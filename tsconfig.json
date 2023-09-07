@@ -25,12 +25,6 @@
       "@components": [
         "src/components"
       ],
-      "@contexts/*": [
-        "src/contexts/*"
-      ],
-      "@contexts": [
-        "src/contexts"
-      ],
       "@styles/*": [
         "src/styles/*"
       ],
@@ -42,6 +36,15 @@
       ],
       "@public": [
         "public"
+      ],
+      "@redux/*": [
+        "src/redux/*"
+      ],
+      "@redux": [
+        "src/redux"
+      ],
+      "@i18n": [
+        "./i18n"
       ]
     },
     "incremental": true

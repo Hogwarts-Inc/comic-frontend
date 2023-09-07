@@ -1,0 +1,52 @@
+{
+  "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "arrow-body-style": ["error", "as-needed"],
+    "arrow-parens": "off",
+    "object-shorthand": "off",
+    "no-multi-spaces": ["error", { "ignoreEOLComments": true }],
+    "react/require-default-props": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-closing-bracket-location": "off",
+    "react/forbid-prop-types": "off",
+    "import/prefer-default-export": "off",
+    "import/extensions": "off",
+    "operator-linebreak": "off",
+    "implicit-arrow-linebreak": "off",
+    "max-len": ["error", 140],
+    "spaced-comment": "off",
+    "one-var-declaration-per-line": "off",
+    "one-var": "off",
+    "no-await-in-loop": "off",
+    "no-confusing-arrow": "off",
+    "function-paren-newline": "off",
+    "object-curly-newline": "off",
+    "react/jsx-curly-newline": "off",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal"],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+  }
+}
