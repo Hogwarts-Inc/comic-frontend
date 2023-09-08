@@ -1,0 +1,45 @@
+name: ci-cd
+
+on:
+  push:
+    branches:
+      - main
+
+build-and-deploy:
+  runs-on: ubuntu-latest
+
+  steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+
+    - name: Build Docker Image
+      run: |
+        docker compo build -t my-app-image .
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker push my-app-image
+
+    - name: Deploy to Oracle Server
+      run: |
+        # SSH into your Oracle Server
+        ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} -i ${{ secrets.SSH_PRIVATE_KEY }}
+
+        # Pull the latest Docker image on the server
+        docker pull my-app-image
+
+        # Stop and remove the existing container (if any)
+        docker stop my-app-container || true
+        docker rm my-app-container || true
+
+        # Run a new container with the updated image
+        docker run -d --name my-app-container -p 80:80 my-app-image
+
+        # Exit the SSH session
+        exit
+
+    - name: Cleanup
+      run: |
+        docker system prune -f
+
+    - name: Test Deployment
+      run: |
+        # You can add commands to test the deployment here

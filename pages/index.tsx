@@ -1,7 +1,7 @@
-import { NavigateToResource } from "@refinedev/nextjs-router";
+import React from 'react';
 
-export default function Home() {
-  return <NavigateToResource resource="blog_posts" />;
-}
+import DesignEditor from 'src/views/DesignEditor';
 
-Home.noLayout = true;
+const Home = () => <DesignEditor />;
+
+export default Home;
