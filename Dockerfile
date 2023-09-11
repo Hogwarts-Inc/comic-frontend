@@ -15,6 +15,8 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
+RUN yarn lint
+
 FROM base AS dev
 
 WORKDIR /app
