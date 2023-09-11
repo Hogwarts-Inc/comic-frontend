@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
+      DOCKER_IMAGE: ${{ vars.DOCKER_IMAGE_DEV }}
       SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY_DEV }}
-      SERVER_USERNAME: ${{ secrets.SERVER_USERNAME_DEV }}
-      SERVER_IP: ${{ secrets.SERVER_IP_DEV }}
-      SERVER_FRONT_FOLDER: ${{ secrets.SERVER_FRONT_FOLDER }}
+      SERVER_USERNAME: ${{ vars.SERVER_USERNAME_DEV }}
+      SERVER_IP: ${{ vars.SERVER_IP_DEV }}
+      SERVER_FRONT_FOLDER: ${{ vars.SERVER_FRONT_FOLDER }}
 
     steps:
       - name: Checkout Code
