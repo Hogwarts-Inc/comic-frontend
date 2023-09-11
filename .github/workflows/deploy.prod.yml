@@ -9,6 +9,13 @@ jobs:
   build-test-and-deploy:
     runs-on: ubuntu-latest
 
+    env:
+      DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
+      SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY_PROD }}
+      SERVER_USERNAME: ${{ secrets.SERVER_USERNAME_PROD }}
+      SERVER_IP: ${{ secrets.SERVER_IP_PROD }}
+      SERVER_FRONT_FOLDER: ${{ secrets.SERVER_FRONT_FOLDER }}
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -20,14 +27,6 @@ jobs:
       - name: Run Tests (lint)
         run: |
           yarn lint
-
-      - name: Set variables
-        env:
-          DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
-          SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY_PROD }}
-          SERVER_USERNAME: ${{ secrets.SERVER_USERNAME_PROD }}
-          SERVER_IP: ${{ secrets.SERVER_IP_PROD }}
-          SERVER_FRONT_FOLDER: ${{ secrets.SERVER_FRONT_FOLDER }}
 
       - name: Build Docker Image
         run: |
