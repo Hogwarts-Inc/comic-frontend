@@ -1,0 +1,19 @@
+name: Build, Test, and Deploy (Development)
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Deploy Application
+        run: |
+          cd ~/front 
+          docker compose up -d --build
