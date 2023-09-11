@@ -1,30 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useActiveObject, useEditor } from '@layerhub-io/react';
-import Scrollbar from '@layerhub-io/react-custom-scrollbar';
 import { IStaticText } from '@layerhub-io/types';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
+import { styled } from '@mui/system';
 import { Block } from 'baseui/block';
 import { Button, SIZE, KIND } from 'baseui/button';
-import { ChevronDown } from 'baseui/icon';
-import { Input } from 'baseui/input';
 import { StatefulPopover } from 'baseui/popover';
-import { Slider } from 'baseui/slider';
 import { StatefulTooltip, PLACEMENT } from 'baseui/tooltip';
 import { useSelector } from 'react-redux';
 
-import Common from './Common';
 import Bold from '../../../../components/Icons/Bold';
 import Italic from '../../../../components/Icons/Italic';
 import LetterCase from '../../../../components/Icons/LetterCase';
-import Spacing from '../../../../components/Icons/Spacing';
 import TextAlignCenter from '../../../../components/Icons/TextAlignCenter';
 import TextAlignJustify from '../../../../components/Icons/TextAlignJustify';
 import TextAlignLeft from '../../../../components/Icons/TextAlignLeft';
 import TextAlignRight from '../../../../components/Icons/TextAlignRight';
 import TextColor from '../../../../components/Icons/TextColor';
 import Underline from '../../../../components/Icons/Underline';
-import { FONT_SIZES } from '../../../../constants/editor';
 import useAppContext from '../../../../hooks/useAppContext';
 import { selectAllFonts } from '../../../../store/slices/fonts/selectors';
 import { loadFonts } from '../../../../utils/fonts';
@@ -45,102 +43,117 @@ interface StyleOptions {
   options: any[];
 }
 
-function TextFontSize() {
+const StyledTextField = styled(TextField)({
+  '& .MuiInput-underline:before': {
+    display: 'none',
+  },
+  '&:hover .MuiInput-underline:before': {
+    display: 'none',
+  },
+  '& .MuiInput-underline:after': {
+    display: 'none',
+  },
+});
+
+const StyledRemoveIcon = styled(RemoveIcon)({
+  color: '#000',
+  fontFamily: 'Inter',
+  fontSize: '12px',
+  fontStyle: 'normal',
+  fontWeight: 700,
+  lineHeight: 'normal',
+});
+
+const styles: Record<string, React.CSSProperties> = {
+  box: {
+    marginTop: '13px',
+    marginBottom: '13px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: '30px',
+    width: '81px',
+  },
+  overlapGroup: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundImage: 'url(./rectangle-5.png)',
+    backgroundSize: '100% 100%',
+    height: '30px',
+    width: '40px',
+    borderColor: 'rgb(185,185,185)',
+    borderRadius: '8px',
+    boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
+  },
+  element: {
+    fontFamily: 'Inter',
+    fontSize: '12px',
+    fontWeight: 'bolder',
+    paddingTop: '2px',
+    paddingBottom: '2px',
+    paddingRight: '3px',
+    paddingLeft: '3px',
+    textAlign: 'center',
+    width: '24px',
+    height: '13px',
+  },
+  decrementButton: {
+    height: '1px',
+    width: '4px',
+  },
+  incrementButton: {
+    height: '6px',
+    width: '6px',
+  },
+  icon: {
+    color: '#000',
+    fontSize: '12px',
+  },
+};
+
+const TextFontSize = () => {
   const editor = useEditor();
   const activeObject = useActiveObject() as any;
-  const [value, setValue] = React.useState(12);
+  const [value, setValue] = useState<number>(12);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (activeObject && activeObject.type === 'StaticText') {
       setValue(activeObject.fontSize);
     }
   }, [activeObject]);
+
   const onChange = (size: number) => {
     editor.objects.update({ fontSize: size });
     setValue(size);
   };
 
   return (
-    <StatefulPopover
-      content={({ close }) => (
-        <Scrollbar style={{ height: '320px', width: '90px' }}>
-          <Block backgroundColor={'#ffffff'} padding={'10px 0'}>
-            {FONT_SIZES.map((size, index) => (
-              <Block
-                onClick={() => {
-                  onChange(size);
-                  close();
-                }}
-                $style={{
-                  height: '32px',
-                  fontSize: '14px',
-                  cursor: 'pointer',
-                  padding: '0 20px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  ':hover': {
-                    background: 'rgb(243,243,243)',
-                  },
-                }}
-                key={index}>
-                {size}
-              </Block>
-            ))}
-          </Block>
-        </Scrollbar>
-      )}>
-      <Block width={'80px'}>
-        <Input
-          value={value}
-          onChange={(e: any) => onChange(e.target.value)}
-          endEnhancer={<ChevronDown size={22} />}
-          overrides={{
-            Input: {
-              style: {
-                backgroundColor: '#ffffff',
-                paddingRight: 0,
-                fontWeight: 500,
-                fontFamily: 'Poppins',
-                fontSize: '14px',
-              },
-            },
-            EndEnhancer: {
-              style: {
-                paddingRight: '8px',
-                paddingLeft: 0,
-                backgroundColor: '#ffffff',
-              },
-            },
-            Root: {
-              style: {
-                paddingRight: 0,
-                borderTopWidth: '1px',
-                borderBottomWidth: '1px',
-                borderRightWidth: '1px',
-                borderLeftWidth: '1px',
-                borderBottomColor: 'rgb(185,185,185)',
-                borderTopColor: 'rgb(185,185,185)',
-                borderRightColor: 'rgb(185,185,185)',
-                borderLeftColor: 'rgb(185,185,185)',
-                borderEndEndRadius: '4px',
-                borderTopLeftRadius: '4px',
-                borderTopRightRadius: '4px',
-                borderStartEndRadius: '4px',
-                borderBottomLeftRadius: '4px',
-                backgroundColor: '#ffffff',
-              },
-            },
-          }}
-          type="number"
-          size={SIZE.mini}
-        />
-      </Block>
-    </StatefulPopover>
+    <div style={styles.box}>
+      <IconButton style={styles.decrementButton} size="small" onClick={() => onChange(value - 1)}>
+        <RemoveIcon style={styles.icon} />
+      </IconButton>
+      <StyledTextField
+        style={styles.overlapGroup}
+        value={value}
+        onChange={e => onChange(Number(e.target.value))}
+        type="number"
+        variant="standard"
+        inputProps={{
+          style: {
+            ...styles.element,
+          },
+        }}
+      />
+      <IconButton style={styles.incrementButton} size="small" onClick={() => onChange(value + 1)}>
+        <AddIcon style={styles.icon} />
+      </IconButton>
+    </div>
   );
-}
+};
 
 function TextLetterCase() {
-  const [state, setState] = React.useState<{ upper: boolean }>({ upper: false });
+  const [state, setState] = useState<{ upper: boolean }>({ upper: false });
   const editor = useEditor();
   return (
     <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={'tooltip'} content="Letter case">
@@ -162,188 +175,14 @@ function TextLetterCase() {
   );
 }
 
-function TextSpacing() {
-  const editor = useEditor();
-  const activeObject = useActiveObject() as any;
-  const [state, setState] = React.useState<{
-    charSpacing: number;
-    lineHeight: number;
-  }>({ charSpacing: 0, lineHeight: 0 });
-
-  React.useEffect(() => {
-    if (activeObject) {
-      const { charSpacing, lineHeight } = activeObject;
-      setState({ ...state, charSpacing: charSpacing / 10, lineHeight: lineHeight * 10 });
-    }
-  }, [activeObject]);
-
-  const handleChange = (type: string, value: number[]) => {
-    if (editor) {
-      if (type === 'charSpacing') {
-        setState({ ...state, [type]: value[0] });
-
-        editor.objects.update({
-          [type]: value[0] * 10,
-        });
-      } else {
-        setState({ ...state, [type]: value[0] });
-
-        editor.objects.update({
-          [type]: value[0] / 10,
-        });
-      }
-    }
-  };
-  return (
-    <StatefulPopover
-      showArrow={true}
-      placement={PLACEMENT.bottom}
-      content={() => (
-        <Block padding={'12px'} width={'200px'} backgroundColor={'#ffffff'} display={'grid'} gridGap={'8px'}>
-          <Block>
-            <Block $style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Block $style={{ fontSize: '14px' }}>Line height</Block>
-              <Block width={'52px'}>
-                <Input
-                  overrides={{
-                    Input: {
-                      style: {
-                        backgroundColor: '#ffffff',
-                        textAlign: 'center',
-                      },
-                    },
-                    Root: {
-                      style: {
-                        borderBottomColor: 'rgba(0,0,0,0.15)',
-                        borderTopColor: 'rgba(0,0,0,0.15)',
-                        borderRightColor: 'rgba(0,0,0,0.15)',
-                        borderLeftColor: 'rgba(0,0,0,0.15)',
-                        borderTopWidth: '1px',
-                        borderBottomWidth: '1px',
-                        borderRightWidth: '1px',
-                        borderLeftWidth: '1px',
-                        height: '26px',
-                      },
-                    },
-                    InputContainer: {},
-                  }}
-                  size={SIZE.mini}
-                  onChange={() => {}}
-                  value={Math.round(state.lineHeight)}
-                />
-              </Block>
-            </Block>
-
-            <Block>
-              <Slider
-                overrides={{
-                  InnerThumb: () => null,
-                  ThumbValue: () => null,
-                  TickBar: () => null,
-                  Track: {
-                    style: {
-                      paddingRight: 0,
-                      paddingLeft: 0,
-                    },
-                  },
-                  Thumb: {
-                    style: {
-                      height: '12px',
-                      width: '12px',
-                    },
-                  },
-                }}
-                min={0}
-                max={100}
-                // step
-                marks={false}
-                value={[state.lineHeight]}
-                onChange={({ value }) => handleChange('lineHeight', value)}
-              />
-            </Block>
-          </Block>
-          <Block>
-            <Block $style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Block $style={{ fontSize: '14px' }}>Char spacing</Block>
-              <Block width={'52px'}>
-                <Input
-                  overrides={{
-                    Input: {
-                      style: {
-                        backgroundColor: '#ffffff',
-                        textAlign: 'center',
-                      },
-                    },
-                    Root: {
-                      style: {
-                        borderBottomColor: 'rgba(0,0,0,0.15)',
-                        borderTopColor: 'rgba(0,0,0,0.15)',
-                        borderRightColor: 'rgba(0,0,0,0.15)',
-                        borderLeftColor: 'rgba(0,0,0,0.15)',
-                        borderTopWidth: '1px',
-                        borderBottomWidth: '1px',
-                        borderRightWidth: '1px',
-                        borderLeftWidth: '1px',
-                        height: '26px',
-                      },
-                    },
-                    InputContainer: {},
-                  }}
-                  size={SIZE.mini}
-                  onChange={() => {}}
-                  value={Math.round(state.charSpacing)}
-                />
-              </Block>
-            </Block>
-
-            <Block>
-              <Slider
-                overrides={{
-                  InnerThumb: () => null,
-                  ThumbValue: () => null,
-                  TickBar: () => null,
-                  Track: {
-                    style: {
-                      paddingRight: 0,
-                      paddingLeft: 0,
-                    },
-                  },
-                  Thumb: {
-                    style: {
-                      height: '12px',
-                      width: '12px',
-                    },
-                  },
-                }}
-                min={-20}
-                max={100}
-                marks={false}
-                value={[state.charSpacing]}
-                onChange={({ value }) => handleChange('charSpacing', value)}
-              />
-            </Block>
-          </Block>
-        </Block>
-      )}>
-      <Block>
-        <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={'tooltip'} content="Spacing">
-          <Button size={SIZE.mini} kind={KIND.tertiary}>
-            <Spacing size={24} />
-          </Button>
-        </StatefulTooltip>
-      </Block>
-    </StatefulPopover>
-  );
-}
-
 const TEXT_ALIGNS = ['left', 'center', 'right', 'justify'];
 
 function TextAlign() {
   const editor = useEditor();
   const activeObject = useActiveObject() as any;
-  const [state, setState] = React.useState<{ align: string }>({ align: 'left' });
+  const [state, setState] = useState<{ align: string }>({ align: 'left' });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (activeObject) {
       setState({ align: activeObject.textAlign });
     }
@@ -426,21 +265,22 @@ const initialOptions: TextState = {
     options: [],
   },
 };
+
 export default function Text() {
-  const [state, setState] = React.useState<TextState>(initialOptions);
+  const [state, setState] = useState<TextState>(initialOptions);
   const activeObject = useActiveObject() as Required<IStaticText>;
   const { setActiveSubMenu } = useAppContext();
   const editor = useEditor();
   const fonts = useSelector(selectAllFonts);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (activeObject && activeObject.type === 'StaticText') {
       const textProperties = getTextProperties(activeObject, fonts);
       setState({ ...state, ...textProperties });
     }
   }, [activeObject]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const watcher = async () => {
       if (activeObject && activeObject.type === 'StaticText') {
         const textProperties = getTextProperties(activeObject, fonts);
@@ -581,11 +421,12 @@ export default function Text() {
     });
     setState({ ...state, underline: !state.underline });
   }, [editor, state]);
+
   return (
     <Block
       $style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '0 12px', justifyContent: 'space-between' }}>
       <Block display={'flex'} gridGap="0.5rem" alignItems={'center'}>
-        <Block
+        {/* <Block
           onClick={() => setActiveSubMenu('FontSelector')}
           $style={{
             border: '1px solid rgb(185,185,185)',
@@ -603,10 +444,13 @@ export default function Text() {
           <Block display={'flex'}>
             <ChevronDown size={22} />
           </Block>
-        </Block>
+        </Block> */}
 
-        <TextFontSize />
-        <Block display={'flex'} alignItems={'center'}>
+        <div style={{ overflow: 'hidden' }}>
+          <TextFontSize />
+        </div>
+
+        {/* <Block display={'flex'} alignItems={'center'}>
           <StatefulTooltip
             placement={PLACEMENT.bottom}
             showArrow={true}
@@ -660,19 +504,8 @@ export default function Text() {
           <TextAlign />
 
           <Block width={'1px'} height={'24px'} backgroundColor="rgb(213,213,213)" margin={'0 4px'} />
-
-          <TextSpacing />
-          <Block width={'1px'} height={'24px'} backgroundColor="rgb(213,213,213)" margin={'0 4px'} />
-          <Button onClick={() => setActiveSubMenu('TextEffects')} size={SIZE.compact} kind={KIND.tertiary}>
-            Effects
-          </Button>
-          <Block width={'1px'} height={'24px'} backgroundColor="rgb(213,213,213)" margin={'0 4px'} />
-          <Button size={SIZE.compact} kind={KIND.tertiary}>
-            Animate
-          </Button>
-        </Block>
+        </Block> */}
       </Block>
-      <Common />
     </Block>
   );
 }
