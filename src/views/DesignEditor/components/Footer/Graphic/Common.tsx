@@ -7,13 +7,12 @@ import { Block } from 'baseui/block';
 import { Button, KIND, SIZE } from 'baseui/button';
 import { Input } from 'baseui/input';
 import { Slider } from 'baseui/slider';
-import { Theme } from 'baseui/theme';
 import { PLACEMENT } from 'baseui/toast';
 import { StatefulTooltip } from 'baseui/tooltip';
 
 import Icons from '../../../../../components/Icons';
 
-const Container = styled<'div', Theme>('div', ({ $theme }: { $theme: { colors: { white: string } } }) => ({
+const Container = styled('div', ({ $theme }: { $theme: { colors: { white: string } } }) => ({
   height: '50px',
   background: $theme.colors.white,
   display: 'flex',

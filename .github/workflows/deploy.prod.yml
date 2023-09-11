@@ -1,0 +1,43 @@
+name: Build, Test, and Deploy (Production)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-test-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          yarn install
+
+      - name: Run Tests (lint)
+        run: |
+          yarn lint
+
+      - name: Set variables
+        env:
+          DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
+          SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY_PROD }}
+          SERVER_USERNAME: ${{ secrets.SERVER_USERNAME_PROD }}
+          SERVER_IP: ${{ secrets.SERVER_IP_PROD }}
+          SERVER_FRONT_FOLDER: ${{ secrets.SERVER_FRONT_FOLDER }}
+
+      - name: Build Docker Image
+        run: |
+          docker build --platform=linux/arm64 -t $DOCKER_IMAGE:latest .
+          docker save -o $DOCKER_IMAGE.tar $DOCKER_IMAGE:latest
+          scp $DOCKER_IMAGE.tar -i $SERVER_SSH_KEY $SERVER_USERNAME@$SERVER_IP:~/$SERVER_FRONT_FOLDER
+
+      - name: Deploy Application
+        run: |
+          ssh -o StrictHostKeyChecking=no -i $SERVER_SSH_KEY $SERVER_USERNAME@$SERVER_IP "cd ~/$SERVER_FRONT_FOLDER && \
+          docker compose down && \
+          docker image load -i $DOCKER_IMAGE.tar && \
+          docker compose up -d"
