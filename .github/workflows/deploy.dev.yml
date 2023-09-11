@@ -17,12 +17,9 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build -t docker-staging:latest .
-          docker save -o docker-staging.tar docker-staging:latest
-          mv docker-staging.tar ~/front
 
       - name: Deploy Application
         run: |
           cd ~/front && 
           docker compose down && 
-          docker image load -i docker-staging.tar && 
           docker compose up -d
