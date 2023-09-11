@@ -8,6 +8,7 @@ on:
 jobs:
   build-test-and-deploy:
     runs-on:
+      group: Default
       labels: front-staging
 
     steps:
