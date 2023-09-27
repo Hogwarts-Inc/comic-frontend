@@ -1,9 +1,10 @@
-import React, { ReactNode, useReducer } from 'react';
+import React, { useReducer } from 'react';
 
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useSwipeable } from 'react-swipeable';
 
 import styles from './carousel.module.css';
-
 const NEXT = 'next';
 const PREV = 'prev';
 
@@ -18,14 +19,14 @@ interface CarouselState {
 type CarouselAction = { type: Direction; numItems: number } | { type: 'stopSliding' };
 
 interface CarouselProps {
-  children: ReactNode;
+  images: string[];
 }
 
 const getOrder = (index: number, pos: number, numItems: number): number =>
   index - pos < 0 ? numItems - Math.abs(index - pos) : index - pos;
 
-export const Carousel: React.FC<CarouselProps> = ({ children }) => {
-  const numItems = React.Children.count(children);
+export const Carousel = ({ images }: CarouselProps) => {
+  const numItems = images.length;
 
   const initialState: CarouselState = {
     pos: numItems - 1,
@@ -76,16 +77,22 @@ export const Carousel: React.FC<CarouselProps> = ({ children }) => {
   return (
     <div {...handlers}>
       <div className={styles.wrapper}>
-        <div className={`${styles['carousel-container']} ${styles[state.dir]} ${state.sliding ? styles.sliding : ''}`}>
-          {React.Children.map(children, (child, index) => (
-            <div className={styles['carousel-slot']} style={{ order: getOrder(index, state.pos, numItems) }}>
-              {child}
+        <ArrowBackIosIcon
+          className={`${styles.carouselButton} ${styles.carouselButtonPrev}`}
+          onClick={() => slide(PREV)}
+        />
+        <div className={`${styles.carouselContainer} ${styles[state.dir]} ${state.sliding ? styles.sliding : ''}`}>
+          {images.map((url, index) => (
+            <div key={url} className={styles.carouselSlot} style={{ order: getOrder(index, state.pos, numItems) }}>
+              <img src={url} />
             </div>
           ))}
         </div>
+        <ArrowForwardIosIcon
+          className={`${styles.carouselButton} ${styles.carouselButtonNext}`}
+          onClick={() => slide(NEXT)}
+        />
       </div>
-      <button className='carouselButton' onClick={() => slide(NEXT)}>Next</button>
-      <button className='carouselButton' onClick={() => slide(PREV)}>Prev</button>
     </div>
   );
 };

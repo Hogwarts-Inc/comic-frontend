@@ -1,50 +1,67 @@
-.wrapper {
-  width: 100%;
-  overflow: hidden;
-}
-
-.carousel-container {
+.carouselContainer {
   position: relative;
   display: flex;
   transition: transform 0.4s ease;
   transform: translateX(calc(-80% - 20px));
 }
 
-.carousel-container.sliding {
+.carouselContainer.sliding {
   transition: none;
 }
 
-.carousel-container.sliding.next {
+.carouselContainer.sliding.next {
   transform: translateX(0%);
 }
 
-.carousel-container.sliding.prev {
+.carouselContainer.sliding.prev {
   transform: translateX(calc(2 * (-80% - 20px)));
 }
 
-.carousel-slot {
+.carouselSlot {
   flex: 1 0 100%;
   flex-basis: 80%;
   margin-right: 20px;
 }
 
-.carousel-slot img {
+.carouselSlot img {
   width: 100%;
 }
 
-.carousel-container::before {
+.carouselContainer::before {
   left: 0;
   background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
 }
 
-.carousel-container::after {
+.carouselContainer::after {
   right: 0;
   background: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
 }
 
 @media (max-width: 768px) {
-  .carousel-container::before,
-  .carousel-container::after {
+  .carouselContainer::before,
+  .carouselContainer::after {
     display: none;
   }
+}
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carouselButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 2;
+}
+
+.carouselButtonPrev {
+  left: 10px;
+}
+
+.carouselButtonNext {
+  right: 10px;
 }
