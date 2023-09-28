@@ -3,11 +3,11 @@ import React from 'react';
 import { Carousel } from '@components/Carousel/Carousel';
 
 const slides = [
-  'https://unsplash.it/475/205',
-  'https://unsplash.it/476/205',
-  'https://unsplash.it/477/205',
-  'https://unsplash.it/478/205',
-  'https://unsplash.it/479/205',
+  'https://picsum.photos/id/1/2000',
+  'https://picsum.photos/id/200/2000',
+  'https://picsum.photos/id/300/2000',
+  'https://picsum.photos/id/400/2000',
+  'https://picsum.photos/id/500/2000'
 ];
 
 const Landing = () => (
