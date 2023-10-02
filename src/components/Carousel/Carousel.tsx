@@ -30,7 +30,7 @@ interface CarouselProps {
 
 const getOrder = (index: number, pos: number, numItems: number): number => {
   let order = index - pos;
-  if (order < 0) order += numItems; 
+  if (order < 0) order += numItems;
   return order;
 };
 
@@ -46,9 +46,7 @@ export const Carousel = ({ images }: CarouselProps) => {
   const reducer = (state: CarouselState, action: CarouselAction): CarouselState => {
     switch (action.type) {
       case PREV:
-        if (state.pos === 0) {
-          return state;  
-        }
+        if (state.pos === 0) return state;
         return {
           ...state,
           dir: PREV,
@@ -56,7 +54,7 @@ export const Carousel = ({ images }: CarouselProps) => {
           pos: state.pos - 1,
         };
       case NEXT:
-        if (state.pos === action.numItems - 1) return state;
+        if (state.pos === action.numItems - 1) return state; 
         return {
           ...state,
           dir: NEXT,
@@ -104,14 +102,14 @@ export const Carousel = ({ images }: CarouselProps) => {
   return (
     <div {...handlers}>
       <div className={styles.wrapper}>
-        {state.pos != 0 && <KeyboardDoubleArrowLeftIcon
+        {state.pos > 0 && <KeyboardDoubleArrowLeftIcon
           className={`${styles.carouselButton} ${styles.carouselButtonFirst}`}
           onClick={() => dispatch({ type: 'goToFirst', numItems })}
         />}
-        <KeyboardArrowLeftIcon
+        {state.pos > 0 && <KeyboardArrowLeftIcon
           className={`${styles.carouselButton} ${styles.carouselButtonPrev}`}
           onClick={() => slide(PREV)}
-        />
+        />}
 
         <div className={styles.imagesContainer}>
           <div className={`${styles.carouselContainer} ${styles[state.dir]} ${state.sliding ? styles.sliding : ''}`}>
@@ -123,11 +121,11 @@ export const Carousel = ({ images }: CarouselProps) => {
           </div>
         </div>
 
-        <KeyboardArrowRightIcon
+        {state.pos < (numItems - 1) && <KeyboardArrowRightIcon
           className={`${styles.carouselButton} ${styles.carouselButtonNext}`}
           onClick={() => slide(NEXT)}
-        />
-        {state.pos != (numItems - 1) && <KeyboardDoubleArrowRightIcon
+        />}
+        {state.pos < (numItems - 1) && <KeyboardDoubleArrowRightIcon
           className={`${styles.carouselButton} ${styles.carouselButtonLast}`}
           onClick={() => dispatch({ type: 'goToLast', numItems })}
         />}
