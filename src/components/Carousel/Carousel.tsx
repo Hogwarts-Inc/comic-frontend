@@ -17,7 +17,7 @@ export const Carousel = ({ images }: CarouselProps) => {
   const numItems = images.length;
 
   const transformStyle = {
-    '--translateX': `-${index * (72 + 2)}%`,
+    '--translateX': `-${index * (75 + 5)}%`,
   } as CSSProperties;
 
   const handleNext = () => {
