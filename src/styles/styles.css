@@ -47,9 +47,3 @@ body {
   width: 100vw;
   overflow: hidden;
 }
-
-@media (max-width: 768px) {
-  .carouselButton {
-    display: none;
-  }
-}

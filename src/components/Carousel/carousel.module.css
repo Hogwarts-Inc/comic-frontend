@@ -1,18 +1,18 @@
 .wrapper {
-  position: relative;
   overflow: hidden;
+  position: relative;
 }
 
 .carouselButton {
+  cursor: pointer;
+  height: auto;
+  max-height: 50px;
+  max-width: 50px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  cursor: pointer;
+  width: 3%;
   z-index: 2;
-  width: 3%;  
-  height: auto;
-  max-width: 50px;
-  max-height: 50px;
 }
 
 .carouselButtonPrev {
@@ -28,54 +28,35 @@
 }
 
 .carouselButtonLast {
-  right: 1%; 
-}
-
-.imagesContainer {
-  position: relative;
-  width: 80%;
-  height: 100%;
-  margin: 0 auto; 
-  overflow: hidden;
+  right: 1%;
 }
 
 .carouselContainer {
   position: relative;
   display: flex;
   transition: transform 0.4s ease;
-  transform: translateX(0%);
-}
-
-.carouselContainer.sliding {
-  transition: none;
-}
-
-.carouselContainer.sliding.next {
-  transform: translateX(calc(70% + 20px)); 
-}
-
-.carouselContainer.sliding.prev {
-  transform: translateX(calc(-70% - 20px));
 }
 
 .carouselSlot {
   flex: 1 0 100%;
-  flex-basis: 70%;
-  margin-right: 20px;
+  flex-basis: 72%;
+  margin-right: 2%;
 }
 
 .carouselSlot img {
   width: 100%;
 }
 
-.carouselContainer::before {
-  left: 0;
-  background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+.imagesContainer {
+  position: relative;
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
-.carouselContainer::after {
-  right: 0;
-  background: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+.transform {
+  transform: translateX(var(--translateX));
 }
 
 @media (max-width: 768px) {
