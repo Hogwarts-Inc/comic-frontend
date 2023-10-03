@@ -12,6 +12,7 @@ import { Block } from 'baseui/block';
 import { Button, SIZE, KIND } from 'baseui/button';
 import { useSelector } from 'react-redux';
 
+import styles from './text.module.css';
 import Bold from '../../../../components/Icons/Bold';
 import Italic from '../../../../components/Icons/Italic';
 import TextAlignCenter from '../../../../components/Icons/TextAlignCenter';
@@ -65,57 +66,6 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const styles: Record<string, React.CSSProperties> = {
-  textSizeContainer: {
-    marginTop: '13px',
-    marginBottom: '13px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: '30px',
-    width: '81px',
-  },
-  boxButton: {
-    height: '40px',
-    width: '40px',
-    backgroundColor: '#ffffff',
-    borderRadius: '10px',
-    boxShadow: '0px 2px 4px #00000040',
-  },
-  textSizeTextField: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '30px',
-    width: '40px',
-    borderColor: 'rgb(185,185,185)',
-    borderRadius: '8px',
-    boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
-  },
-  inputTextField: {
-    fontFamily: 'Inter',
-    fontSize: '12px',
-    fontWeight: 'bolder',
-    paddingTop: '2px',
-    paddingBottom: '2px',
-    textAlign: 'center',
-    width: '24px',
-    height: '13px',
-  },
-  decrementButton: {
-    height: '1px',
-    width: '4px',
-  },
-  incrementButton: {
-    height: '6px',
-    width: '6px',
-  },
-  icon: {
-    color: '#000',
-    fontSize: '12px',
-  },
-};
-
 const TextFontSize = () => {
   const editor = useEditor();
   const activeObject = useActiveObject() as any;
@@ -133,24 +83,22 @@ const TextFontSize = () => {
   };
 
   return (
-    <div style={styles.textSizeContainer}>
-      <IconButton style={styles.decrementButton} size="small" onClick={() => onChange(value - 1)}>
-        <RemoveIcon style={styles.icon} />
+    <div className={styles.textSizeContainer}>
+      <IconButton className={styles.decrementButton} size="small" onClick={() => onChange(value - 1)}>
+        <RemoveIcon className={styles.icon} />
       </IconButton>
       <StyledTextField
-        style={styles.textSizeTextField}
+        className={styles.textSizeTextField}
         value={value}
         onChange={e => onChange(Number(e.target.value))}
         type="number"
         variant="standard"
         inputProps={{
-          style: {
-            ...styles.inputTextField,
-          },
+          className: styles.inputTextField,
         }}
       />
-      <IconButton style={styles.incrementButton} size="small" onClick={() => onChange(value + 1)}>
-        <AddIcon style={styles.icon} />
+      <IconButton className={styles.incrementButton} size="small" onClick={() => onChange(value + 1)}>
+        <AddIcon className={styles.icon} />
       </IconButton>
     </div>
   );
@@ -171,7 +119,7 @@ const TextAlign = () => {
   return (
     <Block backgroundColor={'#ffffff'} display={'grid'} gridTemplateColumns={'1fr 1fr 1fr 1fr'} gridGap={'8px'}>
       <Button
-        style={styles.boxButton}
+        className={styles.boxButton}
         isSelected={state.align === TEXT_ALIGNS[3]}
         onClick={() => {
           editor.objects.update({ textAlign: TEXT_ALIGNS[3] });
@@ -182,7 +130,7 @@ const TextAlign = () => {
         <TextAlignJustify size={24} />
       </Button>
       <Button
-        style={styles.boxButton}
+        className={styles.boxButton}
         isSelected={state.align === TEXT_ALIGNS[0]}
         onClick={() => {
           editor.objects.update({ textAlign: TEXT_ALIGNS[0] });
@@ -193,7 +141,7 @@ const TextAlign = () => {
         <TextAlignLeft size={24} />
       </Button>
       <Button
-        style={styles.boxButton}
+        className={styles.boxButton}
         isSelected={state.align === TEXT_ALIGNS[1]}
         onClick={() => {
           editor.objects.update({ textAlign: TEXT_ALIGNS[1] });
@@ -204,7 +152,7 @@ const TextAlign = () => {
         <TextAlignCenter />
       </Button>
       <Button
-        style={styles.boxButton}
+        className={styles.boxButton}
         isSelected={state.align === TEXT_ALIGNS[2]}
         onClick={() => {
           editor.objects.update({ textAlign: TEXT_ALIGNS[2] });
@@ -230,7 +178,7 @@ export default function Text() {
       const textProperties = getTextProperties(activeObject, fonts);
       setState({ ...state, ...textProperties });
     }
-  }, [activeObject]);
+  }, [activeObject, fonts, state]);
 
   useEffect(() => {
     const watcher = async () => {
@@ -247,7 +195,7 @@ export default function Text() {
         editor.off('history:changed', watcher);
       }
     };
-  }, [editor, activeObject]);
+  }, [editor, activeObject, fonts, state]);
 
   const makeBold = React.useCallback(async () => {
     if (state.bold) {
@@ -375,8 +323,8 @@ export default function Text() {
   }, [editor, state]);
 
   return (
-    <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '0 12px', justifyContent: 'space-between' }}>
-      <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+    <div className={styles.flexContainer}>
+      <div className={styles.flexInnerContainer}>
         {/* 
         <div onClick={() => setActiveSubMenu('FontSelector')} style={{
           border: '1px solid rgb(185,185,185)',
@@ -397,33 +345,27 @@ export default function Text() {
         </div> 
         */}
 
-        <div style={{ width: '1px', height: '14px', backgroundColor: 'rgb(213,213,213)', margin: '0 4px' }}></div>
+        <div className={styles.divider}></div>
 
         <TextFontSize />
 
-        <div style={{ width: '1px', height: '14px', backgroundColor: 'rgb(213,213,213)', margin: '0 4px' }}></div>
+        <div className={styles.divider}></div>
 
         <TextAlign />
 
-        <div style={{ width: '1px', height: '14px', backgroundColor: 'rgb(213,213,213)', margin: '0 4px' }}></div>
+        <div className={styles.divider}></div>
 
-        <div
-          style={{
-            backgroundColor: '#ffffff',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr 1fr',
-            gap: '8px',
-          }}>
+        <div className={styles.gridContainer}>
           <Button
             onClick={() => setActiveSubMenu('TextFill')}
             size={SIZE.mini}
             kind={KIND.tertiary}
-            style={styles.boxButton}>
+            className={styles.boxButton}>
             <TextColor color={state.color} size={22} />
           </Button>
 
           <Button
-            style={styles.boxButton}
+            className={styles.boxButton}
             disabled={!state.styleOptions.hasBold}
             onClick={makeBold}
             size={SIZE.mini}
@@ -432,7 +374,7 @@ export default function Text() {
           </Button>
 
           <Button
-            style={styles.boxButton}
+            className={styles.boxButton}
             disabled={!state.styleOptions.hasItalic}
             onClick={makeItalic}
             size={SIZE.mini}
@@ -440,12 +382,12 @@ export default function Text() {
             <Italic size={20} />
           </Button>
 
-          <Button style={styles.boxButton} onClick={makeUnderline} size={SIZE.mini} kind={KIND.tertiary}>
+          <Button className={styles.boxButton} onClick={makeUnderline} size={SIZE.mini} kind={KIND.tertiary}>
             <Underline size={24} />
           </Button>
         </div>
 
-        <div style={{ width: '1px', height: '14px', backgroundColor: 'rgb(213,213,213)', margin: '0 4px' }}></div>
+        <div className={styles.divider}></div>
       </div>
     </div>
   );
