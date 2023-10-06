@@ -4,10 +4,9 @@ import React from 'react';
 import { useEditor } from '@layerhub-io/react';
 import { Block } from 'baseui/block';
 
-import AngleDoubleLeft from '../../../../../components/Icons/AngleDoubleLeft';
+import { CloseSideBar } from './Common/CloseSideBar';
 import Scrollable from '../../../../../components/Scrollable';
 import useDesignEditorContext from '../../../../../hooks/useDesignEditorContext';
-import useSetIsSidebarOpen from '../../../../../hooks/useSetIsSidebarOpen';
 import { getPexelsVideos } from '../../../../../services/pexels';
 
 const loadVideoResource = (videoSrc: string): Promise<HTMLVideoElement> =>
@@ -53,7 +52,6 @@ const captureDuration = (video: HTMLVideoElement): Promise<number> =>
 
 const Videos = () => {
   const editor = useEditor();
-  const setIsSidebarOpen = useSetIsSidebarOpen();
   const [videos, setVideos] = React.useState<any[]>([]);
   const { scenes, setScenes, currentScene } = useDesignEditorContext();
 
@@ -99,9 +97,7 @@ const Videos = () => {
         }}>
         <Block>Videos</Block>
 
-        <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: 'pointer', display: 'flex' }}>
-          <AngleDoubleLeft size={18} />
-        </Block>
+        <CloseSideBar />
       </Block>
       <Scrollable>
         <Block padding="0 1.5rem">

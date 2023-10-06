@@ -7,12 +7,11 @@ import { Block } from 'baseui/block';
 import { Input } from 'baseui/input';
 import { SIZE, Spinner } from 'baseui/spinner';
 
-import AngleDoubleLeft from '../../../../../components/Icons/AngleDoubleLeft';
+import { CloseSideBar } from './Common/CloseSideBar';
 import Search from '../../../../../components/Icons/Search';
 import InfiniteScrolling from '../../../../../components/InfiniteScrolling';
 import LazyLoadImage from '../../../../../components/LazyLoadImage';
 import Scrollable from '../../../../../components/Scrollable';
-import useSetIsSidebarOpen from '../../../../../hooks/useSetIsSidebarOpen';
 import api from '../../../../../services/api';
 
 const Pixabay = () => {
@@ -22,7 +21,6 @@ const Pixabay = () => {
   const [pageNumber, setPageNumber] = React.useState(1);
   const [isloading, setIsloading] = React.useState(true);
   const [category, setCategory] = useState<string>('');
-  const setIsSidebarOpen = useSetIsSidebarOpen();
 
   const addObject = React.useCallback(
     (url: string) => {
@@ -84,9 +82,7 @@ const Pixabay = () => {
         }}>
         <Block>Pixabay images</Block>
 
-        <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: 'pointer', display: 'flex' }}>
-          <AngleDoubleLeft size={18} />
-        </Block>
+        <CloseSideBar />
       </Block>
 
       <Block $style={{ padding: '1.5rem 1.5rem 1rem' }}>

@@ -8,11 +8,9 @@ import { Block } from 'baseui/block';
 import { nanoid } from 'nanoid';
 import { useSelector } from 'react-redux';
 
-import AngleDoubleLeft from '../../../../../components/Icons/AngleDoubleLeft';
+import { CloseSideBar } from './Common/CloseSideBar';
 import Scrollable from '../../../../../components/Scrollable';
 import useDesignEditorContext from '../../../../../hooks/useDesignEditorContext';
-import useEditorType from '../../../../../hooks/useEditorType';
-import useSetIsSidebarOpen from '../../../../../hooks/useSetIsSidebarOpen';
 import { IDesign } from '../../../../../interfaces/DesignEditor';
 import api from '../../../../../services/api';
 import { selectPublicDesigns } from '../../../../../store/slices/designs/selectors';
@@ -81,10 +79,8 @@ function ImageItem({ preview, onClick }: { preview: any; onClick?: (option: any)
 
 export default function Templates() {
   const editor = useEditor();
-  const setIsSidebarOpen = useSetIsSidebarOpen();
   const { setCurrentScene, currentScene, setScenes, setCurrentDesign } = useDesignEditorContext();
   const designs = useSelector(selectPublicDesigns);
-  const editorType = useEditorType();
 
   const loadGraphicTemplate = async (payload: IDesign): Promise<{ scenes: IScene[]; design: IDesign }> => {
     const scenes: IScene[] = [];
@@ -132,22 +128,18 @@ export default function Templates() {
         }}>
         <Block>Templates</Block>
 
-        <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: 'pointer', display: 'flex' }}>
-          <AngleDoubleLeft size={18} />
-        </Block>
+        <CloseSideBar />
       </Block>
       <Scrollable>
         <div style={{ padding: '0 1.5rem' }}>
           <div style={{ display: 'grid', gap: '0.5rem', gridTemplateColumns: '1fr 1fr' }}>
-            {designs
-              .filter(d => d.type === editorType)
-              .map((design, index) => (
-                <ImageItem
-                  onClick={() => loadDesignById(design.id)}
-                  key={index}
-                  preview={`${design.previews[0].src}?tr=w-320`}
-                />
-              ))}
+            {designs.map((design, index) => (
+              <ImageItem
+                onClick={() => loadDesignById(design.id)}
+                key={index}
+                preview={`${design.previews[0].src}?tr=w-320`}
+              />
+            ))}
           </div>
         </div>
       </Scrollable>

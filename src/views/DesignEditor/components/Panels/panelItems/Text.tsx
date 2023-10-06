@@ -5,12 +5,12 @@ import { useEditor } from '@layerhub-io/react';
 import { Block } from 'baseui/block';
 import { Button, SIZE } from 'baseui/button';
 import { nanoid } from 'nanoid';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useStyletron } from 'styletron-react';
 
-import AngleDoubleLeft from '../../../../../components/Icons/AngleDoubleLeft';
+import { CloseSideBar } from './Common/CloseSideBar';
 import Scrollable from '../../../../../components/Scrollable';
-import useSetIsSidebarOpen from '../../../../../hooks/useSetIsSidebarOpen';
 import { FontItem } from '../../../../../interfaces/common';
 import { IComponent } from '../../../../../interfaces/DesignEditor';
 import api from '../../../../../services/api';
@@ -60,8 +60,8 @@ function TextComponentItem({
 
 export default function Text() {
   const editor = useEditor();
-  const setIsSidebarOpen = useSetIsSidebarOpen();
   const components = useSelector(selectPublicComponents);
+  const { t } = useTranslation();
 
   const addObject = async () => {
     if (editor) {
@@ -134,11 +134,8 @@ export default function Text() {
           justifyContent: 'space-between',
           padding: '1.5rem',
         }}>
-        <Block>Text</Block>
-
-        <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: 'pointer', display: 'flex' }}>
-          <AngleDoubleLeft size={18} />
-        </Block>
+        <Block>{t('text.title')}</Block>
+        <CloseSideBar />
       </Block>
       <Scrollable>
         <Block padding={'0 1.5rem'}>
@@ -152,7 +149,7 @@ export default function Text() {
                 },
               },
             }}>
-            Add text
+            {t('text.add')}
           </Button>
 
           <Block

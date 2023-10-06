@@ -5,10 +5,9 @@ import { useEditor } from '@layerhub-io/react';
 import { useStyletron } from 'baseui';
 import { Block } from 'baseui/block';
 
-import AngleDoubleLeft from '../../../../../components/Icons/AngleDoubleLeft';
+import { CloseSideBar } from './Common/CloseSideBar';
 import Scrollable from '../../../../../components/Scrollable';
 import { images } from '../../../../../constants/mock-data';
-import useSetIsSidebarOpen from '../../../../../hooks/useSetIsSidebarOpen';
 
 const ImageItem = ({ preview, onClick }: { preview: any; onClick?: (option: any) => void }) => {
   const [css] = useStyletron();
@@ -71,9 +70,8 @@ const ImageItem = ({ preview, onClick }: { preview: any; onClick?: (option: any)
     </div>
   );
 };
-const Images = () => {
+const Images = ({ title }: { title: string }) => {
   const editor = useEditor();
-  const setIsSidebarOpen = useSetIsSidebarOpen();
 
   const addObject = React.useCallback(
     (url: string) => {
@@ -98,11 +96,9 @@ const Images = () => {
           justifyContent: 'space-between',
           padding: '1.5rem',
         }}>
-        <Block>Images</Block>
+        <Block>{title}</Block>
 
-        <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: 'pointer', display: 'flex' }}>
-          <AngleDoubleLeft size={18} />
-        </Block>
+        <CloseSideBar />
       </Block>
       <Scrollable>
         <Block padding="0 1.5rem">

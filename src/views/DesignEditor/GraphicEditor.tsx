@@ -6,7 +6,11 @@ import Toolbox from './components/Toolbox';
 
 const GraphicEditor = () => (
   <EditorContainer>
-    <div style={{ display: 'flex', flex: 1 }}>
+    <div
+      style={{
+        display: 'flex',
+        flex: 1,
+      }}>
       <Panels />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', position: 'relative' }}>
         <Toolbox />
