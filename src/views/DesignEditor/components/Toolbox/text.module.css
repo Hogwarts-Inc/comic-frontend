@@ -1,0 +1,82 @@
+.boxButton {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px #00000040;
+  height: 40px;
+  width: 40px;
+}
+
+.decrementButton {
+  height: 1px;
+  width: 4px;
+}
+
+.divider {
+  background-color: rgb(213,213,213);
+  height: 14px;
+  margin: 0 4px;
+  width: 1px;
+}
+
+.flexContainer {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 12px;
+  flex: 1;
+}
+
+.flexInnerContainer {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.gridContainer {
+  background-color: #ffffff;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.icon {
+  color: #000;
+  font-size: 12px;
+}
+
+.incrementButton {
+  height: 6px;
+  width: 6px;
+}
+
+.inputTextField {
+  font-family: 'Inter';
+  font-size: 14px;
+  font-weight: bolder;
+  height: 13px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  text-align: center;
+  width: 24px;
+}
+
+.textSizeContainer {
+  align-items: center;
+  display: flex;
+  height: 30px;
+  justify-content: space-between;
+  margin-bottom: 13px;
+  margin-top: 13px;
+  width: 81px;
+}
+
+.textSizeTextField {
+  align-items: center;
+  border-color: rgb(185,185,185);
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  height: 30px;
+  justify-content: center;
+  width: 40px;
+}
