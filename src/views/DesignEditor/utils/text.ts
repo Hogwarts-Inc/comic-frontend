@@ -1,7 +1,7 @@
 import { IStaticText } from '@layerhub-io/types';
 import { groupBy } from 'lodash';
 
-import { IFontFamily } from '~/interfaces/editor';
+import { IFontFamily } from '../../../interfaces/editor';
 
 export const getTextProperties = (object: Required<IStaticText>, fonts: IFontFamily[]) => {
   const color = object.fill;

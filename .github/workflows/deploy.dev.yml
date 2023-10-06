@@ -1,0 +1,25 @@
+name: Build, Test, and Deploy (Development)
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build-test-and-deploy:
+    runs-on:
+      labels: staging
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Build Docker Image
+        run: |
+          docker build -t docker-staging:latest .
+
+      - name: Deploy Application
+        run: |
+          cd ~/front && 
+          docker compose down && 
+          docker compose up -d

@@ -15,20 +15,21 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
+
+
 FROM base AS dev
 
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
 
-
-
-
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
+
+RUN yarn lint
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
