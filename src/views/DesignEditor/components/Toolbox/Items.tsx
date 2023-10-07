@@ -1,4 +1,3 @@
-import Canvas from './Canvas';
 import Image from './Image';
 import Locked from './Locked';
 import Multiple from './Multiple';
@@ -13,5 +12,4 @@ export default {
   StaticVector: Vector,
   Locked,
   Multiple,
-  Canvas,
 } as { [key: string]: () => React.JSX.Element };

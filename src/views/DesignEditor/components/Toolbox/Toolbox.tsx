@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { useActiveObject, useEditor } from '@layerhub-io/react';
 import { ILayer } from '@layerhub-io/types';
@@ -8,8 +8,6 @@ import { styled } from 'baseui';
 import Items from './Items';
 import useAppContext from '../../../../hooks/useAppContext';
 import getSelectionType from '../../../../utils/get-selection-type';
-
-const DEFAULT_TOOLBOX = 'Canvas';
 
 interface ToolboxState {
   toolbox: string;
@@ -22,12 +20,12 @@ const Container = styled('div', () => ({
 }));
 
 const Toolbox = () => {
-  const [state, setState] = React.useState<ToolboxState>({ toolbox: 'Text' });
+  const [state, setState] = useState<ToolboxState>({ toolbox: '' });
   const { setActiveSubMenu } = useAppContext();
   const activeObject = useActiveObject() as ILayer;
   const editor = useEditor();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const selectionType = getSelectionType(activeObject);
     if (selectionType) {
       if (selectionType.length > 1) {
@@ -36,12 +34,12 @@ const Toolbox = () => {
         setState({ toolbox: selectionType[0] });
       }
     } else {
-      setState({ toolbox: DEFAULT_TOOLBOX });
+      setState({ toolbox: '' });
       setActiveSubMenu('');
     }
   }, [activeObject]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const watcher = async () => {
       if (activeObject) {
         const selectionType = getSelectionType(activeObject) as any;
@@ -63,9 +61,9 @@ const Toolbox = () => {
     };
   }, [editor, activeObject]);
 
-  const Component = Items[state.toolbox];
+  const Component = useMemo(() => Items[state.toolbox], [state.toolbox]);
 
-  return <Container>{Component ? <Component /> : state.toolbox}</Container>;
+  return <Container>{Component && <Component />}</Container>;
 };
 
 export default Toolbox;

@@ -1,5 +1,5 @@
 /* eslint-disable import/order */
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { IScene } from '@layerhub-io/types';
 import { Block } from 'baseui/block';
 import { useSortable } from '@dnd-kit/sortable';
@@ -19,7 +19,7 @@ const SceneItem = ({ isCurrentScene, scene, preview, index, changePage }: Props)
     id: scene.id,
     resizeObserverConfig: {},
   });
-  const sceneRef = React.useRef<HTMLDivElement>(null);
+  const sceneRef = useRef<HTMLDivElement>(null);
   const { setContextMenuTimelineRequest } = useDesignEditorContext();
 
   const style = {
@@ -28,7 +28,7 @@ const SceneItem = ({ isCurrentScene, scene, preview, index, changePage }: Props)
     cursor: 'pointer',
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timeLineItemDiv = sceneRef.current;
     const handleContextMenu = (event: MouseEvent) => {
       event.preventDefault();
