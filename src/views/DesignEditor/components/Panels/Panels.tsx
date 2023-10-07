@@ -1,9 +1,11 @@
-import PanelItem from './PanelItem';
-import PanelsList from './PanelsList';
+import PanelItem from './PanelItem/PanelItem';
+import PanelsList from './PanelList/PanelsList';
+import { Separator } from './styles';
 
 const Panels = () => (
   <>
     <PanelsList />
+    <Separator />
     <PanelItem />
   </>
 );

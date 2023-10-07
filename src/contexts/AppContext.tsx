@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useState } from 'react';
 
-import { PanelType } from '../constants/app-options';
+import { PanelType } from 'src/constants/app-options';
 
 type Template = any;
 interface IAppContext {
@@ -30,7 +30,7 @@ export const AppContext = createContext<IAppContext>({
   setUploads: () => {},
   shapes: [],
   setShapes: () => {},
-  activePanel: PanelType.TEMPLATES,
+  activePanel: '',
   setActivePanel: () => {},
   activeSubMenu: null,
   setActiveSubMenu: () => {},
@@ -43,9 +43,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [templates, setTemplates] = useState<Template[]>([]);
   const [uploads, setUploads] = useState<any[]>([]);
   const [shapes, setShapes] = useState<Template[]>([]);
-  const [activePanel, setActivePanel] = useState<PanelType>(
-    PanelType.TEMPLATES,
-  );
+  const [activePanel, setActivePanel] = useState<PanelType>('');
   const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null);
   const [currentTemplate, setCurrentTemplate] = useState(null);
   const context = {

@@ -1,33 +1,34 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { Block } from 'baseui/block';
+import { useTranslation } from 'react-i18next';
 
-import panelItems from './panelItems';
-import useAppContext from '../../../../hooks/useAppContext';
-import useIsSidebarOpen from '../../../../hooks/useIsSidebarOpen';
+import useAppContext from '../../../../../hooks/useAppContext';
+import useIsSidebarOpen from '../../../../../hooks/useIsSidebarOpen';
+import panelItems from '../panelItems';
 
 interface State {
   panel: string;
 }
 const PanelsList = () => {
-  const [state, setState] = React.useState<State>({ panel: 'Text' });
+  const [state, setState] = React.useState<State>({ panel: '' });
   const isSidebarOpen = useIsSidebarOpen();
   const { activePanel, activeSubMenu } = useAppContext();
+  const { t } = useTranslation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     setState({ panel: activePanel });
   }, [activePanel]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (activeSubMenu) {
       setState({ panel: activeSubMenu });
     } else {
       setState({ panel: activePanel });
     }
-  }, [activeSubMenu]);
+  }, [activePanel, activeSubMenu]);
 
-  const Component = panelItems[state.panel];
-
+  const Component = useMemo(() => panelItems[state.panel], [state.panel]);
   return (
     <Block
       id="EditorPanelItem"
@@ -40,7 +41,7 @@ const PanelsList = () => {
         transition: 'ease width 0.1s',
         overflow: 'hidden',
       }}>
-      {Component && <Component />}
+      {!!Component && <Component title={t(`panels.panelsList.${state.panel.toLowerCase()}`)} />}
     </Block>
   );
 };

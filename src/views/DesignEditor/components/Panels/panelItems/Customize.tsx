@@ -13,12 +13,11 @@ import { StatefulPopover, PLACEMENT } from 'baseui/popover';
 import { Tabs, Tab } from 'baseui/tabs';
 import { HexColorPicker } from 'react-colorful';
 
-import AngleDoubleLeft from '../../../../../components/Icons/AngleDoubleLeft';
+import { CloseSideBar } from './Common/CloseSideBar';
 import SwapHorizontal from '../../../../../components/Icons/SwapHorizontal';
 import Scrollable from '../../../../../components/Scrollable';
 import { sampleFrames } from '../../../../../constants/editor';
 import useDesignEditorContext from '../../../../../hooks/useDesignEditorContext';
-import useSetIsSidebarOpen from '../../../../../hooks/useSetIsSidebarOpen';
 
 const ResizeTemplate = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -225,7 +224,6 @@ interface State {
 
 const Customize = () => {
   const editor = useEditor();
-  const setIsSidebarOpen = useSetIsSidebarOpen();
 
   const [state, setState] = React.useState<State>({
     backgroundColor: '#000000',
@@ -253,9 +251,7 @@ const Customize = () => {
         }}>
         <Block>Customize</Block>
 
-        <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: 'pointer', display: 'flex' }}>
-          <AngleDoubleLeft size={18} />
-        </Block>
+        <CloseSideBar />
       </Block>
       <Scrollable>
         <Block padding="0 1.5rem">

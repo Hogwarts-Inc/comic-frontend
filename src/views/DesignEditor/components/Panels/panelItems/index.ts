@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import CanvasFill from './CanvasFill';
 import Customize from './Customize';
 import Elements from './Elements';
@@ -32,4 +33,6 @@ export default {
   PathFill: PathFill,
   CanvasFill: CanvasFill,
   TextEffects: TextEffects,
-} as { [key: string]: () => React.JSX.Element };
+  Characters: Images,
+  Shapes: Images,
+} as { [key: string]: (props: any) => React.JSX.Element };

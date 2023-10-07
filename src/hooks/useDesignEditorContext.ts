@@ -4,8 +4,6 @@ import { DesignEditorContext } from '../contexts/DesignEditor';
 
 const useDesignEditorContext = () => {
   const {
-    editorType,
-    setEditorType,
     setDisplayPreview,
     displayPreview,
     currentScene,
@@ -22,8 +20,6 @@ const useDesignEditorContext = () => {
     setCurrentDesign,
   } = useContext(DesignEditorContext);
   return {
-    editorType,
-    setEditorType,
     setDisplayPreview,
     displayPreview,
     currentScene,

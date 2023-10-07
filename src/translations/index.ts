@@ -1,21 +1,16 @@
 import i18next from 'i18next';
 
-import common_en from './en/common.json';
-import editor_en from './en/editor.json';
-import common_es from './es/common.json';
-import editor_es from './es/editor.json';
+import es from './es.json';
 
 i18next.init({
   interpolation: { escapeValue: false },
-  lng: 'en',
+  lng: 'es',
   resources: {
     en: {
-      common: common_en,
-      editor: editor_en,
+      translation: es,
     },
     es: {
-      common: common_es,
-      editor: editor_es,
+      translation: es,
     },
   },
 });

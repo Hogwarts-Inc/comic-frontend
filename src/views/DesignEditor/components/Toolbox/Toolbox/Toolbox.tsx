@@ -3,27 +3,25 @@ import React, { useEffect, useMemo, useState } from 'react';
 
 import { useActiveObject, useEditor } from '@layerhub-io/react';
 import { ILayer } from '@layerhub-io/types';
-import { styled } from 'baseui';
+import { useTranslation } from 'react-i18next';
 
-import Items from './Items';
-import useAppContext from '../../../../hooks/useAppContext';
-import getSelectionType from '../../../../utils/get-selection-type';
+import Button from '@components/Button';
+
+import { ButtonsContainer, ButtonsSeparator, Container } from './styles';
+import useAppContext from '../../../../../hooks/useAppContext';
+import getSelectionType from '../../../../../utils/get-selection-type';
+import Items from '../Items';
 
 interface ToolboxState {
   toolbox: string;
 }
-
-const Container = styled('div', () => ({
-  boxShadow: 'rgb(0 0 0 / 15%) 0px 1px 1px',
-  height: '50px',
-  display: 'flex',
-}));
 
 const Toolbox = () => {
   const [state, setState] = useState<ToolboxState>({ toolbox: '' });
   const { setActiveSubMenu } = useAppContext();
   const activeObject = useActiveObject() as ILayer;
   const editor = useEditor();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const selectionType = getSelectionType(activeObject);
@@ -37,7 +35,7 @@ const Toolbox = () => {
       setState({ toolbox: '' });
       setActiveSubMenu('');
     }
-  }, [activeObject]);
+  }, [activeObject, setActiveSubMenu]);
 
   useEffect(() => {
     const watcher = async () => {
@@ -63,7 +61,16 @@ const Toolbox = () => {
 
   const Component = useMemo(() => Items[state.toolbox], [state.toolbox]);
 
-  return <Container>{Component && <Component />}</Container>;
+  return (
+    <Container>
+      {Component && <Component />}
+      <ButtonsContainer>
+        <Button onClick={() => alert('TODO: import')}>{t('navbar.import')}</Button>
+        <ButtonsSeparator />
+        <Button onClick={() => alert('TODO: save')}>{t('navbar.save')}</Button>
+      </ButtonsContainer>
+    </Container>
+  );
 };
 
 export default Toolbox;

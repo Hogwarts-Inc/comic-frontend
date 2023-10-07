@@ -12,7 +12,6 @@ import Github from '../../../../components/Icons/Github';
 import Logo from '../../../../components/Icons/Logo';
 import Play from '../../../../components/Icons/Play';
 import useDesignEditorContext from '../../../../hooks/useDesignEditorContext';
-import useEditorType from '../../../../hooks/useEditorType';
 import { IDesign } from '../../../../interfaces/DesignEditor';
 import { loadTemplateFonts } from '../../../../utils/fonts';
 import { loadVideoEditorAssets } from '../../../../utils/video';
@@ -28,7 +27,6 @@ const Container = styled('div', ({ $theme }) => ({
 
 const Navbar = () => {
   const { setDisplayPreview, setScenes, setCurrentDesign, currentDesign, scenes } = useDesignEditorContext();
-  const editorType = useEditorType();
   const editor = useEditor();
   const inputFileRef = React.useRef<HTMLInputElement>(null);
 
@@ -75,87 +73,9 @@ const Navbar = () => {
     }
   };
 
-  const parsePresentationJSON = () => {
-    const currentScene = editor.scene.exportToJSON();
-
-    const updatedScenes = scenes.map(scn => {
-      if (scn.id === currentScene.id) {
-        return {
-          id: currentScene.id,
-          duration: 5000,
-          layers: currentScene.layers,
-          name: currentScene.name,
-        };
-      }
-      return {
-        id: scn.id,
-        duration: 5000,
-        layers: scn.layers,
-        name: scn.name,
-      };
-    });
-
-    if (currentDesign) {
-      const presentationTemplate: IDesign = {
-        id: currentDesign.id,
-        type: 'PRESENTATION',
-        name: currentDesign.name,
-        frame: currentDesign.frame,
-        scenes: updatedScenes,
-        metadata: {},
-        previews: [],
-        published: false,
-      };
-      makeDownload(presentationTemplate);
-    } else {
-      console.log('NO CURRENT DESIGN');
-    }
-  };
-
-  const parseVideoJSON = () => {
-    const currentScene = editor.scene.exportToJSON();
-    const updatedScenes = scenes.map(scn => {
-      if (scn.id === currentScene.id) {
-        return {
-          id: scn.id,
-          duration: scn.duration,
-          layers: currentScene.layers,
-          name: currentScene.name ? currentScene.name : '',
-        };
-      }
-      return {
-        id: scn.id,
-        duration: scn.duration,
-        layers: scn.layers,
-        name: scn.name ? scn.name : '',
-      };
-    });
-    if (currentDesign) {
-      const videoTemplate: IDesign = {
-        id: currentDesign.id,
-        type: 'VIDEO',
-        name: currentDesign.name,
-        frame: currentDesign.frame,
-        scenes: updatedScenes,
-        metadata: {},
-        previews: [],
-        published: false,
-      };
-      makeDownload(videoTemplate);
-    } else {
-      console.log('NO CURRENT DESIGN');
-    }
-  };
-
   const makeDownloadTemplate = async () => {
     if (editor) {
-      if (editorType === 'GRAPHIC') {
-        return parseGraphicJSON();
-      } else if (editorType === 'PRESENTATION') {
-        return parsePresentationJSON();
-      } else {
-        return parseVideoJSON();
-      }
+      return parseGraphicJSON();
     }
   };
 
@@ -183,10 +103,7 @@ const Navbar = () => {
 
   const handleImportTemplate = React.useCallback(
     async (data: any) => {
-      let template;
-      if (data.type === 'GRAPHIC') {
-        template = await loadGraphicTemplate(data);
-      }
+      const template = await loadGraphicTemplate(data);
 
       if (template) {
         setScenes(template.scenes);

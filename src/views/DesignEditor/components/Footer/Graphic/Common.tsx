@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useEditor, useZoomRatio } from '@layerhub-io/react';
 import { styled } from 'baseui';
@@ -10,6 +10,7 @@ import { Slider } from 'baseui/slider';
 import { PLACEMENT } from 'baseui/toast';
 import { StatefulTooltip } from 'baseui/tooltip';
 
+import { ButtonContainer } from './styles';
 import Icons from '../../../../../components/Icons';
 
 const Container = styled('div', ({ $theme }: { $theme: { colors: { white: string } } }) => ({
@@ -22,7 +23,6 @@ const Container = styled('div', ({ $theme }: { $theme: { colors: { white: string
 
 interface Options {
   zoomRatio: number;
-  zoomRatioTemp: number;
 }
 
 const Common = () => {
@@ -30,28 +30,18 @@ const Common = () => {
   const zoomMax = 240;
   const [options, setOptions] = React.useState<Options>({
     zoomRatio: 20,
-    zoomRatioTemp: 20,
   });
   const editor = useEditor();
   const zoomRatio: number = useZoomRatio();
-
-  React.useEffect(() => {
-    setOptions({ ...options, zoomRatio: Math.round(zoomRatio * 100) });
+  useEffect(() => {
+    setOptions(currentOptions => ({ ...currentOptions, zoomRatio: Math.round(zoomRatio * 100) }));
   }, [zoomRatio]);
-
-  const handleChange = (type: string, value: number) => {
-    if (editor) {
-      if (type.includes('emp')) {
-        setOptions({ ...options, zoomRatioTemp: value });
-      }
-    }
-  };
 
   const applyZoomRatio = (type: string, e: any) => {
     const value = e.target.value;
     if (editor) {
       if (value === '') {
-        setOptions({ ...options, zoomRatio: options.zoomRatio, zoomRatioTemp: options.zoomRatio });
+        setOptions({ ...options, zoomRatio: options.zoomRatio });
       } else {
         const parsedValue = parseFloat(value);
 
@@ -68,15 +58,12 @@ const Common = () => {
 
   return (
     <Container>
-      <div>
+      <ButtonContainer>
         <Button kind={KIND.tertiary} size={SIZE.compact}>
           <Icons.Layers size={20} />
         </Button>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Button kind={KIND.tertiary} size={SIZE.compact}>
-          <Icons.Expand size={16} />
-        </Button>
+      </ButtonContainer>
+      <ButtonContainer>
         <Button kind={KIND.tertiary} size={SIZE.compact} onClick={() => editor.zoom.zoomToFit()}>
           <Icons.Compress size={16} />
         </Button>
@@ -167,25 +154,18 @@ const Common = () => {
           size={SIZE.mini}
           max={zoomMax}
           min={zoomMin}
-          onChange={e => handleChange('zoomRatioTemp', parseFloat(e.target.value))}
-          onKeyUp={e => applyZoomRatio('zoomRatio', e)}
-          value={options.zoomRatioTemp}
+          onChange={e => applyZoomRatio('zoomRatio', e)}
+          value={options.zoomRatio}
         />
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'end' }}>
-        <Button kind={KIND.tertiary} size={SIZE.compact}>
-          <Icons.Refresh size={16} />
-        </Button>
+      </ButtonContainer>
+      <ButtonContainer>
         <Button kind={KIND.tertiary} size={SIZE.compact}>
           <Icons.Undo size={22} />
         </Button>
         <Button kind={KIND.tertiary} size={SIZE.compact}>
           <Icons.Redo size={22} />
         </Button>
-        <Button kind={KIND.tertiary} size={SIZE.compact}>
-          <Icons.TimePast size={16} />
-        </Button>
-      </div>
+      </ButtonContainer>
     </Container>
   );
 };
