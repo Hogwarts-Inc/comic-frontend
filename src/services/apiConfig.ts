@@ -12,7 +12,7 @@ type chapterParam = any;
 type graphicResourcesCreation = any;
 type graphicResourcesParam = any;
 
-export const CONTENT_TYPE = {
+const CONTENT_TYPE = {
   // Accept: '/',
   'Content-Type': 'application/json',
 };
