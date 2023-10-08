@@ -6,20 +6,18 @@ import { ILayer } from '@layerhub-io/types';
 import { Block } from 'baseui/block';
 import { Button, KIND, SIZE } from 'baseui/button';
 
-import AngleDoubleLeft from '../../../../../components/Icons/AngleDoubleLeft';
+import { CloseSideBar } from './Common/CloseSideBar';
 import Delete from '../../../../../components/Icons/Delete';
 import Eye from '../../../../../components/Icons/Eye';
 import EyeCrossed from '../../../../../components/Icons/EyeCrossed';
 import Locked from '../../../../../components/Icons/Locked';
 import Unlocked from '../../../../../components/Icons/Unlocked';
 import Scrollable from '../../../../../components/Scrollable';
-import useSetIsSidebarOpen from '../../../../../hooks/useSetIsSidebarOpen';
 
 const Layers = () => {
   const editor = useEditor();
   const objects = useObjects() as ILayer[];
   const [layerObjects, setLayerObjects] = React.useState<any[]>([]);
-  const setIsSidebarOpen = useSetIsSidebarOpen();
 
   React.useEffect(() => {
     if (objects) {
@@ -55,9 +53,7 @@ const Layers = () => {
         }}>
         <Block>Layers</Block>
 
-        <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: 'pointer', display: 'flex' }}>
-          <AngleDoubleLeft size={18} />
-        </Block>
+        <CloseSideBar />
       </Block>
       <Scrollable>
         <Block padding="0 1.5rem">

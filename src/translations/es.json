@@ -1,0 +1,24 @@
+{
+  "panels": {
+    "panelsList": {
+      "characters": "Personajes",
+      "images": "Imagenes",
+      "shapes": "Formas",
+      "text": "Texto",
+      "uploads": "Subir"
+    }
+  },
+  "uploads": {
+    "title": "Subir",
+    "upload": "Subir archivo"
+  },
+  "text": {
+    "title": "Texto",
+    "add": "Añadir texto"
+  },
+  "volver": "Volver",
+  "navbar": {
+    "import": "Importar",
+    "save": "Guardar"
+  }
+}

@@ -1,2 +1,2 @@
-import Toolbox from './Toolbox';
+import Toolbox from './Toolbox/Toolbox';
 export default Toolbox;

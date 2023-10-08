@@ -5,15 +5,16 @@ import { ILayer } from '@layerhub-io/types';
 import { Block } from 'baseui/block';
 import { Button, SIZE } from 'baseui/button';
 import { nanoid } from 'nanoid';
+import { useTranslation } from 'react-i18next';
 
+import { CloseSideBar } from './Common/CloseSideBar';
 import DropZone from '../../../../../components/Dropzone';
-import AngleDoubleLeft from '../../../../../components/Icons/AngleDoubleLeft';
 import Scrollable from '../../../../../components/Scrollable';
-import useSetIsSidebarOpen from '../../../../../hooks/useSetIsSidebarOpen';
 import { toBase64 } from '../../../../../utils/data';
 import { captureFrame, loadVideoResource } from '../../../../../utils/video';
 
 export default function Uploads() {
+  const { t } = useTranslation();
   const inputFileRef = React.useRef<HTMLInputElement>(null);
   const [uploads, setUploads] = React.useState<
     {
@@ -24,7 +25,6 @@ export default function Uploads() {
     }[]
   >([]);
   const editor = useEditor();
-  const setIsSidebarOpen = useSetIsSidebarOpen();
 
   const handleDropFiles = async (files: FileList) => {
     const file = files[0];
@@ -72,11 +72,9 @@ export default function Uploads() {
             justifyContent: 'space-between',
             padding: '1.5rem',
           }}>
-          <Block>Uploads</Block>
+          <Block>{t('uploads.title')}</Block>
 
-          <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: 'pointer', display: 'flex' }}>
-            <AngleDoubleLeft size={18} />
-          </Block>
+          <CloseSideBar />
         </Block>
         <Scrollable>
           <Block padding={'0 1.5rem'}>
@@ -90,7 +88,7 @@ export default function Uploads() {
                   },
                 },
               }}>
-              Computer
+              {t('uploads.upload')}
             </Button>
             <input onChange={handleFileInput} type="file" id="file" ref={inputFileRef} style={{ display: 'none' }} />
 

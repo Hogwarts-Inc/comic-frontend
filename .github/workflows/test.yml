@@ -1,0 +1,24 @@
+name: Build, Test, and Deploy (Development)
+
+on:
+  pull_request:
+    branches:
+      - development
+      - master
+
+jobs:
+  build-test-and-deploy:
+    runs-on:
+      labels: staging
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          yarn install --frozen-lockfile
+
+      - name: Test application
+        run: |
+          yarn lint

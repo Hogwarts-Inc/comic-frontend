@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "run-docker": "docker compose down && docker compose up --build"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.0.8",
@@ -14,10 +15,13 @@
     "@dnd-kit/sortable": "^7.0.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.8",
     "@layerhub-io/react": "^0.3.3",
     "@layerhub-io/react-custom-scrollbar": "^0.0.1",
     "@layerhub-io/use-timer": "^0.1.1",
-    "@mui/material": "^5.14.8",
+    "@mui/styles": "^5.14.11",
+    "@mui/icons-material": "^5.14.9",
+    "@mui/material": "^5.14.10",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/lodash": "^4.14.197",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
@@ -30,12 +34,12 @@
     "mime": "^3.0.0",
     "next": "^13.4.19",
     "next-compose-plugins": "^2.2.1",
-    "next-i18next": "^14.0.0",
     "react": "18.2.0",
     "react-colorful": "^5.6.1",
     "react-dom": "18.2.0",
     "react-i18next": "^13.2.2",
     "react-redux": "^8.1.2",
+    "react-swipeable": "^7.0.1",
     "styletron-engine-atomic": "^1.5.0",
     "styletron-react": "^6.1.0",
     "use-debounce": "^9.0.4",
@@ -50,5 +54,9 @@
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "typescript": "^5.1.6"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
   }
 }

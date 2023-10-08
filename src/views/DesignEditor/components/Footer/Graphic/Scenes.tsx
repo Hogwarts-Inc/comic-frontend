@@ -192,25 +192,27 @@ const Scenes = () => {
                 }
               />
             ))}
-            <div
-              style={{
-                background: '#ffffff',
-                padding: '1rem 1rem 1rem 0.5rem',
-              }}>
+            {scenes.length < 3 && (
               <div
-                onClick={addScene}
-                className={css({
-                  width: '100px',
-                  height: '56px',
-                  background: 'rgb(243,244,246)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                })}>
-                <Add size={20} />
+                style={{
+                  background: '#ffffff',
+                  padding: '1rem 1rem 1rem 0.5rem',
+                }}>
+                <div
+                  onClick={addScene}
+                  className={css({
+                    width: '100px',
+                    height: '56px',
+                    background: 'rgb(243,244,246)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                  })}>
+                  <Add size={20} />
+                </div>
               </div>
-            </div>
+            )}
           </SortableContext>
           <DragOverlay>
             {draggedScene ? (

@@ -5,11 +5,11 @@ import { useEditor } from '@layerhub-io/react';
 import { useStyletron } from 'baseui';
 import { Block } from 'baseui/block';
 import { Button, SIZE } from 'baseui/button';
+import { useTranslation } from 'react-i18next';
 
-import AngleDoubleLeft from '../../../../../components/Icons/AngleDoubleLeft';
+import { CloseSideBar } from './Common/CloseSideBar';
 import Scrollable from '../../../../../components/Scrollable';
 import { vectors } from '../../../../../constants/mock-data';
-import useSetIsSidebarOpen from '../../../../../hooks/useSetIsSidebarOpen';
 
 const GraphicItem = ({ preview, onClick }: { preview: any; onClick?: (option: any) => void }) => {
   const [css] = useStyletron();
@@ -77,10 +77,10 @@ const GraphicItem = ({ preview, onClick }: { preview: any; onClick?: (option: an
 };
 
 const Graphics = () => {
+  const { t } = useTranslation();
   const inputFileRef = React.useRef<HTMLInputElement>(null);
 
   const editor = useEditor();
-  const setIsSidebarOpen = useSetIsSidebarOpen();
 
   const addObject = React.useCallback(
     (url: string) => {
@@ -122,11 +122,9 @@ const Graphics = () => {
           justifyContent: 'space-between',
           padding: '1.5rem',
         }}>
-        <Block>Graphics</Block>
+        <Block>{t('panels.panelsList.graphics')}</Block>
 
-        <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: 'pointer', display: 'flex' }}>
-          <AngleDoubleLeft size={18} />
-        </Block>
+        <CloseSideBar />
       </Block>
 
       <Block padding="0 1.5rem">
