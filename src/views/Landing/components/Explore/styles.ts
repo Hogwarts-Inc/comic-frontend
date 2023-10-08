@@ -1,53 +1,39 @@
 import styled from '@emotion/styled';
 
+interface StyledProps {
+  lg?: boolean;
+}
+
 export const Box = styled('div')({
-  width: '1400px',
+  width: '100%',
   height: '420px',
   position: 'relative',
-  '@media (max-width: 768px)': {
-    width: '380px',
-    height: '200px',
-  },
 });
 
-export const Placeholder = styled('div')({
-  width: '1400px',
-  height: '420px',
+export const Placeholder = styled('div')<StyledProps>(props => ({
+  width: props.lg ? '1400px' : '380px',
+  height: props.lg ? '420px' : '200px',
   position: 'absolute',
   borderRadius: '10px',
   border: '3px solid transparent',
   borderImage: 'linear-gradient(180deg, #40e0d0 0%, #7079be 62%, #ff0080 100%)',
   borderImageSlice: 1,
-  '@media (max-width: 768px)': {
-    width: '380px',
-    height: '200px',
-  },
-});
+}));
 
-export const Content = styled('div')({
-  width: '950px',
-  height: '230px',
+export const Content = styled('div')<StyledProps>(props => ({
+  width: props.lg ? '950px' : '316px',
+  height: props.lg ? '230px' : '157.81px',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   position: 'absolute',
-  left: '200px',
-  top: '115px',
-  '@media (max-width: 768px)': {
-    width: '316px',
-    height: '157.81px',
-    left: '35px',
-    top: '20px',
-  },
-});
+  left: props.lg ? '200px' : '35px',
+  top: props.lg ? '115px' : '20px',
+}));
 
-export const Description = styled('p')({
+export const Description = styled('p')<StyledProps>(props => ({
   textAlign: 'center',
-  fontSize: '42px',
-  lineHeight: '52px',
+  fontSize: props.lg ? '42px' : '18px',
+  lineHeight: props.lg ? '52px' : '37px',
   color: '#1e0e62',
-  '@media (max-width: 768px)': {
-    fontSize: '18px',
-    lineHeight: '37px',
-  },
-});
+}));
