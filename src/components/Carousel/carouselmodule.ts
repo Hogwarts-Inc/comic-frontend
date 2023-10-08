@@ -1,18 +1,28 @@
-.wrapper {
-  overflow: hidden;
-  position: relative;
-}
+import { makeStyles } from '@mui/styles';
+import theme from '../../styles/theme'; 
 
-.carouselButton {
-  cursor: pointer;
-  height: auto;
-  max-height: 50px;
-  max-width: 50px;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3%;
-}
+
+const useStyles = makeStyles(() => ({
+  wrapper: {
+    overflow: "hidden",
+    position: "relative",
+  },
+  carouselButton:{
+    cursor: "pointer",
+    height: "auto",
+    maxHeight: "50px",
+    maxWidth: "50px",
+    position: "absolute",
+    top: "50%",
+    transform: "translateY(-50%)",
+    width: "3%",
+  },
+  carouselButtonPrev :{
+    left: "4%",
+  }
+}));
+
+export default useStyles;
 
 .carouselButtonPrev {
   left: 4%;
