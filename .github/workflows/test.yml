@@ -1,4 +1,4 @@
-name: Build, Test, and Deploy (Development)
+name: Tests
 
 on:
   pull_request:
@@ -7,13 +7,17 @@ on:
       - master
 
 jobs:
-  build-test-and-deploy:
+  tests:
     runs-on:
       labels: staging
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
       - name: Install dependencies
         run: |

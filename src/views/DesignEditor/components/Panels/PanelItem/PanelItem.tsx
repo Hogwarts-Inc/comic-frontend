@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 
 import { Block } from 'baseui/block';
-import { useTranslation } from 'react-i18next';
 
 import useAppContext from '../../../../../hooks/useAppContext';
 import useIsSidebarOpen from '../../../../../hooks/useIsSidebarOpen';
@@ -14,7 +13,6 @@ const PanelsList = () => {
   const [state, setState] = React.useState<State>({ panel: '' });
   const isSidebarOpen = useIsSidebarOpen();
   const { activePanel, activeSubMenu } = useAppContext();
-  const { t } = useTranslation();
 
   useEffect(() => {
     setState({ panel: activePanel });
@@ -41,7 +39,7 @@ const PanelsList = () => {
         transition: 'ease width 0.1s',
         overflow: 'hidden',
       }}>
-      {!!Component && <Component title={t(`panels.panelsList.${state.panel.toLowerCase()}`)} />}
+      {!!Component && <Component />}
     </Block>
   );
 };

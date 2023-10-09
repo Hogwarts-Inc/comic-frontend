@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
 import useAppContext from './hooks/useAppContext';
+import { apisGraphicResources } from './services/apiConfig';
 import { getPublicComponents } from './store/slices/components/actions';
 import { getPublicDesigns } from './store/slices/designs/actions';
 import { getFonts } from './store/slices/fonts/actions';
@@ -41,6 +42,7 @@ const Container = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
+    apisGraphicResources.getGraphicResources();
     dispatch(getFonts());
     dispatch(getUploads());
     dispatch(getPublicComponents());
