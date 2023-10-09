@@ -1,39 +1,42 @@
 import styled from '@emotion/styled';
 
+import { Colors } from '@styles/colors';
+
 interface StyledProps {
   lg?: boolean;
 }
 
 export const Box = styled('div')({
-  width: '100%',
   height: '420px',
   position: 'relative',
+  width: '100%',
 });
 
 export const Placeholder = styled('div')<StyledProps>(props => ({
-  width: props.lg ? '1400px' : '380px',
+  border: '3px solid transparent',
+  borderImage: Colors.gradientBox,
+  borderImageSlice: 1,
+  borderRadius: '10px',
   height: props.lg ? '420px' : '200px',
   position: 'absolute',
-  borderRadius: '10px',
-  border: '3px solid transparent',
-  borderImage: 'linear-gradient(180deg, #40e0d0 0%, #7079be 62%, #ff0080 100%)',
-  borderImageSlice: 1,
+  width: props.lg ? '1400px' : '380px',
 }));
 
 export const Content = styled('div')<StyledProps>(props => ({
-  width: props.lg ? '950px' : '316px',
-  height: props.lg ? '230px' : '157.81px',
+  alignItems: 'center',
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
-  position: 'absolute',
+  height: props.lg ? '230px' : '158px',
   left: props.lg ? '200px' : '35px',
-  top: props.lg ? '115px' : '20px',
+  position: 'absolute',
+  top: props.lg ? '90px' : '10px',
+  width: props.lg ? '950px' : '316px',
 }));
 
 export const Description = styled('p')<StyledProps>(props => ({
-  textAlign: 'center',
+  color: Colors.deepBlue,
   fontSize: props.lg ? '42px' : '18px',
+  fontWeight: 700,
   lineHeight: props.lg ? '52px' : '37px',
-  color: '#1e0e62',
+  textAlign: 'center',
 }));
