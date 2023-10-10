@@ -1,24 +1,35 @@
-import React, { CSSProperties, useState } from 'react';
+import React, { useState } from 'react';
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import { useMediaQuery, useTheme } from '@mui/material';
 import { useSwipeable } from 'react-swipeable';
 
-import styles from './carousel.module.css';
+import {
+  Wrapper,
+  CarouselButtonPrev,
+  CarouselButtonFirst,
+  CarouselButtonNext,
+  CarouselButtonLast,
+  ImagesContainer,
+  CarouselContainer,
+  CarouselSlot,
+  CarouselSlotImage,
+} from './styles';
 
 interface CarouselProps {
   images: string[];
+  displayMode?: 'full' | 'reduced';
 }
 
-export const Carousel = ({ images }: CarouselProps) => {
+export const Carousel = ({ images, displayMode = 'full' }: CarouselProps) => {
+  const theme = useTheme();
+  const isLargeScreen = !useMediaQuery(theme.breakpoints.only('xs'));
   const [index, setIndex] = useState(0);
   const numItems = images.length;
-
-  const transformStyle = {
-    '--translateX': `-${index * (75 + 5)}%`,
-  } as CSSProperties;
+  const transformValue = `-${index * ((displayMode === 'reduced' ? 100 : 75) + 5)}%`;
 
   const handleNext = () => {
     setIndex(prevIndex => Math.min(prevIndex + 1, numItems - 1));
@@ -44,42 +55,38 @@ export const Carousel = ({ images }: CarouselProps) => {
   });
 
   return (
-    <div className={styles.wrapper} {...handlers}>
+    <Wrapper {...handlers}>
       {index > 0 && (
-        <KeyboardDoubleArrowLeftIcon
-          className={`${styles.carouselButton} ${styles.carouselButtonFirst}`}
-          onClick={handleFirst}
-        />
+        <CarouselButtonFirst lg={isLargeScreen} displayMode={displayMode} onClick={handleFirst}>
+          <KeyboardDoubleArrowLeftIcon />
+        </CarouselButtonFirst>
       )}
       {index > 0 && (
-        <KeyboardArrowLeftIcon
-          className={`${styles.carouselButton} ${styles.carouselButtonPrev}`}
-          onClick={handlePrev}
-        />
+        <CarouselButtonPrev lg={isLargeScreen} onClick={handlePrev}>
+          <KeyboardArrowLeftIcon />
+        </CarouselButtonPrev>
       )}
 
-      <div className={styles.imagesContainer}>
-        <div className={`${styles.carouselContainer} ${styles.transform}`} style={transformStyle}>
+      <ImagesContainer lg={isLargeScreen}>
+        <CarouselContainer translateX={transformValue}>
           {images.map((url, idx) => (
-            <div key={idx} className={styles.carouselSlot}>
-              <img src={url} />
-            </div>
+            <CarouselSlot key={idx} displayMode={displayMode}>
+              <CarouselSlotImage src={url} alt="Carousel Image" />
+            </CarouselSlot>
           ))}
-        </div>
-      </div>
+        </CarouselContainer>
+      </ImagesContainer>
 
       {index < numItems - 1 && (
-        <KeyboardArrowRightIcon
-          className={`${styles.carouselButton} ${styles.carouselButtonNext}`}
-          onClick={handleNext}
-        />
+        <CarouselButtonNext lg={isLargeScreen} onClick={handleNext}>
+          <KeyboardArrowRightIcon />
+        </CarouselButtonNext>
       )}
       {index < numItems - 1 && (
-        <KeyboardDoubleArrowRightIcon
-          className={`${styles.carouselButton} ${styles.carouselButtonLast}`}
-          onClick={handleLast}
-        />
+        <CarouselButtonLast lg={isLargeScreen} displayMode={displayMode} onClick={handleLast}>
+          <KeyboardDoubleArrowRightIcon />
+        </CarouselButtonLast>
       )}
-    </div>
+    </Wrapper>
   );
 };
