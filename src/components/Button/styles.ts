@@ -2,7 +2,7 @@ import { CSSObject } from '@emotion/react';
 import styled from '@emotion/styled';
 import Button from '@mui/material/Button';
 
-import { Colors } from '@styles/colors';
+import theme from '../../styles/theme';
 
 interface ButtonOwnProps {
   isSelected?: boolean;
@@ -27,12 +27,12 @@ const sizeStyles: Record<'small' | 'medium' | 'large', CSSObject> = {
 
 export const ButtonMui = styled(Button)<ButtonOwnProps>(({ isSelected, variantType, size = 'medium' }) => {
   let styles: CSSObject = {
-    background: Colors.violet,
-    backgroundColor: isSelected ? Colors.violetDark : Colors.violet,
+    background: theme.customPalette.violet.main,
+    backgroundColor: isSelected ? theme.customPalette.violetDark.main : theme.customPalette.violet.main,
     borderRadius: '20px',
-    boxShadow: `0px 4px 4px 0px ${Colors.blackTransparent}`,
+    boxShadow: `0px 4px 4px 0px ${theme.customPalette.blackTransparent.main}`,
     '&:hover': {
-      background: Colors.violetDark,
+      background: theme.customPalette.violetDark.main,
     },
     display: 'flex',
     minWidth: 0,
@@ -45,9 +45,9 @@ export const ButtonMui = styled(Button)<ButtonOwnProps>(({ isSelected, variantTy
     styles = {
       ...styles,
       position: 'relative',
-      background: Colors.gradient,
+      background: theme.customPalette.gradient.main,
       '&:before': {
-        background: Colors.gradientReverse,
+        background: theme.customPalette.gradientReverse.main,
         bottom: '0',
         content: '""',
         left: '0',
