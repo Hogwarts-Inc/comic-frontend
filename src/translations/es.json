@@ -8,6 +8,9 @@
       "uploads": "Subir"
     }
   },
+  "explore": {
+    "title": "Empeza a explorar otros capitulos y crear tus propias historias"
+  },
   "uploads": {
     "title": "Subir",
     "upload": "Subir archivo"
