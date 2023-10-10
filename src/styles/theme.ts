@@ -14,6 +14,7 @@ interface CustomTheme {
     blackTransparent: { main: string };
     gradient: { main: string };
     gradientReverse: { main: string };
+    gradientBox: { main: string };
   };
 }
 
@@ -56,6 +57,9 @@ const theme = createTheme({
     },
     gradientReverse: {
       main: 'linear-gradient(to left, rgba(64, 224, 208, 1), rgba(112, 121, 190, 1), rgba(255, 0, 128, 1))',
+    },
+    gradientBox: {
+      main: 'linear-gradient(to bottom, rgba(64, 224, 208, 1) 0%, rgba(112, 121, 190, 1) 62%, rgba(255, 0, 128, 1) 100%)',
     },
   },
   components: {

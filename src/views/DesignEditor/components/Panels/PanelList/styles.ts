@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { Colors } from '@styles/colors';
+import theme from '../../../../../styles/theme';
 
 export const ButtonText = styled('p')({
   fontSize: '0.7rem',
@@ -24,7 +24,8 @@ export const ButtonContainer = styled('div')({
 export const Container = styled('div')({
   display: 'flex',
   padding: '1.25rem 0 0 1.25rem',
-  background: `linear-gradient(181deg, ${Colors.fuchsia} 0.23%, ${Colors.blue} 14.06%, ${Colors.green} 36.98%)`,
+  background: `linear-gradient(181deg, ${theme.palette.secondary.main} 0.23%, 
+    ${theme.customPalette.third.main} 14.06%, ${theme.palette.primary.main} 36.98%)`,
   flexDirection: 'column',
   width: '7.5625rem',
   minWidth: '7.5625rem',
@@ -33,7 +34,7 @@ export const Container = styled('div')({
 export const WhiteContainer = styled('div')({
   display: 'flex',
   flex: 'none',
-  background: Colors.white,
+  background: theme.palette.common.white,
   borderTopLeftRadius: '1.875rem',
   overflow: 'hidden',
   height: '100%',

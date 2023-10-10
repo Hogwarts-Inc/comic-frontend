@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { Colors } from '@styles/colors';
+import theme from '../../../../../styles/theme';
 
 export const Container = styled('div')(() => ({
   boxShadow: 'rgb(0 0 0 / 15%) 0px 1px 1px',
@@ -19,5 +19,5 @@ export const ButtonsSeparator = styled('div')(() => ({
   width: '0.0625rem',
   height: '0.875rem',
   margin: '0 1rem',
-  background: Colors.gray,
+  background: theme.palette.background.default,
 }));

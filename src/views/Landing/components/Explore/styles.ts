@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { Colors } from '@styles/colors';
+import theme from '../../../../styles/theme';
 
 interface StyledProps {
   lg?: boolean;
@@ -14,7 +14,7 @@ export const Box = styled('div')({
 
 export const Placeholder = styled('div')<StyledProps>(props => ({
   border: '3px solid transparent',
-  borderImage: Colors.gradientBox,
+  borderImage: theme.customPalette.gradientBox.main,
   borderImageSlice: 1,
   borderRadius: '10px',
   height: props.lg ? '420px' : '200px',
@@ -34,7 +34,7 @@ export const Content = styled('div')<StyledProps>(props => ({
 }));
 
 export const Description = styled('p')<StyledProps>(props => ({
-  color: Colors.deepBlue,
+  color: theme.palette.text.primary,
   fontSize: props.lg ? '42px' : '18px',
   fontWeight: 700,
   lineHeight: props.lg ? '52px' : '37px',
