@@ -1,12 +1,8 @@
 import React, { CSSProperties, useState } from 'react';
 
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import { useSwipeable } from 'react-swipeable';
 
-import styles from './carousel.module.css';
+import { Wrapper, CarouselButtonPrev,CarouselContainer, ImagesContainer,CarouselSlot ,CarouselButtonFirst,CarouselButtonLast,CarouselButtonNext} from './styles';
 
 interface CarouselProps {
   images: string[];
@@ -44,42 +40,30 @@ export const Carousel = ({ images }: CarouselProps) => {
   });
 
   return (
-    <div className={styles.wrapper} {...handlers}>
+    <Wrapper {...handlers}>
       {index > 0 && (
-        <KeyboardDoubleArrowLeftIcon
-          className={`${styles.carouselButton} ${styles.carouselButtonFirst}`}
-          onClick={handleFirst}
-        />
+        <CarouselButtonFirst onClick={handleFirst} />
       )}
       {index > 0 && (
-        <KeyboardArrowLeftIcon
-          className={`${styles.carouselButton} ${styles.carouselButtonPrev}`}
-          onClick={handlePrev}
-        />
+        <CarouselButtonPrev  onClick={handlePrev} />
       )}
 
-      <div className={styles.imagesContainer}>
-        <div className={`${styles.carouselContainer} ${styles.transform}`} style={transformStyle}>
+      <ImagesContainer>
+        <CarouselContainer style={transformStyle}>
           {images.map((url, idx) => (
-            <div key={idx} className={styles.carouselSlot}>
+            <CarouselSlot key={idx} >
               <img src={url} />
             </div>
           ))}
-        </div>
-      </div>
+        </CarouselContainer>
+      </ImagesContainer>
 
       {index < numItems - 1 && (
-        <KeyboardArrowRightIcon
-          className={`${styles.carouselButton} ${styles.carouselButtonNext}`}
-          onClick={handleNext}
-        />
+        <CarouselButtonNext onClick={handleNext} />
       )}
       {index < numItems - 1 && (
-        <KeyboardDoubleArrowRightIcon
-          className={`${styles.carouselButton} ${styles.carouselButtonLast}`}
-          onClick={handleLast}
-        />
+        <CarouselButtonLast onClick={handleLast} />
       )}
-    </div>
+    </Wrapper>
   );
 };

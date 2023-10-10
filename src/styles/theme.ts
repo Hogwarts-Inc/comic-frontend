@@ -3,6 +3,8 @@ import { createTheme } from '@mui/material/styles';
 
 const customColors = {
     third: '#7079BE', 
+    violet: 'rgba(112, 121, 190, 0.55)',
+    violetDark: 'rgba(112, 121, 190, 0.8)',
   };
 
 const theme = createTheme({
