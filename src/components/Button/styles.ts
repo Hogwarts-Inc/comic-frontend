@@ -14,14 +14,17 @@ const sizeStyles: Record<'small' | 'medium' | 'large', CSSObject> = {
   small: {
     fontSize: '0.6rem',
     padding: '3px 8px',
+    color: theme.palette.common.white,
   },
   medium: {
     fontSize: '0.8rem',
     padding: '4px 12px',
+    color: theme.palette.common.white,
   },
   large: {
     fontSize: '1rem',
     padding: '24px 60px',
+    color: theme.palette.common.white,
   },
 };
 
