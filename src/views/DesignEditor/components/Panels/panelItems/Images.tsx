@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { useEditor } from '@layerhub-io/react';
+import { ILayer, LayerType } from '@layerhub-io/types';
 import { useStyletron } from 'baseui';
 import { Block } from 'baseui/block';
 
+import { Resource } from 'src/store/slices/resources/reducer';
+
 import { CloseSideBar } from './Common/CloseSideBar';
 import Scrollable from '../../../../../components/Scrollable';
-import { images } from '../../../../../constants/mock-data';
 
-const ImageItem = ({ preview, onClick }: { preview: any; onClick?: (option: any) => void }) => {
+export const ImageItem = ({ preview, onClick }: { preview: any; onClick?: (option: any) => void }) => {
   const [css] = useStyletron();
   return (
     <div
@@ -70,14 +72,14 @@ const ImageItem = ({ preview, onClick }: { preview: any; onClick?: (option: any)
     </div>
   );
 };
-const Images = ({ title }: { title: string }) => {
+const Images = ({ title, images }: { title: string; images: Resource[] }) => {
   const editor = useEditor();
 
-  const addObject = React.useCallback(
+  const addObject = useCallback(
     (url: string) => {
       if (editor) {
-        const options = {
-          type: 'StaticImage',
+        const options: Partial<ILayer> = {
+          type: LayerType.STATIC_IMAGE,
           src: url,
         };
         editor.objects.add(options);
@@ -97,14 +99,13 @@ const Images = ({ title }: { title: string }) => {
           padding: '1.5rem',
         }}>
         <Block>{title}</Block>
-
         <CloseSideBar />
       </Block>
       <Scrollable>
         <Block padding="0 1.5rem">
           <div style={{ display: 'grid', gap: '8px', gridTemplateColumns: '1fr 1fr' }}>
-            {images.map((image, index) => (
-              <ImageItem key={index} onClick={() => addObject(image.src.large)} preview={image.src.small} />
+            {images.map(image => (
+              <ImageItem key={image.id} onClick={() => addObject(image.url)} preview={image.url} />
             ))}
           </div>
         </Block>

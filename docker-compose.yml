@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  development:
+  front:
     container_name: development
     build:
       context: . #if your Dockerfile is not at the same level change the path here (./frontend)

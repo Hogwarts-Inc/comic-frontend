@@ -1,0 +1,28 @@
+name: Tests
+
+on:
+  pull_request:
+    branches:
+      - development
+      - master
+
+jobs:
+  tests:
+    runs-on:
+      labels: staging
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          yarn install --frozen-lockfile
+
+      - name: Test application
+        run: |
+          yarn lint
