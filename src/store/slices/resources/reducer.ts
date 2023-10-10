@@ -1,18 +1,33 @@
-import { createReducer } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { setPixabayResources } from './actions';
-import { Resource } from '../../../interfaces/editor';
-
-export interface ResourcesState {
-  pixabay: Resource[];
+export type Resource = { id: string; url: string };
+export interface ResourceSliceState {
+  characters: Resource[];
+  images: Resource[];
+  shapes: Resource[];
+  text: Resource[];
 }
 
-const initialState: ResourcesState = {
-  pixabay: [],
+const appDataInitialState: ResourceSliceState = {
+  characters: [],
+  images: [],
+  shapes: [],
+  text: [],
 };
 
-export const resourcesReducer = createReducer(initialState, builder => {
-  builder.addCase(setPixabayResources, (state, { payload }) => {
-    state.pixabay = payload;
-  });
+const resources = createSlice({
+  name: 'resources',
+  initialState: appDataInitialState,
+  reducers: {
+    setResources(state, { payload }: PayloadAction<ResourceSliceState>) {
+      state.characters = payload.characters;
+      state.images = payload.images;
+      state.shapes = payload.shapes;
+      state.text = payload.text;
+    },
+  },
 });
+
+export const { setResources } = resources.actions;
+
+export default resources.reducer;
