@@ -1,6 +1,4 @@
-import styled from '@emotion/styled';
-
-import theme from '../../../../../styles/theme';
+import { styled } from '@mui/material';
 
 export const ButtonText = styled('p')({
   fontSize: '0.7rem',
@@ -21,7 +19,7 @@ export const ButtonContainer = styled('div')({
   flexDirection: 'column',
 });
 
-export const Container = styled('div')({
+export const Container = styled('div')(({ theme }) => ({
   display: 'flex',
   padding: '1.25rem 0 0 1.25rem',
   background: `linear-gradient(181deg, ${theme.palette.secondary.main} 0.23%, 
@@ -29,16 +27,16 @@ export const Container = styled('div')({
   flexDirection: 'column',
   width: '7.5625rem',
   minWidth: '7.5625rem',
-});
+}));
 
-export const WhiteContainer = styled('div')({
+export const WhiteContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flex: 'none',
   background: theme.palette.common.white,
   borderTopLeftRadius: '1.875rem',
   overflow: 'hidden',
   height: '100%',
-});
+}));
 
 export const SubContainer = styled('div')({
   width: '100%',

@@ -1,7 +1,8 @@
 import { CSSObject } from '@emotion/react';
-import styled from '@emotion/styled';
+import { styled } from '@mui/material';
 import Button from '@mui/material/Button';
 
+// theme is imported like this bc is used outside the styled
 import theme from '../../styles/theme';
 
 interface ButtonOwnProps {
