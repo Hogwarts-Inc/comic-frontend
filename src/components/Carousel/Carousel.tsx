@@ -1,12 +1,17 @@
-import React, { CSSProperties, useState } from 'react';
+import React, { useState } from 'react';
 
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import { useSwipeable } from 'react-swipeable';
 
-import styles from './carousel.module.css';
+import {
+  Wrapper,
+  CarouselButtonPrev,
+  CarouselContainer,
+  ImagesContainer,
+  CarouselSlot,
+  CarouselButtonFirst,
+  CarouselButtonLast,
+  CarouselButtonNext,
+} from './styles';
 
 interface CarouselProps {
   images: string[];
@@ -15,10 +20,6 @@ interface CarouselProps {
 export const Carousel = ({ images }: CarouselProps) => {
   const [index, setIndex] = useState(0);
   const numItems = images.length;
-
-  const transformStyle = {
-    '--translateX': `-${index * (75 + 5)}%`,
-  } as CSSProperties;
 
   const handleNext = () => {
     setIndex(prevIndex => Math.min(prevIndex + 1, numItems - 1));
@@ -44,42 +45,22 @@ export const Carousel = ({ images }: CarouselProps) => {
   });
 
   return (
-    <div className={styles.wrapper} {...handlers}>
-      {index > 0 && (
-        <KeyboardDoubleArrowLeftIcon
-          className={`${styles.carouselButton} ${styles.carouselButtonFirst}`}
-          onClick={handleFirst}
-        />
-      )}
-      {index > 0 && (
-        <KeyboardArrowLeftIcon
-          className={`${styles.carouselButton} ${styles.carouselButtonPrev}`}
-          onClick={handlePrev}
-        />
-      )}
+    <Wrapper {...handlers}>
+      {index > 0 && <CarouselButtonFirst onClick={handleFirst} />}
+      {index > 0 && <CarouselButtonPrev onClick={handlePrev} />}
 
-      <div className={styles.imagesContainer}>
-        <div className={`${styles.carouselContainer} ${styles.transform}`} style={transformStyle}>
+      <ImagesContainer>
+        <CarouselContainer index={index}>
           {images.map((url, idx) => (
-            <div key={idx} className={styles.carouselSlot}>
+            <CarouselSlot key={idx}>
               <img src={url} />
-            </div>
+            </CarouselSlot>
           ))}
-        </div>
-      </div>
+        </CarouselContainer>
+      </ImagesContainer>
 
-      {index < numItems - 1 && (
-        <KeyboardArrowRightIcon
-          className={`${styles.carouselButton} ${styles.carouselButtonNext}`}
-          onClick={handleNext}
-        />
-      )}
-      {index < numItems - 1 && (
-        <KeyboardDoubleArrowRightIcon
-          className={`${styles.carouselButton} ${styles.carouselButtonLast}`}
-          onClick={handleLast}
-        />
-      )}
-    </div>
+      {index < numItems - 1 && <CarouselButtonNext onClick={handleNext} />}
+      {index < numItems - 1 && <CarouselButtonLast onClick={handleLast} />}
+    </Wrapper>
   );
 };
