@@ -1,6 +1,7 @@
 import { CSSObject } from '@emotion/react';
 import styled from '@emotion/styled';
 import Button from '@mui/material/Button';
+import { LoadingSpinner } from 'baseui/button/styled-components';
 
 import { Colors } from '@styles/colors';
 
@@ -8,6 +9,7 @@ interface ButtonOwnProps {
   isSelected?: boolean;
   variantType?: 'default' | 'gradient';
   size?: 'small' | 'medium' | 'large';
+  isLoading?: boolean;
 }
 
 const sizeStyles: Record<'small' | 'medium' | 'large', CSSObject> = {
@@ -25,7 +27,7 @@ const sizeStyles: Record<'small' | 'medium' | 'large', CSSObject> = {
   },
 };
 
-export const ButtonMui = styled(Button)<ButtonOwnProps>(({ isSelected, variantType, size = 'medium' }) => {
+export const ButtonMui = styled(Button)<ButtonOwnProps>(({ isSelected, variantType, size = 'medium', isLoading }) => {
   let styles: CSSObject = {
     background: Colors.violet,
     backgroundColor: isSelected ? Colors.violetDark : Colors.violet,
@@ -68,6 +70,11 @@ export const ButtonMui = styled(Button)<ButtonOwnProps>(({ isSelected, variantTy
   styles = {
     ...styles,
     ...sizeStyles[size ?? 'medium'],
+    ...(isLoading ? { color: 'transparent', transition: undefined } : {}),
   };
   return styles;
+});
+
+export const Loader = styled(LoadingSpinner)({
+  position: 'absolute',
 });
