@@ -1,4 +1,4 @@
-import React, { CSSProperties, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useSwipeable } from 'react-swipeable';
 
@@ -20,10 +20,6 @@ interface CarouselProps {
 export const Carousel = ({ images }: CarouselProps) => {
   const [index, setIndex] = useState(0);
   const numItems = images.length;
-
-  const transformStyle = {
-    '--translateX': `-${index * (75 + 5)}%`,
-  } as CSSProperties;
 
   const handleNext = () => {
     setIndex(prevIndex => Math.min(prevIndex + 1, numItems - 1));
@@ -54,7 +50,7 @@ export const Carousel = ({ images }: CarouselProps) => {
       {index > 0 && <CarouselButtonPrev onClick={handlePrev} />}
 
       <ImagesContainer>
-        <CarouselContainer style={transformStyle}>
+        <CarouselContainer index={index}>
           {images.map((url, idx) => (
             <CarouselSlot key={idx}>
               <img src={url} />

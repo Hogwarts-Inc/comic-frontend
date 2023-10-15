@@ -29,48 +29,32 @@ const carouselButton = css`
   }
 `;
 
-const carouselButtonPrevMargin = css`
-  left: 4%;
-`;
+export const CarouselButtonPrev = styled(KeyboardArrowLeftIcon)({
+  ...carouselButton,
+  left: '4%',
+});
 
-const carouselButtonFirstMargin = css`
-  left: 1%;
-`;
+export const CarouselButtonFirst = styled(KeyboardDoubleArrowLeftIcon)({
+  ...carouselButton,
+  left: '1%',
+});
 
-const carouselButtonNextMargin = css`
-  right: 4%;
-`;
+export const CarouselButtonNext = styled(KeyboardArrowRightIcon)({
+  ...carouselButton,
+  right: '4%',
+});
 
-const carouselButtonLastMargin = css`
-  right: 1%;
-`;
+export const CarouselButtonLast = styled(KeyboardDoubleArrowRightIcon)({
+  ...carouselButton,
+  right: '1%',
+});
 
-export const CarouselButtonPrev = styled(KeyboardArrowLeftIcon)`
-  ${carouselButtonPrevMargin},
-  ${carouselButton},
-`;
-
-export const CarouselButtonFirst = styled(KeyboardDoubleArrowLeftIcon)`
-  ${carouselButtonFirstMargin},
-  ${carouselButton},
-`;
-
-export const CarouselButtonNext = styled(KeyboardArrowRightIcon)`
-  ${carouselButtonNextMargin},
-  ${carouselButton},
-`;
-
-export const CarouselButtonLast = styled(KeyboardDoubleArrowRightIcon)`
-  ${carouselButtonLastMargin},
-  ${carouselButton},
-`;
-
-export const CarouselContainer = styled('div')({
+export const CarouselContainer = styled('div')<{ index: number }>(({ index }) => ({
   position: 'relative',
   display: 'flex',
   transition: ' transform 0.4s ease',
-  transform: 'translateX(var(--translateX))',
-});
+  transform: `translateX(-${index * (75 + 5)}%`,
+}));
 
 export const CarouselSlot = styled('div')({
   flex: '1 0 100%',
