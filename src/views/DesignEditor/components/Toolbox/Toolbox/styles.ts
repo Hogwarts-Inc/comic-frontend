@@ -2,7 +2,7 @@ import { styled } from '@mui/material';
 
 export const Container = styled('div')(() => ({
   boxShadow: 'rgb(0 0 0 / 15%) 0px 1px 1px',
-  height: '6.25rem',
+  height: '3.125rem',
   display: 'flex',
 }));
 

@@ -11,7 +11,7 @@ const Canvas = () => (
       config={{
         background: '#f1f2f6',
         controlsPosition: {
-          rotation: 'BOTTOM',
+          rotation: 'TOP',
         },
         shadow: {
           blur: 4,

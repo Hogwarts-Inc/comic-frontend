@@ -6,6 +6,7 @@ import { ILayer } from '@layerhub-io/types';
 import { useTranslation } from 'react-i18next';
 
 import Button from '@components/Button';
+import { apisCanvas } from 'src/services/apiConfig';
 
 import { ButtonsContainer, ButtonsSeparator, Container } from './styles';
 import useAppContext from '../../../../../hooks/useAppContext';
@@ -15,13 +16,13 @@ import Items from '../Items';
 interface ToolboxState {
   toolbox: string;
 }
-
 const Toolbox = () => {
   const [state, setState] = useState<ToolboxState>({ toolbox: '' });
   const { setActiveSubMenu } = useAppContext();
   const activeObject = useActiveObject() as ILayer;
   const editor = useEditor();
   const { t } = useTranslation();
+  const [isSaveLoading, setIsSaveLoading] = useState(false);
 
   useEffect(() => {
     const selectionType = getSelectionType(activeObject);
@@ -59,6 +60,20 @@ const Toolbox = () => {
     };
   }, [editor, activeObject]);
 
+  const uploadCanva = async () => {
+    setIsSaveLoading(true);
+    try {
+      if (editor) {
+        const currentScene = editor.scene.exportToJSON();
+        const updatedPreview = (await editor.renderer.render(currentScene)) as string;
+        await apisCanvas.postCanva({ chapter_id: 1, image: updatedPreview });
+      }
+    } catch (e) {
+      // TODO handle error
+    }
+    setIsSaveLoading(false);
+  };
+
   const Component = useMemo(() => Items[state.toolbox], [state.toolbox]);
 
   return (
@@ -67,7 +82,9 @@ const Toolbox = () => {
       <ButtonsContainer>
         <Button onClick={() => alert('TODO: import')}>{t('navbar.import')}</Button>
         <ButtonsSeparator />
-        <Button onClick={() => alert('TODO: save')}>{t('navbar.save')}</Button>
+        <Button onClick={uploadCanva} isLoading={isSaveLoading}>
+          {t('navbar.save')}
+        </Button>
       </ButtonsContainer>
     </Container>
   );
