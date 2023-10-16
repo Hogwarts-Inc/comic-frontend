@@ -12,7 +12,6 @@ interface TopBarProps {
 
 export const TopBar = (props: TopBarProps) => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  console.log(props);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
