@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
 import { Avatar, Box, Typography, Grid, MenuItem, IconButton, Menu } from '@mui/material';
-
-const userMenuOptions = ['Mi perfil', 'Cerrar sesión'];
+import { useTranslation } from 'react-i18next';
 
 import { AppBarMui, ToolbarMui, ButtonSignUp, ButtonLogIn, ButtonBox } from './styles';
 
@@ -10,14 +9,17 @@ interface TopBarProps {
   isAuthenticated: boolean;
 }
 
-export const TopBar = (props: TopBarProps) => {
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+export const TopBar = ({ isAuthenticated }: TopBarProps) => {
+  const [anchorMenuUser, setAnchorMenuUser] = useState<null | HTMLElement>(null);
+  const { t } = useTranslation();
+
+  const userMenuOptions = [t('topBar.menu.profile'), t('topBar.menu.logout')];
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
+    setAnchorMenuUser(event.currentTarget);
   };
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+    setAnchorMenuUser(null);
   };
 
   return (
@@ -29,17 +31,16 @@ export const TopBar = (props: TopBarProps) => {
             <Box>
               <Typography>LOGO</Typography>
             </Box>
-            {props.isAuthenticated ? (
+            {isAuthenticated ? (
               <Box>
                 {/* To do: add user picture */}
                 <IconButton onClick={handleOpenUserMenu}>
                   <Avatar src="/static/images/avatar/2.jpg" />
                 </IconButton>
-                {/* User menu */}
                 <Menu
                   sx={{ mt: '45px' }}
                   id="menu-appbar"
-                  anchorEl={anchorElUser}
+                  anchorEl={anchorMenuUser}
                   anchorOrigin={{
                     vertical: 'top',
                     horizontal: 'right',
@@ -49,7 +50,7 @@ export const TopBar = (props: TopBarProps) => {
                     vertical: 'top',
                     horizontal: 'right',
                   }}
-                  open={Boolean(anchorElUser)}
+                  open={Boolean(anchorMenuUser)}
                   onClose={handleCloseUserMenu}>
                   {userMenuOptions.map(setting => (
                     <MenuItem key={setting} onClick={handleCloseUserMenu}>
@@ -61,9 +62,9 @@ export const TopBar = (props: TopBarProps) => {
             ) : (
               <ButtonBox>
                 {/* To do: add on click navigation */}
-                <ButtonLogIn size="medium">Iniciar sesión</ButtonLogIn>
+                <ButtonLogIn size="medium">{t('topBar.login')}</ButtonLogIn>
                 <ButtonSignUp size="medium" variant="outlined">
-                  Crear cuenta
+                  {t('topBar.signup')}
                 </ButtonSignUp>
               </ButtonBox>
             )}
