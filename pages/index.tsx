@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 
 import { TopBar } from '@components/TopBar';
 import { Route } from 'src/constants/routes';
+import Characters from 'src/views/Landing/components/Characters/Characters';
 
 const Home = () => {
   const { push } = useRouter();
@@ -21,6 +22,8 @@ const Home = () => {
       {/* To do: add authentication */}
       <TopBar isAuthenticated={false} />
       Inicio
+      {/* <Characters /> */}
+      <Characters />
       <Button onClick={() => push(Route.editor)}>Editor</Button>
       <Button onClick={() => push(Route.profile)}>Perfil</Button>
       <Button onClick={() => push(`${Route.visualizer}/1/1`)}>Visualizar</Button>

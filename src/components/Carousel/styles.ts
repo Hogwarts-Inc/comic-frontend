@@ -60,7 +60,7 @@ export const CarouselContainer = styled('div')<CarouselProps>(props => ({
 
 export const CarouselSlot = styled('div')<CarouselProps>(props => ({
   flex: '1 0 100%',
-  flexBasis: props.displayMode === 'reduced' ? '100%' : '75%', // Corrected the logic here
+  flexBasis: props.displayMode === 'reduced' ? '100%' : '75%', 
   marginRight: '5%',
 }));
 
