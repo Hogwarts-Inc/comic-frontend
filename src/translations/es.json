@@ -23,5 +23,13 @@
   "navbar": {
     "import": "Importar",
     "save": "Guardar"
+  },
+  "topBar": {
+    "login": "Iniciar sesión",
+    "signup": " Crear cuenta",
+    "menu": {
+      "profile": "Mi perfil",
+      "logout": "Cerrar sesión"
+    }
   }
 }

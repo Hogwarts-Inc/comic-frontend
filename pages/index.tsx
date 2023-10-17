@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from 'baseui/button';
 import { useRouter } from 'next/router';
 
+import { TopBar } from '@components/TopBar';
 import { Route } from 'src/constants/routes';
 
 const Home = () => {
@@ -17,6 +18,8 @@ const Home = () => {
         flexDirection: 'column',
         gap: '10px',
       }}>
+      {/* To do: add authentication */}
+      <TopBar isAuthenticated={false} />
       Inicio
       <Button onClick={() => push(Route.editor)}>Editor</Button>
       <Button onClick={() => push(Route.profile)}>Perfil</Button>
