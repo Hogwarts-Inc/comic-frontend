@@ -25,7 +25,7 @@ export interface IDesign {
   name: string;
   frame: IFrame;
   type: string;
-  scenes: { id: string; duration?: number; layers: Partial<ILayer>[]; name: string | undefined }[];
+  scenes: { id: string; duration?: number; layers: Partial<ILayer>[]; name?: string }[];
   previews: { id: string; src: string }[];
   metadata: object;
   published: boolean;

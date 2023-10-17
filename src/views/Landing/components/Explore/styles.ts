@@ -1,6 +1,4 @@
-import styled from '@emotion/styled';
-
-import { Colors } from '@styles/colors';
+import { styled } from '@mui/material';
 
 interface StyledProps {
   lg?: boolean;
@@ -12,14 +10,14 @@ export const Box = styled('div')({
   width: '100%',
 });
 
-export const Placeholder = styled('div')<StyledProps>(props => ({
+export const Placeholder = styled('div')<StyledProps>(({ theme, lg }) => ({
   border: '3px solid transparent',
-  borderImage: Colors.gradientBox,
+  borderImage: theme.customPalette.gradientBox.main,
   borderImageSlice: 1,
   borderRadius: '10px',
-  height: props.lg ? '420px' : '200px',
+  height: lg ? '420px' : '200px',
   position: 'absolute',
-  width: props.lg ? '1400px' : '380px',
+  width: lg ? '1400px' : '380px',
 }));
 
 export const Content = styled('div')<StyledProps>(props => ({
@@ -33,10 +31,10 @@ export const Content = styled('div')<StyledProps>(props => ({
   width: props.lg ? '950px' : '316px',
 }));
 
-export const Description = styled('p')<StyledProps>(props => ({
-  color: Colors.deepBlue,
-  fontSize: props.lg ? '42px' : '18px',
+export const Description = styled('p')<StyledProps>(({ theme, lg }) => ({
+  color: theme.palette.text.primary,
+  fontSize: lg ? '42px' : '18px',
   fontWeight: 700,
-  lineHeight: props.lg ? '52px' : '37px',
+  lineHeight: lg ? '52px' : '37px',
   textAlign: 'center',
 }));
