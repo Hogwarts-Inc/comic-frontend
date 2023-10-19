@@ -8,6 +8,9 @@
       "uploads": "Subir"
     }
   },
+  "mainComic": {
+    "title": "La historieta más larga del mundo."
+  },
   "explore": {
     "title": "Empeza a explorar otros capitulos y crear tus propias historias"
   },
