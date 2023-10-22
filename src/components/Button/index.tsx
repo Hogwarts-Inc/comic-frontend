@@ -12,15 +12,16 @@ interface ButtonProps extends ButtonPropsMui {
   isLoading?: boolean;
 }
 
-function Button(props: ButtonProps) {
+function Button({ variantType, size, isSelected, isLoading, ...props }: ButtonProps) {
   return (
     <ButtonMui
       variant="contained"
-      variantType={props.variantType}
-      size={props.size}
+      variantType={variantType}
+      size={size}
+      isSelected={isSelected}
       {...props}
-      onClick={props.isLoading ? undefined : props.onClick}>
-      {props.isLoading && <Loader />}
+      onClick={isLoading ? undefined : props.onClick}>
+      {isLoading && <Loader />}
       {props.children}
     </ButtonMui>
   );

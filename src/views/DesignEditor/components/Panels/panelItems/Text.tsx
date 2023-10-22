@@ -80,7 +80,7 @@ export default function Text({ images }: { images: Resource[] }) {
         id: nanoid(),
         type: LayerType.STATIC_TEXT,
         width: 420,
-        text: 'Add some text',
+        text: 'Texto',
         fontSize: 40,
         fontFamily: font.name,
         textAlign: 'center',
