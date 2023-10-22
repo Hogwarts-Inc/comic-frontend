@@ -13,7 +13,7 @@ interface State {
   width: number;
 }
 
-const DesignTitle = () => {
+function DesignTitle() {
   const [state, setState] = React.useState<State>({ name: 'My first design.', width: 0 });
   const { currentDesign, setCurrentDesign } = useDesignEditorContext();
   const inputTitleRef = React.useRef<Input>(null);
@@ -25,7 +25,7 @@ const DesignTitle = () => {
   };
 
   React.useEffect(() => {
-    const name = currentDesign.name;
+    const { name } = currentDesign;
     if (name || name === '') {
       spanRef.current!.innerHTML = name;
       setState({ ...state, name: name, width: (spanRef.current?.clientWidth || 0)! + 20 });
@@ -96,7 +96,7 @@ const DesignTitle = () => {
       </Block>
 
       <StatefulTooltip
-        showArrow={true}
+        showArrow
         overrides={{
           Inner: {
             style: {
@@ -104,7 +104,7 @@ const DesignTitle = () => {
             },
           },
         }}
-        content={() => <Block backgroundColor="#ffffff">All changes are saved</Block>}>
+        content={<Block backgroundColor="#ffffff">All changes are saved</Block>}>
         <Block
           $style={{
             cursor: 'pointer',
@@ -117,6 +117,6 @@ const DesignTitle = () => {
       </StatefulTooltip>
     </Block>
   );
-};
+}
 
 export default DesignTitle;

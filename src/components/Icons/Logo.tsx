@@ -1,11 +1,9 @@
+import React from 'react';
+
 /* eslint-disable max-len */
 function Logo({ size }: { size: number }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      xmlns="http://www.w3.org/2000/svg"
-      height={size}>
+    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height={size}>
       <path
         fillRule="evenodd"
         clipRule="evenodd"

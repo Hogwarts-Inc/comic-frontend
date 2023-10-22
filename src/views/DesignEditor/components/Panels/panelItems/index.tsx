@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react';
+
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
@@ -19,30 +21,29 @@ import TextEffects from './TextEffects';
 import TextFill from './TextFill';
 import TextProperties from './TextProperties';
 import Uploads from './Uploads';
-import Videos from './Videos';
 
-const ImagesConvertor = () => {
+function ImagesConvertor() {
   const { t } = useTranslation();
   const { images } = useSelector((state: RootState) => state.resources);
   return <Images title={t('panels.panelsList.images')} images={images} />;
-};
+}
 
-const CharacterConvertor = () => {
+function CharacterConvertor() {
   const { t } = useTranslation();
   const { characters } = useSelector((state: RootState) => state.resources);
   return <Images title={t('panels.panelsList.characters')} images={characters} />;
-};
+}
 
-const ShapesConvertor = () => {
+function ShapesConvertor() {
   const { t } = useTranslation();
   const { shapes } = useSelector((state: RootState) => state.resources);
   return <Images title={t('panels.panelsList.shapes')} images={shapes} />;
-};
+}
 
-const TextConvertor = () => {
+function TextConvertor() {
   const { text } = useSelector((state: RootState) => state.resources);
   return <Text images={text} />;
-};
+}
 
 export default {
   StaticText: TextProperties,
@@ -53,7 +54,6 @@ export default {
   Templates: Templates,
   Uploads: Uploads,
   Images: ImagesConvertor,
-  Videos: Videos,
   Elements: Elements,
   Graphics: Graphics,
   Layers: Layers,

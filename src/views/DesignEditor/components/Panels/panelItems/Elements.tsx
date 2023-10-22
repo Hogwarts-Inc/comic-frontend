@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 
@@ -10,7 +11,7 @@ import { CloseSideBar } from './Common/CloseSideBar';
 import Scrollable from '../../../../../components/Scrollable';
 import { graphics } from '../../../../../constants/mock-data';
 
-const ImageItem = ({ preview, onClick }: { preview: any; onClick?: (option: any) => void }) => {
+function ImageItem({ preview, onClick }: { preview: any; onClick?: (option: any) => void }) {
   const [css] = useStyletron();
   return (
     <div
@@ -38,9 +39,9 @@ const ImageItem = ({ preview, onClick }: { preview: any; onClick?: (option: any)
       />
     </div>
   );
-};
+}
 
-const Elements = () => {
+function Elements() {
   const { t } = useTranslation();
   const editor = useEditor();
 
@@ -70,14 +71,14 @@ const Elements = () => {
       <Scrollable>
         <Block>
           <Block $style={{ display: 'grid', gap: '8px', padding: '1.5rem', gridTemplateColumns: '1fr 1fr 1fr 1fr' }}>
-            {graphics.map((graphic, index) => (
-              <ImageItem onClick={() => addObject(graphic)} key={index} preview={graphic.preview} />
+            {graphics.map(graphic => (
+              <ImageItem onClick={() => addObject(graphic)} key={graphic.id} preview={graphic.preview} />
             ))}
           </Block>
         </Block>
       </Scrollable>
     </Block>
   );
-};
+}
 
 export default Elements;

@@ -17,7 +17,7 @@ interface Options {
   color: string;
 }
 
-const Shadow = () => {
+function Shadow() {
   const editor = useEditor();
   const [options, setOptions] = React.useState<Options>({
     enabled: false,
@@ -75,7 +75,7 @@ const Shadow = () => {
         </div>
         <StatefulPopover
           placement={PLACEMENT.bottomLeft}
-          content={
+          content={(
             <div
               style={{
                 padding: '1rem',
@@ -95,7 +95,7 @@ const Shadow = () => {
                 clearOnEscape
               />
             </div>
-          }
+          )}
           accessibilityType="tooltip">
           <div>
             <div
@@ -201,5 +201,5 @@ const Shadow = () => {
       </div>
     </div>
   );
-};
+}
 export default Shadow;

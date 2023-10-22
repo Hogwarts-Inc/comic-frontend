@@ -10,7 +10,7 @@ import { StatefulTooltip } from 'baseui/tooltip';
 import FlipHorizontal from '../../../../../components/Icons/FlipHorizontal';
 import FlipVertical from '../../../../../components/Icons/FlipVertical';
 
-const Flip = () => {
+function Flip() {
   const editor = useEditor();
   const activeObject = useActiveObject() as any;
   const [state, setState] = React.useState({ flipX: false, flipY: false });
@@ -37,7 +37,7 @@ const Flip = () => {
   return (
     <StatefulPopover
       placement={PLACEMENT.bottom}
-      content={() => (
+      content={
         <Block width="180px" padding="12px" backgroundColor="#ffffff">
           <Block>
             <Button
@@ -58,9 +58,9 @@ const Flip = () => {
             Flip vertically
           </Button>
         </Block>
-      )}>
+      }>
       <Block>
-        <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType="tooltip" content="Layers">
+        <StatefulTooltip placement={PLACEMENT.bottom} showArrow accessibilityType="tooltip" content="Layers">
           <Button size={SIZE.compact} kind={KIND.tertiary}>
             Flip
           </Button>
@@ -68,6 +68,6 @@ const Flip = () => {
       </Block>
     </StatefulPopover>
   );
-};
+}
 
 export default Flip;

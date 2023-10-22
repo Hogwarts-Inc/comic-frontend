@@ -2,8 +2,7 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
-import { styled } from '@mui/material';
-import { css } from '@mui/material';
+import { styled, css } from '@mui/material';
 
 export const Wrapper = styled('div')({
   overflow: 'hidden',

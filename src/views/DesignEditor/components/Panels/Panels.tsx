@@ -1,13 +1,17 @@
+import React from 'react';
+
 import PanelItem from './PanelItem/PanelItem';
 import PanelsList from './PanelList/PanelsList';
 import { Separator } from './styles';
 
-const Panels = () => (
-  <>
-    <PanelsList />
-    <Separator />
-    <PanelItem />
-  </>
-);
+function Panels() {
+  return (
+    <>
+      <PanelsList />
+      <Separator />
+      <PanelItem />
+    </>
+  );
+}
 
 export default Panels;

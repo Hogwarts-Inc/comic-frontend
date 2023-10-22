@@ -31,7 +31,7 @@ export const getPixabayVideos = (query: string): Promise<PixabayImage[]> => {
     pixabayClient
       .get(`/videos?key=${PIXABAY_KEY}&q=${encodedWord}&per_page=20`)
       .then(response => {
-        const hits = response.data.hits;
+        const { hits } = response.data;
         const videos = hits.map((hit: any) => ({
           id: hit.id,
           type: 'StaticVideo',

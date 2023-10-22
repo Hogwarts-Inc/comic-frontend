@@ -1,3 +1,5 @@
+import React from 'react';
+
 /* eslint-disable max-len */
 function AddCircleOutline({ size }: { size: number }) {
   return (

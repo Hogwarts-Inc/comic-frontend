@@ -1,1 +1,2 @@
-export { default as default } from './LazyLoadImage';
+/* eslint-disable no-restricted-exports */
+export { default } from './LazyLoadImage';

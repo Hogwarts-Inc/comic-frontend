@@ -5,12 +5,11 @@ export const getSelectionMetadata = (selection: any) => {
       isGroup: selection.type === 'group',
       isMultiple: true,
     };
-  } else {
-    return {
-      isGroup: false,
-      isMultiple: false,
-    };
   }
+  return {
+    isGroup: false,
+    isMultiple: false,
+  };
 };
 export const getTextOptions = (selection: any) => {
   const selectionMetadata = getSelectionMetadata(selection);
@@ -27,17 +26,16 @@ export const getTextOptions = (selection: any) => {
       fontFamily,
       ...selectionMetadata,
     };
-  } else {
-    const { underline, textAlign, fontSize, fill, charSpacing, lineHeight, fontFamily } = selection;
-    return {
-      underline,
-      textAlign,
-      fontSize,
-      fill,
-      charSpacing,
-      lineHeight,
-      fontFamily,
-      ...selectionMetadata,
-    };
   }
+  const { underline, textAlign, fontSize, fill, charSpacing, lineHeight, fontFamily } = selection;
+  return {
+    underline,
+    textAlign,
+    fontSize,
+    fill,
+    charSpacing,
+    lineHeight,
+    fontFamily,
+    ...selectionMetadata,
+  };
 };

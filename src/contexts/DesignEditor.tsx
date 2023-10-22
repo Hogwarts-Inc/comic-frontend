@@ -1,12 +1,15 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useMemo } from 'react';
 
 import { IScene } from '@layerhub-io/types';
 
 import { ContextMenuSceneRequest, ContextMenuTimelineRequest, IDesign } from '../interfaces/DesignEditor';
 
+export type ScenesWithPosition = { history: IScene[]; scenePosition: number }[];
+
 interface ISceneEditorContext {
-  scenes: IScene[];
-  setScenes: (value: ((prevState: IScene[]) => IScene[]) | IScene[]) => void;
+  scenes: ScenesWithPosition;
+  setScenes: (value: ((prevState: ScenesWithPosition) => ScenesWithPosition) | ScenesWithPosition) => void;
   currentScene: IScene | null;
   setCurrentScene: React.Dispatch<React.SetStateAction<IScene | null>>;
   currentDesign: IDesign;
@@ -68,8 +71,8 @@ export const DesignEditorContext = React.createContext<ISceneEditorContext>({
   setContextMenuSceneRequest: () => {},
 });
 
-export const DesignEditorProvider = ({ children }: { children: React.ReactNode }) => {
-  const [scenes, setScenes] = React.useState<IScene[]>([]);
+export function DesignEditorProvider({ children }: { children: React.ReactNode }) {
+  const [scenes, setScenes] = React.useState<ScenesWithPosition>([]);
   const [currentScene, setCurrentScene] = React.useState<IScene | null>(null);
   const [currentDesign, setCurrentDesign] = React.useState<IDesign>({
     id: '',
@@ -100,25 +103,38 @@ export const DesignEditorProvider = ({ children }: { children: React.ReactNode }
     top: 0,
     visible: false,
   });
-  const context = {
-    scenes,
-    setScenes,
-    currentScene,
-    setCurrentScene,
-    currentDesign,
-    setCurrentDesign,
-    isSidebarOpen,
-    setIsSidebarOpen,
-    displayPreview,
-    setDisplayPreview,
-    currentPreview,
-    setCurrentPreview,
-    maxTime,
-    setMaxTime,
-    contextMenuTimelineRequest,
-    setContextMenuTimelineRequest,
-    contextMenuSceneRequest,
-    setContextMenuSceneRequest,
-  };
+  const context = useMemo(
+    () => ({
+      scenes,
+      setScenes,
+      currentScene,
+      setCurrentScene,
+      currentDesign,
+      setCurrentDesign,
+      isSidebarOpen,
+      setIsSidebarOpen,
+      displayPreview,
+      setDisplayPreview,
+      currentPreview,
+      setCurrentPreview,
+      maxTime,
+      setMaxTime,
+      contextMenuTimelineRequest,
+      setContextMenuTimelineRequest,
+      contextMenuSceneRequest,
+      setContextMenuSceneRequest,
+    }),
+    [
+      contextMenuSceneRequest,
+      contextMenuTimelineRequest,
+      currentDesign,
+      currentPreview,
+      currentScene,
+      displayPreview,
+      isSidebarOpen,
+      maxTime,
+      scenes,
+    ],
+  );
   return <DesignEditorContext.Provider value={context}>{children}</DesignEditorContext.Provider>;
-};
+}

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 
@@ -11,7 +12,7 @@ import { CloseSideBar } from './Common/CloseSideBar';
 import Scrollable from '../../../../../components/Scrollable';
 import { vectors } from '../../../../../constants/mock-data';
 
-const GraphicItem = ({ preview, onClick }: { preview: any; onClick?: (option: any) => void }) => {
+function GraphicItem({ preview, onClick }: { preview: any; onClick?: (option: any) => void }) {
   const [css] = useStyletron();
   return (
     <div
@@ -74,9 +75,9 @@ const GraphicItem = ({ preview, onClick }: { preview: any; onClick?: (option: an
       />
     </div>
   );
-};
+}
 
-const Graphics = () => {
+function Graphics() {
   const { t } = useTranslation();
   const inputFileRef = React.useRef<HTMLInputElement>(null);
 
@@ -145,14 +146,14 @@ const Graphics = () => {
         <input onChange={handleFileInput} type="file" id="file" ref={inputFileRef} style={{ display: 'none' }} />
         <Block>
           <Block $style={{ display: 'grid', gap: '8px', padding: '1.5rem', gridTemplateColumns: '1fr 1fr' }}>
-            {vectors.map((vector, index) => (
-              <GraphicItem onClick={() => addObject(vector)} key={index} preview={vector} />
+            {vectors.map(vector => (
+              <GraphicItem onClick={() => addObject(vector)} key={vector} preview={vector} />
             ))}
           </Block>
         </Block>
       </Scrollable>
     </Block>
   );
-};
+}
 
 export default Graphics;

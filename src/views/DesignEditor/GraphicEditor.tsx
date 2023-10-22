@@ -1,24 +1,28 @@
+import React from 'react';
+
 import Canvas from './components/Canvas';
 import EditorContainer from './components/EditorContainer';
 import Footer from './components/Footer';
 import Panels from './components/Panels';
 import Toolbox from './components/Toolbox';
 
-const GraphicEditor = () => (
-  <EditorContainer>
-    <div
-      style={{
-        display: 'flex',
-        flex: 1,
-      }}>
-      <Panels />
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        <Toolbox />
-        <Canvas />
-        <Footer />
+function GraphicEditor() {
+  return (
+    <EditorContainer>
+      <div
+        style={{
+          display: 'flex',
+          flex: 1,
+        }}>
+        <Panels />
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', position: 'relative' }}>
+          <Toolbox />
+          <Canvas />
+          <Footer />
+        </div>
       </div>
-    </div>
-  </EditorContainer>
-);
+    </EditorContainer>
+  );
+}
 
 export default GraphicEditor;

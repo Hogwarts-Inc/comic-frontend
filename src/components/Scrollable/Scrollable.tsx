@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Scrollbars from '@layerhub-io/react-custom-scrollbar';
+
 function Scrollable({
   children,
   autoHide,

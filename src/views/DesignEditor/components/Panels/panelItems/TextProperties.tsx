@@ -20,7 +20,7 @@ import { selectFonts } from '../../../../../store/slices/fonts/selectors';
 import { loadFonts } from '../../../../../utils/fonts';
 import { getTextOptions } from '../../../../../utils/object-options';
 
-const TextProperties = () => {
+function TextProperties() {
   const fonts = useSelector(selectFonts);
   const [state, setState] = React.useState<TextOptions>(defaultTextOptions);
   const { setActiveSubMenu } = useAppContext();
@@ -30,7 +30,7 @@ const TextProperties = () => {
   React.useEffect(() => {
     if (activeObject) {
       const textOptions = getTextOptions(activeObject);
-      const isGroup = textOptions.isGroup;
+      const { isGroup } = textOptions;
       const active = textOptions.fontFamily.split('__')[1];
       const font = fonts.find(f => f.family === textOptions.fontFamily.split('__')[0].split('_').join(' '));
       if (!font) {
@@ -146,6 +146,6 @@ const TextProperties = () => {
       </div>
     </div>
   );
-};
+}
 
 export default TextProperties;
