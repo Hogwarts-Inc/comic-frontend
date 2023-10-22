@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 
 import { useEditor, useZoomRatio } from '@layerhub-io/react';
 import { styled } from 'baseui';
@@ -9,6 +9,8 @@ import { Input } from 'baseui/input';
 import { Slider } from 'baseui/slider';
 import { PLACEMENT } from 'baseui/toast';
 import { StatefulTooltip } from 'baseui/tooltip';
+
+import { DesignEditorContext } from 'src/contexts/DesignEditor';
 
 import { ButtonContainer } from './styles';
 import Icons from '../../../../../components/Icons';
@@ -33,6 +35,8 @@ function Common() {
   });
   const editor = useEditor();
   const zoomRatio: number = useZoomRatio();
+  const { setScenes, setCurrentScene, currentScene, scenes } = useContext(DesignEditorContext);
+
   useEffect(() => {
     setOptions(currentOptions => ({ ...currentOptions, zoomRatio: Math.round(zoomRatio * 100) }));
   }, [zoomRatio]);
@@ -56,6 +60,41 @@ function Common() {
     }
   };
 
+  const { isUndoEnable, isRedoEnable } = useMemo(() => {
+    const sceneFound = scenes.find(scene => scene.history[scene.scenePosition].id === currentScene?.id) || {
+      history: [currentScene],
+      scenePosition: 0,
+    };
+
+    return {
+      isRedoEnable: sceneFound?.history.length > sceneFound.scenePosition + 1,
+      isUndoEnable: sceneFound.history[sceneFound.scenePosition - 1]?.name && sceneFound?.scenePosition > 0,
+    };
+  }, [currentScene, scenes]);
+
+  const moveHistory = (newPosition: 1 | -1) => {
+    if (editor) {
+      let newCurrentScene = currentScene;
+      const newScene = scenes.map(scene => {
+        if (currentScene?.id === scene.history[scene.scenePosition].id) {
+          newCurrentScene = scene.history[scene.scenePosition + newPosition];
+          return { ...scene, scenePosition: scene.scenePosition + newPosition };
+        }
+        return scene;
+      });
+      setScenes(newScene);
+      setCurrentScene(newCurrentScene);
+    }
+  };
+
+  const handleRedo = () => {
+    moveHistory(1);
+  };
+
+  const handleUndo = () => {
+    moveHistory(-1);
+  };
+
   return (
     <Container>
       <ButtonContainer>
@@ -68,11 +107,7 @@ function Common() {
           <Icons.Compress size={16} />
         </Button>
         <Block>
-          <StatefulTooltip
-            placement={PLACEMENT.bottom}
-            showArrow
-            accessibilityType="tooltip"
-            content="Zoom Out">
+          <StatefulTooltip placement={PLACEMENT.bottom} showArrow accessibilityType="tooltip" content="Zoom Out">
             <Button kind={KIND.tertiary} size={SIZE.compact} onClick={() => editor.zoom.zoomOut()}>
               <Icons.RemoveCircleOutline size={24} />
             </Button>
@@ -106,11 +141,7 @@ function Common() {
           max={zoomMax}
         />
         <Block>
-          <StatefulTooltip
-            placement={PLACEMENT.bottom}
-            showArrow
-            accessibilityType="tooltip"
-            content="Zoom Out">
+          <StatefulTooltip placement={PLACEMENT.bottom} showArrow accessibilityType="tooltip" content="Zoom Out">
             <Button kind={KIND.tertiary} size={SIZE.compact} onClick={() => editor.zoom.zoomIn()}>
               <Icons.AddCircleOutline size={24} />
             </Button>
@@ -159,10 +190,10 @@ function Common() {
         />
       </ButtonContainer>
       <ButtonContainer>
-        <Button kind={KIND.tertiary} size={SIZE.compact}>
+        <Button kind={KIND.tertiary} size={SIZE.compact} onClick={handleUndo} disabled={!isUndoEnable}>
           <Icons.Undo size={22} />
         </Button>
-        <Button kind={KIND.tertiary} size={SIZE.compact}>
+        <Button kind={KIND.tertiary} size={SIZE.compact} onClick={handleRedo} disabled={!isRedoEnable}>
           <Icons.Redo size={22} />
         </Button>
       </ButtonContainer>

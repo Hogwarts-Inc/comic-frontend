@@ -37,25 +37,33 @@ function Scenes() {
 
   useEffect(() => {
     if (editor && scenes && currentScene) {
-      const isCurrentSceneLoaded = scenes.find(
+      const currentSceneLoaded = scenes.find(
         ({ history, scenePosition }) => history[scenePosition].id === currentScene?.id,
       );
-      if (!isCurrentSceneLoaded) {
+      if (!currentSceneLoaded) {
         setCurrentScene(scenes[0].history[scenes[0].scenePosition]);
       }
     }
   }, [editor, scenes, currentScene, setCurrentScene]);
   const watcher = useCallback(async () => {
     const updatedTemplate = editor.scene.exportToJSON();
-    const updatedPreview = (await editor.renderer.render(updatedTemplate)) as string;
-    const updatedPages = scenes.map(p => {
-      if (p.history[p.scenePosition].id === updatedTemplate.id) {
-        const newHistory = [...p.history];
-        newHistory[p.scenePosition] = { ...updatedTemplate, preview: updatedPreview };
-        return { ...p, history: newHistory };
-      }
-      return p;
-    });
+
+    const updatedPages = await Promise.all(
+      scenes.map(async p => {
+        if (p.history[p.scenePosition].id === updatedTemplate.id) {
+          const needToPushNewHistory =
+            JSON.stringify(p.history[p.scenePosition].layers) !== JSON.stringify(updatedTemplate.layers);
+          if (needToPushNewHistory) {
+            const position = p.scenePosition + 1;
+            const updatedPreview = (await editor.renderer.render(updatedTemplate)) as string;
+            const newHistory = p.history.slice(0, needToPushNewHistory ? position : p.history.length);
+            newHistory[position] = { ...updatedTemplate, preview: updatedPreview };
+            return { scenePosition: position, history: newHistory };
+          }
+        }
+        return p;
+      }),
+    );
     setScenes(updatedPages);
   }, [editor, scenes, setScenes]);
 
