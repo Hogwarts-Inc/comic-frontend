@@ -14,7 +14,7 @@ interface Options {
   enabled: boolean;
 }
 
-const Gradient = () => {
+function Gradient() {
   const editor = useEditor();
   const activeObject = useActiveObject();
   const [options, setOptions] = React.useState<Options>({
@@ -34,10 +34,8 @@ const Gradient = () => {
           fill: '#000000',
         });
       }
-    } else {
-      if (options.enabled) {
-        editor.objects.setGradient({ ...options, [key]: value });
-      }
+    } else if (options.enabled) {
+      editor.objects.setGradient({ ...options, [key]: value });
     }
   };
   const initialOptions = {
@@ -49,22 +47,21 @@ const Gradient = () => {
   const getGradientOptions = (object: any) => {
     const isNotGradient = typeof object?.fill === 'string' || object?.fill instanceof String;
     if (!isNotGradient) {
-      const colorStops = object.fill.colorStops;
+      const { colorStops } = object.fill;
       const colors = [colorStops[0].color, colorStops[1].color];
       return {
         angle: 0,
         colors: colors,
         enabled: true,
       };
-    } else {
-      return initialOptions;
     }
+    return initialOptions;
   };
 
   React.useEffect(() => {
     if (activeObject) {
-      const initialOptions = getGradientOptions(activeObject);
-      setOptions({ ...options, ...initialOptions });
+      const initialOptionsEffect = getGradientOptions(activeObject);
+      setOptions({ ...options, ...initialOptionsEffect });
     }
   }, [activeObject]);
 
@@ -223,5 +220,5 @@ const Gradient = () => {
       </div>
     </div>
   );
-};
+}
 export default Gradient;

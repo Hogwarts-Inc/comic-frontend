@@ -14,7 +14,7 @@ import LazyLoadImage from '../../../../../components/LazyLoadImage';
 import Scrollable from '../../../../../components/Scrollable';
 import api from '../../../../../services/api';
 
-const Pixabay = () => {
+function Pixabay() {
   const editor = useEditor();
   const [hasMore, setHasMore] = React.useState(true);
   const [images, setImages] = useState<IStaticImage[]>([]);
@@ -71,7 +71,7 @@ const Pixabay = () => {
     fetchData(true);
   };
   return (
-    <Block flex={1} flexDirection="column" display={'flex'}>
+    <Block flex={1} flexDirection="column" display="flex">
       <Block
         $style={{
           display: 'flex',
@@ -99,12 +99,12 @@ const Pixabay = () => {
           value={category}
           onChange={e => setCategory(e.target.value)}
           placeholder="Search"
-          size={'compact'}
+          size="compact"
           startEnhancer={<Search size={16} />}
         />
       </Block>
       <Scrollable>
-        <Block padding={'0 1.5rem'}>
+        <Block padding="0 1.5rem">
           <InfiniteScrolling fetchData={fetchData} hasMore={hasMore}>
             <Block
               style={{
@@ -134,6 +134,6 @@ const Pixabay = () => {
       </Scrollable>
     </Block>
   );
-};
+}
 
 export default Pixabay;

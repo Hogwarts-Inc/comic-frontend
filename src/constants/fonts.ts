@@ -22,7 +22,7 @@ export const editorFonts = [
 ];
 
 export const fontStyleLabels: { [key: string]: { id: number; label: string } } = {
-  '100': {
+  100: {
     id: 0,
     label: 'Thin',
   },
@@ -30,7 +30,7 @@ export const fontStyleLabels: { [key: string]: { id: number; label: string } } =
     id: 1,
     label: 'Thin Italic',
   },
-  '200': {
+  200: {
     id: 2,
     label: 'ExtraLight',
   },
@@ -38,7 +38,7 @@ export const fontStyleLabels: { [key: string]: { id: number; label: string } } =
     id: 3,
     label: 'ExtraLight Italic',
   },
-  '300': {
+  300: {
     id: 4,
     label: 'Light',
   },
@@ -54,7 +54,7 @@ export const fontStyleLabels: { [key: string]: { id: number; label: string } } =
     id: 7,
     label: 'Regular Italic',
   },
-  '500': {
+  500: {
     id: 8,
     label: 'Medium',
   },
@@ -62,7 +62,7 @@ export const fontStyleLabels: { [key: string]: { id: number; label: string } } =
     id: 9,
     label: 'Medium Italic',
   },
-  '600': {
+  600: {
     id: 10,
     label: 'SemiBold',
   },
@@ -70,7 +70,7 @@ export const fontStyleLabels: { [key: string]: { id: number; label: string } } =
     id: 11,
     label: 'SemiBold Italic',
   },
-  '700': {
+  700: {
     id: 12,
     label: 'Bold',
   },
@@ -78,7 +78,7 @@ export const fontStyleLabels: { [key: string]: { id: number; label: string } } =
     id: 13,
     label: 'Bold Italic',
   },
-  '800': {
+  800: {
     id: 14,
     label: 'ExtraBold',
   },
@@ -86,7 +86,7 @@ export const fontStyleLabels: { [key: string]: { id: number; label: string } } =
     id: 15,
     label: 'ExtraBold Italic',
   },
-  '900': {
+  900: {
     id: 16,
     label: 'Black',
   },

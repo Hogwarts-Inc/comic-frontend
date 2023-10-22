@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { useEditor } from '@layerhub-io/react';
 import { IScene } from '@layerhub-io/types';
@@ -25,7 +25,7 @@ const Container = styled('div', ({ $theme }) => ({
   alignItems: 'center',
 }));
 
-const Navbar = () => {
+function Navbar() {
   const { setDisplayPreview, setScenes, setCurrentDesign, currentDesign, scenes } = useDesignEditorContext();
   const editor = useEditor();
   const inputFileRef = React.useRef<HTMLInputElement>(null);
@@ -41,7 +41,8 @@ const Navbar = () => {
   const parseGraphicJSON = () => {
     const currentScene = editor.scene.exportToJSON();
 
-    const updatedScenes = scenes.map(scn => {
+    const updatedScenes = scenes.map(({ history, scenePosition }) => {
+      const scn = history[scenePosition];
       if (scn.id === currentScene.id) {
         return {
           id: currentScene.id,
@@ -75,12 +76,12 @@ const Navbar = () => {
 
   const makeDownloadTemplate = async () => {
     if (editor) {
-      return parseGraphicJSON();
+      parseGraphicJSON();
     }
   };
 
   const loadGraphicTemplate = async (payload: IDesign) => {
-    const scenes = [];
+    const newScenes = [];
     const { scenes: scns, ...design } = payload;
 
     for (const scn of scns) {
@@ -95,18 +96,18 @@ const Navbar = () => {
       await loadTemplateFonts(loadedScene);
 
       const preview = (await editor.renderer.render(loadedScene)) as string;
-      scenes.push({ ...loadedScene, preview });
+      newScenes.push({ ...loadedScene, preview });
     }
 
-    return { scenes, design };
+    return { scenes: newScenes, design };
   };
 
-  const handleImportTemplate = React.useCallback(
+  const handleImportTemplate = useCallback(
     async (data: any) => {
       const template = await loadGraphicTemplate(data);
 
       if (template) {
-        setScenes(template.scenes);
+        setScenes(template.scenes.map(scene => ({ history: [scene], scenePosition: 0 })));
         setCurrentDesign({ ...template.design, scenes: [] });
       }
     },
@@ -209,6 +210,6 @@ const Navbar = () => {
       </Container>
     </ThemeProvider>
   );
-};
+}
 
 export default Navbar;

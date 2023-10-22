@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 

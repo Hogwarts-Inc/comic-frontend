@@ -2,25 +2,25 @@
 import { IScene, ILayer } from '@layerhub-io/types';
 
 export const loadVideoResource = (videoSrc: string): Promise<HTMLVideoElement> =>
-  new Promise(function (resolve, reject) {
+  new Promise((resolve, reject) => {
     const video = document.createElement('video');
     video.src = videoSrc;
     video.crossOrigin = 'anonymous';
-    video.addEventListener('loadedmetadata', function () {
+    video.addEventListener('loadedmetadata', () => {
       video.currentTime = 1;
     });
 
-    video.addEventListener('seeked', function () {
+    video.addEventListener('seeked', () => {
       resolve(video);
     });
 
-    video.addEventListener('error', function (error) {
+    video.addEventListener('error', (error) => {
       reject(error);
     });
   });
 
 export const captureFrame = (video: HTMLVideoElement): Promise<string> =>
-  new Promise(function (resolve) {
+  new Promise((resolve) => {
     const canvas = document.createElement('canvas') as HTMLCanvasElement;
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;

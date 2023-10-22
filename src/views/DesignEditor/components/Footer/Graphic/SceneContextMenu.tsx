@@ -10,7 +10,7 @@ import { getDefaultTemplate } from '../../../../../constants/design-editor';
 import useDesignEditorContext from '../../../../../hooks/useDesignEditorContext';
 import useOnClickOutside from '../../../../../hooks/useOnClickOutside';
 
-const SceneContextMenu = () => {
+function SceneContextMenu() {
   const {
     scenes,
     setScenes,
@@ -32,10 +32,12 @@ const SceneContextMenu = () => {
   };
 
   const makeDeleteScene = async () => {
-    const updatedScenes = scenes.filter(scene => scene.id !== contextMenuTimelineRequest.id);
+    const updatedScenes = scenes.filter(
+      ({ history, scenePosition }) => history[scenePosition].id !== contextMenuTimelineRequest.id,
+    );
 
     setContextMenuTimelineRequest({ ...contextMenuTimelineRequest, visible: false });
-    if (updatedScenes[0]) {
+    if (updatedScenes.length) {
       setScenes(updatedScenes);
     } else {
       const defaultTemplate = getDefaultTemplate({
@@ -54,21 +56,27 @@ const SceneContextMenu = () => {
         type: 'VIDEO',
         published: false,
       });
-      const initialDesign = editor.scene.exportToJSON() as any;
-      const preview = await editor.renderer.render(initialDesign);
+      const initialDesign = editor.scene.exportToJSON();
+      const preview = (await editor.renderer.render(initialDesign)) as string;
       setCurrentScene({ ...initialDesign, preview: preview, duration: 5000 });
-      setScenes([{ ...initialDesign, preview: preview, duration: 5000 }]);
+      setScenes([{ history: [{ ...initialDesign, preview: preview, duration: 5000 }], scenePosition: 0 }]);
     }
   };
 
   const makeDuplicateScene = () => {
-    const currentScene = scenes.find(scene => scene.id === contextMenuTimelineRequest.id);
-    const updatedScenes = [...scenes, { ...currentScene, id: nanoid() }];
-    //  @ts-ignore
-    setScenes(updatedScenes);
+    const currentScene = scenes.find(
+      ({ history, scenePosition }) => history[scenePosition].id === contextMenuTimelineRequest.id,
+    );
+    if (currentScene) {
+      const id = nanoid();
+      currentScene.history = currentScene.history.map(scene => ({ ...scene, id }));
+      const updatedScenes = [...scenes, currentScene];
+      setScenes(updatedScenes);
+    }
+
     setContextMenuTimelineRequest({ ...contextMenuTimelineRequest, visible: false });
   };
-  console.log({ contextMenuTimelineRequest });
+
   return (
     <Block
       ref={ref}
@@ -114,6 +122,6 @@ const SceneContextMenu = () => {
       </Block>
     </Block>
   );
-};
+}
 
 export default SceneContextMenu;

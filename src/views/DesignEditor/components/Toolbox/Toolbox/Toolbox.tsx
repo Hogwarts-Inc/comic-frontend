@@ -6,6 +6,7 @@ import { ILayer } from '@layerhub-io/types';
 import { useTranslation } from 'react-i18next';
 
 import Button from '@components/Button';
+import useDesignEditorContext from 'src/hooks/useDesignEditorContext';
 import { apisCanvas } from 'src/services/apiConfig';
 
 import { ButtonsContainer, ButtonsSeparator, Container } from './styles';
@@ -16,9 +17,10 @@ import Items from '../Items';
 interface ToolboxState {
   toolbox: string;
 }
-const Toolbox = () => {
+function Toolbox() {
   const [state, setState] = useState<ToolboxState>({ toolbox: '' });
   const { setActiveSubMenu } = useAppContext();
+  const { scenes } = useDesignEditorContext();
   const activeObject = useActiveObject() as ILayer;
   const editor = useEditor();
   const { t } = useTranslation();
@@ -63,10 +65,10 @@ const Toolbox = () => {
   const uploadCanva = async () => {
     setIsSaveLoading(true);
     try {
-      if (editor) {
-        const currentScene = editor.scene.exportToJSON();
-        const updatedPreview = (await editor.renderer.render(currentScene)) as string;
-        await apisCanvas.postCanva({ chapter_id: 1, image: updatedPreview });
+      for (const { history, scenePosition } of scenes || []) {
+        if (history[scenePosition].preview) {
+          await apisCanvas.postCanva({ chapter_id: 1, image: history[scenePosition].preview as string });
+        }
       }
     } catch (e) {
       // TODO handle error
@@ -88,6 +90,6 @@ const Toolbox = () => {
       </ButtonsContainer>
     </Container>
   );
-};
+}
 
 export default Toolbox;

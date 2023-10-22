@@ -8,7 +8,7 @@ import Common from './Common';
 import Flip from './Shared/Flip';
 import useAppContext from '../../../../hooks/useAppContext';
 
-const Path = () => {
+function Path() {
   const [state, setState] = React.useState({ fill: '#000000' });
   const { setActiveSubMenu } = useAppContext();
   const editor = useEditor();
@@ -70,6 +70,6 @@ const Path = () => {
       <Common />
     </Block>
   );
-};
+}
 
 export default Path;

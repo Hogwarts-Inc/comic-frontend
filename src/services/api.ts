@@ -1,3 +1,4 @@
+/* eslint-disable no-async-promise-executor */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosInstance } from 'axios';
 
@@ -11,6 +12,7 @@ type Template = any;
 
 class ApiService {
   base: AxiosInstance;
+
   constructor() {
     this.base = axios.create({
       baseURL: 'https://layerhub-api.up.railway.app/api',
@@ -219,6 +221,7 @@ class ApiService {
       }
     });
   }
+
   updateCreation(id: string, props: Partial<Template>): Promise<Template> {
     return new Promise((resolve, reject) => {
       this.base
@@ -241,6 +244,7 @@ class ApiService {
       }
     });
   }
+
   updateTemplate(id: string, props: Partial<Template>): Promise<Template> {
     return new Promise((resolve, reject) => {
       this.base

@@ -16,12 +16,6 @@ export default function LazyLoadImage({ url }: { url: string }) {
     };
   }, []);
   return (
-    <>
-      {state.image ? (
-        <img src={url} style={{ height: '180px' }} alt="image" />
-      ) : (
-        <Skeleton height="180px" animation />
-      )}
-    </>
+    <>{state.image ? <img src={url} style={{ height: '180px' }} alt="url" /> : <Skeleton height="180px" animation />}</>
   );
 }

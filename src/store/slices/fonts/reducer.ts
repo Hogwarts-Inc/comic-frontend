@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-plusplus */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { createReducer } from '@reduxjs/toolkit';
 
@@ -30,7 +32,7 @@ function fuzzySearch(items: IFontFamily[], query: string) {
         matches++;
       }
     });
-    if (matches == search.length) {
+    if (matches === search.length) {
       // console.log(i, found, 'was found');
       // @ts-ignore
       found.push(i);

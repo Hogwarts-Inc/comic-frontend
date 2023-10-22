@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import { DndContext, closestCenter, PointerSensor, useSensor, DragOverlay } from '@dnd-kit/core';
 import { restrictToFirstScrollableAncestor, restrictToHorizontalAxis } from '@dnd-kit/modifiers';
@@ -14,19 +14,17 @@ import SceneContextMenu from './SceneContextMenu';
 import SceneItem from './SceneItem';
 import Add from '../../../../../components/Icons/Add';
 import { getDefaultTemplate } from '../../../../../constants/design-editor';
-import { DesignEditorContext } from '../../../../../contexts/DesignEditor';
+import { DesignEditorContext, ScenesWithPosition } from '../../../../../contexts/DesignEditor';
 import useContextMenuTimelineRequest from '../../../../../hooks/useContextMenuTimelineRequest';
 import useDesignEditorPages from '../../../../../hooks/useDesignEditorScenes';
 
-const Scenes = () => {
+function Scenes() {
   const scenes = useDesignEditorPages();
-  const { setScenes, setCurrentScene, currentScene, setCurrentDesign, currentDesign } =
-    React.useContext(DesignEditorContext);
+  const { setScenes, setCurrentScene, currentScene, setCurrentDesign, currentDesign } = useContext(DesignEditorContext);
   const editor = useEditor();
   const [css] = useStyletron();
-  const [currentPreview, setCurrentPreview] = React.useState('');
   const frame = useFrame();
-  const [draggedScene, setDraggedScene] = React.useState<IScene | null>(null);
+  const [draggedScene, setDraggedScene] = useState<IScene | null>(null);
   const contextMenuTimelineRequest = useContextMenuTimelineRequest();
 
   const sensors = [
@@ -37,21 +35,39 @@ const Scenes = () => {
     }),
   ];
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (editor && scenes && currentScene) {
-      const isCurrentSceneLoaded = scenes.find(s => s.id === currentScene?.id);
-      if (!isCurrentSceneLoaded) {
-        setCurrentScene(scenes[0]);
+      const currentSceneLoaded = scenes.find(
+        ({ history, scenePosition }) => history[scenePosition].id === currentScene?.id,
+      );
+      if (!currentSceneLoaded) {
+        setCurrentScene(scenes[0].history[scenes[0].scenePosition]);
       }
     }
-  }, [editor, scenes, currentScene]);
+  }, [editor, scenes, currentScene, setCurrentScene]);
+  const watcher = useCallback(async () => {
+    const updatedTemplate = editor.scene.exportToJSON();
 
-  React.useEffect(() => {
-    const watcher = async () => {
-      const updatedTemplate = editor.scene.exportToJSON();
-      const updatedPreview = (await editor.renderer.render(updatedTemplate)) as string;
-      setCurrentPreview(updatedPreview);
-    };
+    const updatedPages = await Promise.all(
+      scenes.map(async p => {
+        if (p.history[p.scenePosition].id === updatedTemplate.id) {
+          const needToPushNewHistory =
+            JSON.stringify(p.history[p.scenePosition].layers) !== JSON.stringify(updatedTemplate.layers);
+          if (needToPushNewHistory) {
+            const position = p.scenePosition + 1;
+            const updatedPreview = (await editor.renderer.render(updatedTemplate)) as string;
+            const newHistory = p.history.slice(0, needToPushNewHistory ? position : p.history.length);
+            newHistory[position] = { ...updatedTemplate, preview: updatedPreview };
+            return { scenePosition: position, history: newHistory };
+          }
+        }
+        return p;
+      }),
+    );
+    setScenes(updatedPages);
+  }, [editor, scenes, setScenes]);
+
+  useEffect(() => {
     if (editor) {
       editor.on('history:changed', watcher);
     }
@@ -60,18 +76,16 @@ const Scenes = () => {
         editor.off('history:changed', watcher);
       }
     };
-  }, [editor]);
+  }, [editor, watcher]);
 
   const updateCurrentScene = React.useCallback(
     async (design: IScene) => {
       await editor.scene.importFromJSON(design);
-      const updatedPreview = (await editor.renderer.render(design)) as string;
-      setCurrentPreview(updatedPreview);
     },
-    [editor, currentScene],
+    [editor],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (editor) {
       if (currentScene) {
         updateCurrentScene(currentScene);
@@ -93,62 +107,30 @@ const Scenes = () => {
         editor.scene
           .importFromJSON(defaultTemplate)
           .then(() => {
-            const initialDesign = editor.scene.exportToJSON() as any;
+            const initialDesign = editor.scene.exportToJSON();
             editor.renderer.render(initialDesign).then(data => {
-              setCurrentScene({ ...initialDesign, preview: data });
-              setScenes([{ ...initialDesign, preview: data }]);
+              setCurrentScene({ ...initialDesign, preview: data as string });
+              setScenes([{ history: [{ ...initialDesign, preview: data as string }], scenePosition: 0 }]);
             });
           })
           .catch(console.log);
       }
     }
-  }, [editor, currentScene]);
+  }, [editor, currentScene, setCurrentDesign, setCurrentScene, setScenes, updateCurrentScene]);
 
-  const addScene = React.useCallback(async () => {
-    setCurrentPreview('');
-    const updatedTemplate = editor.scene.exportToJSON();
-    const updatedPreview = await editor.renderer.render(updatedTemplate);
-
-    const updatedPages = scenes.map(p => {
-      if (p.id === updatedTemplate.id) {
-        return { ...updatedTemplate, preview: updatedPreview };
-      }
-      return p;
-    });
-
+  const addScene = useCallback(async () => {
     const defaultTemplate = getDefaultTemplate(currentDesign.frame);
-    const newPreview = await editor.renderer.render(defaultTemplate);
-    const newPage = { ...defaultTemplate, id: nanoid(), preview: newPreview } as any;
-    const newPages = [...updatedPages, newPage] as any[];
+    const newPreview = (await editor.renderer.render(defaultTemplate)) as string;
+    const newPage = { ...defaultTemplate, id: nanoid(), preview: newPreview };
+    const newPages: ScenesWithPosition = [...scenes, { history: [newPage], scenePosition: 0 }];
     setScenes(newPages);
     setCurrentScene(newPage);
-  }, [scenes, currentDesign]);
-
-  const changePage = React.useCallback(
-    async (page: any) => {
-      setCurrentPreview('');
-      if (editor) {
-        const updatedTemplate = editor.scene.exportToJSON();
-        const updatedPreview = await editor.renderer.render(updatedTemplate);
-
-        const updatedPages = scenes.map(p => {
-          if (p.id === updatedTemplate.id) {
-            return { ...updatedTemplate, preview: updatedPreview };
-          }
-          return p;
-        }) as any[];
-
-        setScenes(updatedPages);
-        setCurrentScene(page);
-      }
-    },
-    [editor, scenes, currentScene],
-  );
+  }, [editor, scenes, currentDesign, setScenes, setCurrentScene]);
 
   const handleDragStart = (event: any) => {
-    const draggedScene = scenes.find(s => s.id === event.active.id);
-    if (draggedScene) {
-      setDraggedScene(draggedScene);
+    const newDraggedScene = scenes.find(({ history, scenePosition }) => history[scenePosition].id === event.active.id);
+    if (newDraggedScene) {
+      setDraggedScene(newDraggedScene.history[newDraggedScene.scenePosition]);
     }
   };
 
@@ -157,8 +139,8 @@ const Scenes = () => {
 
     if (active.id !== over.id) {
       setScenes(items => {
-        const oldIndex = items.findIndex(item => item.id === active.id);
-        const newIndex = items.findIndex(item => item.id === over.id);
+        const oldIndex = items.findIndex(({ history, scenePosition }) => history[scenePosition].id === active.id);
+        const newIndex = items.findIndex(({ history, scenePosition }) => history[scenePosition].id === over.id);
 
         return arrayMove(items, oldIndex, newIndex);
       });
@@ -179,17 +161,17 @@ const Scenes = () => {
         <div className={css({ display: 'flex', alignItems: 'center' })}>
           {contextMenuTimelineRequest.visible && <SceneContextMenu />}
 
-          <SortableContext items={scenes} strategy={horizontalListSortingStrategy}>
-            {scenes.map((page, index) => (
+          <SortableContext
+            items={scenes.map(({ history, scenePosition }) => history[scenePosition])}
+            strategy={horizontalListSortingStrategy}>
+            {scenes.map(({ history, scenePosition }, index) => (
               <SceneItem
-                key={index}
-                isCurrentScene={page.id === currentScene?.id}
-                scene={page}
+                key={history[scenePosition].id}
+                isCurrentScene={history[scenePosition].id === currentScene?.id}
+                scene={history[scenePosition]}
                 index={index}
-                changePage={changePage}
-                preview={
-                  currentPreview && page.id === currentScene?.id ? currentPreview : page.preview ? page.preview : ''
-                }
+                changePage={setCurrentScene}
+                preview={history[scenePosition]?.preview || ''}
               />
             ))}
             {scenes.length < 3 && (
@@ -230,6 +212,6 @@ const Scenes = () => {
       </Block>
     </DndContext>
   );
-};
+}
 
 export default Scenes;

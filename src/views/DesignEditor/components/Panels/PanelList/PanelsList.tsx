@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 
@@ -8,7 +10,7 @@ import { ButtonsContainer, Container, SubContainer, WhiteContainer } from './sty
 import Scrollable from '../../../../../components/Scrollable';
 import { BASE_ITEMS, PanelType } from '../../../../../constants/app-options';
 
-const PanelsList = () => {
+function PanelsList() {
   const { t } = useTranslation();
   const { back } = useRouter();
   return (
@@ -18,7 +20,7 @@ const PanelsList = () => {
       </div>
       <WhiteContainer>
         <SubContainer>
-          <Scrollable autoHide={true}>
+          <Scrollable autoHide>
             <ButtonsContainer>
               {BASE_ITEMS.map(panelListItem => (
                 <PanelListItem
@@ -34,6 +36,6 @@ const PanelsList = () => {
       </WhiteContainer>
     </Container>
   );
-};
+}
 
 export default PanelsList;

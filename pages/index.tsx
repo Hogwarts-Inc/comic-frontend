@@ -7,7 +7,7 @@ import { Footer } from '@components/Footer';
 import { TopBar } from '@components/TopBar';
 import { Route } from 'src/constants/routes';
 
-const Home = () => {
+function Home() {
   const { push } = useRouter();
   return (
     <div
@@ -28,6 +28,6 @@ const Home = () => {
       <Footer />
     </div>
   );
-};
+}
 
 export default Home;

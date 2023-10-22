@@ -1,3 +1,5 @@
+import React from 'react';
+
 /* eslint-disable max-len */
 function InformationCircleOutline({ size }: { size: number }) {
   return (

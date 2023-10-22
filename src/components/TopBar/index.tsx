@@ -9,7 +9,7 @@ interface TopBarProps {
   isAuthenticated: boolean;
 }
 
-export const TopBar = ({ isAuthenticated }: TopBarProps) => {
+export function TopBar({ isAuthenticated }: TopBarProps) {
   const [anchorMenuUser, setAnchorMenuUser] = useState<null | HTMLElement>(null);
   const { t } = useTranslation();
 
@@ -73,4 +73,4 @@ export const TopBar = ({ isAuthenticated }: TopBarProps) => {
       </Grid>
     </Grid>
   );
-};
+}

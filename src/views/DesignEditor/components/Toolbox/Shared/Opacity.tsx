@@ -12,7 +12,7 @@ import { StatefulTooltip } from 'baseui/tooltip';
 
 import OpacityIcon from '../../../../../components/Icons/Opacity';
 
-const Opacity = () => {
+function Opacity() {
   const editor = useEditor();
   const [state, setState] = React.useState<{
     opacity: number;
@@ -37,7 +37,7 @@ const Opacity = () => {
     }
   };
   const applyTextOpacity = (type: string, e: any) => {
-    const value = e.target.value;
+    const { value } = e.target;
     if (editor) {
       if (value === '') {
         setState({ ...state, opacity: state.opacity, opacityTemp: state.opacity });
@@ -55,11 +55,11 @@ const Opacity = () => {
   return (
     <StatefulPopover
       placement={PLACEMENT.bottomLeft}
-      content={() => (
-        <Block width={'200px'} backgroundColor={'#ffffff'} padding={'20px'}>
+      content={
+        <Block width="200px" backgroundColor="#ffffff" padding="20px">
           <Block $style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Block $style={{ fontSize: '14px' }}>Opacity</Block>
-            <Block width={'52px'}></Block>
+            <Block width="52px" />
           </Block>
 
           <Block $style={{ display: 'grid', gridTemplateColumns: '1fr 40px', gap: '1rem' }}>
@@ -113,7 +113,7 @@ const Opacity = () => {
                   },
                 }}
                 size={SIZE.mini}
-                type={'number'}
+                type="number"
                 inputMode="decimal"
                 pattern="[0-9]*(.[0-9]+)?"
                 onChange={e => handleChange('opacityTemp', parseFloat(e.target.value))}
@@ -123,9 +123,9 @@ const Opacity = () => {
             </Block>
           </Block>
         </Block>
-      )}>
+      }>
       <Block>
-        <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={'tooltip'} content="Opacity">
+        <StatefulTooltip placement={PLACEMENT.bottom} showArrow accessibilityType="tooltip" content="Opacity">
           <Button kind={KIND.tertiary} size={SIZE.mini}>
             <OpacityIcon size={24} />
           </Button>
@@ -133,6 +133,6 @@ const Opacity = () => {
       </Block>
     </StatefulPopover>
   );
-};
+}
 
 export default Opacity;

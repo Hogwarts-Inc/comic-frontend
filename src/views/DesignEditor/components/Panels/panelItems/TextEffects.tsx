@@ -77,7 +77,7 @@ const EFFECTS = {
     },
   },
 };
-const TextEffects = () => {
+function TextEffects() {
   const editor = useEditor();
 
   const applyEffect = (name: string) => {
@@ -108,8 +108,8 @@ const TextEffects = () => {
       <Scrollable>
         <Block padding="0 1.5rem">
           <Block $style={{ display: 'grid', gridTemplateColumns: '80px 80px 80px', gap: '0.5rem' }}>
-            {TEXT_EFFECTS.map((effect, index) => (
-              <Block style={{ cursor: 'pointer' }} key={index}>
+            {TEXT_EFFECTS.map(effect => (
+              <Block style={{ cursor: 'pointer' }} key={effect.id}>
                 <Block
                   onClick={() => applyEffect(effect.name)}
                   $style={{
@@ -119,7 +119,7 @@ const TextEffects = () => {
                     justifyContent: 'center',
                     height: '80px',
                   }}>
-                  <img style={{ width: '70px' }} src={effect.preview} />
+                  <img style={{ width: '70px' }} src={effect.preview} alt={`${effect.name}`} />
                 </Block>
                 <Block
                   $style={{
@@ -140,6 +140,6 @@ const TextEffects = () => {
       </Scrollable>
     </Block>
   );
-};
+}
 
 export default TextEffects;

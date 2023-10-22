@@ -1,11 +1,9 @@
+import React from 'react';
+
 /* eslint-disable max-len */
 function Spacing({ size }: { size: number }) {
   return (
-    <svg
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg">
+    <svg height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M21 6.7959H10.5V8.2959H21V6.7959Z" fill="currentColor" />
       <path d="M21 12.0459H10.5V13.5459H21V12.0459Z" fill="currentColor" />
       <path d="M21 17.2959H10.5V18.7959H21V17.2959Z" fill="currentColor" />

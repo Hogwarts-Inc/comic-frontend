@@ -1,4 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react';
+
 import Add from './Add';
 import AddCircleOutline from './AddCircleOutline';
 import ArrowBackOutline from './ArrowBackOutline';
@@ -28,7 +31,7 @@ import Undo from './Undo';
 import Uploads from './Uploads';
 import Video from './Video';
 
-const Icons: { [key: string]: (value: any) => JSX.Element } = {
+const Icons: { [key: string]: (value: any) => React.JSX.Element } = {
   Background,
   Elements,
   Text,

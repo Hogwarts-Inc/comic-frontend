@@ -23,7 +23,7 @@ const PRESET_COLORS = [
   '#d9d9d9',
 ];
 
-const TextFill = () => {
+function TextFill() {
   const activeObject = useActiveObject();
   const editor = useEditor();
 
@@ -55,7 +55,7 @@ const TextFill = () => {
           <Block>
             <Block $style={{ padding: '0.75rem 0', fontWeight: 500, fontSize: '14px' }}>Preset colors</Block>
             <Block $style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', gap: '0.25rem' }}>
-              {PRESET_COLORS.map((color, index) => (
+              {PRESET_COLORS.map(color => (
                 <Block
                   $style={{
                     cursor: 'pointer',
@@ -63,7 +63,7 @@ const TextFill = () => {
                   onClick={() => updateObjectFill(color)}
                   backgroundColor={color}
                   height="38px"
-                  key={index}
+                  key={color}
                 />
               ))}
             </Block>
@@ -72,6 +72,6 @@ const TextFill = () => {
       </Scrollable>
     </Block>
   );
-};
+}
 
 export default TextFill;

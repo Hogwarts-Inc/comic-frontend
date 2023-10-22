@@ -23,7 +23,7 @@ const PRESET_COLORS = [
   '#d9d9d9',
 ];
 
-const CanvasFill = () => {
+function CanvasFill() {
   const editor = useEditor();
 
   const updateCanvasBackground = throttle((color: string) => {
@@ -52,7 +52,7 @@ const CanvasFill = () => {
           <Block>
             <Block $style={{ padding: '0.75rem 0', fontWeight: 500, fontSize: '14px' }}>Preset colors</Block>
             <Block $style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', gap: '0.25rem' }}>
-              {PRESET_COLORS.map((color, index) => (
+              {PRESET_COLORS.map(color => (
                 <Block
                   $style={{
                     cursor: 'pointer',
@@ -60,7 +60,7 @@ const CanvasFill = () => {
                   onClick={() => updateCanvasBackground(color)}
                   backgroundColor={color}
                   height="38px"
-                  key={index}
+                  key={color}
                 />
               ))}
             </Block>
@@ -69,6 +69,6 @@ const CanvasFill = () => {
       </Scrollable>
     </Block>
   );
-};
+}
 
 export default CanvasFill;
