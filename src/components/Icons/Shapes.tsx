@@ -1,3 +1,5 @@
+import React from 'react';
+
 /* eslint-disable max-len */
 function Shapes({ size }: { size: number }) {
   return (

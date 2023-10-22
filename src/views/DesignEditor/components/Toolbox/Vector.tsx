@@ -10,7 +10,7 @@ import { HexColorPicker } from 'react-colorful';
 import Common from './Common';
 import Flip from './Shared/Flip';
 
-const Vector = () => {
+function Vector() {
   const [state, setState] = React.useState<{ colors: string[]; colorMap: { [key: string]: string } }>({
     colors: [],
     colorMap: {},
@@ -51,9 +51,9 @@ const Vector = () => {
       <Block>
         <Block $style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <Block $style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            {Object.keys(state.colorMap).map((c, index) => (
+            {Object.keys(state.colorMap).map(c => (
               <StatefulPopover
-                key={index}
+                key={c}
                 placement={PLACEMENT.bottomLeft}
                 content={
                   <div
@@ -97,6 +97,6 @@ const Vector = () => {
       <Common />
     </Block>
   );
-};
+}
 
 export default Vector;

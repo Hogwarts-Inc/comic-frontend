@@ -25,7 +25,7 @@ interface Options {
   zoomRatio: number;
 }
 
-const Common = () => {
+function Common() {
   const zoomMin = 10;
   const zoomMax = 240;
   const [options, setOptions] = React.useState<Options>({
@@ -38,7 +38,7 @@ const Common = () => {
   }, [zoomRatio]);
 
   const applyZoomRatio = (type: string, e: any) => {
-    const value = e.target.value;
+    const { value } = e.target;
     if (editor) {
       if (value === '') {
         setOptions({ ...options, zoomRatio: options.zoomRatio });
@@ -70,8 +70,8 @@ const Common = () => {
         <Block>
           <StatefulTooltip
             placement={PLACEMENT.bottom}
-            showArrow={true}
-            accessibilityType={'tooltip'}
+            showArrow
+            accessibilityType="tooltip"
             content="Zoom Out">
             <Button kind={KIND.tertiary} size={SIZE.compact} onClick={() => editor.zoom.zoomOut()}>
               <Icons.RemoveCircleOutline size={24} />
@@ -108,8 +108,8 @@ const Common = () => {
         <Block>
           <StatefulTooltip
             placement={PLACEMENT.bottom}
-            showArrow={true}
-            accessibilityType={'tooltip'}
+            showArrow
+            accessibilityType="tooltip"
             content="Zoom Out">
             <Button kind={KIND.tertiary} size={SIZE.compact} onClick={() => editor.zoom.zoomIn()}>
               <Icons.AddCircleOutline size={24} />
@@ -168,6 +168,6 @@ const Common = () => {
       </ButtonContainer>
     </Container>
   );
-};
+}
 
 export default Common;

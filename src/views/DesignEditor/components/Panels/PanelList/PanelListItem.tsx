@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import Button from '@components/Button';
 import Icons from '@components/Icons';
@@ -8,7 +8,7 @@ import useSetIsSidebarOpen from 'src/hooks/useSetIsSidebarOpen';
 
 import { ButtonContainer, ButtonText } from './styles';
 
-export const PanelListItem = ({ label, icon, name }: { label: string; icon: string; name: PanelType }) => {
+export function PanelListItem({ label, icon, name }: { label: string; icon: string; name: PanelType }) {
   const { setActivePanel, activePanel } = useAppContext();
   const setIsSidebarOpen = useSetIsSidebarOpen();
   const Icon = useMemo(() => Icons[icon], [icon]);
@@ -22,9 +22,9 @@ export const PanelListItem = ({ label, icon, name }: { label: string; icon: stri
       fullWidth
       style={{ aspectRatio: '1/1' }}>
       <ButtonContainer>
-        <Icon size={'2.25rem'} />
+        <Icon size="2.25rem" />
         <ButtonText>{label}</ButtonText>
       </ButtonContainer>
     </Button>
   );
-};
+}

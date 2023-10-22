@@ -1,10 +1,12 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
 
 interface Props {
   children: React.ReactNode;
   handleDropFiles: (files: FileList) => void;
 }
-const DropZone = ({ children, handleDropFiles }: Props) => {
+function DropZone({ children, handleDropFiles }: Props) {
   const [isDragging, setIsDragging] = useState(false);
   let dragCounter = 0;
   const dropRef = useRef<HTMLDivElement | null>(null);
@@ -17,11 +19,7 @@ const DropZone = ({ children, handleDropFiles }: Props) => {
     e.preventDefault();
     e.stopPropagation();
     dragCounter++;
-    if (
-      e.dataTransfer &&
-      e.dataTransfer.items &&
-      e.dataTransfer.items.length > 0
-    ) {
+    if (e.dataTransfer && e.dataTransfer.items && e.dataTransfer.items.length > 0) {
       setIsDragging(true);
     }
   };
@@ -37,11 +35,7 @@ const DropZone = ({ children, handleDropFiles }: Props) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
-    if (
-      e.dataTransfer &&
-      e.dataTransfer.files &&
-      e.dataTransfer.files.length > 0
-    ) {
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       handleDropFiles(e.dataTransfer.files);
       e.dataTransfer.clearData();
       dragCounter = 0;
@@ -68,9 +62,7 @@ const DropZone = ({ children, handleDropFiles }: Props) => {
   }, []);
 
   return (
-    <div
-      style={{ display: 'flex', height: '100%', position: 'relative', flex: 1 }}
-      ref={dropRef}>
+    <div style={{ display: 'flex', height: '100%', position: 'relative', flex: 1 }} ref={dropRef}>
       {isDragging && (
         <div
           style={{
@@ -91,6 +83,6 @@ const DropZone = ({ children, handleDropFiles }: Props) => {
       {children}
     </div>
   );
-};
+}
 
 export default DropZone;

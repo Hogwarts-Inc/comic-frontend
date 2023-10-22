@@ -14,7 +14,7 @@ import Locked from '../../../../../components/Icons/Locked';
 import Unlocked from '../../../../../components/Icons/Unlocked';
 import Scrollable from '../../../../../components/Scrollable';
 
-const Layers = () => {
+function Layers() {
   const editor = useEditor();
   const objects = useObjects() as ILayer[];
   const [layerObjects, setLayerObjects] = React.useState<any[]>([]);
@@ -157,6 +157,6 @@ const Layers = () => {
       </Scrollable>
     </Block>
   );
-};
+}
 
 export default Layers;

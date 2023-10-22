@@ -1,3 +1,6 @@
+/* eslint-disable react/destructuring-assignment */
+import React from 'react';
+
 import { ButtonProps as ButtonPropsMui } from '@mui/material/Button';
 
 import { ButtonMui, Loader } from './styles';
@@ -9,16 +12,18 @@ interface ButtonProps extends ButtonPropsMui {
   isLoading?: boolean;
 }
 
-const Button = (props: ButtonProps) => (
-  <ButtonMui
-    variant="contained"
-    variantType={props.variantType}
-    size={props.size}
-    {...props}
-    onClick={props.isLoading ? undefined : props.onClick}>
-    {props.isLoading && <Loader />}
-    {props.children}
-  </ButtonMui>
-);
+function Button(props: ButtonProps) {
+  return (
+    <ButtonMui
+      variant="contained"
+      variantType={props.variantType}
+      size={props.size}
+      {...props}
+      onClick={props.isLoading ? undefined : props.onClick}>
+      {props.isLoading && <Loader />}
+      {props.children}
+    </ButtonMui>
+  );
+}
 
 export default Button;

@@ -3,7 +3,7 @@ import React from 'react';
 import { useEditor } from '@layerhub-io/react';
 import { Block } from 'baseui/block';
 
-const Graphic = () => {
+function Graphic() {
   const editor = useEditor();
   const [loading, setLoading] = React.useState(true);
   const [state, setState] = React.useState({
@@ -25,9 +25,9 @@ const Graphic = () => {
 
   return (
     <Block $style={{ flex: 1, alignItems: 'center', justifyContent: 'center', display: 'flex', padding: '5rem' }}>
-      {!loading && <img width="auto" height="100%" src={state.image} />}
+      {!loading && <img width="auto" height="100%" src={state.image} alt="graphic" />}
     </Block>
   );
-};
+}
 
 export default Graphic;

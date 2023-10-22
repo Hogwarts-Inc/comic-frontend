@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { TopBar } from '@components/TopBar';
 import { Route } from 'src/constants/routes';
 
-const Home = () => {
+function Home() {
   const { push } = useRouter();
   return (
     <div
@@ -26,6 +26,6 @@ const Home = () => {
       <Button onClick={() => push(`${Route.visualizer}/1/1`)}>Visualizar</Button>
     </div>
   );
-};
+}
 
 export default Home;

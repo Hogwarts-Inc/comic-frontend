@@ -1,1 +1,2 @@
-export { default as default } from './InfiniteScrolling';
+/* eslint-disable no-restricted-exports */
+export { default } from './InfiniteScrolling';

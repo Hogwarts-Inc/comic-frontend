@@ -14,11 +14,11 @@ import SceneContextMenu from './SceneContextMenu';
 import SceneItem from './SceneItem';
 import Add from '../../../../../components/Icons/Add';
 import { getDefaultTemplate } from '../../../../../constants/design-editor';
-import { DesignEditorContext } from '../../../../../contexts/DesignEditor';
+import { DesignEditorContext, ScenesWithPosition } from '../../../../../contexts/DesignEditor';
 import useContextMenuTimelineRequest from '../../../../../hooks/useContextMenuTimelineRequest';
 import useDesignEditorPages from '../../../../../hooks/useDesignEditorScenes';
 
-const Scenes = () => {
+function Scenes() {
   const scenes = useDesignEditorPages();
   const { setScenes, setCurrentScene, currentScene, setCurrentDesign, currentDesign } = useContext(DesignEditorContext);
   const editor = useEditor();
@@ -37,22 +37,25 @@ const Scenes = () => {
 
   useEffect(() => {
     if (editor && scenes && currentScene) {
-      const isCurrentSceneLoaded = scenes.find(s => s.id === currentScene?.id);
+      const isCurrentSceneLoaded = scenes.find(
+        ({ history, scenePosition }) => history[scenePosition].id === currentScene?.id,
+      );
       if (!isCurrentSceneLoaded) {
-        setCurrentScene(scenes[0]);
+        setCurrentScene(scenes[0].history[scenes[0].scenePosition]);
       }
     }
   }, [editor, scenes, currentScene, setCurrentScene]);
   const watcher = useCallback(async () => {
     const updatedTemplate = editor.scene.exportToJSON();
-    const updatedPreview = await editor.renderer.render(updatedTemplate);
-
+    const updatedPreview = (await editor.renderer.render(updatedTemplate)) as string;
     const updatedPages = scenes.map(p => {
-      if (p.id === updatedTemplate.id) {
-        return { ...updatedTemplate, preview: updatedPreview };
+      if (p.history[p.scenePosition].id === updatedTemplate.id) {
+        const newHistory = [...p.history];
+        newHistory[p.scenePosition] = { ...updatedTemplate, preview: updatedPreview };
+        return { ...p, history: newHistory };
       }
       return p;
-    }) as any[];
+    });
     setScenes(updatedPages);
   }, [editor, scenes, setScenes]);
 
@@ -96,10 +99,10 @@ const Scenes = () => {
         editor.scene
           .importFromJSON(defaultTemplate)
           .then(() => {
-            const initialDesign = editor.scene.exportToJSON() as any;
+            const initialDesign = editor.scene.exportToJSON();
             editor.renderer.render(initialDesign).then(data => {
-              setCurrentScene({ ...initialDesign, preview: data });
-              setScenes([{ ...initialDesign, preview: data }]);
+              setCurrentScene({ ...initialDesign, preview: data as string });
+              setScenes([{ history: [{ ...initialDesign, preview: data as string }], scenePosition: 0 }]);
             });
           })
           .catch(console.log);
@@ -109,17 +112,17 @@ const Scenes = () => {
 
   const addScene = useCallback(async () => {
     const defaultTemplate = getDefaultTemplate(currentDesign.frame);
-    const newPreview = await editor.renderer.render(defaultTemplate);
-    const newPage = { ...defaultTemplate, id: nanoid(), preview: newPreview } as any;
-    const newPages = [...scenes, newPage] as any[];
+    const newPreview = (await editor.renderer.render(defaultTemplate)) as string;
+    const newPage = { ...defaultTemplate, id: nanoid(), preview: newPreview };
+    const newPages: ScenesWithPosition = [...scenes, { history: [newPage], scenePosition: 0 }];
     setScenes(newPages);
     setCurrentScene(newPage);
   }, [editor, scenes, currentDesign, setScenes, setCurrentScene]);
 
   const handleDragStart = (event: any) => {
-    const draggedScene = scenes.find(s => s.id === event.active.id);
-    if (draggedScene) {
-      setDraggedScene(draggedScene);
+    const newDraggedScene = scenes.find(({ history, scenePosition }) => history[scenePosition].id === event.active.id);
+    if (newDraggedScene) {
+      setDraggedScene(newDraggedScene.history[newDraggedScene.scenePosition]);
     }
   };
 
@@ -128,8 +131,8 @@ const Scenes = () => {
 
     if (active.id !== over.id) {
       setScenes(items => {
-        const oldIndex = items.findIndex(item => item.id === active.id);
-        const newIndex = items.findIndex(item => item.id === over.id);
+        const oldIndex = items.findIndex(({ history, scenePosition }) => history[scenePosition].id === active.id);
+        const newIndex = items.findIndex(({ history, scenePosition }) => history[scenePosition].id === over.id);
 
         return arrayMove(items, oldIndex, newIndex);
       });
@@ -150,21 +153,17 @@ const Scenes = () => {
         <div className={css({ display: 'flex', alignItems: 'center' })}>
           {contextMenuTimelineRequest.visible && <SceneContextMenu />}
 
-          <SortableContext items={scenes} strategy={horizontalListSortingStrategy}>
-            {scenes.map((page, index) => (
+          <SortableContext
+            items={scenes.map(({ history, scenePosition }) => history[scenePosition])}
+            strategy={horizontalListSortingStrategy}>
+            {scenes.map(({ history, scenePosition }, index) => (
               <SceneItem
-                key={index}
-                isCurrentScene={page.id === currentScene?.id}
-                scene={page}
+                key={history[scenePosition].id}
+                isCurrentScene={history[scenePosition].id === currentScene?.id}
+                scene={history[scenePosition]}
                 index={index}
                 changePage={setCurrentScene}
-                preview={
-                  currentScene?.preview && page.id === currentScene?.id
-                    ? currentScene.preview
-                    : page.preview
-                    ? page.preview
-                    : ''
-                }
+                preview={history[scenePosition]?.preview || ''}
               />
             ))}
             {scenes.length < 3 && (
@@ -205,6 +204,6 @@ const Scenes = () => {
       </Block>
     </DndContext>
   );
-};
+}
 
 export default Scenes;

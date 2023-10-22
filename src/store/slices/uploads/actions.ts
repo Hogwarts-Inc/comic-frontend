@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import axios from 'axios';
@@ -26,7 +27,7 @@ export const getUploads = createAsyncThunk<void, never, { rejectValue: Record<st
 export const uploadFile = createAsyncThunk<void, { file: File }, any>(
   'uploads/uploadFile',
   async (args, { dispatch }) => {
-    const file = args.file;
+    const { file } = args;
     setUploading({
       progress: 0,
       status: 'IN_PROGRESS',

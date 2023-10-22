@@ -19,7 +19,7 @@ import Scrollable from '../../../../../components/Scrollable';
 import { sampleFrames } from '../../../../../constants/editor';
 import useDesignEditorContext from '../../../../../hooks/useDesignEditorContext';
 
-const ResizeTemplate = () => {
+function ResizeTemplate() {
   const [isOpen, setIsOpen] = React.useState(false);
   const [activeKey, setActiveKey] = React.useState<string | number>('0');
   const { currentDesign, setCurrentDesign } = useDesignEditorContext();
@@ -49,14 +49,14 @@ const ResizeTemplate = () => {
     const size = activeKey === '0' ? selectedFrame : desiredFrame;
     if (editor) {
       editor.frame.resize({
-        width: parseInt(size.width),
-        height: parseInt(size.height),
+        width: parseInt(size.width, 10),
+        height: parseInt(size.height, 10),
       });
       setCurrentDesign({
         ...currentDesign,
         frame: {
-          width: parseInt(size.width),
-          height: parseInt(size.height),
+          width: parseInt(size.width, 10),
+          height: parseInt(size.height, 10),
         },
       });
     }
@@ -66,7 +66,7 @@ const ResizeTemplate = () => {
     // @ts-ignore
     (activeKey === '0' && selectedFrame.id !== 0) ||
     // @ts-ignore
-    (activeKey === '1' && !!parseInt(desiredFrame.width) && !!parseInt(desiredFrame.height));
+    (activeKey === '1' && !!parseInt(desiredFrame.width, 10) && !!parseInt(desiredFrame.height, 10));
 
   return (
     <>
@@ -84,7 +84,7 @@ const ResizeTemplate = () => {
       </Button>
       <Modal
         onClose={() => setIsOpen(false)}
-        closeable={true}
+        closeable
         isOpen={isOpen}
         animate
         autoFocus
@@ -128,14 +128,14 @@ const ResizeTemplate = () => {
               },
             }}
             activeKey={activeKey}
-            onChange={({ activeKey }) => {
-              setActiveKey(activeKey);
+            onChange={({ activeKey: activeKeyValue }) => {
+              setActiveKey(activeKeyValue);
             }}>
             <Tab title="Preset size">
               <Block $style={{ width: '100%', height: '400px' }}>
                 <Scrollbar>
                   <Block $style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
-                    {sampleFrames.map((sampleFrame, index) => (
+                    {sampleFrames.map(sampleFrame => (
                       <Block
                         onClick={() => setSelectedFrame(sampleFrame)}
                         $style={{
@@ -146,7 +146,7 @@ const ResizeTemplate = () => {
                             cursor: 'pointer',
                           },
                         }}
-                        key={index}>
+                        key={sampleFrame.id}>
                         <Block
                           $style={{
                             height: '120px',
@@ -214,7 +214,7 @@ const ResizeTemplate = () => {
       </Modal>
     </>
   );
-};
+}
 
 const colors = ['#ffffff', '#9B9B9B', '#4A4A4A', '#000000', '#A70C2C', '#DA9A15', '#F8E71D', '#47821A', '#4990E2'];
 
@@ -222,7 +222,7 @@ interface State {
   backgroundColor: string;
 }
 
-const Customize = () => {
+function Customize() {
   const editor = useEditor();
 
   const [state, setState] = React.useState<State>({
@@ -350,6 +350,6 @@ const Customize = () => {
       </Scrollable>
     </Block>
   );
-};
+}
 
 export default Customize;

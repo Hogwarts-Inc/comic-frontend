@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { useEditor } from '@layerhub-io/react';
 import { IScene } from '@layerhub-io/types';
@@ -62,7 +63,8 @@ function ImageItem({ preview, onClick }: { preview: any; onClick?: (option: any)
           ':hover': {
             opacity: 1,
           },
-        })}></div>
+        })}
+      />
       <img
         src={preview}
         className={css({
@@ -103,12 +105,12 @@ export default function Templates() {
     return { scenes, design: design as IDesign };
   };
 
-  const loadDesignById = React.useCallback(
+  const loadDesignById = useCallback(
     async (designId: string) => {
       if (editor) {
         const design = await api.getPublicDesignById(designId);
         const loadedDesign = await loadGraphicTemplate(design);
-        setScenes(loadedDesign.scenes);
+        setScenes(loadedDesign.scenes.map(scene => ({ history: [scene], scenePosition: 0 })));
         setCurrentScene(loadedDesign.scenes[0]);
         setCurrentDesign(loadedDesign.design);
       }
@@ -133,10 +135,10 @@ export default function Templates() {
       <Scrollable>
         <div style={{ padding: '0 1.5rem' }}>
           <div style={{ display: 'grid', gap: '0.5rem', gridTemplateColumns: '1fr 1fr' }}>
-            {designs.map((design, index) => (
+            {designs.map(design => (
               <ImageItem
                 onClick={() => loadDesignById(design.id)}
-                key={index}
+                key={design.id}
                 preview={`${design.previews[0].src}?tr=w-320`}
               />
             ))}

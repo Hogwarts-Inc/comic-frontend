@@ -1,3 +1,10 @@
+/* eslint-disable react/no-unused-class-component-methods */
+/* eslint-disable react/no-access-state-in-setstate */
+/* eslint-disable react/static-property-placement */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/sort-comp */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
@@ -131,19 +138,14 @@ interface State {
   flexBasis?: string | number;
 }
 
-const clamp = (n: number, min: number, max: number): number =>
-  Math.max(Math.min(n, max), min);
+const clamp = (n: number, min: number, max: number): number => Math.max(Math.min(n, max), min);
 const snap = (n: number, size: number): number => Math.round(n / size) * size;
-const hasDirection = (
-  dir: 'top' | 'right' | 'bottom' | 'left',
-  target: string,
-): boolean => new RegExp(dir, 'i').test(target);
+const hasDirection = (dir: 'top' | 'right' | 'bottom' | 'left', target: string): boolean =>
+  new RegExp(dir, 'i').test(target);
 
 // INFO: In case of window is a Proxy and does not porxy Events correctly, use isTouchEvent & isMouseEvent to distinguish event type instead of `instanceof`.
 const isTouchEvent = (event: MouseEvent | TouchEvent): event is TouchEvent =>
-  Boolean(
-    (event as TouchEvent).touches && (event as TouchEvent).touches.length,
-  );
+  Boolean((event as TouchEvent).touches && (event as TouchEvent).touches.length);
 
 const isMouseEvent = (event: MouseEvent | TouchEvent): event is MouseEvent =>
   Boolean(
@@ -151,14 +153,9 @@ const isMouseEvent = (event: MouseEvent | TouchEvent): event is MouseEvent =>
       ((event as MouseEvent).clientY || (event as MouseEvent).clientY === 0),
   );
 
-const findClosestSnap = (
-  n: number,
-  snapArray: number[],
-  snapGap: number = 0,
-): number => {
+const findClosestSnap = (n: number, snapArray: number[], snapGap: number = 0): number => {
   const closestGapIndex = snapArray.reduce(
-    (prev, curr, index) =>
-      Math.abs(curr - n) < Math.abs(snapArray[prev] - n) ? index : prev,
+    (prev, curr, index) => (Math.abs(curr - n) < Math.abs(snapArray[prev] - n) ? index : prev),
     0,
   );
   const gap = Math.abs(snapArray[closestGapIndex] - n);
@@ -228,19 +225,9 @@ const calculateNewMax = (
   minHeight?: string | number,
 ) => {
   maxWidth = getPixelSize(maxWidth, parentSize.width, innerWidth, innerHeight);
-  maxHeight = getPixelSize(
-    maxHeight,
-    parentSize.height,
-    innerWidth,
-    innerHeight,
-  );
+  maxHeight = getPixelSize(maxHeight, parentSize.height, innerWidth, innerHeight);
   minWidth = getPixelSize(minWidth, parentSize.width, innerWidth, innerHeight);
-  minHeight = getPixelSize(
-    minHeight,
-    parentSize.height,
-    innerWidth,
-    innerHeight,
-  );
+  minHeight = getPixelSize(minHeight, parentSize.height, innerWidth, innerHeight);
   return {
     maxWidth: typeof maxWidth === 'undefined' ? undefined : Number(maxWidth),
     maxHeight: typeof maxHeight === 'undefined' ? undefined : Number(maxHeight),
@@ -332,14 +319,8 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
         this.resizable.style.position = 'relative';
       }
       // INFO: Use original width or height if set auto.
-      width =
-        this.resizable.style.width !== 'auto'
-          ? this.resizable.offsetWidth
-          : orgWidth;
-      height =
-        this.resizable.style.height !== 'auto'
-          ? this.resizable.offsetHeight
-          : orgHeight;
+      width = this.resizable.style.width !== 'auto' ? this.resizable.offsetWidth : orgWidth;
+      height = this.resizable.style.height !== 'auto' ? this.resizable.offsetHeight : orgHeight;
       // Restore original position
       this.resizable.style.position = orgPosition;
     }
@@ -349,17 +330,10 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
   get sizeStyle(): { width: string; height: string } {
     const { size } = this.props;
     const getSize = (key: 'width' | 'height'): string => {
-      if (
-        typeof this.state[key] === 'undefined' ||
-        this.state[key] === 'auto'
-      ) {
+      if (typeof this.state[key] === 'undefined' || this.state[key] === 'auto') {
         return 'auto';
       }
-      if (
-        this.propsSize &&
-        this.propsSize[key] &&
-        this.propsSize[key].toString().endsWith('%')
-      ) {
+      if (this.propsSize && this.propsSize[key] && this.propsSize[key].toString().endsWith('%')) {
         if (this.state[key].toString().endsWith('%')) {
           return this.state[key].toString();
         }
@@ -405,18 +379,28 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
     resizeRatio: 1,
     snapGap: 0,
   };
+
   ratio = 1;
+
   resizable: HTMLElement | null = null;
+
   // For parent boundary
   parentLeft = 0;
+
   parentTop = 0;
+
   // For boundary
   resizableLeft = 0;
+
   resizableRight = 0;
+
   resizableTop = 0;
+
   resizableBottom = 0;
+
   // For target boundary
   targetLeft = 0;
+
   targetTop = 0;
 
   constructor(props: ResizableProps) {
@@ -523,10 +507,7 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
     this.setState({
       width: this.state.width || this.size.width,
       height: this.state.height || this.size.height,
-      flexBasis:
-        computedStyle.flexBasis !== 'auto'
-          ? computedStyle.flexBasis
-          : undefined,
+      flexBasis: computedStyle.flexBasis !== 'auto' ? computedStyle.flexBasis : undefined,
     });
   }
 
@@ -568,10 +549,7 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
     }
   }
 
-  createSizeForCssProperty(
-    newSize: number | string,
-    kind: 'width' | 'height',
-  ): number | string {
+  createSizeForCssProperty(newSize: number | string, kind: 'width' | 'height'): number | string {
     const propsSize = this.propsSize && this.propsSize[kind];
     return this.state[kind] === 'auto' &&
       this.state.original[kind] === newSize &&
@@ -583,10 +561,8 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
   calculateNewMaxFromBoundary(maxWidth?: number, maxHeight?: number) {
     const { boundsByDirection } = this.props;
     const { direction } = this.state;
-    const widthByDirection =
-      boundsByDirection && hasDirection('left', direction);
-    const heightByDirection =
-      boundsByDirection && hasDirection('top', direction);
+    const widthByDirection = boundsByDirection && hasDirection('left', direction);
+    const heightByDirection = boundsByDirection && hasDirection('top', direction);
     let boundWidth;
     let boundHeight;
     if (this.props.bounds === 'parent') {
@@ -601,18 +577,13 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
       }
     } else if (this.props.bounds === 'window') {
       if (this.window) {
-        boundWidth = widthByDirection
-          ? this.resizableRight
-          : this.window.innerWidth - this.resizableLeft;
-        boundHeight = heightByDirection
-          ? this.resizableBottom
-          : this.window.innerHeight - this.resizableTop;
+        boundWidth = widthByDirection ? this.resizableRight : this.window.innerWidth - this.resizableLeft;
+        boundHeight = heightByDirection ? this.resizableBottom : this.window.innerHeight - this.resizableTop;
       }
     } else if (this.props.bounds) {
       boundWidth = widthByDirection
         ? this.resizableRight - this.targetLeft
-        : this.props.bounds.offsetWidth +
-          (this.targetLeft - this.resizableLeft);
+        : this.props.bounds.offsetWidth + (this.targetLeft - this.resizableLeft);
       boundHeight = heightByDirection
         ? this.resizableBottom - this.targetTop
         : this.props.bounds.offsetHeight + (this.targetTop - this.resizableTop);
@@ -621,8 +592,7 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
       maxWidth = maxWidth && maxWidth < boundWidth ? maxWidth : boundWidth;
     }
     if (boundHeight && Number.isFinite(boundHeight)) {
-      maxHeight =
-        maxHeight && maxHeight < boundHeight ? maxHeight : boundHeight;
+      maxHeight = maxHeight && maxHeight < boundHeight ? maxHeight : boundHeight;
     }
     return { maxWidth, maxHeight };
   }
@@ -631,39 +601,31 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
     const scale = this.props.scale || 1;
     const resizeRatio = this.props.resizeRatio || 1;
     const { direction, original } = this.state;
-    const {
-      lockAspectRatio,
-      lockAspectRatioExtraHeight,
-      lockAspectRatioExtraWidth,
-    } = this.props;
+    const { lockAspectRatio, lockAspectRatioExtraHeight, lockAspectRatioExtraWidth } = this.props;
     let newWidth = original.width;
     let newHeight = original.height;
     const extraHeight = lockAspectRatioExtraHeight || 0;
     const extraWidth = lockAspectRatioExtraWidth || 0;
     if (hasDirection('right', direction)) {
-      newWidth =
-        original.width + ((clientX - original.x) * resizeRatio) / scale;
+      newWidth = original.width + ((clientX - original.x) * resizeRatio) / scale;
       if (lockAspectRatio) {
         newHeight = (newWidth - extraWidth) / this.ratio + extraHeight;
       }
     }
     if (hasDirection('left', direction)) {
-      newWidth =
-        original.width - ((clientX - original.x) * resizeRatio) / scale;
+      newWidth = original.width - ((clientX - original.x) * resizeRatio) / scale;
       if (lockAspectRatio) {
         newHeight = (newWidth - extraWidth) / this.ratio + extraHeight;
       }
     }
     if (hasDirection('bottom', direction)) {
-      newHeight =
-        original.height + ((clientY - original.y) * resizeRatio) / scale;
+      newHeight = original.height + ((clientY - original.y) * resizeRatio) / scale;
       if (lockAspectRatio) {
         newWidth = (newHeight - extraHeight) * this.ratio + extraWidth;
       }
     }
     if (hasDirection('top', direction)) {
-      newHeight =
-        original.height - ((clientY - original.y) * resizeRatio) / scale;
+      newHeight = original.height - ((clientY - original.y) * resizeRatio) / scale;
       if (lockAspectRatio) {
         newWidth = (newHeight - extraHeight) * this.ratio + extraWidth;
       }
@@ -677,31 +639,18 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
     max: { width?: number; height?: number },
     min: { width?: number; height?: number },
   ) {
-    const {
-      lockAspectRatio,
-      lockAspectRatioExtraHeight,
-      lockAspectRatioExtraWidth,
-    } = this.props;
+    const { lockAspectRatio, lockAspectRatioExtraHeight, lockAspectRatioExtraWidth } = this.props;
     const computedMinWidth = typeof min.width === 'undefined' ? 10 : min.width;
-    const computedMaxWidth =
-      typeof max.width === 'undefined' || max.width < 0 ? newWidth : max.width;
-    const computedMinHeight =
-      typeof min.height === 'undefined' ? 10 : min.height;
-    const computedMaxHeight =
-      typeof max.height === 'undefined' || max.height < 0
-        ? newHeight
-        : max.height;
+    const computedMaxWidth = typeof max.width === 'undefined' || max.width < 0 ? newWidth : max.width;
+    const computedMinHeight = typeof min.height === 'undefined' ? 10 : min.height;
+    const computedMaxHeight = typeof max.height === 'undefined' || max.height < 0 ? newHeight : max.height;
     const extraHeight = lockAspectRatioExtraHeight || 0;
     const extraWidth = lockAspectRatioExtraWidth || 0;
     if (lockAspectRatio) {
-      const extraMinWidth =
-        (computedMinHeight - extraHeight) * this.ratio + extraWidth;
-      const extraMaxWidth =
-        (computedMaxHeight - extraHeight) * this.ratio + extraWidth;
-      const extraMinHeight =
-        (computedMinWidth - extraWidth) / this.ratio + extraHeight;
-      const extraMaxHeight =
-        (computedMaxWidth - extraWidth) / this.ratio + extraHeight;
+      const extraMinWidth = (computedMinHeight - extraHeight) * this.ratio + extraWidth;
+      const extraMaxWidth = (computedMaxHeight - extraHeight) * this.ratio + extraWidth;
+      const extraMinHeight = (computedMinWidth - extraWidth) / this.ratio + extraHeight;
+      const extraMaxHeight = (computedMaxWidth - extraWidth) / this.ratio + extraHeight;
       const lockedMinWidth = Math.max(computedMinWidth, extraMinWidth);
       const lockedMaxWidth = Math.min(computedMaxWidth, extraMaxWidth);
       const lockedMinHeight = Math.max(computedMinHeight, extraMinHeight);
@@ -735,8 +684,7 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
 
     // For boundary
     if (this.resizable) {
-      const { left, top, right, bottom } =
-        this.resizable.getBoundingClientRect();
+      const { left, top, right, bottom } = this.resizable.getBoundingClientRect();
       this.resizableLeft = left;
       this.resizableRight = right;
       this.resizableTop = top;
@@ -744,10 +692,7 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
     }
   }
 
-  onResizeStart(
-    event: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>,
-    direction: Direction,
-  ) {
+  onResizeStart(event: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>, direction: Direction) {
     if (!this.resizable || !this.window) {
       return;
     }
@@ -762,11 +707,7 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
     }
     if (this.props.onResizeStart) {
       if (this.resizable) {
-        const startResize = this.props.onResizeStart(
-          event,
-          direction,
-          this.resizable,
-        );
+        const startResize = this.props.onResizeStart(event, direction, this.resizable);
         if (startResize === false) {
           return;
         }
@@ -775,25 +716,17 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
 
     // Fix #168
     if (this.props.size) {
-      if (
-        typeof this.props.size.height !== 'undefined' &&
-        this.props.size.height !== this.state.height
-      ) {
+      if (typeof this.props.size.height !== 'undefined' && this.props.size.height !== this.state.height) {
         this.setState({ height: this.props.size.height });
       }
-      if (
-        typeof this.props.size.width !== 'undefined' &&
-        this.props.size.width !== this.state.width
-      ) {
+      if (typeof this.props.size.width !== 'undefined' && this.props.size.width !== this.state.width) {
         this.setState({ width: this.props.size.width });
       }
     }
 
     // For lockAspectRatio case
     this.ratio =
-      typeof this.props.lockAspectRatio === 'number'
-        ? this.props.lockAspectRatio
-        : this.size.width / this.size.height;
+      typeof this.props.lockAspectRatio === 'number' ? this.props.lockAspectRatio : this.size.width / this.size.height;
 
     let flexBasis;
     const computedStyle = this.window.getComputedStyle(this.resizable);
@@ -818,9 +751,7 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
       isResizing: true,
       backgroundStyle: {
         ...this.state.backgroundStyle,
-        cursor:
-          this.window.getComputedStyle(event.target as HTMLElement).cursor ||
-          'auto',
+        cursor: this.window.getComputedStyle(event.target as HTMLElement).cursor || 'auto',
       },
       direction,
       flexBasis,
@@ -842,12 +773,8 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
       }
     }
     let { maxWidth, maxHeight, minWidth, minHeight } = this.props;
-    const clientX = isTouchEvent(event)
-      ? event.touches[0].clientX
-      : event.clientX;
-    const clientY = isTouchEvent(event)
-      ? event.touches[0].clientY
-      : event.clientY;
+    const clientX = isTouchEvent(event) ? event.touches[0].clientX : event.clientX;
+    const clientY = isTouchEvent(event) ? event.touches[0].clientY : event.clientY;
     const { direction, original, width, height } = this.state;
     const parentSize = this.getParentSize();
     const max = calculateNewMax(
@@ -866,27 +793,16 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
     minHeight = max.minHeight;
 
     // Calculate new size
-    let { newHeight, newWidth }: NewSize = this.calculateNewSizeFromDirection(
-      clientX,
-      clientY,
-    );
+    let { newHeight, newWidth }: NewSize = this.calculateNewSizeFromDirection(clientX, clientY);
 
     // Calculate max size from boundary settings
     const boundaryMax = this.calculateNewMaxFromBoundary(maxWidth, maxHeight);
 
     if (this.props.snap && this.props.snap.x) {
-      newWidth = findClosestSnap(
-        newWidth,
-        this.props.snap.x,
-        this.props.snapGap,
-      );
+      newWidth = findClosestSnap(newWidth, this.props.snap.x, this.props.snapGap);
     }
     if (this.props.snap && this.props.snap.y) {
-      newHeight = findClosestSnap(
-        newHeight,
-        this.props.snap.y,
-        this.props.snapGap,
-      );
+      newHeight = findClosestSnap(newHeight, this.props.snap.y, this.props.snapGap);
     }
 
     // Calculate new size from aspect ratio
@@ -903,14 +819,8 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
       const newGridWidth = snap(newWidth, this.props.grid[0]);
       const newGridHeight = snap(newHeight, this.props.grid[1]);
       const gap = this.props.snapGap || 0;
-      newWidth =
-        gap === 0 || Math.abs(newGridWidth - newWidth) <= gap
-          ? newGridWidth
-          : newWidth;
-      newHeight =
-        gap === 0 || Math.abs(newGridHeight - newHeight) <= gap
-          ? newGridHeight
-          : newHeight;
+      newWidth = gap === 0 || Math.abs(newGridWidth - newWidth) <= gap ? newGridWidth : newWidth;
+      newHeight = gap === 0 || Math.abs(newGridHeight - newHeight) <= gap ? newGridHeight : newHeight;
     }
 
     const delta = {
@@ -996,14 +906,7 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
   }
 
   renderResizer() {
-    const {
-      enable,
-      handleStyles,
-      handleClasses,
-      handleWrapperStyle,
-      handleWrapperClass,
-      handleComponent,
-    } = this.props;
+    const { enable, handleStyles, handleClasses, handleWrapperStyle, handleWrapperClass, handleComponent } = this.props;
     if (!enable) {
       return null;
     }
@@ -1016,9 +919,7 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
             onResizeStart={this.onResizeStart}
             replaceStyles={handleStyles && handleStyles[dir as Direction]}
             className={handleClasses && handleClasses[dir as Direction]}>
-            {handleComponent && handleComponent[dir as Direction]
-              ? handleComponent[dir as Direction]
-              : null}
+            {handleComponent && handleComponent[dir as Direction] ? handleComponent[dir as Direction] : null}
           </Resizer>
         );
       }
@@ -1067,11 +968,7 @@ export class Resizable extends React.PureComponent<ResizableProps, State> {
     const Wrapper = this.props.as || 'div';
 
     return (
-      <Wrapper
-        ref={this.ref}
-        style={style}
-        className={this.props.className}
-        {...extendsProps}>
+      <Wrapper ref={this.ref} style={style} className={this.props.className} {...extendsProps}>
         {this.state.isResizing && <div style={this.state.backgroundStyle} />}
         {this.props.children}
         {this.renderResizer()}

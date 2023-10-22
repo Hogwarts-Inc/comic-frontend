@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { createContext, useState } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
 
 import { PanelType } from 'src/constants/app-options';
 
@@ -38,7 +39,7 @@ export const AppContext = createContext<IAppContext>({
   setCurrentTemplate: {},
 });
 
-export const AppProvider = ({ children }: { children: React.ReactNode }) => {
+export function AppProvider({ children }: { children: React.ReactNode }) {
   const [isMobile, setIsMobile] = useState<boolean | undefined>(undefined);
   const [templates, setTemplates] = useState<Template[]>([]);
   const [uploads, setUploads] = useState<any[]>([]);
@@ -46,21 +47,24 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [activePanel, setActivePanel] = useState<PanelType>('');
   const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null);
   const [currentTemplate, setCurrentTemplate] = useState(null);
-  const context = {
-    isMobile,
-    setIsMobile,
-    templates,
-    setTemplates,
-    activePanel,
-    setActivePanel,
-    shapes,
-    setShapes,
-    activeSubMenu,
-    setActiveSubMenu,
-    uploads,
-    setUploads,
-    currentTemplate,
-    setCurrentTemplate,
-  };
+  const context = useMemo(
+    () => ({
+      isMobile,
+      setIsMobile,
+      templates,
+      setTemplates,
+      activePanel,
+      setActivePanel,
+      shapes,
+      setShapes,
+      activeSubMenu,
+      setActiveSubMenu,
+      uploads,
+      setUploads,
+      currentTemplate,
+      setCurrentTemplate,
+    }),
+    [activePanel, activeSubMenu, currentTemplate, isMobile, shapes, templates, uploads],
+  );
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
-};
+}

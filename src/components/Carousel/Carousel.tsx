@@ -17,7 +17,7 @@ interface CarouselProps {
   images: string[];
 }
 
-export const Carousel = ({ images }: CarouselProps) => {
+export function Carousel({ images }: CarouselProps) {
   const [index, setIndex] = useState(0);
   const numItems = images.length;
 
@@ -51,8 +51,8 @@ export const Carousel = ({ images }: CarouselProps) => {
 
       <ImagesContainer>
         <CarouselContainer index={index}>
-          {images.map((url, idx) => (
-            <CarouselSlot key={idx}>
+          {images.map(url => (
+            <CarouselSlot key={url}>
               <img src={url} />
             </CarouselSlot>
           ))}
@@ -63,4 +63,4 @@ export const Carousel = ({ images }: CarouselProps) => {
       {index < numItems - 1 && <CarouselButtonLast onClick={handleLast} />}
     </Wrapper>
   );
-};
+}

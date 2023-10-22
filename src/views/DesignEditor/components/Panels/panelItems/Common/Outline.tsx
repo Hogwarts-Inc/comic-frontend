@@ -14,7 +14,7 @@ interface Options {
   strokeWidth: number;
 }
 
-const Outline = () => {
+function Outline() {
   const editor = useEditor();
   const activeObject = useActiveObject<Options>();
 
@@ -43,10 +43,8 @@ const Outline = () => {
       } else {
         editor.objects.update({ strokeWidth: 0 });
       }
-    } else {
-      if (editor && options.enabled) {
-        editor.objects.update({ [type]: value });
-      }
+    } else if (editor && options.enabled) {
+      editor.objects.update({ [type]: value });
     }
   };
 
@@ -69,7 +67,7 @@ const Outline = () => {
           </div>
           <StatefulPopover
             placement={PLACEMENT.bottomLeft}
-            content={
+            content={(
               <div
                 style={{
                   padding: '1rem',
@@ -89,7 +87,7 @@ const Outline = () => {
                   clearOnEscape
                 />
               </div>
-            }
+            )}
             accessibilityType="tooltip">
             <div>
               <div
@@ -139,6 +137,6 @@ const Outline = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Outline;

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { IFrame, IScene } from '@layerhub-io/types';
 import { nanoid } from 'nanoid';
 
@@ -23,7 +24,7 @@ export const defaultTemplate: IScene = {
   metadata: {},
 };
 
-export const getDefaultTemplate = ({ width, height }: IFrame) => ({
+export const getDefaultTemplate: ({ width, height }: IFrame) => IScene = ({ width, height }) => ({
   id: nanoid(),
   frame: {
     width,

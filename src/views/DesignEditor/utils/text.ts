@@ -26,4 +26,5 @@ export const getTextProperties = (object: Required<IStaticText>, fonts: IFontFam
       styleOptions,
     };
   }
+  return undefined;
 };

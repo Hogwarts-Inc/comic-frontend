@@ -1,10 +1,12 @@
+import React from 'react';
+
 import { Block } from 'baseui/block';
 
 import AngleDoubleLeft from '@components/Icons/AngleDoubleLeft';
 import useAppContext from 'src/hooks/useAppContext';
 import useSetIsSidebarOpen from 'src/hooks/useSetIsSidebarOpen';
 
-export const CloseSideBar = () => {
+export function CloseSideBar() {
   const { setActivePanel } = useAppContext();
   const setIsSidebarOpen = useSetIsSidebarOpen();
   return (
@@ -17,4 +19,4 @@ export const CloseSideBar = () => {
       <AngleDoubleLeft size={18} />
     </Block>
   );
-};
+}

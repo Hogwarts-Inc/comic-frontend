@@ -10,6 +10,8 @@ import { groupBy } from 'lodash';
 import { useSelector } from 'react-redux';
 import { useDebounce } from 'use-debounce';
 
+import { IFontFamily } from 'src/interfaces/editor';
+
 import Search from '../../../../../components/Icons/Search';
 import InfiniteScrolling from '../../../../../components/InfiniteScrolling';
 import Scrollable from '../../../../../components/Scrollable';
@@ -25,7 +27,7 @@ export default function FontSelector() {
   const [query, setQuery] = React.useState('');
   const { setActiveSubMenu } = useAppContext();
   const fonts = useSelector(selectFonts);
-  const [commonFonts, setCommonFonts] = React.useState<any[]>([]);
+  const [commonFonts, setCommonFonts] = React.useState<IFontFamily[]>([]);
   const [searchQuery] = useDebounce(query, 250);
   const [css] = useStyletron();
   const editor = useEditor();
@@ -127,9 +129,9 @@ export default function FontSelector() {
         <Block $style={{ padding: '0 1.5rem', display: 'grid', gap: '0.2rem' }}>
           <InfiniteScrolling fetchData={fetchData} hasMore={hasMore}>
             <Block $style={{ display: 'grid' }}>
-              {commonFonts.map((font, index) => (
+              {commonFonts.map(font => (
                 <div
-                  key={index}
+                  key={font.id}
                   onClick={() => handleFontFamilyChange(font)}
                   className={css({
                     height: '40px',

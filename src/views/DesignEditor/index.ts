@@ -1,2 +1,3 @@
-import DesignEditor from "./DesignEditor"
-export default DesignEditor
+import DesignEditor from './DesignEditor';
+
+export default DesignEditor;

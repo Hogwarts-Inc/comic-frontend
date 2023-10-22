@@ -1,3 +1,6 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 import React, { useEffect } from 'react';
 
 import arePassiveEventsSupported from 'are-passive-events-supported';
@@ -15,9 +18,7 @@ type Handler = (event: PossibleEvent) => void;
 
 const events: HandledEvents = [MOUSEDOWN, TOUCHSTART];
 
-const getAddOptions = (
-  event: HandledEventsType,
-): AddEventListenerOptions | undefined => {
+const getAddOptions = (event: HandledEventsType): AddEventListenerOptions | undefined => {
   if (event === TOUCHSTART && arePassiveEventsSupported()) {
     return { passive: true };
   }
@@ -38,11 +39,7 @@ const useOnClickOutside = (
     }
 
     const listener = (event: PossibleEvent) => {
-      if (
-        !ref.current ||
-        !handlerRef.current ||
-        ref.current.contains(event.target as Node)
-      ) {
+      if (!ref.current || !handlerRef.current || ref.current.contains(event.target as Node)) {
         return;
       }
 

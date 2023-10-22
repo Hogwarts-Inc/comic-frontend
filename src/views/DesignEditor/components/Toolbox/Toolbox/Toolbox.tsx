@@ -17,7 +17,7 @@ import Items from '../Items';
 interface ToolboxState {
   toolbox: string;
 }
-const Toolbox = () => {
+function Toolbox() {
   const [state, setState] = useState<ToolboxState>({ toolbox: '' });
   const { setActiveSubMenu } = useAppContext();
   const { scenes } = useDesignEditorContext();
@@ -65,9 +65,9 @@ const Toolbox = () => {
   const uploadCanva = async () => {
     setIsSaveLoading(true);
     try {
-      for (const { preview } of scenes || []) {
-        if (preview) {
-          await apisCanvas.postCanva({ chapter_id: 1, image: preview });
+      for (const { history, scenePosition } of scenes || []) {
+        if (history[scenePosition].preview) {
+          await apisCanvas.postCanva({ chapter_id: 1, image: history[scenePosition].preview as string });
         }
       }
     } catch (e) {
@@ -90,6 +90,6 @@ const Toolbox = () => {
       </ButtonsContainer>
     </Container>
   );
-};
+}
 
 export default Toolbox;

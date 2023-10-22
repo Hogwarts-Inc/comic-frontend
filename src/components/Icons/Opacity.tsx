@@ -1,11 +1,9 @@
+import React from 'react';
+
 /* eslint-disable max-len */
 function Opacity({ size }: { size: number }) {
   return (
-    <svg
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg">
+    <svg height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M6.23176 7.20527L5.0791 6.24609C4.41048 7.04781 3.88715 7.96022 3.53271 8.94214L4.94336 9.4521C5.2385 8.63374 5.67454 7.87334 6.23176 7.20527V7.20527Z"
         fill="currentColor"
