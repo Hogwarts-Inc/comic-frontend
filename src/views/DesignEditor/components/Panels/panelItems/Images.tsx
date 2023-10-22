@@ -7,7 +7,7 @@ import { ILayer, LayerType } from '@layerhub-io/types';
 import { useStyletron } from 'baseui';
 import { Block } from 'baseui/block';
 
-import { Resource } from 'src/store/slices/resources/reducer';
+import { Character, Resource } from 'src/store/slices/resources/reducer';
 
 import { CloseSideBar } from './Common/CloseSideBar';
 import Scrollable from '../../../../../components/Scrollable';
@@ -73,7 +73,7 @@ export function ImageItem({ preview, onClick }: { preview: any; onClick?: (optio
     </div>
   );
 }
-function Images({ title, images }: { title: string; images: Resource[] }) {
+function Images({ title, images }: { title: string; images: (Character | Resource)[] }) {
   const editor = useEditor();
 
   const addObject = useCallback(
@@ -104,10 +104,37 @@ function Images({ title, images }: { title: string; images: Resource[] }) {
       </Block>
       <Scrollable>
         <Block padding="0 1.5rem">
-          <div style={{ display: 'grid', gap: '8px', gridTemplateColumns: '1fr 1fr' }}>
-            {images.map(image => (
-              <ImageItem key={image.id} onClick={() => addObject(image.url)} preview={image.url} />
-            ))}
+          <div
+            style={{
+              display: 'grid',
+              gap: '8px',
+              gridTemplateColumns: (images[0] as Character)?.images ? undefined : '1fr 1fr',
+            }}>
+            {images.map(image => {
+              if ((image as Character)?.images) {
+                return (
+                  <>
+                    <Block>{(image as Character).name}</Block>
+                    <div style={{ display: 'grid', gap: '8px', gridTemplateColumns: '1fr 1fr' }}>
+                      {(image as Character)?.images.map(characterImage => (
+                        <ImageItem
+                          key={characterImage.id}
+                          onClick={() => addObject(characterImage.url)}
+                          preview={characterImage.url}
+                        />
+                      ))}
+                    </div>
+                  </>
+                );
+              }
+              return (
+                <ImageItem
+                  key={image.id}
+                  onClick={() => addObject((image as Resource).url)}
+                  preview={(image as Resource).url}
+                />
+              );
+            })}
           </div>
         </Block>
       </Scrollable>

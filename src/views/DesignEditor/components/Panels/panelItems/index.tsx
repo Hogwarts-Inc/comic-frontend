@@ -24,8 +24,8 @@ import Uploads from './Uploads';
 
 function ImagesConvertor() {
   const { t } = useTranslation();
-  const { images } = useSelector((state: RootState) => state.resources);
-  return <Images title={t('panels.panelsList.images')} images={images} />;
+  const { background } = useSelector((state: RootState) => state.resources);
+  return <Images title={t('panels.panelsList.images')} images={background} />;
 }
 
 function CharacterConvertor() {
@@ -41,8 +41,8 @@ function ShapesConvertor() {
 }
 
 function TextConvertor() {
-  const { text } = useSelector((state: RootState) => state.resources);
-  return <Text images={text} />;
+  const { dialog } = useSelector((state: RootState) => state.resources);
+  return <Text images={dialog} />;
 }
 
 export default {

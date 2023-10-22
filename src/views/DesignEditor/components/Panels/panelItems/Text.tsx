@@ -169,7 +169,7 @@ export default function Text({ images }: { images: Resource[] }) {
             }}>
             {t('text.add')}
           </Button>
-          <div style={{ display: 'grid', gap: '8px', gridTemplateColumns: '1fr 1fr' }}>
+          <div style={{ display: 'grid', gap: '8px', gridTemplateColumns: '1fr 1fr', marginTop: '1rem' }}>
             {images.map(image => (
               <ImageItem key={image.id} onClick={() => addImage(image.url)} preview={image.url} />
             ))}
