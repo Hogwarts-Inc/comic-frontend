@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Grid, Hidden } from '@mui/material';
-import { useSwipeable } from 'react-swipeable';
+
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import { Grid, Hidden } from '@mui/material';
+import { useSwipeable } from 'react-swipeable';
+
 import {
   Wrapper,
   CarouselButtonPrev,
@@ -76,8 +78,8 @@ export const Carousel = ({ images, displayMode = 'full' }: CarouselProps) => {
         <Grid item lg={8} xs={12}>
           <ImagesContainer>
             <CarouselContainer translateX={transformValue}>
-              {images.map((url, idx) => (
-                <CarouselSlot key={idx} displayMode={displayMode}>
+              {images.map((url) => (
+                <CarouselSlot key={url} displayMode={displayMode}>
                   <CarouselSlotImage src={url} alt="Carousel Image" />
                 </CarouselSlot>
               ))}
