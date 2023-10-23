@@ -80,7 +80,7 @@ export default function Text({ images }: { images: Resource[] }) {
         id: nanoid(),
         type: LayerType.STATIC_TEXT,
         width: 420,
-        text: 'Add some text',
+        text: 'Texto',
         fontSize: 40,
         fontFamily: font.name,
         textAlign: 'center',
@@ -156,7 +156,7 @@ export default function Text({ images }: { images: Resource[] }) {
         <CloseSideBar />
       </Block>
       <Scrollable>
-        <Block padding={'0 1.5rem'}>
+        <Block padding="0 1.5rem">
           <Button
             onClick={addObject}
             size={SIZE.compact}

@@ -9,11 +9,13 @@ const Container = styled('div', ({ $theme }: { $theme: { colors: { white: string
   background: $theme.colors.white,
 }));
 
-const Graphic = () => (
-  <Container>
-    <Scenes />
-    <Common />
-  </Container>
-);
+function Graphic() {
+  return (
+    <Container>
+      <Scenes />
+      <Common />
+    </Container>
+  );
+}
 
 export default Graphic;

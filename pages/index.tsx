@@ -3,10 +3,11 @@ import React from 'react';
 import { Button } from 'baseui/button';
 import { useRouter } from 'next/router';
 
+import { Footer } from '@components/Footer';
 import { TopBar } from '@components/TopBar';
 import { Route } from 'src/constants/routes';
 
-const Home = () => {
+function Home() {
   const { push } = useRouter();
   return (
     <div
@@ -24,8 +25,9 @@ const Home = () => {
       <Button onClick={() => push(Route.editor)}>Editor</Button>
       <Button onClick={() => push(Route.profile)}>Perfil</Button>
       <Button onClick={() => push(`${Route.visualizer}/1/1`)}>Visualizar</Button>
+      <Footer />
     </div>
   );
-};
+}
 
 export default Home;

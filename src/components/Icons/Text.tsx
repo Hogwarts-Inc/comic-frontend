@@ -1,3 +1,5 @@
+import React from 'react';
+
 /* eslint-disable max-len */
 function Text({ size }: { size: number }) {
   return (

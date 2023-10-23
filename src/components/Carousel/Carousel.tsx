@@ -89,4 +89,4 @@ export const Carousel = ({ images, displayMode = 'full' }: CarouselProps) => {
       )}
     </Wrapper>
   );
-};
+}

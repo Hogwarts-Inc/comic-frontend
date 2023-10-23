@@ -1,3 +1,6 @@
+/* eslint-disable no-loss-of-precision */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-shadow */
 /* eslint-disable @typescript-eslint/no-loss-of-precision */
 export const SecondLevelMenus = ['FontFamily'];
 export const FirstLevelMenus = ['Background'];

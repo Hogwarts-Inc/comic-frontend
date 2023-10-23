@@ -5,9 +5,9 @@ import { useActiveObject, useEditor } from '@layerhub-io/react';
 import { IStaticText } from '@layerhub-io/types';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { styled } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
-import { styled } from '@mui/system';
 import { Block } from 'baseui/block';
 import { Button, SIZE, KIND } from 'baseui/button';
 import { useSelector } from 'react-redux';
@@ -66,7 +66,7 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const TextFontSize = () => {
+function TextFontSize() {
   const editor = useEditor();
   const activeObject = useActiveObject() as any;
   const [value, setValue] = useState<number>(12);
@@ -102,11 +102,11 @@ const TextFontSize = () => {
       </IconButton>
     </div>
   );
-};
+}
 
 const TEXT_ALIGNS = ['left', 'center', 'right', 'justify'];
 
-const TextAlign = () => {
+function TextAlign() {
   const editor = useEditor();
   const activeObject = useActiveObject() as any;
   const [state, setState] = useState<{ align: string }>({ align: 'left' });
@@ -117,7 +117,7 @@ const TextAlign = () => {
     }
   }, [activeObject]);
   return (
-    <Block backgroundColor={'#ffffff'} display={'grid'} gridTemplateColumns={'1fr 1fr 1fr 1fr'} gridGap={'8px'}>
+    <Block backgroundColor="#ffffff" display="grid" gridTemplateColumns="1fr 1fr 1fr 1fr" gridGap="8px">
       <Button
         className={styles.boxButton}
         isSelected={state.align === TEXT_ALIGNS[3]}
@@ -164,7 +164,7 @@ const TextAlign = () => {
       </Button>
     </Block>
   );
-};
+}
 
 export default function Text() {
   const [state, setState] = useState<TextState>(initialOptions);
@@ -325,7 +325,7 @@ export default function Text() {
   return (
     <div className={styles.flexContainer}>
       <div className={styles.flexInnerContainer}>
-        {/* 
+        {/*
         <div onClick={() => setActiveSubMenu('FontSelector')} style={{
           border: '1px solid rgb(185,185,185)',
           borderRadius: '4px',
@@ -342,18 +342,18 @@ export default function Text() {
           <div style={{ display: 'flex' }}>
             <ChevronDown size={22} />
           </div>
-        </div> 
+        </div>
         */}
 
-        <div className={styles.divider}></div>
+        <div className={styles.divider} />
 
         <TextFontSize />
 
-        <div className={styles.divider}></div>
+        <div className={styles.divider} />
 
         <TextAlign />
 
-        <div className={styles.divider}></div>
+        <div className={styles.divider} />
 
         <div className={styles.gridContainer}>
           <Button
@@ -387,7 +387,7 @@ export default function Text() {
           </Button>
         </div>
 
-        <div className={styles.divider}></div>
+        <div className={styles.divider} />
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+import React from 'react';
+
 /* eslint-disable max-len */
 function AngleDoubleLeft({ size }: { size: number }) {
   return (

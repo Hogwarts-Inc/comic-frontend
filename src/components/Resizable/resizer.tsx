@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable no-unused-vars */
 import * as React from 'react';
 
 const rowSizeBase = {
@@ -67,15 +69,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
 } as const;
 
-export type Direction =
-  | 'top'
-  | 'right'
-  | 'bottom'
-  | 'left'
-  | 'topRight'
-  | 'bottomRight'
-  | 'bottomLeft'
-  | 'topLeft';
+export type Direction = 'top' | 'right' | 'bottom' | 'left' | 'topRight' | 'bottomRight' | 'bottomLeft' | 'topLeft';
 
 export type OnStartCallback = (
   e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createReducer } from '@reduxjs/toolkit';
 
 import { closeUploading, setUploading, setUploads } from './actions';

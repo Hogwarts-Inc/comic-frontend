@@ -11,22 +11,24 @@ import { Provider as ReduxProvier } from 'react-redux';
 import { AppProvider } from './contexts/AppContext';
 import { DesignEditorProvider } from './contexts/DesignEditor';
 import { store } from './store/store';
-import theme from '../src/styles/theme';
+import theme from './styles/theme';
 import './translations';
 
-const Provider = ({ children }: { children: React.ReactNode }) => (
-  <ReduxProvier store={store}>
-    <ThemeProvider theme={theme}>
-      <DesignEditorProvider>
-        <TimerProvider>
-          <AppProvider>
-            <ScenifyProvider>
-              <I18nextProvider i18n={i18next}>{children}</I18nextProvider>
-            </ScenifyProvider>
-          </AppProvider>
-        </TimerProvider>
-      </DesignEditorProvider>
-    </ThemeProvider>
-  </ReduxProvier>
-);
+function Provider({ children }: { children: React.ReactNode }) {
+  return (
+    <ReduxProvier store={store}>
+      <ThemeProvider theme={theme}>
+        <DesignEditorProvider>
+          <TimerProvider>
+            <AppProvider>
+              <ScenifyProvider>
+                <I18nextProvider i18n={i18next}>{children}</I18nextProvider>
+              </ScenifyProvider>
+            </AppProvider>
+          </TimerProvider>
+        </DesignEditorProvider>
+      </ThemeProvider>
+    </ReduxProvier>
+  );
+}
 export default Provider;

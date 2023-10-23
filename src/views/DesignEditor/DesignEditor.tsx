@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 import { Client as Styletron } from 'styletron-engine-atomic';

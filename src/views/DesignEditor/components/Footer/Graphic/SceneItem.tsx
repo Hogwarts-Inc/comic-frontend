@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/order */
 import React, { useEffect, useRef } from 'react';
 import { IScene } from '@layerhub-io/types';
@@ -14,7 +15,7 @@ interface Props {
   changePage: (p: IScene) => void;
 }
 
-const SceneItem = ({ isCurrentScene, scene, preview, index, changePage }: Props) => {
+function SceneItem({ isCurrentScene, scene, preview, index, changePage }: Props) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
     id: scene.id,
     resizeObserverConfig: {},
@@ -88,6 +89,6 @@ const SceneItem = ({ isCurrentScene, scene, preview, index, changePage }: Props)
       </Block>
     </Block>
   );
-};
+}
 
 export default SceneItem;

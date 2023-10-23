@@ -1,5 +1,9 @@
+import React from 'react';
+
 import Graphic from './Graphic';
 
-const Footer = () => <Graphic />;
+function Footer() {
+  return <Graphic />;
+}
 
 export default Footer;

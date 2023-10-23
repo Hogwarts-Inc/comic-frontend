@@ -9,7 +9,7 @@ import panelItems from '../panelItems';
 interface State {
   panel: string;
 }
-const PanelsList = () => {
+function PanelsList() {
   const [state, setState] = React.useState<State>({ panel: '' });
   const isSidebarOpen = useIsSidebarOpen();
   const { activePanel, activeSubMenu } = useAppContext();
@@ -42,6 +42,6 @@ const PanelsList = () => {
       {!!Component && <Component />}
     </Block>
   );
-};
+}
 
 export default PanelsList;

@@ -1,5 +1,7 @@
 import React from 'react';
 
-const Profile = () => <div></div>;
+function Profile() {
+  return <div />;
+}
 
 export default Profile;

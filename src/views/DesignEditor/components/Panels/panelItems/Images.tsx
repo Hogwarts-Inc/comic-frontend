@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback } from 'react';
 
@@ -11,7 +12,7 @@ import { Resource } from 'src/store/slices/resources/reducer';
 import { CloseSideBar } from './Common/CloseSideBar';
 import Scrollable from '../../../../../components/Scrollable';
 
-export const ImageItem = ({ preview, onClick }: { preview: any; onClick?: (option: any) => void }) => {
+export function ImageItem({ preview, onClick }: { preview: any; onClick?: (option: any) => void }) {
   const [css] = useStyletron();
   return (
     <div
@@ -71,8 +72,8 @@ export const ImageItem = ({ preview, onClick }: { preview: any; onClick?: (optio
       />
     </div>
   );
-};
-const Images = ({ title, images }: { title: string; images: Resource[] }) => {
+}
+function Images({ title, images }: { title: string; images: Resource[] }) {
   const editor = useEditor();
 
   const addObject = useCallback(
@@ -112,6 +113,6 @@ const Images = ({ title, images }: { title: string; images: Resource[] }) => {
       </Scrollable>
     </Block>
   );
-};
+}
 
 export default Images;

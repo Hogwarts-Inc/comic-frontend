@@ -77,7 +77,7 @@ export default function Uploads() {
           <CloseSideBar />
         </Block>
         <Scrollable>
-          <Block padding={'0 1.5rem'}>
+          <Block padding="0 1.5rem">
             <Button
               onClick={handleInputFileRefClick}
               size={SIZE.compact}

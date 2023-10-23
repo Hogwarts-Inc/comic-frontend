@@ -1,1 +1,2 @@
-export { default as default } from './Graphic';
+/* eslint-disable no-restricted-exports */
+export { default } from './Graphic';

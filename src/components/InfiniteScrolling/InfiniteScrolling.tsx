@@ -38,7 +38,7 @@ function InfiniteScrolling({ children, fetchData, hasMore }: Props) {
   return (
     <Block>
       {children}
-      <Block ref={lastElementRef}></Block>
+      <Block ref={lastElementRef} />
     </Block>
   );
 }

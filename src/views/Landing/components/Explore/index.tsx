@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { JSX } from 'react';
 
 import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/material/styles';
@@ -9,7 +9,7 @@ import Button from '@components/Button';
 
 import { Box, Placeholder, Content, Description } from './styles';
 
-export const Explore = (): JSX.Element => {
+export function Explore(): JSX.Element {
   const theme = useTheme();
   const isXSScreen = useMediaQuery(theme.breakpoints.only('xs'));
 
@@ -30,4 +30,4 @@ export const Explore = (): JSX.Element => {
       </Grid>
     </Grid>
   );
-};
+}

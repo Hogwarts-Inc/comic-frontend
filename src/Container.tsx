@@ -11,7 +11,7 @@ import { getFonts } from './store/slices/fonts/actions';
 import { getUploads } from './store/slices/uploads/actions';
 import { useAppDispatch } from './store/store';
 
-const Container = ({ children }: { children: React.ReactNode }) => {
+function Container({ children }: { children: React.ReactNode }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { isMobile, setIsMobile } = useAppContext();
   const dispatch = useAppDispatch();
@@ -61,6 +61,6 @@ const Container = ({ children }: { children: React.ReactNode }) => {
       {children}
     </div>
   );
-};
+}
 
 export default Container;
