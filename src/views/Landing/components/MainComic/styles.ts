@@ -1,18 +1,20 @@
 import { Grid, styled } from '@mui/material';
 
-interface StyledProps {
-    lg?: boolean;
-}
-
-export const Title = styled('p')<StyledProps>(({ theme, lg }) => ({
-    color: theme.palette.text.primary,
-    fontSize: lg ? '58px' : '25px',
-    fontWeight: 700,
-    letterSpacing: '-1px',
-    lineHeight: lg ? '70px' : '20px',
+export const Title = styled('p')(({ theme }) => ({
     textAlign: 'center',
-}));
+    fontStyle: 'normal',
+    fontWeight: 700,
+    letterSpacing: '-1px',  
+    color: theme.palette.text.primary,
+    fontSize: '25px',
+    lineHeight: '20px',
+  
+    [theme.breakpoints.up('lg')]: {
+      fontSize: '58px',
+      lineHeight: '70px',
+    },
+  }));
 
-export const MainComicGrid = styled(Grid)(({ }) => ({
-    justifyContent: 'center',
+export const MainComicGrid = styled(Grid)(({}) => ({
+  justifyContent: 'center',
 }));

@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 
 interface CarouselProps {
-  lg?: boolean;
   translateX?: string;
   displayMode?: 'full' | 'reduced';
 }
@@ -23,33 +22,18 @@ export const CarouselButton = styled('div')<CarouselProps>({
   width: '3%',
 });
 
-export const CarouselButtonPrev = styled(CarouselButton)<CarouselProps>(props => ({
-  display: props.lg ? 'block' : 'none',
-  left: '4%',
-}));
+export const CarouselButtonPrev = styled(CarouselButton)({ left: '8%' });
+export const CarouselButtonFirst = styled(CarouselButton)({ left: '5%' });
+export const CarouselButtonNext = styled(CarouselButton)({ right: '8%' });
+export const CarouselButtonLast = styled(CarouselButton)({ right: '5%' });
 
-export const CarouselButtonFirst = styled(CarouselButton)<CarouselProps>(props => ({
-  display: props.lg && props.displayMode === 'full' ? 'block' : 'none',
-  left: '1%',
-}));
-
-export const CarouselButtonNext = styled(CarouselButton)<CarouselProps>(props => ({
-  display: props.lg ? 'block' : 'none',
-  right: '4%',
-}));
-
-export const CarouselButtonLast = styled(CarouselButton)<CarouselProps>(props => ({
-  display: props.lg && props.displayMode === 'full' ? 'block' : 'none',
-  right: '1%',
-}));
-
-export const ImagesContainer = styled('div')<CarouselProps>(props => ({
+export const ImagesContainer = styled('div')({
   position: 'relative',
-  width: props.lg ? '80%' : '100%',
+  width: '100%',
   height: '100%',
   margin: '0 auto',
   overflow: 'hidden',
-}));
+});
 
 export const CarouselContainer = styled('div')<CarouselProps>(props => ({
   position: 'relative',
@@ -60,7 +44,7 @@ export const CarouselContainer = styled('div')<CarouselProps>(props => ({
 
 export const CarouselSlot = styled('div')<CarouselProps>(props => ({
   flex: '1 0 100%',
-  flexBasis: props.displayMode === 'reduced' ? '100%' : '75%', 
+  flexBasis: props.displayMode === 'reduced' ? '100%' : '75%',
   marginRight: '5%',
 }));
 
