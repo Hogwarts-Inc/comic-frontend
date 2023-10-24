@@ -10,6 +10,7 @@ import { Block } from 'baseui/block';
 import { Character, Resource } from 'src/store/slices/resources/reducer';
 
 import { CloseSideBar } from './Common/CloseSideBar';
+import { CharacterContainer } from './styles';
 import Scrollable from '../../../../../components/Scrollable';
 
 export function ImageItem({ preview, onClick }: { preview: any; onClick?: (option: any) => void }) {
@@ -115,7 +116,7 @@ function Images({ title, images }: { title: string; images: (Character | Resourc
                 return (
                   <>
                     <Block>{(image as Character).name}</Block>
-                    <div style={{ display: 'grid', gap: '8px', gridTemplateColumns: '1fr 1fr' }}>
+                    <CharacterContainer>
                       {(image as Character)?.images.map(characterImage => (
                         <ImageItem
                           key={characterImage.id}
@@ -123,7 +124,7 @@ function Images({ title, images }: { title: string; images: (Character | Resourc
                           preview={characterImage.url}
                         />
                       ))}
-                    </div>
+                    </CharacterContainer>
                   </>
                 );
               }
