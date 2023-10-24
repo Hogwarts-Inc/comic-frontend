@@ -18,6 +18,10 @@ jobs:
         run: |
           cp ~/front/.env .env
 
+      - name: Clean images
+        run: |
+          docker system prune -f
+
       - name: Build Docker Image
         run: |
           docker build -t docker-staging:latest .

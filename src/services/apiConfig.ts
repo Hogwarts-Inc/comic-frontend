@@ -1,8 +1,9 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
+import { nanoid } from 'nanoid';
 
-import { ResourceSliceState, setResources } from 'src/store/slices/resources/reducer';
+import { Character, ResourceSliceState, setCharacters, setResources } from 'src/store/slices/resources/reducer';
 import { store } from 'src/store/store';
 
 //TO DO: Add types
@@ -11,11 +12,13 @@ type CanvaCreation = { chapter_id: number; image: string };
 type CanvaParam = any;
 type StoriettesCreation = any;
 type StoriettesParam = any;
+type CharacterCreation = any;
+type CharacterParam = any;
 type ChapterCreation = any;
 type ChapterParam = any;
 type GraphicResourcesCreation = any;
 type GraphicResourcesParam = any;
-type GraphicResources = 'character' | 'background' | 'object' | 'dialog';
+type GraphicResources = 'background' | 'object' | 'dialog';
 
 const { dispatch } = store;
 
@@ -76,21 +79,18 @@ export const apisCanvas = {
 export const apisGraphicResources = {
   getGraphicResources: () =>
     api.get('/graphic_resources').then(({ data }) => {
-      const dataMap: ResourceSliceState = { characters: [], images: [], shapes: [], text: [] };
+      const dataMap: ResourceSliceState = { characters: [], background: [], shapes: [], dialog: [] };
       (data || []).forEach(
         ({ id, image_url, resource_type }: { id: string; resource_type: string; image_url: string }) => {
           switch (resource_type) {
-            case 'character':
-              dataMap.characters.push({ id, url: image_url });
-              break;
             case 'background':
-              dataMap.images.push({ id, url: image_url });
+              dataMap.background.push({ id, url: image_url });
               break;
             case 'object':
               dataMap.shapes.push({ id, url: image_url });
               break;
             case 'dialog':
-              dataMap.text.push({ id, url: image_url });
+              dataMap.dialog.push({ id, url: image_url });
               break;
             default:
               break;
@@ -104,4 +104,35 @@ export const apisGraphicResources = {
     api.get(`/graphic_resources/resource_for_type?resource_type=${type}`),
   postGraphicResources: (data: GraphicResourcesCreation) => api.post('/graphic_resources', data),
   patchGraphicResources: (id: number, data: GraphicResourcesParam) => api.patch(`/graphic_resources/${id}`, data),
+};
+
+export const apisCharacter = {
+  getCharacters: () =>
+    api.get('/characters').then(({ data }) => {
+      const characters: Character[] = (data || []).map(
+        ({
+          id,
+          name,
+          images_urls,
+          descriptions,
+        }: {
+          id: string;
+          name: string;
+          images_urls: string[];
+          descriptions: { id: string; title: string; text: string }[];
+        }) => {
+          const character: Character = {
+            descriptions,
+            id,
+            name,
+            images: images_urls.map(url => ({ id: nanoid(), url })),
+          };
+          return character;
+        },
+      );
+      dispatch(setCharacters(characters));
+    }),
+  getCharacterById: (id: number) => api.get(`/characters/${id}`),
+  postCharacter: (data: CharacterCreation) => api.post('/characters', data),
+  patchCharacter: (id: number, data: CharacterParam) => api.patch(`/characters/${id}`, data),
 };
