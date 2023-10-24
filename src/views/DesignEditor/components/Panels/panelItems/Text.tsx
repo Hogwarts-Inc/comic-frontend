@@ -16,6 +16,7 @@ import { Resource } from 'src/store/slices/resources/reducer';
 
 import { CloseSideBar } from './Common/CloseSideBar';
 import { ImageItem } from './Images';
+import { ImageContainer } from './styles';
 import Scrollable from '../../../../../components/Scrollable';
 import { FontItem } from '../../../../../interfaces/common';
 // import { IComponent } from '../../../../../interfaces/DesignEditor';
@@ -169,11 +170,11 @@ export default function Text({ images }: { images: Resource[] }) {
             }}>
             {t('text.add')}
           </Button>
-          <div style={{ display: 'grid', gap: '8px', gridTemplateColumns: '1fr 1fr' }}>
+          <ImageContainer>
             {images.map(image => (
               <ImageItem key={image.id} onClick={() => addImage(image.url)} preview={image.url} />
             ))}
-          </div>
+          </ImageContainer>
 
           <Block
             $style={{

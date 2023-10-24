@@ -19,6 +19,7 @@ function Button({ variantType, size, isSelected, isLoading, ...props }: ButtonPr
       variantType={variantType}
       size={size}
       isSelected={isSelected}
+      isLoading={isLoading}
       {...props}
       onClick={isLoading ? undefined : props.onClick}>
       {isLoading && <Loader />}

@@ -2,33 +2,41 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type Resource = { id: string; url: string };
+export type Description = { id: string; title: string; text: string };
+export type Character = { id: string; name: string; images: Resource[]; descriptions: Description[] };
 export interface ResourceSliceState {
-  characters: Resource[];
-  images: Resource[];
+  characters: Character[];
+  background: Resource[];
   shapes: Resource[];
-  text: Resource[];
+  dialog: Resource[];
+  [key: string]: Character[] | Resource[];
 }
 
-const appDataInitialState: ResourceSliceState = {
+const resourcesInitialState: ResourceSliceState = {
   characters: [],
-  images: [],
+  background: [],
   shapes: [],
-  text: [],
+  dialog: [],
 };
 
 const resources = createSlice({
   name: 'resources',
-  initialState: appDataInitialState,
+  initialState: resourcesInitialState,
   reducers: {
-    setResources(state, { payload }: PayloadAction<ResourceSliceState>) {
-      state.characters = payload.characters;
-      state.images = payload.images;
+    setResources(
+      state,
+      { payload }: PayloadAction<{ background: Resource[]; shapes: Resource[]; dialog: Resource[] }>,
+    ) {
+      state.background = payload.background;
       state.shapes = payload.shapes;
-      state.text = payload.text;
+      state.dialog = payload.dialog;
+    },
+    setCharacters(state, { payload }: PayloadAction<Character[]>) {
+      state.characters = payload;
     },
   },
 });
 
-export const { setResources } = resources.actions;
+export const { setResources, setCharacters } = resources.actions;
 
 export default resources.reducer;
