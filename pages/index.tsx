@@ -10,6 +10,7 @@ import { MainComic } from 'src/views/Landing/components/MainComic';
 
 function Home() {
   const { push } = useRouter();
+  // TODO: Change this component when all the components for the landing page are ready
   return (
     <div
       style={{
@@ -19,14 +20,19 @@ function Home() {
         width: '100%',
         flexDirection: 'column',
         gap: '10px',
+        overflow: 'auto',
       }}>
       {/* To do: add authentication */}
-      <TopBar isAuthenticated={false} />
-      Inicio
-      <MainComic />
+      <div style={{ marginBottom: '16rem' }}>
+        <TopBar isAuthenticated={false} />
+      </div>
+      <div>
+        <MainComic />
+      </div>
       <Button onClick={() => push(Route.editor)}>Editor</Button>
       <Button onClick={() => push(Route.profile)}>Perfil</Button>
       <Button onClick={() => push(`${Route.visualizer}/1/1`)}>Visualizar</Button>
+      <div style={{ marginTop: '15rem' }} />
       <Footer />
     </div>
   );
