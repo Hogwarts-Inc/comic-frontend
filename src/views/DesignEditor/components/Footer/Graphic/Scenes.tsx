@@ -6,9 +6,13 @@ import { restrictToFirstScrollableAncestor, restrictToHorizontalAxis } from '@dn
 import { arrayMove, SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable';
 import { useEditor, useFrame } from '@layerhub-io/react';
 import { IScene } from '@layerhub-io/types';
+import { Grid } from '@mui/material';
 import { useStyletron } from 'baseui';
 import { Block } from 'baseui/block';
 import { nanoid } from 'nanoid';
+
+import AngleDoubleLeft from '@components/Icons/AngleDoubleLeft';
+import useIsMobile from 'src/hooks/useIsMobile';
 
 import SceneContextMenu from './SceneContextMenu';
 import SceneItem from './SceneItem';
@@ -21,11 +25,13 @@ import useDesignEditorPages from '../../../../../hooks/useDesignEditorScenes';
 function Scenes() {
   const scenes = useDesignEditorPages();
   const { setScenes, setCurrentScene, currentScene, setCurrentDesign, currentDesign } = useContext(DesignEditorContext);
+  const isMobile = useIsMobile();
   const editor = useEditor();
   const [css] = useStyletron();
   const frame = useFrame();
   const [draggedScene, setDraggedScene] = useState<IScene | null>(null);
   const contextMenuTimelineRequest = useContextMenuTimelineRequest();
+  const [isOpen, setIsOpen] = useState(true);
 
   const sensors = [
     useSensor(PointerSensor, {
@@ -149,68 +155,83 @@ function Scenes() {
   };
 
   return (
-    <DndContext
-      modifiers={[restrictToFirstScrollableAncestor, restrictToHorizontalAxis]}
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragEnd={handleDragEnd}
-      onDragStart={handleDragStart}>
-      <Block
-        id="TimelineItemsContainer"
-        $style={{ padding: '0.25rem 0.75rem', background: '#ffffff', position: 'relative' }}>
-        <div className={css({ display: 'flex', alignItems: 'center' })}>
-          {contextMenuTimelineRequest.visible && <SceneContextMenu />}
+    <Grid container justifyContent="flex-end">
+      {isMobile && (
+        <Block
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+          $style={{ padding: '0.5rem', cursor: 'pointer', display: 'flex', rotate: isOpen ? '270deg' : '90deg' }}>
+          <AngleDoubleLeft size={18} />
+        </Block>
+      )}
+      {(isOpen || !isMobile) && (
+        <Grid container wrap="nowrap" overflow="hidden">
+          <DndContext
+            modifiers={[restrictToFirstScrollableAncestor, restrictToHorizontalAxis]}
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+            onDragStart={handleDragStart}>
+            <Block
+              id="TimelineItemsContainer"
+              $style={{ padding: '0.25rem 0.75rem', background: '#ffffff', position: 'relative' }}>
+              <div className={css({ display: 'flex', alignItems: 'center' })}>
+                {contextMenuTimelineRequest.visible && <SceneContextMenu />}
 
-          <SortableContext
-            items={scenes.map(({ history, scenePosition }) => history[scenePosition])}
-            strategy={horizontalListSortingStrategy}>
-            {scenes.map(({ history, scenePosition }, index) => (
-              <SceneItem
-                key={history[scenePosition].id}
-                isCurrentScene={history[scenePosition].id === currentScene?.id}
-                scene={history[scenePosition]}
-                index={index}
-                changePage={setCurrentScene}
-                preview={history[scenePosition]?.preview || ''}
-              />
-            ))}
-            {scenes.length < 3 && (
-              <div
-                style={{
-                  background: '#ffffff',
-                  padding: '1rem 1rem 1rem 0.5rem',
-                }}>
-                <div
-                  onClick={addScene}
-                  className={css({
-                    width: '100px',
-                    height: '56px',
-                    background: 'rgb(243,244,246)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                  })}>
-                  <Add size={20} />
-                </div>
+                <SortableContext
+                  items={scenes.map(({ history, scenePosition }) => history[scenePosition])}
+                  strategy={horizontalListSortingStrategy}>
+                  {scenes.map(({ history, scenePosition }, index) => (
+                    <SceneItem
+                      key={history[scenePosition].id}
+                      isCurrentScene={history[scenePosition].id === currentScene?.id}
+                      scene={history[scenePosition]}
+                      index={index}
+                      changePage={setCurrentScene}
+                      preview={history[scenePosition]?.preview || ''}
+                    />
+                  ))}
+                  {scenes.length < 3 && (
+                    <div
+                      style={{
+                        background: '#ffffff',
+                        padding: '1rem 1rem 1rem 0.5rem',
+                      }}>
+                      <div
+                        onClick={addScene}
+                        className={css({
+                          width: '100px',
+                          height: '56px',
+                          background: 'rgb(243,244,246)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          cursor: 'pointer',
+                        })}>
+                        <Add size={20} />
+                      </div>
+                    </div>
+                  )}
+                </SortableContext>
+                <DragOverlay>
+                  {draggedScene ? (
+                    <Block
+                      $style={{
+                        backgroundImage: `url(${draggedScene.preview})`,
+                        backgroundSize: `${frame ? (frame.width * 70) / frame.height : 70}px 70px`,
+                        height: '80px',
+                        opacity: 0.75,
+                      }}
+                    />
+                  ) : null}
+                </DragOverlay>
               </div>
-            )}
-          </SortableContext>
-          <DragOverlay>
-            {draggedScene ? (
-              <Block
-                $style={{
-                  backgroundImage: `url(${draggedScene.preview})`,
-                  backgroundSize: `${frame ? (frame.width * 70) / frame.height : 70}px 70px`,
-                  height: '80px',
-                  opacity: 0.75,
-                }}
-              />
-            ) : null}
-          </DragOverlay>
-        </div>
-      </Block>
-    </DndContext>
+            </Block>
+          </DndContext>
+        </Grid>
+      )}
+    </Grid>
   );
 }
 

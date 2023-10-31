@@ -5,6 +5,9 @@ import React from 'react';
 import { useEditor, useFrame } from '@layerhub-io/react';
 import { Block } from 'baseui/block';
 import { nanoid } from 'nanoid';
+import { useTranslation } from 'react-i18next';
+
+import { ScenesWithPosition } from 'src/contexts/DesignEditor';
 
 import { getDefaultTemplate } from '../../../../../constants/design-editor';
 import useDesignEditorContext from '../../../../../hooks/useDesignEditorContext';
@@ -22,6 +25,7 @@ function SceneContextMenu() {
   const ref = React.useRef<HTMLDivElement | null>(null);
   const editor = useEditor();
   const frame = useFrame();
+  const { t } = useTranslation();
   useOnClickOutside(ref, () => {
     setContextMenuTimelineRequest({ ...contextMenuTimelineRequest, visible: false });
   });
@@ -69,8 +73,11 @@ function SceneContextMenu() {
     );
     if (currentScene) {
       const id = nanoid();
-      currentScene.history = currentScene.history.map(scene => ({ ...scene, id }));
-      const updatedScenes = [...scenes, currentScene];
+      const newHistory = currentScene.history.map(scene => ({ ...scene, id }));
+      const updatedScenes: ScenesWithPosition = [
+        ...scenes,
+        { history: newHistory, scenePosition: newHistory.length - 1 },
+      ];
       setScenes(updatedScenes);
     }
 
@@ -90,21 +97,23 @@ function SceneContextMenu() {
         left: `${contextMenuTimelineRequest.left - timelineItemsContainerBounds.left}px`,
         padding: '0.5rem 0',
       }}>
-      <Block
-        onClick={makeDuplicateScene}
-        $style={{
-          fontSize: '14px',
-          height: '28px',
-          display: 'flex',
-          alignItems: 'center',
-          padding: '0 1rem',
-          ':hover': {
-            backgroundColor: 'rgba(0,0,0,0.1)',
-            cursor: 'pointer',
-          },
-        }}>
-        Duplicate Scene
-      </Block>
+      {scenes.length < 3 && (
+        <Block
+          onClick={makeDuplicateScene}
+          $style={{
+            fontSize: '14px',
+            height: '28px',
+            display: 'flex',
+            alignItems: 'center',
+            padding: '0 1rem',
+            ':hover': {
+              backgroundColor: 'rgba(0,0,0,0.1)',
+              cursor: 'pointer',
+            },
+          }}>
+          {t('scene.duplicate')}
+        </Block>
+      )}
       <Block
         onClick={makeDeleteScene}
         $style={{
@@ -118,7 +127,7 @@ function SceneContextMenu() {
             cursor: 'pointer',
           },
         }}>
-        Delete Scene
+        {t('scene.delete')}
       </Block>
     </Block>
   );

@@ -1,17 +1,20 @@
 import React from 'react';
 
+import useIsMobile from 'src/hooks/useIsMobile';
+
 import PanelItem from './PanelItem/PanelItem';
 import PanelsList from './PanelList/PanelsList';
 import { Separator } from './styles';
 
-function Panels() {
+const Panels = () => {
+  const isMobile = useIsMobile();
   return (
     <>
       <PanelsList />
-      <Separator />
+      {!isMobile && <Separator />}
       <PanelItem />
     </>
   );
-}
+};
 
 export default Panels;

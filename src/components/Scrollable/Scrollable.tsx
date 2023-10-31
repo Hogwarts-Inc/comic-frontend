@@ -2,13 +2,7 @@ import React from 'react';
 
 import Scrollbars from '@layerhub-io/react-custom-scrollbar';
 
-function Scrollable({
-  children,
-  autoHide,
-}: {
-  children: React.ReactNode;
-  autoHide?: boolean;
-}) {
+function Scrollable({ children, autoHide }: { children: React.ReactNode; autoHide?: boolean }) {
   return (
     <div style={{ flex: 1, position: 'relative' }}>
       <div

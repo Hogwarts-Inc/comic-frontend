@@ -18,8 +18,12 @@ const useDesignEditorContext = () => {
     setContextMenuSceneRequest,
     currentDesign,
     setCurrentDesign,
+    isSidebarOpen,
+    setIsSidebarOpen,
   } = useContext(DesignEditorContext);
   return {
+    isSidebarOpen,
+    setIsSidebarOpen,
     setDisplayPreview,
     displayPreview,
     currentScene,

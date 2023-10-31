@@ -1,28 +1,28 @@
 import React from 'react';
 
+import { Grid } from '@mui/material';
+
+import useIsMobile from 'src/hooks/useIsMobile';
+
 import Canvas from './components/Canvas';
-import EditorContainer from './components/EditorContainer';
-import Footer from './components/Footer';
+import Graphic from './components/Footer/Graphic';
 import Panels from './components/Panels';
 import Toolbox from './components/Toolbox';
 
-function GraphicEditor() {
+const GraphicEditor = () => {
+  const isMobile = useIsMobile();
   return (
-    <EditorContainer>
-      <div
-        style={{
-          display: 'flex',
-          flex: 1,
-        }}>
+    <Grid container wrap="nowrap" direction={isMobile ? 'column' : 'row'}>
+      <Grid container item xs="auto" direction={isMobile ? 'column' : 'row'}>
         <Panels />
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', position: 'relative' }}>
-          <Toolbox />
-          <Canvas />
-          <Footer />
-        </div>
-      </div>
-    </EditorContainer>
+      </Grid>
+      <Grid container item xs direction="column" overflow="hidden">
+        <Toolbox />
+        <Canvas />
+        <Graphic />
+      </Grid>
+    </Grid>
   );
-}
+};
 
 export default GraphicEditor;
