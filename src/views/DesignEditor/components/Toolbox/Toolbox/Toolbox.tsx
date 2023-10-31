@@ -3,13 +3,15 @@ import React, { useEffect, useMemo, useState } from 'react';
 
 import { useActiveObject, useEditor } from '@layerhub-io/react';
 import { ILayer } from '@layerhub-io/types';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 
 import Button from '@components/Button';
+import { Route } from 'src/constants/routes';
 import useDesignEditorContext from 'src/hooks/useDesignEditorContext';
 import { apisCanvas } from 'src/services/apiConfig';
 
-import { ButtonsContainer, ButtonsSeparator, Container } from './styles';
+import { ButtonsContainer, Container } from './styles';
 import useAppContext from '../../../../../hooks/useAppContext';
 import getSelectionType from '../../../../../utils/get-selection-type';
 import Items from '../Items';
@@ -25,6 +27,7 @@ function Toolbox() {
   const editor = useEditor();
   const { t } = useTranslation();
   const [isSaveLoading, setIsSaveLoading] = useState(false);
+  const { push } = useRouter();
 
   useEffect(() => {
     const selectionType = getSelectionType(activeObject);
@@ -73,6 +76,7 @@ function Toolbox() {
     } catch (e) {
       // TODO handle error
     }
+    push(Route.home);
     setIsSaveLoading(false);
   };
 
@@ -82,8 +86,6 @@ function Toolbox() {
     <Container>
       {Component && <Component />}
       <ButtonsContainer>
-        <Button onClick={() => alert('TODO: import')}>{t('navbar.import')}</Button>
-        <ButtonsSeparator />
         <Button onClick={uploadCanva} isLoading={isSaveLoading}>
           {t('navbar.save')}
         </Button>
