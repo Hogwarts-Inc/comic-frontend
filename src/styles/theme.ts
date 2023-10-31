@@ -62,6 +62,15 @@ const theme = createTheme({
       main: 'linear-gradient(to bottom, rgba(64, 224, 208, 1) 0%, rgba(112, 121, 190, 1) 62%, rgba(255, 0, 128, 1) 100%)',
     },
   },
+  breakpoints: {
+    values: {
+      xs: 0, // Mobile
+      sm: 600, // Tablet and larger
+      md: 960, // Desktop
+      lg: 1280, // Large desktop
+      xl: 1920, // Extra-large desktop
+    },
+  },
   components: {
     MuiTypography: {
       styleOverrides: {
@@ -86,16 +95,6 @@ const theme = createTheme({
           letterSpacing: '0.009rem',
         },
       },
-      variants: [
-        {
-          props: { className: 'title' },
-          style: {
-            fontSize: '3.625rem',
-            textAlign: 'left',
-            fontWeight: 'bold',
-          },
-        },
-      ],
     },
   },
 });
