@@ -19,6 +19,14 @@ type ChapterParam = any;
 type GraphicResourcesCreation = any;
 type GraphicResourcesParam = any;
 type GraphicResources = 'background' | 'object' | 'dialog';
+export type Description = { id: string; title: string; text: string };
+export type Event = {
+  active: boolean;
+  descriptions: Description[];
+  id: number;
+  image_url: string;
+  name: string;
+};
 
 const { dispatch } = store;
 
@@ -135,4 +143,9 @@ export const apisCharacter = {
   getCharacterById: (id: number) => api.get(`/characters/${id}`),
   postCharacter: (data: CharacterCreation) => api.post('/characters', data),
   patchCharacter: (id: number, data: CharacterParam) => api.patch(`/characters/${id}`, data),
+};
+
+//Event
+export const apisEvents = {
+  getEvent: () => api.get<Event[]>('/conventions'),
 };

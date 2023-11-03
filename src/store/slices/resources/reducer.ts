@@ -1,8 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export type Resource = { id: string; url: string };
+//To do: remove this from here
 export type Description = { id: string; title: string; text: string };
+export type Resource = { id: string; url: string };
 export type Character = { id: string; name: string; images: Resource[]; descriptions: Description[] };
 export interface ResourceSliceState {
   characters: Character[];
