@@ -7,17 +7,19 @@ interface StyledProps {
 export const Box = styled('div')({
   height: '420px',
   position: 'relative',
+  backgroundColor: '#000',
   width: '100%',
 });
 
 export const Placeholder = styled('div')<StyledProps>(({ theme, lg }) => ({
   border: '3px solid transparent',
+  width: '100%',
   borderImage: theme.customPalette.gradientBox.main,
   borderImageSlice: 1,
   borderRadius: '10px',
   height: lg ? '420px' : '200px',
   position: 'absolute',
-  width: lg ? '1400px' : '380px',
+  // width: lg ? '1400px' : '380px',
 }));
 
 export const Content = styled('div')<StyledProps>(props => ({

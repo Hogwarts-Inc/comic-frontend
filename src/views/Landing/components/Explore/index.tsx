@@ -12,11 +12,10 @@ import { Box, Placeholder, Content, Description } from './styles';
 export function Explore(): JSX.Element {
   const theme = useTheme();
   const isXSScreen = useMediaQuery(theme.breakpoints.only('xs'));
-
   const { t } = useTranslation();
 
   return (
-    <Grid container>
+    <Grid container justifyContent="center" alignItems="center">
       <Grid item xs={12} lg={8}>
         <Box>
           <Placeholder lg={!isXSScreen} />
