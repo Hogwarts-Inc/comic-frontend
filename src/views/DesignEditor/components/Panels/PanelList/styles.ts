@@ -42,7 +42,7 @@ export const WhiteContainer = styled(Grid)<{ isMobile: boolean }>(({ theme, isMo
   alignItems: 'center',
   ...(isMobile
     ? {
-        borderBottom: '1px solid rgb(0 0 0 / 15%)',
+        borderBottom: `1px solid ${theme.customPalette.shadow.third} `,
       }
     : {
         overflow: 'scroll',

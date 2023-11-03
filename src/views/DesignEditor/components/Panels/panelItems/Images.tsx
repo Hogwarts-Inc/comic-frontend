@@ -113,7 +113,7 @@ function Images({ title, images }: { title: string; images: (Character | Resourc
               gap: '8px',
               gridTemplateColumns: (images[0] as Character)?.images
                 ? undefined
-                : `1fr 1fr${isMobile ? ' 1fr 1fr' : ''}`,
+                : `repeat(${isMobile ? '4' : '2'}, 1fr)`,
             }}>
             {images.map(image => {
               if ((image as Character)?.images) {

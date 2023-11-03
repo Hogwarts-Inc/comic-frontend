@@ -1,11 +1,11 @@
 import { Grid, styled } from '@mui/material';
 
-export const Container = styled(Grid)<{ isMobile: boolean }>(({ isMobile }) => ({
-  boxShadow: 'rgb(0 0 0 / 15%) 0px 1px 1px',
+export const Container = styled(Grid)<{ isMobile: boolean }>(({ isMobile, theme }) => ({
+  boxShadow: `${theme.customPalette.shadow.third} 0px 1px 1px`,
   overflow: 'scroll',
   minHeight: isMobile ? undefined : '3.125rem',
   justifyContent: isMobile ? 'center' : undefined,
-  borderBottom: isMobile ? '1px solid rgb(0 0 0 / 15%)' : undefined,
+  borderBottom: isMobile ? `1px solid ${theme.customPalette.shadow.third}` : undefined,
 }));
 
 export const ButtonsContainer = styled('div')(() => ({

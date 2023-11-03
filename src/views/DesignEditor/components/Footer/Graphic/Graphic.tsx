@@ -11,13 +11,11 @@ const Container = styled(Grid, ({ $theme }: { $theme: { colors: { white: string 
   width: '100%',
 }));
 
-function Graphic() {
-  return (
-    <Container>
-      <Scenes />
-      <Common />
-    </Container>
-  );
-}
+const Graphic = () => (
+  <Container>
+    <Scenes />
+    <Common />
+  </Container>
+);
 
 export default Graphic;

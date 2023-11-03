@@ -3,12 +3,12 @@
 import React from 'react';
 
 import { useEditor, useFrame } from '@layerhub-io/react';
-import { Block } from 'baseui/block';
 import { nanoid } from 'nanoid';
 import { useTranslation } from 'react-i18next';
 
 import { ScenesWithPosition } from 'src/contexts/DesignEditor';
 
+import { SceneButton, SceneButtonContainer } from './styles';
 import { getDefaultTemplate } from '../../../../../constants/design-editor';
 import useDesignEditorContext from '../../../../../hooks/useDesignEditorContext';
 import useOnClickOutside from '../../../../../hooks/useOnClickOutside';
@@ -85,51 +85,13 @@ function SceneContextMenu() {
   };
 
   return (
-    <Block
+    <SceneButtonContainer
       ref={ref}
-      $style={{
-        width: '160px',
-        position: 'absolute',
-        backgroundColor: '#ffffff',
-        boxShadow: '0 0 0 1px rgba(64,87,109,0.07),0 2px 12px rgba(53,71,90,0.2)',
-        zIndex: 4,
-        top: `${contextMenuTimelineRequest.top - timelineItemsContainerBounds.top - 80}px`,
-        left: `${contextMenuTimelineRequest.left - timelineItemsContainerBounds.left}px`,
-        padding: '0.5rem 0',
-      }}>
-      {scenes.length < 3 && (
-        <Block
-          onClick={makeDuplicateScene}
-          $style={{
-            fontSize: '14px',
-            height: '28px',
-            display: 'flex',
-            alignItems: 'center',
-            padding: '0 1rem',
-            ':hover': {
-              backgroundColor: 'rgba(0,0,0,0.1)',
-              cursor: 'pointer',
-            },
-          }}>
-          {t('scene.duplicate')}
-        </Block>
-      )}
-      <Block
-        onClick={makeDeleteScene}
-        $style={{
-          fontSize: '14px',
-          height: '28px',
-          display: 'flex',
-          alignItems: 'center',
-          padding: '0 1rem',
-          ':hover': {
-            backgroundColor: 'rgba(0,0,0,0.1)',
-            cursor: 'pointer',
-          },
-        }}>
-        {t('scene.delete')}
-      </Block>
-    </Block>
+      left={`${contextMenuTimelineRequest.left - timelineItemsContainerBounds.left}px`}
+      top={`${contextMenuTimelineRequest.top - timelineItemsContainerBounds.top - 80}px`}>
+      {scenes.length < 3 && <SceneButton onClick={makeDuplicateScene}>{t('scene.duplicate')}</SceneButton>}
+      <SceneButton onClick={makeDeleteScene}>{t('scene.delete')}</SceneButton>
+    </SceneButtonContainer>
   );
 }
 

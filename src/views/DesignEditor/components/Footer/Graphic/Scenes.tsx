@@ -8,7 +8,6 @@ import { useEditor, useFrame } from '@layerhub-io/react';
 import { IScene } from '@layerhub-io/types';
 import { Grid } from '@mui/material';
 import { useStyletron } from 'baseui';
-import { Block } from 'baseui/block';
 import { nanoid } from 'nanoid';
 
 import AngleDoubleLeft from '@components/Icons/AngleDoubleLeft';
@@ -16,6 +15,7 @@ import useIsMobile from 'src/hooks/useIsMobile';
 
 import SceneContextMenu from './SceneContextMenu';
 import SceneItem from './SceneItem';
+import { AddButton, CloseButton, DraggedScene, TimelineContainer } from './styles';
 import Add from '../../../../../components/Icons/Add';
 import { getDefaultTemplate } from '../../../../../constants/design-editor';
 import { DesignEditorContext, ScenesWithPosition } from '../../../../../contexts/DesignEditor';
@@ -157,25 +157,23 @@ function Scenes() {
   return (
     <Grid container justifyContent="flex-end">
       {isMobile && (
-        <Block
+        <CloseButton
+          isOpen={isOpen}
           onClick={() => {
             setIsOpen(!isOpen);
-          }}
-          $style={{ padding: '0.5rem', cursor: 'pointer', display: 'flex', rotate: isOpen ? '270deg' : '90deg' }}>
+          }}>
           <AngleDoubleLeft size={18} />
-        </Block>
+        </CloseButton>
       )}
       {(isOpen || !isMobile) && (
-        <Grid container wrap="nowrap" overflow="hidden">
+        <Grid container wrap="nowrap">
           <DndContext
             modifiers={[restrictToFirstScrollableAncestor, restrictToHorizontalAxis]}
             sensors={sensors}
             collisionDetection={closestCenter}
             onDragEnd={handleDragEnd}
             onDragStart={handleDragStart}>
-            <Block
-              id="TimelineItemsContainer"
-              $style={{ padding: '0.25rem 0.75rem', background: '#ffffff', position: 'relative' }}>
+            <TimelineContainer id="TimelineItemsContainer">
               <div className={css({ display: 'flex', alignItems: 'center' })}>
                 {contextMenuTimelineRequest.visible && <SceneContextMenu />}
 
@@ -198,36 +196,22 @@ function Scenes() {
                         background: '#ffffff',
                         padding: '1rem 1rem 1rem 0.5rem',
                       }}>
-                      <div
-                        onClick={addScene}
-                        className={css({
-                          width: '100px',
-                          height: '56px',
-                          background: 'rgb(243,244,246)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          cursor: 'pointer',
-                        })}>
+                      <AddButton onClick={addScene}>
                         <Add size={20} />
-                      </div>
+                      </AddButton>
                     </div>
                   )}
                 </SortableContext>
                 <DragOverlay>
-                  {draggedScene ? (
-                    <Block
-                      $style={{
-                        backgroundImage: `url(${draggedScene.preview})`,
-                        backgroundSize: `${frame ? (frame.width * 70) / frame.height : 70}px 70px`,
-                        height: '80px',
-                        opacity: 0.75,
-                      }}
+                  {!!draggedScene && (
+                    <DraggedScene
+                      backgroundImage={`url(${draggedScene.preview})`}
+                      backgroundSize={`${frame ? (frame.width * 70) / frame.height : 70}px 70px`}
                     />
-                  ) : null}
+                  )}
                 </DragOverlay>
               </div>
-            </Block>
+            </TimelineContainer>
           </DndContext>
         </Grid>
       )}

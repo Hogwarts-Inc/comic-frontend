@@ -11,10 +11,12 @@ interface CustomTheme {
     third: { main: string };
     violet: { main: string };
     violetDark: { main: string };
-    blackTransparent: { main: string };
+    blackTransparent: { main: string; secondary: string };
     gradient: { main: string };
     gradientReverse: { main: string };
     gradientBox: { main: string };
+    shadow: { main: string; secondary: string; third: string };
+    ligth: { main: string };
   };
 }
 
@@ -51,6 +53,7 @@ const theme = createTheme({
     },
     blackTransparent: {
       main: 'rgba(0, 0, 0, 0.25)',
+      secondary: 'rgba(0,0,0,0.1)',
     },
     gradient: {
       main: 'linear-gradient(to right, rgba(64, 224, 208, 1), rgba(112, 121, 190, 1), rgba(255, 0, 128, 1))',
@@ -60,6 +63,14 @@ const theme = createTheme({
     },
     gradientBox: {
       main: 'linear-gradient(to bottom, rgba(64, 224, 208, 1) 0%, rgba(112, 121, 190, 1) 62%, rgba(255, 0, 128, 1) 100%)',
+    },
+    shadow: {
+      main: 'rgba(64,87,109,0.07)',
+      secondary: 'rgba(53,71,90,0.2)',
+      third: 'rgb(0 0 0 / 15%)',
+    },
+    ligth: {
+      main: 'rgb(243,244,246)',
     },
   },
   components: {
