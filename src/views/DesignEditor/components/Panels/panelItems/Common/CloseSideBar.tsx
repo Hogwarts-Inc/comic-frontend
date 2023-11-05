@@ -7,7 +7,7 @@ import useAppContext from 'src/hooks/useAppContext';
 import useSetIsSidebarOpen from 'src/hooks/useSetIsSidebarOpen';
 
 export function CloseSideBar() {
-  const { setActivePanel } = useAppContext();
+  const { setActivePanel, isMobile } = useAppContext();
   const setIsSidebarOpen = useSetIsSidebarOpen();
   return (
     <Block
@@ -15,7 +15,7 @@ export function CloseSideBar() {
         setIsSidebarOpen(false);
         setActivePanel('');
       }}
-      $style={{ cursor: 'pointer', display: 'flex' }}>
+      $style={{ cursor: 'pointer', display: 'flex', rotate: isMobile ? '90deg' : undefined }}>
       <AngleDoubleLeft size={18} />
     </Block>
   );

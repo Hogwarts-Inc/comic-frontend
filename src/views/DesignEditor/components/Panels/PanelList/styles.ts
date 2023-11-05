@@ -1,17 +1,18 @@
-import { styled } from '@mui/material';
+/* eslint-disable indent */
+import { Grid, styled } from '@mui/material';
 
 export const ButtonText = styled('p')({
   fontSize: '0.7rem',
   margin: 0,
 });
 
-export const ButtonsContainer = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
+export const ButtonsContainer = styled(Grid)(() => ({
+  height: 'fit-content',
+  width: 'auto',
+  overflow: 'scroll',
   gap: '1rem',
-  width: '60%',
-  margin: '8rem auto ',
-});
+  padding: '1rem',
+}));
 export const ButtonContainer = styled('div')({
   width: '100%',
   display: 'flex',
@@ -19,23 +20,33 @@ export const ButtonContainer = styled('div')({
   flexDirection: 'column',
 });
 
-export const Container = styled('div')(({ theme }) => ({
-  display: 'flex',
-  padding: '1.25rem 0 0 1.25rem',
-  background: `linear-gradient(181deg, ${theme.palette.secondary.main} 0.23%, 
-    ${theme.customPalette.third.main} 14.06%, ${theme.palette.primary.main} 36.98%)`,
-  flexDirection: 'column',
-  width: '7.5625rem',
-  minWidth: '7.5625rem',
+export const Container = styled(Grid)<{ isMobile: boolean }>(({ theme, isMobile }) => ({
+  gap: '1rem',
+  height: '100%',
+  ...(isMobile
+    ? {
+        background: `linear-gradient(89.97deg, ${theme.palette.secondary.main} 44.58%,
+           ${theme.customPalette.third.main} 63.56%, ${theme.palette.primary.main} 95%)`,
+      }
+    : {
+        background: `linear-gradient(181deg, ${theme.palette.secondary.main} 0.23%, 
+            ${theme.customPalette.third.main} 14.06%, ${theme.palette.primary.main} 36.98%)`,
+        padding: '1.25rem 0 0 1.25rem',
+      }),
 }));
 
-export const WhiteContainer = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flex: 'none',
+export const WhiteContainer = styled(Grid)<{ isMobile: boolean }>(({ theme, isMobile }) => ({
   background: theme.palette.common.white,
   borderTopLeftRadius: '1.875rem',
-  overflow: 'hidden',
-  height: '100%',
+  justifyContent: 'center',
+  alignItems: 'center',
+  ...(isMobile
+    ? {
+        borderBottom: `1px solid ${theme.customPalette.shadow.third} `,
+      }
+    : {
+        overflow: 'scroll',
+      }),
 }));
 
 export const SubContainer = styled('div')({

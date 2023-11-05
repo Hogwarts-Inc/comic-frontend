@@ -1,12 +1,13 @@
 import React from 'react';
 
 import { Canvas as LayerhubCanvas } from '@layerhub-io/react';
+import { Grid } from '@mui/material';
 
 import ContextMenu from '../ContextMenu';
 
 function Canvas() {
   return (
-    <div style={{ flex: 1, display: 'flex', position: 'relative' }}>
+    <Grid container xs item>
       <ContextMenu />
       <LayerhubCanvas
         config={{
@@ -21,8 +22,8 @@ function Canvas() {
             offsetY: 0,
           },
         }}
-    />
-    </div>
+      />
+    </Grid>
   );
 }
 

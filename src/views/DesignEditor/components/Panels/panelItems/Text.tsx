@@ -9,9 +9,8 @@ import { Block } from 'baseui/block';
 import { Button, SIZE } from 'baseui/button';
 import { nanoid } from 'nanoid';
 import { useTranslation } from 'react-i18next';
-// import { useSelector } from 'react-redux';
-// import { useStyletron } from 'styletron-react';
 
+import useIsMobile from 'src/hooks/useIsMobile';
 import { Resource } from 'src/store/slices/resources/reducer';
 
 import { CloseSideBar } from './Common/CloseSideBar';
@@ -19,56 +18,12 @@ import { ImageItem } from './Images';
 import { ImageContainer } from './styles';
 import Scrollable from '../../../../../components/Scrollable';
 import { FontItem } from '../../../../../interfaces/common';
-// import { IComponent } from '../../../../../interfaces/DesignEditor';
-// import api from '../../../../../services/api';
-// import { selectPublicComponents } from '../../../../../store/slices/components/selectors';
 import { loadFonts } from '../../../../../utils/fonts';
-
-// function TextComponentItem({
-//   component,
-//   onClick,
-//   onDragStart,
-// }: {
-//   component: IComponent;
-//   onDragStart: (ev: React.DragEvent<HTMLDivElement>) => void;
-//   onClick: (option: any) => void;
-// }) {
-//   const [css] = useStyletron();
-//   return (
-//     <div
-//       onClick={() => onClick(component.id)}
-//       onDragStart={onDragStart}
-//       className={css({
-//         position: 'relative',
-//         height: '84px',
-//         background: '#f8f8fb',
-//         cursor: 'pointer',
-//         padding: '12px',
-//         borderRadius: '8px',
-//         overflow: 'hidden',
-//         '::before:hover': {
-//           opacity: 1,
-//         },
-//         userSelect: 'all',
-//       })}>
-//       <img
-//         src={component.preview.src}
-//         className={css({
-//           width: '100%',
-//           height: '100%',
-//           objectFit: 'contain',
-//           pointerEvents: 'none',
-//           verticalAlign: 'middle',
-//         })}
-//       />
-//     </div>
-//   );
-// }
 
 export default function Text({ images }: { images: Resource[] }) {
   const editor = useEditor();
-  // const components = useSelector(selectPublicComponents);
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
 
   const addObject = useCallback(async () => {
     if (editor) {
@@ -92,43 +47,6 @@ export default function Text({ images }: { images: Resource[] }) {
       await editor.objects.add(options);
     }
   }, [editor]);
-
-  // const makeAddComponent = async (id: string) => {
-  //   if (editor) {
-  //     const component = await api.getComponentById(id);
-  //     const fontItemsList: FontItem[] = [];
-  //     const object: any = component.layers[0];
-  //     if (object.type === 'Group') {
-  //       object.objects.forEach((object: any) => {
-  //         if (object.type === 'StaticText' || object.type === 'DynamicText') {
-  //           fontItemsList.push({
-  //             name: object.fontFamily,
-  //             url: object.fontURL,
-  //           });
-  //         }
-  //       });
-  //       const filteredFonts = fontItemsList.filter(f => !!f.url);
-  //       await loadFonts(filteredFonts);
-  //     } else {
-  //       if (object.type === 'StaticText') {
-  //         fontItemsList.push({
-  //           name: object.fontFamily,
-  //           url: object.fontURL,
-  //         });
-  //         await loadFonts(fontItemsList);
-  //       }
-  //     }
-
-  //     editor.objects.add(object);
-  //   }
-  // };
-
-  // const onDragStart = React.useCallback(async (ev: React.DragEvent<HTMLDivElement>, item: any) => {
-  //   const img = new Image();
-  //   img.src = item.preview;
-  //   ev.dataTransfer.setDragImage(img, img.width / 2, img.height / 2);
-  //   // editor.dragger.onDragStart(item)
-  // }, []);
 
   const addImage = useCallback(
     async (url: string) => {
@@ -170,29 +88,11 @@ export default function Text({ images }: { images: Resource[] }) {
             }}>
             {t('text.add')}
           </Button>
-          <ImageContainer>
+          <ImageContainer isMobile={!!isMobile}>
             {images.map(image => (
               <ImageItem key={image.id} onClick={() => addImage(image.url)} preview={image.url} />
             ))}
           </ImageContainer>
-
-          <Block
-            $style={{
-              paddingTop: '0.5rem',
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: '8px',
-            }}>
-            {/* TODO remove if not needed */}
-            {/* {components?.map(component => (
-              <TextComponentItem
-                onDragStart={(ev: React.DragEvent<HTMLDivElement>) => onDragStart(ev, component)}
-                onClick={makeAddComponent}
-                key={component.id}
-                component={component}
-              />
-            ))} */}
-          </Block>
         </Block>
       </Scrollable>
     </Block>
