@@ -2,6 +2,7 @@
 import React, { useContext, useEffect, useMemo } from 'react';
 
 import { useEditor, useZoomRatio } from '@layerhub-io/react';
+import { Grid } from '@mui/material';
 import { styled } from 'baseui';
 import { Block } from 'baseui/block';
 import { Button, KIND, SIZE } from 'baseui/button';
@@ -12,11 +13,9 @@ import { StatefulTooltip } from 'baseui/tooltip';
 
 import { DesignEditorContext } from 'src/contexts/DesignEditor';
 
-import { ButtonContainer } from './styles';
 import Icons from '../../../../../components/Icons';
 
-const Container = styled('div', ({ $theme }: { $theme: { colors: { white: string } } }) => ({
-  height: '50px',
+const Container = styled(Grid, ({ $theme }: { $theme: { colors: { white: string } } }) => ({
   background: $theme.colors.white,
   display: 'flex',
   justifyContent: 'space-between',
@@ -96,13 +95,13 @@ function Common() {
   };
 
   return (
-    <Container>
-      <ButtonContainer>
+    <Container container item xs>
+      <Grid container item xs="auto">
         <Button kind={KIND.tertiary} size={SIZE.compact}>
           <Icons.Layers size={20} />
         </Button>
-      </ButtonContainer>
-      <ButtonContainer>
+      </Grid>
+      <Grid container item xs alignItems="center" justifyContent="center" wrap="nowrap">
         <Button kind={KIND.tertiary} size={SIZE.compact} onClick={() => editor.zoom.zoomToFit()}>
           <Icons.Compress size={16} />
         </Button>
@@ -119,7 +118,7 @@ function Common() {
             ThumbValue: () => null,
             TickBar: () => null,
             Root: {
-              style: { width: '140px' },
+              style: { width: '16%' },
             },
             Thumb: {
               style: {
@@ -152,12 +151,7 @@ function Common() {
           endEnhancer="%"
           overrides={{
             Input: {
-              style: {
-                backgroundColor: '#ffffff',
-                textAlign: 'center',
-                paddingLeft: 0,
-                paddingRight: 0,
-              },
+              style: { backgroundColor: '#ffffff', textAlign: 'center', paddingLeft: 0, paddingRight: 0 },
             },
             Root: {
               style: {
@@ -175,11 +169,7 @@ function Common() {
               },
             },
             EndEnhancer: {
-              style: {
-                paddingLeft: 0,
-                paddingRight: '10px',
-                backgroundColor: '#ffffff',
-              },
+              style: { paddingLeft: 0, paddingRight: '4px', backgroundColor: '#ffffff' },
             },
           }}
           size={SIZE.mini}
@@ -188,15 +178,15 @@ function Common() {
           onChange={e => applyZoomRatio('zoomRatio', e)}
           value={options.zoomRatio}
         />
-      </ButtonContainer>
-      <ButtonContainer>
+      </Grid>
+      <Grid container item xs="auto">
         <Button kind={KIND.tertiary} size={SIZE.compact} onClick={handleUndo} disabled={!isUndoEnable}>
           <Icons.Undo size={22} />
         </Button>
         <Button kind={KIND.tertiary} size={SIZE.compact} onClick={handleRedo} disabled={!isRedoEnable}>
           <Icons.Redo size={22} />
         </Button>
-      </ButtonContainer>
+      </Grid>
     </Container>
   );
 }

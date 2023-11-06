@@ -7,6 +7,7 @@ import { ILayer, LayerType } from '@layerhub-io/types';
 import { useStyletron } from 'baseui';
 import { Block } from 'baseui/block';
 
+import useIsMobile from 'src/hooks/useIsMobile';
 import { Character, Resource } from 'src/store/slices/resources/reducer';
 
 import { CloseSideBar } from './Common/CloseSideBar';
@@ -76,6 +77,7 @@ export function ImageItem({ preview, onClick }: { preview: any; onClick?: (optio
 }
 function Images({ title, images }: { title: string; images: (Character | Resource)[] }) {
   const editor = useEditor();
+  const isMobile = useIsMobile();
 
   const addObject = useCallback(
     (url: string) => {
@@ -109,14 +111,16 @@ function Images({ title, images }: { title: string; images: (Character | Resourc
             style={{
               display: 'grid',
               gap: '8px',
-              gridTemplateColumns: (images[0] as Character)?.images ? undefined : '1fr 1fr',
+              gridTemplateColumns: (images[0] as Character)?.images
+                ? undefined
+                : `repeat(${isMobile ? '4' : '2'}, 1fr)`,
             }}>
             {images.map(image => {
               if ((image as Character)?.images) {
                 return (
                   <>
                     <Block>{(image as Character).name}</Block>
-                    <CharacterContainer>
+                    <CharacterContainer isMobile={!!isMobile}>
                       {(image as Character)?.images.map(characterImage => (
                         <ImageItem
                           key={characterImage.id}

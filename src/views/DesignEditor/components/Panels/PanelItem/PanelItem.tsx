@@ -1,7 +1,7 @@
+/* eslint-disable indent */
 import React, { useEffect, useMemo } from 'react';
 
-import { Block } from 'baseui/block';
-
+import { EditorPanelItem } from './styles';
 import useAppContext from '../../../../../hooks/useAppContext';
 import useIsSidebarOpen from '../../../../../hooks/useIsSidebarOpen';
 import panelItems from '../panelItems';
@@ -12,7 +12,7 @@ interface State {
 function PanelsList() {
   const [state, setState] = React.useState<State>({ panel: '' });
   const isSidebarOpen = useIsSidebarOpen();
-  const { activePanel, activeSubMenu } = useAppContext();
+  const { activePanel, activeSubMenu, isMobile } = useAppContext();
 
   useEffect(() => {
     setState({ panel: activePanel });
@@ -28,19 +28,9 @@ function PanelsList() {
 
   const Component = useMemo(() => panelItems[state.panel], [state.panel]);
   return (
-    <Block
-      id="EditorPanelItem"
-      $style={{
-        background: '#ffffff',
-        width: isSidebarOpen ? '306px' : 0,
-        flex: 'none',
-        borderRight: '1px solid #d7d8e3',
-        display: 'flex',
-        transition: 'ease width 0.1s',
-        overflow: 'hidden',
-      }}>
+    <EditorPanelItem id="EditorPanelItem" isMobile={!!isMobile} isSidebarOpen={isSidebarOpen}>
       {!!Component && <Component />}
-    </Block>
+    </EditorPanelItem>
   );
 }
 

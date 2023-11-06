@@ -34,5 +34,9 @@
       "profile": "Mi perfil",
       "logout": "Cerrar sesión"
     }
+  },
+  "scene": {
+    "duplicate": "Duplicar",
+    "delete": "Eliminar"
   }
 }

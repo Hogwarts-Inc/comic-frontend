@@ -1,13 +1,13 @@
 import { styled } from '@mui/material';
 
-export const ImageContainer = styled('div')(() => ({
+export const ImageContainer = styled('div')<{ isMobile: boolean }>(({ isMobile }) => ({
   display: 'grid',
   gap: '8px',
-  gridTemplateColumns: '1fr 1fr',
+  gridTemplateColumns: `repeat(${isMobile ? '4' : '2'}, 1fr)`,
   marginTop: '1rem',
 }));
-export const CharacterContainer = styled('div')(() => ({
+export const CharacterContainer = styled('div')<{ isMobile: boolean }>(({ isMobile }) => ({
   display: 'grid',
   gap: '8px',
-  gridTemplateColumns: '1fr 1fr',
+  gridTemplateColumns: `repeat(${isMobile ? '4' : '2'}, 1fr)`,
 }));
