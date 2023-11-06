@@ -3,8 +3,10 @@ import { styled, Box, AppBar, Toolbar } from '@mui/material';
 import Button from '@components/Button';
 
 export const AppBarMui = styled(AppBar)(({ theme }) => ({
-  position: 'fixed',
+  position: 'sticky',
+  top: 0,
   height: '70px',
+  width: '100%',
   background: theme.customPalette.gradient.main,
 }));
 
