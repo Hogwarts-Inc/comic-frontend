@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 import { nanoid } from 'nanoid';
-
+import { toast } from 'react-toastify';
 import { Character, ResourceSliceState, setCharacters, setResources } from 'src/store/slices/resources/reducer';
 import { store } from 'src/store/store';
 
@@ -40,15 +40,16 @@ const api = axios.create({
   headers: { ...CONTENT_TYPE },
 });
 
-// api.interceptors.request.use(async req => {
-//   const { user } = getState().auth;
-//   const mcid = user?.MCID;
-//   req.headers = { ...req.headers };
-//   if (mcid && !req?.headers?.masterCustomerId) {
-//     req.headers.masterCustomerId = mcid;
-//   }
-//   return req;
-// });
+api.interceptors.response.use(
+  (response: AxiosResponse) => {
+    toast.success('Solicitud exitosa', { autoClose: 2000 });
+    return response;
+  },
+  (error: AxiosError) => {
+    toast.error('La solicitud ha fallado', { autoClose: 2000 });
+    return Promise.reject(error);
+  },
+);
 
 //COMIC
 export const apisComic = {
