@@ -4,6 +4,7 @@
   "plugins": ["@typescript-eslint"],
   "rules": {
     "no-use-before-define": "off",
+    "linebreak-style": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
     "arrow-body-style": ["error", "as-needed"],
     "arrow-parens": "off",
