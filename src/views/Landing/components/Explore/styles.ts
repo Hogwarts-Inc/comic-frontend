@@ -11,18 +11,9 @@ export const Box = styled('div')({
   alignItems: 'center',
   height: '420px',
   width: '100%',
-
-  margin: '0 auto', // This centers the box and maintains equal margins on the sides
-
+  margin: '0 auto',
   [theme.breakpoints.down('sm')]: {
-    margin: '0 20px', // Fixed distance from the edges on small screens
     height: '220px',
-  },
-  [theme.breakpoints.between('sm', 'lg')]: {
-    margin: '0 40px', // Fixed distance from the edges on medium screens
-  },
-  [theme.breakpoints.up('lg')]: {
-    margin: '0 60px', // Fixed distance from the edges on large screens
   },
 });
 

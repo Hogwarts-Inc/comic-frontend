@@ -8,7 +8,7 @@ export function Explore() {
   const { t } = useTranslation();
 
   return (
-    <Grid container justifyContent="center" alignItems="center" spacing={2}>
+    <Grid container justifyContent="center" alignItems="center">
       <Grid item xs={12} lg={12}> 
         <Box>
           <Content>

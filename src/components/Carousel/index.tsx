@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -22,12 +22,17 @@ import {
 interface CarouselProps {
   images: string[];
   displayMode?: 'full' | 'reduced';
+  setCurrentIndex?: (index: number) => void;
 }
 
-export const Carousel = ({ images, displayMode = 'full' }: CarouselProps) => {
+export const Carousel = ({ images, displayMode = 'full', setCurrentIndex = () => {} }: CarouselProps) => {
   const [index, setIndex] = useState(0);
   const numItems = images.length;
   const transformValue = `-${index * ((displayMode === 'reduced' ? 100 : 75) + 5)}%`;
+
+  useEffect(() => {
+    setCurrentIndex(index);
+  }, [index, setCurrentIndex]);
 
   const handleNext = () => {
     setIndex(prevIndex => Math.min(prevIndex + 1, numItems - 1));
@@ -78,7 +83,7 @@ export const Carousel = ({ images, displayMode = 'full' }: CarouselProps) => {
         <Grid item lg={8} xs={12}>
           <ImagesContainer>
             <CarouselContainer translateX={transformValue}>
-              {images.map((url) => (
+              {images.map(url => (
                 <CarouselSlot key={url} displayMode={displayMode}>
                   <CarouselSlotImage src={url} alt="Carousel Image" />
                 </CarouselSlot>

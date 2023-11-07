@@ -1,19 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from 'react';
 
-import { Grid } from '@mui/material';
+import { CircularProgress, Grid } from '@mui/material';
 
 import { apisEvents, Event as EventType } from 'src/services/apiConfig';
 
 import { GridItemCenter, GridContainer, TypographyDescription, TypographyTitle } from './styles';
 
 export const Event = () => {
-  const [eventData, setEvent] = useState<EventType>();
+  const [eventData, setEventData] = useState<EventType>();
   useEffect(() => {
     apisEvents.getEvent().then(({ data }) => {
-      setEvent(data[0]);
+      setEventData(data[0]);
     });
   }, []);
+
+  if (!eventData) {
+    return <CircularProgress />;
+  }
+
+  const descriptionText = eventData.descriptions?.[0]?.text ?? 'Description not available';
 
   return (
     eventData && (
@@ -21,7 +27,7 @@ export const Event = () => {
         <GridItemCenter item xs={12} md={6} lg={6}>
           <TypographyTitle>Evento</TypographyTitle>
           <br />
-          <TypographyDescription>{eventData.descriptions[0].text}</TypographyDescription>
+          <TypographyDescription>{descriptionText}</TypographyDescription>
         </GridItemCenter>
         <Grid item xs={12} md={6} lg={6}>
           <img alt="Imagen del evento" src={eventData.image_url} style={{ width: '100%', height: '100%' }} />
