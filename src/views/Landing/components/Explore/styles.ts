@@ -28,21 +28,21 @@ export const Content = styled('div')(() => ({
   textAlign: 'center',
 }));
 
-export const Description = styled(Typography)(({ theme }) => ({
-  color: theme.palette.text.primary,
+export const Description = styled(Typography)(({ theme: defaultTheme }) => ({
+  color: defaultTheme.palette.text.primary,
   fontWeight: 700,
   lineHeight: 1.2,
   textAlign: 'center',
   padding: '0 1rem',
-  [theme.breakpoints.down('sm')]: {
+  [defaultTheme.breakpoints.down('sm')]: {
     marginBottom: '1rem',
     fontSize: '18px',
   },
-  [theme.breakpoints.between('sm', 'lg')]: {
+  [defaultTheme.breakpoints.between('sm', 'lg')]: {
     marginBottom: '2rem',
     fontSize: '35px',
   },
-  [theme.breakpoints.up('lg')]: {
+  [defaultTheme.breakpoints.up('lg')]: {
     marginBottom: '3rem',
     fontSize: '42px',
   },

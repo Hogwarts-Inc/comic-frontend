@@ -1,4 +1,5 @@
 import { styled, Box, Typography } from '@mui/material';
+
 import Button from '@components/Button';
 
 export const BoxContainer = styled(Box)({
