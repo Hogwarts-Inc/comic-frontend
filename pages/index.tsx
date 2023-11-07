@@ -19,10 +19,10 @@ const Home = () => {
             <MainComic />
           </Grid>
           <Grid item>
-            <Event />
+            <Explore />
           </Grid>
           <Grid item>
-            <Explore />
+            <Event />
           </Grid>
         </Grid>
       }

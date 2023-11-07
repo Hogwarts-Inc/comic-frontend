@@ -6,9 +6,13 @@ export const Title = styled('p')(({ theme }) => ({
   fontWeight: 700,
   letterSpacing: '-1px',
   color: theme.palette.text.primary,
-  fontSize: '25px',
   lineHeight: '20px',
-
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '25px',
+  },
+  [theme.breakpoints.between('sm', 'lg')]: {
+    fontSize: '35px',
+  },
   [theme.breakpoints.up('lg')]: {
     fontSize: '58px',
     lineHeight: '70px',

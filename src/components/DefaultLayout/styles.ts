@@ -1,4 +1,3 @@
-// styles.ts
 import { styled } from '@mui/material/styles';
 import { Container, Grid } from '@mui/material';
 import TextureBackground from 'src/utils/texture';
