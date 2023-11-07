@@ -22,6 +22,7 @@ import {
 interface CarouselProps {
   images: string[];
   displayMode?: 'full' | 'reduced';
+  // eslint-disable-next-line no-unused-vars
   setCurrentIndex?: (index: number) => void;
 }
 
