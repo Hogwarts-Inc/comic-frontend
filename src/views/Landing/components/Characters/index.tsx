@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
+
 import { CircularProgress, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'src/store/rootReducer';
+
 import { Carousel } from '@components/Carousel';
 import { apisCharacter } from 'src/services/apiConfig';
+import { RootState } from 'src/store/rootReducer';
+
 import { GridContainer, TypographyDescription, TypographyTitle, TypographyName, GridItemCenter } from './styles';
 
 export const Characters = () => {

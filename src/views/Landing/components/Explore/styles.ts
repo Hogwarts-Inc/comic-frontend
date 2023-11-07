@@ -1,4 +1,5 @@
 import { Typography, styled } from '@mui/material';
+
 import theme from '@styles/theme';
 
 export const Box = styled('div')({
@@ -17,7 +18,7 @@ export const Box = styled('div')({
   },
 });
 
-export const Content = styled('div')(({ theme }) => ({
+export const Content = styled('div')(() => ({
   width: '80%',
   display: 'flex',
   flexDirection: 'column',

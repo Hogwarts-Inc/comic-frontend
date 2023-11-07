@@ -1,7 +1,10 @@
 import React, { ReactNode } from 'react';
+
 import { Grid } from '@mui/material';
-import { TopBar } from '@components/TopBar';
+
 import { Footer } from '@components/Footer';
+import { TopBar } from '@components/TopBar';
+
 import { LayoutContainer, StyledContainer, StyledTextureBackground } from './styles';
 
 interface DefaultLayoutProps {
