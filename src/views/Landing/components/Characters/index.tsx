@@ -33,7 +33,6 @@ export const Characters = () => {
       setLoading(false);
     }
   }, [characters.length, dispatch]);
-  
   if (loading) {
     return <CircularProgress />;
   }
