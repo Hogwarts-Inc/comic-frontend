@@ -29,8 +29,6 @@ export const StyledContainer = styled(Container)({
 
 export const StyledGrid = styled(Grid)({
   flex: 1,
-});
-
-export const StyledGridItem = styled(Grid)({
-  flex: 1,
+  flexDirection: 'column',
+  justifyContent: 'center',
 });

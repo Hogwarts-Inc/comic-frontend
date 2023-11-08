@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 import { Footer } from '@components/Footer';
 import { TopBar } from '@components/TopBar';
 
-import { LayoutContainer, StyledContainer, StyledTextureBackground } from './styles';
+import { LayoutContainer, StyledContainer, StyledGrid, StyledTextureBackground } from './styles';
 
 interface DefaultLayoutProps {
   children: ReactNode;
@@ -15,17 +15,17 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => (
   <LayoutContainer>
     <StyledTextureBackground />
     <StyledContainer maxWidth={false} disableGutters>
-      <Grid container direction="column" spacing={2} style={{ flex: 1 }} justifyContent="center">
+      <StyledGrid container spacing={2}>
         <Grid item>
           <TopBar isAuthenticated={false} />
         </Grid>
-        <Grid item xs={12} style={{ flex: 1 }}>
+        <Grid item style={{ flex: 1 }}>
           {children}
         </Grid>
         <Grid item container justifyContent="center">
           <Footer />
         </Grid>
-      </Grid>
+      </StyledGrid>
     </StyledContainer>
   </LayoutContainer>
 );

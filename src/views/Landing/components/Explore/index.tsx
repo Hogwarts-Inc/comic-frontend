@@ -16,7 +16,7 @@ export function Explore() {
         <Box>
           <Content>
             <Description>{t('explore.title')}</Description>
-            <Button variantType="gradient" size="large">
+            <Button variantType="gradient" size="large" onClick={() => console.log('Page not available')}>
               {t('explore.buttonText')}
             </Button>
           </Content>

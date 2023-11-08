@@ -24,16 +24,19 @@ const Home = () => {
             <MainComic />
           </Fade>
         </Grid>
+
         <Grid item ref={exploreRef}>
           <Fade direction="right" triggerOnce={false}>
             <Explore />
           </Fade>
         </Grid>
+
         <Grid item ref={charactersRef}>
           <Fade direction="left" triggerOnce={false}>
             <Characters />
           </Fade>
         </Grid>
+
         <Grid item ref={eventRef}>
           <Fade direction="right" triggerOnce={false}>
             <Event />

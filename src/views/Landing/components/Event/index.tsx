@@ -19,7 +19,7 @@ export const Event = () => {
     return <CircularProgress />;
   }
 
-  const descriptionText = eventData.descriptions?.[0]?.text ?? 'Description not available';
+  const descriptionText = eventData.descriptions?.[0]?.text ?? 'Descripcion no disponible';
 
   return (
     eventData && (
