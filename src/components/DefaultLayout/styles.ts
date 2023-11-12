@@ -15,6 +15,7 @@ export const StyledTextureBackground = styled(TextureBackground)({
 export const LayoutContainer = styled('div')({
   position: 'relative',
   minHeight: '100vh',
+  maxWidth: '100vw',
 });
 
 export const StyledContainer = styled(Container)({
