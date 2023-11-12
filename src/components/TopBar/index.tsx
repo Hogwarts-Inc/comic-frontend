@@ -24,7 +24,7 @@ export function TopBar({ isAuthenticated }: TopBarProps) {
 
   return (
     <Grid container>
-      <Grid item>
+      <Grid item xs={12}>
         <AppBarMui>
           <ToolbarMui disableGutters>
             {/* To do: Add logo and remove Typography*/}

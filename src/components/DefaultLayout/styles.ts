@@ -15,6 +15,7 @@ export const StyledTextureBackground = styled(TextureBackground)({
 export const LayoutContainer = styled('div')({
   position: 'relative',
   minHeight: '100vh',
+  maxWidth: '100vw',
 });
 
 export const StyledContainer = styled(Container)({
@@ -29,8 +30,6 @@ export const StyledContainer = styled(Container)({
 
 export const StyledGrid = styled(Grid)({
   flex: 1,
-});
-
-export const StyledGridItem = styled(Grid)({
-  flex: 1,
+  flexDirection: 'column',
+  justifyContent: 'center',
 });

@@ -8,6 +8,7 @@ export const GridItemCenter = styled(Grid)({
 });
 
 export const GridContainer = styled(Grid)({
+  marginBottom: '8rem',
   paddingLeft: '2rem',
   paddingRight: '2rem',
 });

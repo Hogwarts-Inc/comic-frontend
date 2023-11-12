@@ -1,29 +1,23 @@
-import React, { JSX } from 'react';
+import React from 'react';
 
 import Grid from '@mui/material/Grid';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTranslation } from 'react-i18next';
 
 import Button from '@components/Button';
 
-import { Box, Placeholder, Content, Description } from './styles';
+import { Box, Content, Description } from './styles';
 
-export function Explore(): JSX.Element {
-  const theme = useTheme();
-  const isXSScreen = useMediaQuery(theme.breakpoints.only('xs'));
-
+export function Explore() {
   const { t } = useTranslation();
 
   return (
-    <Grid container>
-      <Grid item xs={12} lg={8}>
+    <Grid container justifyContent="center" alignItems="center">
+      <Grid item xs={12} lg={12}>
         <Box>
-          <Placeholder lg={!isXSScreen} />
-          <Content lg={!isXSScreen}>
-            <Description lg={!isXSScreen}> {t('explore.title')}</Description>
-            <Button variantType="gradient" size="large">
-              Lorem
+          <Content>
+            <Description>{t('explore.title')}</Description>
+            <Button variantType="gradient" size="large" onClick={() => console.log('Page not available')}>
+              {t('explore.buttonText')}
             </Button>
           </Content>
         </Box>
