@@ -14,7 +14,12 @@ type StoriettesCreation = any;
 type StoriettesParam = any;
 type CharacterCreation = any;
 type CharacterParam = any;
-type ChapterCreation = any;
+export type ChapterCreation = {
+  active: boolean;
+  description: string;
+  storiette_id: number;
+  title: string;
+};
 type ChapterParam = any;
 type GraphicResourcesCreation = any;
 type GraphicResourcesParam = any;

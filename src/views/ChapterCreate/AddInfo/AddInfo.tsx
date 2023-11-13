@@ -9,9 +9,34 @@ import { Grid } from '@mui/material';
 
 interface AddInfoProps {
   onNext: () => void;
+  values: {
+    title: string;
+    description: string;
+  };
+  handleChange: (e: React.ChangeEvent<any>) => void;
+  handleBlur: (e: React.FocusEvent<any>) => void; 
+  errors: {
+    title?: string;
+    description?: string;
+  };
+  touched: {
+    title?: boolean;
+    description?: boolean;
+  };
+  isValidating: boolean;
+  isSubmitting: boolean;
 }
 
-export const AddInfo = ({ onNext }: AddInfoProps) => {
+export const AddInfo = ({
+  onNext,
+  values,
+  handleChange,
+  handleBlur,
+  errors,
+  touched,
+  isValidating,
+  isSubmitting,
+}: AddInfoProps) => {
   const { t } = useTranslation();
 
   return (
@@ -23,8 +48,14 @@ export const AddInfo = ({ onNext }: AddInfoProps) => {
       <Grid item xs={12}>
         <TitleTextField
           id="title"
+          name="title"
           variant="outlined"
           label={t('common.title')}
+          value={values.title}
+          onChange={handleChange}
+          onBlur={handleBlur} 
+          error={touched.title && Boolean(errors.title)}
+          helperText={touched.title && errors.title}
         />
       </Grid>
 
@@ -34,8 +65,15 @@ export const AddInfo = ({ onNext }: AddInfoProps) => {
           minRows={10}
           multiline
           id="description"
+          name="description"
           variant="outlined"
-          label={t('common.description')} />
+          label={t('common.description')}
+          value={values.description}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.description && Boolean(errors.description)}
+          helperText={touched.description && errors.description}
+        />
       </Grid>
 
       <Button
@@ -43,6 +81,7 @@ export const AddInfo = ({ onNext }: AddInfoProps) => {
         variantType="gradient"
         size="large"
         onClick={onNext}
+        disabled={isValidating || isSubmitting}
       >
         {t('common.next')}
       </Button>

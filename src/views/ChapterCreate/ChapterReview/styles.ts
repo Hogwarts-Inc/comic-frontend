@@ -1,25 +1,8 @@
-import { Grid, TextField, Typography, styled } from '@mui/material';
+import { Grid, Typography, styled } from '@mui/material';
 
 import theme from '@styles/theme';
 
-const commonTextFieldStyles = {
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      border: '1px solid transparent',
-      borderImage: theme.customPalette.gradientBox.main,
-      borderImageSlice: 1,
-      borderRadius: '1px',
-    },
-    '&:hover fieldset': {
-      borderColor: theme.customPalette.gradientBox.main,
-    },
-    '&.Mui-focused fieldset': {
-      borderColor: theme.customPalette.gradientBox.main,
-    },
-  },
-}
-
-export const OutsideGridContainer = styled(Grid)({
+export const GridContainer = styled(Grid)({
   border: '3px solid transparent',
   borderImage: theme.customPalette.gradientBox.main,
   borderImageSlice: 1,
@@ -33,23 +16,12 @@ export const OutsideGridContainer = styled(Grid)({
   marginTop: '5rem',
 });
 
-export const ColGridContainer = styled(Grid)({
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'flex-start',
-  justifyContent: 'center',
-  width: '100%',
-  margin: 'auto',
-  marginLeft: '-1rem',
-  marginBottom: '2rem',
-});
-
 export const Title = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
+  marginLeft: '4rem',
   fontWeight: 700,
   lineHeight: "52px",
   textAlign: 'left',
-  marginLeft: '4rem',
   marginTop: '2rem',
   [defaultTheme.breakpoints.down('sm')]: {
     marginBottom: '1rem',
@@ -68,6 +40,7 @@ export const Title = styled(Typography)(({ theme: defaultTheme }) => ({
 export const SectionTitle = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
   fontWeight: 500,
+  marginLeft: '4rem',
   lineHeight: "22px",
   textAlign: 'left',
   [defaultTheme.breakpoints.up('lg')]: {
@@ -80,6 +53,7 @@ export const SectionDescription = styled(Typography)(({ theme: defaultTheme }) =
   color: defaultTheme.palette.text.primary,
   fontWeight: 500,
   lineHeight: "22px",
+  marginLeft: '4rem',
   textAlign: 'left',
   whiteSpace: 'pre-line',
 
@@ -89,19 +63,17 @@ export const SectionDescription = styled(Typography)(({ theme: defaultTheme }) =
   },
 }));
 
-export const TitleTextField = styled(TextField)(({ theme: defaultTheme }) => ({
-  ...commonTextFieldStyles,
-  color: defaultTheme.palette.text.primary,
+export const ThumbnailContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
   marginBottom: '2rem',
   marginLeft: '4rem',
-  width: '70%',
+  flexWrap: 'wrap',
+  gap: theme.spacing(5),
 }));
 
-export const DescriptionTextField = styled(TextField)({
-  ...commonTextFieldStyles,
-  marginBottom: '5rem',
-  marginLeft: '4rem',
-  width: '70%',
-});
-
-
+export const Thumbnail = styled('img')(({ theme }) => ({
+  width: '300px',
+  height: '300px',
+  objectFit: 'cover',
+  borderRadius: theme.shape.borderRadius,
+}));

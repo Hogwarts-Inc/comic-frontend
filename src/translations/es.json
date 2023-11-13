@@ -45,6 +45,10 @@
       "navToEditorTitle": "Utiliza el editor gráfico",
       "navToEditorButton": "Ir al editor",
       "dropZone": "Arrastra y suelta tus archivos aquí"
+    },
+    "chapterReview": {
+      "createdCanvas": "Viñetas creadas",
+      "publishButton": "Publicar"
     }
   },
   "explore": {

@@ -5,17 +5,40 @@ import { Title, OutsideGridContainer, TitleTextField, ColGridContainer, SectionT
 import { Divider, Grid } from '@mui/material';
 import theme from '@styles/theme';
 import { DropzoneArea } from 'mui-file-dropzone';
+import { useRouter } from 'next/router';
 
-interface AddInfoProps {
+interface AddCanvaProps {
   onNext: () => void;
+  values: any;
+  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
 }
 
-export const AddCanva = ({ onNext }: AddInfoProps) => {
+export const AddCanva = ({ onNext, values, setFieldValue }: AddCanvaProps) => {
   const { t } = useTranslation();
-  const [files, setFiles] = useState([]);
 
-  const handleFileChange = (fileObjects: any) => {
-    setFiles(fileObjects);
+  const [filePreviews, setFilePreviews] = useState<string[]>([]);
+
+  const handleFileChange = (fileObjects: File[]) => {
+    setFieldValue('files', fileObjects);
+
+    setFilePreviews([]);
+
+    fileObjects.forEach((file) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file); 
+      reader.onloadend = () => {
+        const result = reader.result;
+        if (typeof result === 'string') {
+          setFilePreviews((prevPreviews) => [...prevPreviews, result]);
+        }
+      };
+    });
+  };
+
+  const router = useRouter();
+
+  const onNavigateToEditor = () => {
+    router.push('/editor');
   };
 
   return (
@@ -35,23 +58,23 @@ export const AddCanva = ({ onNext }: AddInfoProps) => {
             onChange={handleFileChange}
             maxFileSize={5000000}
             filesLimit={3}
-            fileObjects={files}
+            fileObjects={values.files}
           />
 
-          {files.length > 0 && (
-            <Button
-              style={{
-                display: 'block',
-                margin: '1rem auto 0',
-                width: 'fit-content'
-              }}
-              variantType="gradient"
-              size="large"
-              onClick={onNext}
-            >
-              {t('common.next')}
-            </Button>
-          )}
+          <Button
+            style={{
+              display: 'block',
+              margin: '1rem auto 0',
+              width: 'fit-content'
+            }}
+            variantType="gradient"
+            size="large"
+            onClick={onNext}
+            disabled={values.files.length === 0}
+          >
+            {t('common.next')}
+          </Button>
+
         </Grid>
 
         <Divider orientation="vertical" flexItem style={{
@@ -71,7 +94,7 @@ export const AddCanva = ({ onNext }: AddInfoProps) => {
               width: 'fit-content'
             }} variantType="gradient"
             size="large"
-            onClick={onNext}
+            onClick={onNavigateToEditor}
           >
             {t('chapterCreate.addCanva.navToEditorButton')}
           </Button>
