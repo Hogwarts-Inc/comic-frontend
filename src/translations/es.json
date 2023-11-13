@@ -38,5 +38,6 @@
   "scene": {
     "duplicate": "Duplicar",
     "delete": "Eliminar"
-  }
+  },
+  "errorHandler": "Ocurrió un error inesperado. Por favor, inténtalo de nuevo."
 }
