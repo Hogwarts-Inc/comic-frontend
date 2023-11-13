@@ -3,14 +3,13 @@
 import React, { useState, useEffect } from 'react';
 
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import Paper from '@mui/material/Paper';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TablePagination from '@mui/material/TablePagination';
 
 import { StoriettesParam, apisChapters } from 'src/services/apiConfig';
 
-import { Title, TableRowMui, ReactionRow, TableMui } from './styles';
+import { Title, TableRowMui, CenterDivHorizontal, TableMui, CenterDivVertical } from './styles';
 
 function ChapterPreviewer() {
   const [page, setPage] = useState(0);
@@ -53,17 +52,17 @@ function ChapterPreviewer() {
               <TableCell>{formatDate(row.updated_at).toString()}</TableCell>
               {/* To do: this cell is going to be changed once the chapter has reactions */}
               <TableCell>
-                <ReactionRow>
+                <CenterDivVertical>
                   <FavoriteBorderOutlinedIcon />
                   <div>30</div>
-                </ReactionRow>
+                </CenterDivVertical>
               </TableCell>
               <TableCell>{`#${index + 1}`}</TableCell>
             </TableRowMui>
           ))}
         </TableBody>
       </TableMui>
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+      <CenterDivHorizontal>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
@@ -73,7 +72,7 @@ function ChapterPreviewer() {
           onPageChange={handleChangePagina}
           onRowsPerPageChange={handleChangeFilasPorPagina}
         />
-      </div>
+      </CenterDivHorizontal>
     </>
   );
 }

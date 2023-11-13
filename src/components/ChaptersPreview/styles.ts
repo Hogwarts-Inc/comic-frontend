@@ -1,9 +1,15 @@
 import { Typography, styled, TableRow, Table } from '@mui/material';
 
-export const ReactionRow = styled('div')({
+export const CenterDivVertical = styled('div')({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
+});
+
+export const CenterDivHorizontal = styled('div')({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
 });
 
 export const TableRowMui = styled(TableRow)({
