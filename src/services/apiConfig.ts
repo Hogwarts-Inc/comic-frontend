@@ -3,6 +3,7 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
+
 import { Character, ResourceSliceState, setCharacters, setResources } from 'src/store/slices/resources/reducer';
 import { store } from 'src/store/store';
 
@@ -42,11 +43,11 @@ const api = axios.create({
 
 api.interceptors.response.use(
   (response: AxiosResponse) => {
-    toast.success('Solicitud exitosa', { autoClose: 2000 });
+    toast.success('Solicitud exitosa');
     return response;
   },
   (error: AxiosError) => {
-    toast.error('La solicitud ha fallado', { autoClose: 2000 });
+    toast.error('La solicitud ha fallado');
     return Promise.reject(error);
   },
 );
