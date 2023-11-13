@@ -8,6 +8,8 @@ import { AddCanva } from 'src/views/ChapterCreate/AddCanva/AddCanva';
 import { Formik, Form, FormikErrors, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { ChapterReview } from 'src/views/ChapterCreate/ChapterReview/ChapterReview';
+import { apisCanvas, apisChapters } from 'src/services/apiConfig';
+import { useRouter } from 'next/router';
 
 const steps = ['Agregar información del capítulo', 'Agregar viñetas', 'Publicar'];
 
@@ -22,26 +24,48 @@ interface FormValues {
   files: File[];
 }
 
-const ChapterCreate = () => {
-  const [activeStep, setActiveStep] = useState(0);
+const initialValues: FormValues = {
+  title: '',
+  description: '',
+  files: [],
+};
 
-  const initialValues: FormValues = {
-    title: '',
-    description: '',
-    files: [],
-  };
+const ChapterCreate = () => {
+  const router = useRouter();
+
+  const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const createObjectURL = (file: File) => {
+    return URL.createObjectURL(file);
   };
 
   const handleSubmit = (
     values: FormValues,
     { setSubmitting, validateForm }: FormikHelpers<FormValues>
   ) => {
-    validateForm().then((errors: FormikErrors<FormValues>) => {
+    validateForm().then(async (errors: FormikErrors<FormValues>) => {
       if (!Object.keys(errors).length) {
-        handleNext();
+        try {
+          const chapterResponse = await apisChapters.postChapters({
+            title: values.title,
+            description: values.description,
+            active: true,
+            storiette_id: 1, 
+          });
+
+          const chapterId = chapterResponse.data.id; 
+
+          for (const file of values.files) {
+            await apisCanvas.postCanva({ chapter_id: chapterId, image: createObjectURL(file) }); 
+          }
+          router.push('/');
+        } catch (e) {
+          // TODO handle error
+        }
       }
       setSubmitting(false);
     });
@@ -87,7 +111,7 @@ const ChapterCreate = () => {
                 {activeStep === 2 && (
                   <ChapterReview
                     values={values}
-                    onNext={() => handleSubmit()}
+                    onNext={handleSubmit}
                   />
                 )}
               </Grid>

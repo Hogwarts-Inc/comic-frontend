@@ -15,12 +15,11 @@ interface AddCanvaProps {
 
 export const AddCanva = ({ onNext, values, setFieldValue }: AddCanvaProps) => {
   const { t } = useTranslation();
+  const router = useRouter();
 
   const handleFileChange = (fileObjects: File[]) => {
     setFieldValue('files', fileObjects);
   };
-
-  const router = useRouter();
 
   const onNavigateToEditor = () => {
     router.push('/editor');

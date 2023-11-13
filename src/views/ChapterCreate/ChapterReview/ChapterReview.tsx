@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
@@ -22,9 +22,17 @@ export const ChapterReview = ({
 }: ChapterReviewProps) => {
   const { t } = useTranslation();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const createObjectURL = (file: File) => {
     return URL.createObjectURL(file);
   };
+
+  const onPublish = () => {
+    setIsLoading(true);
+    onNext();
+    setIsLoading(false);
+  }
 
   return (
     <GridContainer container >
@@ -55,7 +63,8 @@ export const ChapterReview = ({
         style={{ marginBottom: '4rem' }}
         variantType="gradient"
         size="large"
-        onClick={onNext}
+        onClick={onPublish}
+        isLoading={isLoading}
       >
         {t('chapterCreate.chapterReview.publishButton')}
       </Button>
