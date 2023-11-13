@@ -1,4 +1,4 @@
-import { Typography, styled, TableRow, Table } from '@mui/material';
+import { Typography, styled, TableRow, Table, TableCell } from '@mui/material';
 
 export const CenterDivVertical = styled('div')({
   display: 'flex',
@@ -14,6 +14,12 @@ export const CenterDivHorizontal = styled('div')({
 
 export const TableRowMui = styled(TableRow)({
   background: 'rgba(217, 217, 217, 0.39)',
+});
+export const TableCellImg = styled(TableCell)({
+  padding: 0,
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
 });
 
 export const TableMui = styled(Table)({

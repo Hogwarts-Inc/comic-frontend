@@ -13,7 +13,8 @@ import { store } from 'src/store/store';
 type CanvaCreation = { chapter_id: number; image: string };
 type CanvaParam = any;
 type StoriettesCreation = any;
-export type StoriettesParam = { title: string; id: number; updated_at: string };
+//To do: create canva type
+export type StoriettesParam = { title: string; id: number; updated_at: string; canvas: any[] };
 type CharacterCreation = any;
 type CharacterParam = any;
 type ChapterCreation = any;
