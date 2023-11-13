@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosResponse, AxiosError } from 'axios';
+import i18next from 'i18next';
 import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 
@@ -43,11 +44,11 @@ const api = axios.create({
 
 api.interceptors.response.use(
   (response: AxiosResponse) => {
-    toast.success('Solicitud exitosa');
+    toast.success(i18next.t('toast.successCall'));
     return response;
   },
   (error: AxiosError) => {
-    toast.error('La solicitud ha fallado');
+    toast.error(i18next.t('toast.failCall'));
     return Promise.reject(error);
   },
 );
