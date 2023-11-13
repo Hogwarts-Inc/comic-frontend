@@ -15,7 +15,7 @@ export const StyledTextureBackground = styled(TextureBackground)({
 export const LayoutContainer = styled('div')({
   position: 'relative',
   minHeight: '100vh',
-  maxWidth: '100vw',
+  // maxWidth: '100vw',
 });
 
 export const StyledContainer = styled(Container)({
@@ -25,6 +25,8 @@ export const StyledContainer = styled(Container)({
   display: 'flex',
   flexDirection: 'column',
   padding: 0,
+  // maxWidth: '100vw', // This should ensure it's not constrained by the Container maxWidth
+  // width: '100%', // Ensure width is set to 100%
   zIndex: 1,
 });
 

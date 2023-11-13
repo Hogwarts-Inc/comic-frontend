@@ -1,4 +1,27 @@
 {
+  "common": {
+    "title": "Título",
+    "description": "Descripción",
+    "next": "Siguiente",
+    "back": "Atrás",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Añadir",
+    "upload": "Subir",
+    "import": "Importar",
+    "create": "Crear",
+    "name": "Nombre",
+    "email": "Email",
+    "event": "Evento",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "login": "Iniciar sesión",
+    "signup": "Crear cuenta",
+    "logout": "Cerrar sesión",
+    "profile": "Mi perfil"
+  },
   "panels": {
     "panelsList": {
       "characters": "Personajes",
@@ -13,6 +36,16 @@
   },
   "characters": {
     "title": "Personajes"
+  },
+  "chapterCreate": {
+    "title": "Agregar Capítulo",
+    "addCanva":{
+      "uploadTitle": "Sube tus propios archivos",
+      "uploadDescription": "Puedes subir tu propia viñeta creada previamente y agregarla al capítulo. \nAsegúrate que sea un archivo PNG. \nPuedes subir hasta 3 viñetas en esta instancia. ",
+      "navToEditorTitle": "Utiliza el editor gráfico",
+      "navToEditorButton": "Ir al editor",
+      "dropZone": "Arrastra y suelta tus archivos aquí"
+    }
   },
   "explore": {
     "title": "Empeza a explorar otros capitulos y crear tus propias historias",

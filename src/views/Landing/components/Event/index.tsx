@@ -6,8 +6,11 @@ import { CircularProgress, Grid } from '@mui/material';
 import { apisEvents, Event as EventType } from 'src/services/apiConfig';
 
 import { GridItemCenter, GridContainer, TypographyDescription, TypographyTitle } from './styles';
+import { useTranslation } from 'react-i18next';
 
 export const Event = () => {
+  const { t } = useTranslation();
+
   const [eventData, setEventData] = useState<EventType>();
   useEffect(() => {
     apisEvents.getEvent().then(({ data }) => {
@@ -25,7 +28,7 @@ export const Event = () => {
     eventData && (
       <GridContainer container spacing={4}>
         <GridItemCenter item xs={12} md={6} lg={6}>
-          <TypographyTitle>Evento</TypographyTitle>
+          <TypographyTitle>{t('common.event')}</TypographyTitle>
           <br />
           <TypographyDescription>{descriptionText}</TypographyDescription>
         </GridItemCenter>
