@@ -43,10 +43,7 @@ export const SectionTitle = styled(Typography)(({ theme: defaultTheme }) => ({
   marginLeft: '4rem',
   lineHeight: "22px",
   textAlign: 'left',
-  [defaultTheme.breakpoints.up('lg')]: {
-    marginBottom: '2rem',
-    fontSize: '24px',
-  },
+  marginBottom: '2rem',
 }));
 
 export const SectionDescription = styled(Typography)(({ theme: defaultTheme }) => ({
@@ -56,11 +53,7 @@ export const SectionDescription = styled(Typography)(({ theme: defaultTheme }) =
   marginLeft: '4rem',
   textAlign: 'left',
   whiteSpace: 'pre-line',
-
-  [defaultTheme.breakpoints.up('lg')]: {
-    marginBottom: '2rem',
-    fontSize: '16px',
-  },
+  marginBottom: '2rem',
 }));
 
 export const ThumbnailContainer = styled('div')(({ theme }) => ({

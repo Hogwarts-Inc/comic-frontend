@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 
 import DefaultLayout from '@components/DefaultLayout';
 import CustomStepper from '@components/Stepper';
@@ -14,7 +14,6 @@ const steps = ['Agregar información del capítulo', 'Agregar viñetas', 'Public
 const validationSchema = Yup.object({
   title: Yup.string().required('Titulo es requerido'),
   description: Yup.string().required('Descripcion es requerida'),
-  // Add other fields for AddCanva and other steps
 });
 
 interface FormValues {
@@ -60,35 +59,35 @@ const ChapterCreate = () => {
             <Grid container direction="row" justifyContent="center" spacing={2}>
               <Grid item>
                 <CustomStepper
-                  steps={steps}
                   activeStep={activeStep}
                   setActiveStep={setActiveStep}
+                  steps={steps}
                   onNext={handleNext}
                   onBack={() => console.log('ssd')}
                 />
                 {activeStep === 0 && (
                   <AddInfo
-                    onNext={() => handleSubmit()}
-                    values={values}
-                    handleChange={handleChange}
-                    handleBlur={handleBlur}
                     errors={errors}
-                    touched={touched}
-                    isValidating={isValidating}
+                    handleBlur={handleBlur}
+                    handleChange={handleChange}
                     isSubmitting={isSubmitting}
+                    isValidating={isValidating}
+                    touched={touched}
+                    values={values}
+                    onNext={handleNext}
                   />
                 )}
                 {activeStep === 1 && (
                   <AddCanva
-                    onNext={handleNext}
-                    values={values}
                     setFieldValue={setFieldValue}
+                    values={values}
+                    onNext={handleNext}
                   />
                 )}
                 {activeStep === 2 && (
                   <ChapterReview
-                    onNext={() => handleSubmit()}
                     values={values}
+                    onNext={() => handleSubmit()}
                   />
                 )}
               </Grid>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Button from '@components/Button';
-import { Title, OutsideGridContainer, TitleTextField, ColGridContainer, SectionTitle, SectionDescription } from './styles';
+import { Title, OutsideGridContainer, ColGridContainer, SectionTitle, SectionDescription } from './styles';
 import { Divider, Grid } from '@mui/material';
 import theme from '@styles/theme';
 import { DropzoneArea } from 'mui-file-dropzone';
@@ -16,23 +16,8 @@ interface AddCanvaProps {
 export const AddCanva = ({ onNext, values, setFieldValue }: AddCanvaProps) => {
   const { t } = useTranslation();
 
-  const [filePreviews, setFilePreviews] = useState<string[]>([]);
-
   const handleFileChange = (fileObjects: File[]) => {
     setFieldValue('files', fileObjects);
-
-    setFilePreviews([]);
-
-    fileObjects.forEach((file) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file); 
-      reader.onloadend = () => {
-        const result = reader.result;
-        if (typeof result === 'string') {
-          setFilePreviews((prevPreviews) => [...prevPreviews, result]);
-        }
-      };
-    });
   };
 
   const router = useRouter();
