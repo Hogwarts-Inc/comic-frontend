@@ -38,5 +38,9 @@
   "scene": {
     "duplicate": "Duplicar",
     "delete": "Eliminar"
+  },
+  "toast": {
+    "successCall": "Solicitud exitosa",
+    "failCall": "La solicitud ha fallado"
   }
 }
