@@ -13,7 +13,8 @@ import { store } from 'src/store/store';
 type CanvaCreation = { chapter_id: number; image: string };
 type CanvaParam = any;
 type StoriettesCreation = any;
-type StoriettesParam = any;
+//To do: create canva type
+export type StoriettesParam = { title: string; id: number; updated_at: string; canvas: any[] };
 type CharacterCreation = any;
 type CharacterParam = any;
 type ChapterCreation = any;
@@ -63,7 +64,7 @@ export const apisComic = {
 
 //CHAPTERS
 export const apisChapters = {
-  getCChapters: () => api.get('/chapters'),
+  getChapters: () => api.get('/chapters'),
   getChaptersById: (id: number) => api.get(`/chapters/${id}`),
   postChapters: (data: ChapterCreation) => api.post('/chapters', data),
   patchChapters: (id: number, data: ChapterParam) => api.patch(`/chapters/${id}`, data),
