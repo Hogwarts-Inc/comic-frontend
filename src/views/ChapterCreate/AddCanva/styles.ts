@@ -17,7 +17,7 @@ const commonTextFieldStyles = {
       borderColor: theme.customPalette.gradientBox.main,
     },
   },
-}
+};
 
 export const OutsideGridContainer = styled(Grid)({
   border: '3px solid transparent',
@@ -47,7 +47,7 @@ export const ColGridContainer = styled(Grid)({
 export const Title = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
   fontWeight: 700,
-  lineHeight: "52px",
+  lineHeight: '52px',
   textAlign: 'left',
   marginLeft: '4rem',
   marginTop: '2rem',
@@ -68,7 +68,7 @@ export const Title = styled(Typography)(({ theme: defaultTheme }) => ({
 export const SectionTitle = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
   fontWeight: 500,
-  lineHeight: "22px",
+  lineHeight: '22px',
   textAlign: 'left',
   [defaultTheme.breakpoints.up('lg')]: {
     marginBottom: '2rem',
@@ -79,7 +79,7 @@ export const SectionTitle = styled(Typography)(({ theme: defaultTheme }) => ({
 export const SectionDescription = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
   fontWeight: 500,
-  lineHeight: "22px",
+  lineHeight: '22px',
   textAlign: 'left',
   whiteSpace: 'pre-line',
 
@@ -103,5 +103,3 @@ export const DescriptionTextField = styled(TextField)({
   marginLeft: '4rem',
   width: '70%',
 });
-
-

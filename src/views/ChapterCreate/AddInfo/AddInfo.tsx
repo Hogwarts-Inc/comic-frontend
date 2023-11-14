@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-unused-vars */
 import React from 'react';
 
+import { Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import Button from '@components/Button';
 
 import { Title, GridContainer, TitleTextField, DescriptionTextField } from './styles';
-import { Grid } from '@mui/material';
 
 interface AddInfoProps {
   onNext: () => void;
@@ -14,7 +16,7 @@ interface AddInfoProps {
     description: string;
   };
   handleChange: (e: React.ChangeEvent<any>) => void;
-  handleBlur: (e: React.FocusEvent<any>) => void; 
+  handleBlur: (e: React.FocusEvent<any>) => void;
   errors: {
     title?: string;
     description?: string;
@@ -40,7 +42,7 @@ export const AddInfo = ({
   const { t } = useTranslation();
 
   return (
-    <GridContainer container >
+    <GridContainer container>
       <Grid item xs={12}>
         <Title>{t('chapterCreate.title')}</Title>
       </Grid>
@@ -53,7 +55,7 @@ export const AddInfo = ({
           label={t('common.title')}
           value={values.title}
           onChange={handleChange}
-          onBlur={handleBlur} 
+          onBlur={handleBlur}
           error={touched.title && Boolean(errors.title)}
           helperText={touched.title && errors.title}
         />
@@ -81,10 +83,9 @@ export const AddInfo = ({
         variantType="gradient"
         size="large"
         onClick={onNext}
-        disabled={isValidating || isSubmitting}
-      >
+        disabled={isValidating || isSubmitting}>
         {t('common.next')}
       </Button>
-    </GridContainer >
+    </GridContainer>
   );
-}
+};

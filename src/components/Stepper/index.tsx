@@ -1,6 +1,10 @@
+/* eslint-disable indent */
+/* eslint-disable react/jsx-indent */
 import React from 'react';
-import { Box, Button, Step, StepLabel, Stepper, Typography } from '@mui/material';
+
+import { Button, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+
 import { ButtonRow, Spacer, StepperContainer, StyledButton } from './styles';
 
 interface CustomStepperProps {
@@ -13,18 +17,21 @@ interface CustomStepperProps {
   onReset?: () => void;
 }
 
-const CustomStepper = ({ steps, activeStep, setActiveStep, optionalSteps, onBack, onNext, onReset }: CustomStepperProps) => {
+const CustomStepper = ({
+  steps,
+  activeStep,
+  setActiveStep,
+  optionalSteps,
+  onBack,
+  onNext,
+  onReset,
+}: CustomStepperProps) => {
   const { t } = useTranslation();
 
   const [skipped, setSkipped] = React.useState(new Set<number>());
 
   const isStepOptional = (step: number) => optionalSteps?.includes(step);
   const isStepSkipped = (step: number) => skipped.has(step);
-
-  const handleSkip = () => {
-    setSkipped(new Set(skipped).add(activeStep));
-    handleNext();
-  };
 
   const handleNext = () => {
     let newSkipped = skipped;
@@ -38,6 +45,11 @@ const CustomStepper = ({ steps, activeStep, setActiveStep, optionalSteps, onBack
     if (onNext) {
       onNext();
     }
+  };
+
+  const handleSkip = () => {
+    setSkipped(new Set(skipped).add(activeStep));
+    handleNext();
   };
 
   const handleBack = () => {
@@ -56,14 +68,14 @@ const CustomStepper = ({ steps, activeStep, setActiveStep, optionalSteps, onBack
 
   return (
     <>
-      <StepperContainer >
+      <StepperContainer>
         <Stepper activeStep={activeStep}>
           {steps.map((label, index) => {
             const stepProps: { completed?: boolean } = {};
             const labelProps: { optional?: React.ReactNode } = {};
 
             if (isStepOptional(index)) {
-              labelProps.optional = <Typography variant="caption">{t("common.optional")}</Typography>;
+              labelProps.optional = <Typography variant="caption">{t('common.optional')}</Typography>;
             }
 
             if (isStepSkipped(index)) {
@@ -80,32 +92,26 @@ const CustomStepper = ({ steps, activeStep, setActiveStep, optionalSteps, onBack
 
         <ButtonRow>
           {onBack && (
-            <StyledButton color="inherit" disabled={activeStep === 0} onClick={handleBack} >
+            <StyledButton color="inherit" disabled={activeStep === 0} onClick={handleBack}>
               {t('common.back')}
             </StyledButton>
           )}
           {isStepOptional(activeStep) && !isStepSkipped(activeStep) && (
-            <StyledButton onClick={handleSkip}>
-              {t('common.skip')}
-            </StyledButton>
+            <StyledButton onClick={handleSkip}>{t('common.skip')}</StyledButton>
           )}
           <Spacer />
-          {onNext ? (
-            null
-          ) : (
-            activeStep < steps.length && (
-              <Button onClick={handleNext}>
-                {activeStep === steps.length - 1 ? t('common.finish') : t('common.next')}
-              </Button>
-            )
-          )}
-          {onReset && activeStep === steps.length && (
-            <Button onClick={handleReset}>Reset</Button>
-          )}
+          {onNext
+            ? null
+            : activeStep < steps.length && (
+                <Button onClick={handleNext}>
+                  {activeStep === steps.length - 1 ? t('common.finish') : t('common.next')}
+                </Button>
+              )}
+          {onReset && activeStep === steps.length && <Button onClick={handleReset}>Reset</Button>}
         </ButtonRow>
       </StepperContainer>
     </>
-  )
-}
+  );
+};
 
 export default CustomStepper;

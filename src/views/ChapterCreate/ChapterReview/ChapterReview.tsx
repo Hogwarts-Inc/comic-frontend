@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
+import { Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import Button from '@components/Button';
 
 import { Title, GridContainer, SectionTitle, SectionDescription, Thumbnail, ThumbnailContainer } from './styles';
-import { Grid } from '@mui/material';
 
 interface ChapterReviewProps {
   onNext: () => void;
@@ -16,26 +16,21 @@ interface ChapterReviewProps {
   };
 }
 
-export const ChapterReview = ({
-  onNext,
-  values,
-}: ChapterReviewProps) => {
+export const ChapterReview = ({ onNext, values }: ChapterReviewProps) => {
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const createObjectURL = (file: File) => {
-    return URL.createObjectURL(file);
-  };
+  const createObjectURL = (file: File) => URL.createObjectURL(file);
 
   const onPublish = () => {
     setIsLoading(true);
     onNext();
     setIsLoading(false);
-  }
+  };
 
   return (
-    <GridContainer container >
+    <GridContainer container>
       <Grid item xs={12}>
         <Title>{t('chapterCreate.title')}</Title>
       </Grid>
@@ -54,7 +49,7 @@ export const ChapterReview = ({
         <SectionTitle>{t('chapterCreate.chapterReview.createdCanvas')}</SectionTitle>
         <ThumbnailContainer>
           {values.files.map((file, index) => (
-            <Thumbnail key={index} src={createObjectURL(file)} alt={`image-${index}`} />
+            <Thumbnail key={file.name} src={createObjectURL(file)} alt={`image-${index}`} />
           ))}
         </ThumbnailContainer>
       </Grid>
@@ -64,10 +59,9 @@ export const ChapterReview = ({
         variantType="gradient"
         size="large"
         onClick={onPublish}
-        isLoading={isLoading}
-      >
+        isLoading={isLoading}>
         {t('chapterCreate.chapterReview.publishButton')}
       </Button>
-    </GridContainer >
+    </GridContainer>
   );
-}
+};

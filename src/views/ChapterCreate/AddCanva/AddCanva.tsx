@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import Button from '@components/Button';
-import { Title, OutsideGridContainer, ColGridContainer, SectionTitle, SectionDescription } from './styles';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-unused-vars */
+import React from 'react';
+
 import { Divider, Grid } from '@mui/material';
-import theme from '@styles/theme';
 import { DropzoneArea } from 'mui-file-dropzone';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
+
+import Button from '@components/Button';
+import theme from '@styles/theme';
+
+import { Title, OutsideGridContainer, ColGridContainer, SectionTitle, SectionDescription } from './styles';
 
 interface AddCanvaProps {
   onNext: () => void;
@@ -32,7 +37,7 @@ export const AddCanva = ({ onNext, values, setFieldValue }: AddCanvaProps) => {
       </Grid>
 
       <ColGridContainer container>
-        <Grid item xs={5} >
+        <Grid item xs={5}>
           <SectionTitle>{t('chapterCreate.addCanva.uploadTitle')}</SectionTitle>
           <SectionDescription>{t('chapterCreate.addCanva.uploadDescription')}</SectionDescription>
 
@@ -49,41 +54,47 @@ export const AddCanva = ({ onNext, values, setFieldValue }: AddCanvaProps) => {
             style={{
               display: 'block',
               margin: '1rem auto 0',
-              width: 'fit-content'
+              width: 'fit-content',
             }}
             variantType="gradient"
             size="large"
             onClick={onNext}
-            disabled={values.files.length === 0}
-          >
+            disabled={values.files.length === 0}>
             {t('common.next')}
           </Button>
-
         </Grid>
 
-        <Divider orientation="vertical" flexItem style={{
-          width: '1px', marginLeft: '2rem',
-          backgroundColor: theme.palette.text.primary
-        }} />
+        <Divider
+          orientation="vertical"
+          flexItem
+          style={{
+            width: '1px',
+            marginLeft: '2rem',
+            backgroundColor: theme.palette.text.primary,
+          }}
+        />
 
-        <Grid item xs={5} style={{
-          marginLeft: '2rem',
-        }}>
+        <Grid
+          item
+          xs={5}
+          style={{
+            marginLeft: '2rem',
+          }}>
           <SectionTitle>{t('chapterCreate.addCanva.navToEditorTitle')}</SectionTitle>
           <Button
             style={{
               display: 'flex',
               justifyContent: 'center',
               margin: '4rem auto 0 auto',
-              width: 'fit-content'
-            }} variantType="gradient"
+              width: 'fit-content',
+            }}
+            variantType="gradient"
             size="large"
-            onClick={onNavigateToEditor}
-          >
+            onClick={onNavigateToEditor}>
             {t('chapterCreate.addCanva.navToEditorButton')}
           </Button>
         </Grid>
       </ColGridContainer>
-    </OutsideGridContainer >
+    </OutsideGridContainer>
   );
-}
+};

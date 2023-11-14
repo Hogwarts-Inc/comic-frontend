@@ -5,28 +5,23 @@ import { Grid } from '@mui/material';
 import { Footer } from '@components/Footer';
 import { TopBar } from '@components/TopBar';
 
-import { LayoutContainer, StyledContainer, StyledGrid, StyledTextureBackground } from './styles';
+import { LayoutContainer } from './styles';
 
 interface DefaultLayoutProps {
   children: ReactNode;
 }
 
 const DefaultLayout = ({ children }: DefaultLayoutProps) => (
-  <LayoutContainer>
-    <StyledTextureBackground />
-    <StyledContainer maxWidth={false} disableGutters>
-      <StyledGrid container spacing={2}>
-        <Grid item>
-          <TopBar isAuthenticated={false} />
-        </Grid>
-        <Grid item style={{ flex: 1 }}>
-          {children}
-        </Grid>
-        <Grid item container justifyContent="center">
-          <Footer />
-        </Grid>
-      </StyledGrid>
-    </StyledContainer>
+  <LayoutContainer container direction="column">
+    <Grid item>
+      <TopBar isAuthenticated={false} />
+    </Grid>
+    <Grid container xs item overflow="scroll" justifyContent="center">
+      {children}
+    </Grid>
+    <Grid item container justifyContent="center">
+      <Footer />
+    </Grid>
   </LayoutContainer>
 );
 

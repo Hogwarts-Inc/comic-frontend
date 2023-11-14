@@ -17,7 +17,7 @@ const commonTextFieldStyles = {
       borderColor: theme.customPalette.gradientBox.main,
     },
   },
-}
+};
 
 export const GridContainer = styled(Grid)({
   border: '3px solid transparent',
@@ -36,7 +36,7 @@ export const GridContainer = styled(Grid)({
 export const Title = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
   fontWeight: 700,
-  lineHeight: "52px",
+  lineHeight: '52px',
   textAlign: 'left',
   marginLeft: '4rem',
   marginTop: '2rem',
@@ -68,5 +68,3 @@ export const DescriptionTextField = styled(TextField)({
   marginLeft: '4rem',
   width: '70%',
 });
-
-

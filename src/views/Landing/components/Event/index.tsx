@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from 'react';
 
 import { CircularProgress, Grid } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import { apisEvents, Event as EventType } from 'src/services/apiConfig';
 
 import { GridItemCenter, GridContainer, TypographyDescription, TypographyTitle } from './styles';
-import { useTranslation } from 'react-i18next';
 
 export const Event = () => {
   const { t } = useTranslation();
