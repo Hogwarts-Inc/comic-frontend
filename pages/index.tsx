@@ -1,16 +1,26 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect } from 'react';
 
+import { getAccessToken } from '@auth0/nextjs-auth0';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import { Button } from 'baseui/button';
 import { useRouter } from 'next/router';
 
 import { Footer } from '@components/Footer';
 import { TopBar } from '@components/TopBar';
 import { Route } from 'src/constants/routes';
+import { apisComic } from 'src/services/apiConfig';
 import { MainComic } from 'src/views/Landing/components/MainComic';
 
-function Home() {
+function Home({ accessToken }: { accessToken: string }) {
   const { push } = useRouter();
-  // TODO: Change this component when all the components for the landing page are ready
+  const { user } = useUser();
+
+  // TODO remove after test if works on staging
+  useEffect(() => {
+    apisComic.getStoriettesById(1, accessToken).catch(console.log);
+  }, [accessToken]);
+
   return (
     <div
       style={{
@@ -22,9 +32,8 @@ function Home() {
         gap: '10px',
         overflow: 'auto',
       }}>
-      {/* To do: add authentication */}
       <div style={{ marginBottom: '16rem' }}>
-        <TopBar isAuthenticated={false} />
+        <TopBar isAuthenticated={!!user} />
       </div>
       <div>
         <MainComic />
@@ -37,5 +46,13 @@ function Home() {
     </div>
   );
 }
-
+export async function getServerSideProps(ctx: any) {
+  let accessToken = '';
+  try {
+    accessToken = (await getAccessToken(ctx.req, ctx.res)).accessToken || '';
+  } catch (e) {
+    console.log(e);
+  }
+  return { props: { accessToken } };
+}
 export default Home;

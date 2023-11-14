@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 
 import { Avatar, Box, Typography, Grid, MenuItem, IconButton, Menu } from '@mui/material';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
+
+import { Route } from 'src/constants/routes';
 
 import { AppBarMui, ToolbarMui, ButtonSignUp, ButtonLogIn, ButtonBox } from './styles';
 
@@ -12,8 +15,12 @@ interface TopBarProps {
 export function TopBar({ isAuthenticated }: TopBarProps) {
   const [anchorMenuUser, setAnchorMenuUser] = useState<null | HTMLElement>(null);
   const { t } = useTranslation();
+  const { push } = useRouter();
 
-  const userMenuOptions = [t('topBar.menu.profile'), t('topBar.menu.logout')];
+  const userMenuOptions = [
+    { title: t('topBar.menu.profile') },
+    { title: t('topBar.menu.logout'), handler: () => push(Route.logout) },
+  ];
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorMenuUser(event.currentTarget);
@@ -52,18 +59,19 @@ export function TopBar({ isAuthenticated }: TopBarProps) {
                   }}
                   open={Boolean(anchorMenuUser)}
                   onClose={handleCloseUserMenu}>
-                  {userMenuOptions.map(setting => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
+                  {userMenuOptions.map(({ title, handler }) => (
+                    <MenuItem key={title} onClick={() => handler?.()}>
+                      <Typography textAlign="center">{title}</Typography>
                     </MenuItem>
                   ))}
                 </Menu>
               </Box>
             ) : (
               <ButtonBox>
-                {/* To do: add on click navigation */}
-                <ButtonLogIn size="medium">{t('topBar.login')}</ButtonLogIn>
-                <ButtonSignUp size="medium" variant="outlined">
+                <ButtonLogIn onClick={() => push(Route.login)} size="medium">
+                  {t('topBar.login')}
+                </ButtonLogIn>
+                <ButtonSignUp onClick={() => push(Route.login)} size="medium" variant="outlined">
                   {t('topBar.signup')}
                 </ButtonSignUp>
               </ButtonBox>

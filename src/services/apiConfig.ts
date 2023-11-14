@@ -56,7 +56,8 @@ api.interceptors.response.use(
 //COMIC
 export const apisComic = {
   getStoriettes: () => api.get('/storiettes'),
-  getStoriettesById: (id: number) => api.get(`/storiettes/${id}`),
+  getStoriettesById: (id: number, token: string) =>
+    api.get(`/storiettes/${id}`, { headers: { Authorization: `Bearer ${token}` } }),
   postStoriettes: (data: StoriettesCreation) => api.post('/storiettes', data),
   patchStoriettes: (id: number, data: StoriettesParam) => api.patch(`/storiettes/${id}`, data),
 };
