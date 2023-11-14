@@ -1,35 +1,10 @@
-import { Container, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import TextureBackground from 'src/utils/texture';
+import bg from '../Icons/texture.svg';
 
-export const StyledTextureBackground = styled(TextureBackground)({
-  position: 'absolute',
-  width: '100%',
-  height: '100%',
-  top: 0,
-  left: 0,
-  zIndex: -1,
-});
-
-export const LayoutContainer = styled('div')({
-  position: 'relative',
-  minHeight: '100vh',
-  maxWidth: '100vw',
-});
-
-export const StyledContainer = styled(Container)({
-  position: 'relative',
-  height: '100vh',
-  overflowY: 'auto',
-  display: 'flex',
-  flexDirection: 'column',
-  padding: 0,
-  zIndex: 1,
-});
-
-export const StyledGrid = styled(Grid)({
-  flex: 1,
-  flexDirection: 'column',
-  justifyContent: 'center',
+export const LayoutContainer = styled(Grid)({
+  backgroundImage: `url(${bg.src})`,
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover',
 });
