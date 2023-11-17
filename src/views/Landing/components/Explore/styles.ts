@@ -3,47 +3,39 @@ import { Typography, styled } from '@mui/material';
 import theme from '@styles/theme';
 
 export const Box = styled('div')({
+  alignItems: 'center',
   border: '3px solid transparent',
   borderImage: theme.customPalette.gradientBox.main,
   borderImageSlice: 1,
   borderRadius: '10px',
   display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
   height: '420px',
-  width: '100%',
+  justifyContent: 'center',
   margin: '0 auto',
-  [theme.breakpoints.down('sm')]: {
-    height: '220px',
-  },
+  width: '100%',
 });
 
 export const Content = styled('div')(() => ({
-  width: '80%',
+  alignItems: 'center',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
   height: '100%',
+  justifyContent: 'center',
   textAlign: 'center',
+  width: '80%',
 }));
 
-export const Description = styled(Typography)(({ theme: defaultTheme }) => ({
+export const TypographyDescription = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
-  fontWeight: 700,
-  lineHeight: 1.2,
   textAlign: 'center',
   padding: '0 1rem',
   [defaultTheme.breakpoints.down('sm')]: {
     marginBottom: '1rem',
-    fontSize: '18px',
   },
   [defaultTheme.breakpoints.between('sm', 'lg')]: {
     marginBottom: '2rem',
-    fontSize: '35px',
   },
   [defaultTheme.breakpoints.up('lg')]: {
     marginBottom: '3rem',
-    fontSize: '42px',
   },
 }));

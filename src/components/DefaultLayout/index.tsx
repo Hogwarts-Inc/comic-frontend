@@ -18,8 +18,6 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => (
     </Grid>
     <Grid container xs item overflow="scroll" justifyContent="center">
       {children}
-    </Grid>
-    <Grid item container justifyContent="center">
       <Footer />
     </Grid>
   </LayoutContainer>

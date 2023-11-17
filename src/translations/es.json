@@ -58,6 +58,10 @@
     "title": "Empeza a explorar otros capitulos y crear tus propias historias",
     "buttonText": "Explorar"
   },
+  "event": {
+    "title": "Evento",
+    "descriptionUnavailable": "Descripción no disponible"
+  },
   "uploads": {
     "title": "Subir",
     "upload": "Subir archivo"

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import Button from '@components/Button';
 
-import { Box, Content, Description } from './styles';
+import { Box, Content, TypographyDescription } from './styles';
 
 export function Explore() {
   const { t } = useTranslation();
@@ -15,7 +15,7 @@ export function Explore() {
       <Grid item xs={12} lg={12}>
         <Box>
           <Content>
-            <Description>{t('explore.title')}</Description>
+            <TypographyDescription variant="h3">{t('explore.title')}</TypographyDescription>
             <Button variantType="gradient" size="large" onClick={() => console.log('Page not available')}>
               {t('explore.buttonText')}
             </Button>
