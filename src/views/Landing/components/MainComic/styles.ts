@@ -1,21 +1,19 @@
-import { Grid, styled } from '@mui/material';
+import { Grid, Typography, styled } from '@mui/material';
 
-export const Title = styled('p')(({ theme }) => ({
-  textAlign: 'center',
-  fontStyle: 'normal',
-  fontWeight: 700,
-  letterSpacing: '-1px',
+export const TypographyTitle = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.primary,
-  lineHeight: '20px',
+  textAlign: 'center',
   [theme.breakpoints.down('sm')]: {
-    fontSize: '25px',
+    fontSize: '2.5rem',
+    lineHeight: '3rem',
+    marginTop: '2rem',
   },
   [theme.breakpoints.between('sm', 'lg')]: {
-    fontSize: '35px',
+    margin: '3rem',
   },
   [theme.breakpoints.up('lg')]: {
-    fontSize: '58px',
-    lineHeight: '70px',
+    margin: '4rem',
+    lineHeight: '4.375rem',
   },
 }));
 
