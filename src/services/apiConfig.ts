@@ -30,7 +30,7 @@ export type Event = {
   name: string;
 };
 
-const { dispatch } = store;
+const { dispatch, getState } = store;
 
 const CONTENT_TYPE = {
   // Accept: '/',
@@ -40,6 +40,14 @@ const CONTENT_TYPE = {
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   headers: { ...CONTENT_TYPE },
+});
+
+api.interceptors.request.use(req => {
+  const { token } = getState().auth;
+  if (token) {
+    req.headers.Authorization = `Bearer ${token}`;
+  }
+  return req;
 });
 
 api.interceptors.response.use(
@@ -56,8 +64,7 @@ api.interceptors.response.use(
 //COMIC
 export const apisComic = {
   getStoriettes: () => api.get('/storiettes'),
-  getStoriettesById: (id: number, token: string) =>
-    api.get(`/storiettes/${id}`, { headers: { Authorization: `Bearer ${token}` } }),
+  getStoriettesById: (id: number) => api.get(`/storiettes/${id}`),
   postStoriettes: (data: StoriettesCreation) => api.post('/storiettes', data),
   patchStoriettes: (id: number, data: StoriettesParam) => api.patch(`/storiettes/${id}`, data),
 };

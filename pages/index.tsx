@@ -5,21 +5,25 @@ import { getAccessToken } from '@auth0/nextjs-auth0';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { Button } from 'baseui/button';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
 
 import { Footer } from '@components/Footer';
 import { TopBar } from '@components/TopBar';
 import { Route } from 'src/constants/routes';
 import { apisComic } from 'src/services/apiConfig';
+import { setToken } from 'src/store/slices/auth';
 import { MainComic } from 'src/views/Landing/components/MainComic';
 
 function Home({ accessToken }: { accessToken: string }) {
   const { push } = useRouter();
   const { user } = useUser();
+  const dispatch = useDispatch();
 
   // TODO remove after test if works on staging
   useEffect(() => {
-    apisComic.getStoriettesById(1, accessToken).catch(console.log);
-  }, [accessToken]);
+    dispatch(setToken(accessToken));
+    apisComic.getStoriettesById(1).catch(console.log);
+  }, [accessToken, dispatch]);
 
   return (
     <div
