@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { getAccessToken } from '@auth0/nextjs-auth0';
 import { useUser } from '@auth0/nextjs-auth0/client';
@@ -9,17 +9,13 @@ import { useRouter } from 'next/router';
 import { Footer } from '@components/Footer';
 import { TopBar } from '@components/TopBar';
 import { Route } from 'src/constants/routes';
-import { apisComic } from 'src/services/apiConfig';
+import useAppAuthentication from 'src/hooks/useAppAuthentication';
 import { MainComic } from 'src/views/Landing/components/MainComic';
 
 function Home({ accessToken }: { accessToken: string }) {
   const { push } = useRouter();
   const { user } = useUser();
-
-  // TODO remove after test if works on staging
-  useEffect(() => {
-    apisComic.getStoriettesById(1, accessToken).catch(console.log);
-  }, [accessToken]);
+  useAppAuthentication(accessToken);
 
   return (
     <div
