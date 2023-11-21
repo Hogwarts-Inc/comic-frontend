@@ -1,41 +1,50 @@
 import React from 'react';
 
-import { Button } from 'baseui/button';
-import { useRouter } from 'next/router';
+import { Grid } from '@mui/material';
+import { Fade } from 'react-awesome-reveal';
+import { useInView } from 'react-intersection-observer';
 
-import { Footer } from '@components/Footer';
-import { TopBar } from '@components/TopBar';
-import { Route } from 'src/constants/routes';
+import DefaultLayout from '@components/DefaultLayout';
+import { Characters } from 'src/views/Landing/components/Characters';
+import { Event } from 'src/views/Landing/components/Event';
+import { Explore } from 'src/views/Landing/components/Explore';
 import { MainComic } from 'src/views/Landing/components/MainComic';
 
-function Home() {
-  const { push } = useRouter();
-  // TODO: Change this component when all the components for the landing page are ready
+const Home = () => {
+  const [mainComicRef] = useInView();
+  const [exploreRef] = useInView();
+  const [charactersRef] = useInView();
+  const [eventRef] = useInView();
+
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        flexDirection: 'column',
-        gap: '10px',
-        overflow: 'auto',
-      }}>
-      {/* To do: add authentication */}
-      <div style={{ marginBottom: '16rem' }}>
-        <TopBar isAuthenticated={false} />
-      </div>
-      <div>
-        <MainComic />
-      </div>
-      <Button onClick={() => push(Route.editor)}>Editor</Button>
-      <Button onClick={() => push(Route.profile)}>Perfil</Button>
-      <Button onClick={() => push(`${Route.visualizer}/1/1`)}>Visualizar</Button>
-      <div style={{ marginTop: '15rem' }} />
-      <Footer />
-    </div>
+    <DefaultLayout>
+      <Grid container direction="column" alignItems="center" spacing={30}>
+        <Grid item ref={mainComicRef}>
+          <Fade direction="up" triggerOnce={false}>
+            <MainComic />
+          </Fade>
+        </Grid>
+
+        <Grid item ref={exploreRef}>
+          <Fade direction="right" triggerOnce={false}>
+            <Explore />
+          </Fade>
+        </Grid>
+
+        <Grid item ref={charactersRef}>
+          <Fade direction="left" triggerOnce={false}>
+            <Characters />
+          </Fade>
+        </Grid>
+
+        <Grid item ref={eventRef}>
+          <Fade direction="right" triggerOnce={false}>
+            <Event />
+          </Fade>
+        </Grid>
+      </Grid>
+    </DefaultLayout>
   );
-}
+};
 
 export default Home;
