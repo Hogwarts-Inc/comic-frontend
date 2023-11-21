@@ -28,7 +28,7 @@ export const Characters = () => {
 
   useEffect(() => {
     if (characters.length === 0) {
-      apisCharacter.getCharacters().then(() => setLoading(false));
+      apisCharacter.getCharacters().finally(() => setLoading(false));
     } else {
       setLoading(false);
     }
