@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { getAccessToken } from '@auth0/nextjs-auth0';
 import { Grid } from '@mui/material';
@@ -7,7 +7,7 @@ import { Fade } from 'react-awesome-reveal';
 import { useInView } from 'react-intersection-observer';
 
 import DefaultLayout from '@components/DefaultLayout';
-import { apisComic } from 'src/services/apiConfig';
+import useAppAuthentication from 'src/hooks/useAppAuthentication';
 import { Characters } from 'src/views/Landing/components/Characters';
 import { Event } from 'src/views/Landing/components/Event';
 import { Explore } from 'src/views/Landing/components/Explore';
@@ -18,11 +18,7 @@ const Home = ({ accessToken }: { accessToken: string }) => {
   const [exploreRef] = useInView();
   const [charactersRef] = useInView();
   const [eventRef] = useInView();
-
-  // TODO remove after test if works on staging
-  useEffect(() => {
-    apisComic.getStoriettesById(1, accessToken).catch(console.log);
-  }, [accessToken]);
+  useAppAuthentication(accessToken);
 
   return (
     <DefaultLayout>

@@ -12,20 +12,18 @@ interface ButtonProps extends ButtonPropsMui {
   isLoading?: boolean;
 }
 
-function Button({ variantType, size, isSelected, isLoading, ...props }: ButtonProps) {
-  return (
-    <ButtonMui
-      variant="contained"
-      variantType={variantType}
-      size={size}
-      isSelected={isSelected}
-      isLoading={isLoading}
-      {...props}
-      onClick={isLoading ? undefined : props.onClick}>
-      {isLoading && <Loader />}
-      {props.children}
-    </ButtonMui>
-  );
-}
+const Button = ({ variantType, size, isSelected, isLoading, ...props }: ButtonProps) => (
+  <ButtonMui
+    variant="contained"
+    variantType={variantType}
+    size={size}
+    isSelected={isSelected}
+    isLoading={isLoading}
+    {...props}
+    onClick={isLoading ? undefined : props.onClick}>
+    {isLoading && <Loader />}
+    {props.children}
+  </ButtonMui>
+);
 
 export default Button;
