@@ -11,11 +11,12 @@ export const BoxContainer = styled(Box)({
 });
 
 export const BoxMui = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  bottom: '0',
   height: '110px',
   width: '100%',
   background: theme.customPalette.gradient.main,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 }));
 
 export const TextButton = styled(Button)({

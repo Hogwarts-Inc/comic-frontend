@@ -2,46 +2,55 @@
 import React from 'react';
 
 import { getAccessToken } from '@auth0/nextjs-auth0';
-import { useUser } from '@auth0/nextjs-auth0/client';
-import { Button } from 'baseui/button';
-import { useRouter } from 'next/router';
+import { Grid } from '@mui/material';
+import { Fade } from 'react-awesome-reveal';
+import { useInView } from 'react-intersection-observer';
 
-import { Footer } from '@components/Footer';
-import { TopBar } from '@components/TopBar';
-import { Route } from 'src/constants/routes';
+import DefaultLayout from '@components/DefaultLayout';
 import useAppAuthentication from 'src/hooks/useAppAuthentication';
+import { Characters } from 'src/views/Landing/components/Characters';
+import { Event } from 'src/views/Landing/components/Event';
+import { Explore } from 'src/views/Landing/components/Explore';
 import { MainComic } from 'src/views/Landing/components/MainComic';
 
-function Home({ accessToken }: { accessToken: string }) {
-  const { push } = useRouter();
-  const { user } = useUser();
+const Home = ({ accessToken }: { accessToken: string }) => {
+  const [mainComicRef] = useInView();
+  const [exploreRef] = useInView();
+  const [charactersRef] = useInView();
+  const [eventRef] = useInView();
   useAppAuthentication(accessToken);
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        flexDirection: 'column',
-        gap: '10px',
-        overflow: 'auto',
-      }}>
-      <div style={{ marginBottom: '16rem' }}>
-        <TopBar isAuthenticated={!!user} />
-      </div>
-      <div>
-        <MainComic />
-      </div>
-      <Button onClick={() => push(Route.editor)}>Editor</Button>
-      <Button onClick={() => push(Route.profile)}>Perfil</Button>
-      <Button onClick={() => push(`${Route.visualizer}/1/1`)}>Visualizar</Button>
-      <div style={{ marginTop: '15rem' }} />
-      <Footer />
-    </div>
+    <DefaultLayout>
+      <Grid container direction="column" alignItems="center" spacing={30}>
+        <Grid item ref={mainComicRef}>
+          <Fade direction="up" triggerOnce={false}>
+            <MainComic />
+          </Fade>
+        </Grid>
+
+        <Grid item ref={exploreRef}>
+          <Fade direction="right" triggerOnce={false}>
+            <Explore />
+          </Fade>
+        </Grid>
+
+        <Grid item ref={charactersRef}>
+          <Fade direction="left" triggerOnce={false}>
+            <Characters />
+          </Fade>
+        </Grid>
+
+        <Grid item ref={eventRef}>
+          <Fade direction="right" triggerOnce={false}>
+            <Event />
+          </Fade>
+        </Grid>
+      </Grid>
+    </DefaultLayout>
   );
-}
+};
+
 export async function getServerSideProps(ctx: any) {
   let accessToken = '';
   try {
@@ -51,4 +60,5 @@ export async function getServerSideProps(ctx: any) {
   }
   return { props: { accessToken } };
 }
+
 export default Home;
