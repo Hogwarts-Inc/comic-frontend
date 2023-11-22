@@ -1,9 +1,9 @@
 import { createTheme } from '@mui/material/styles';
 // allow configuration using `createTheme`
 declare module '@mui/material/styles' {
-  interface Theme extends CustomTheme {}
+  interface Theme extends CustomTheme { }
   // allow configuration using `createTheme`
-  interface ThemeOptions extends CustomTheme {}
+  interface ThemeOptions extends CustomTheme { }
 }
 
 interface CustomTheme {
@@ -89,21 +89,24 @@ const theme = createTheme({
           margin: '0 auto',
         },
         h1: {
-          fontSize: '0.925rem',
-          fontWeight: '600',
-          lineHeight: '1.5rem',
-          letterSpacing: '0.009rem',
+          fontSize: '4rem', //64px
+          fontWeight: '700',
+          lineHeight: '2rem',
         },
         h2: {
-          fontSize: '1.2rem',
+          fontSize: '3.625rem', //58px
           fontWeight: '700',
-          lineHeight: '1.125rem',
+          lineHeight: '4.375rem',
         },
         h3: {
-          fontSize: '1.125rem',
-          fontWeight: '600',
-          lineHeight: '1.5rem',
-          letterSpacing: '0.009rem',
+          fontSize: '2.625rem', //42px
+          fontWeight: '700',
+          lineHeight: '3.25rem',
+        },
+        h4: {
+          fontSize: '1.5rem', //24px
+          fontWeight: '500',
+          lineHeight: '2.125rem',
         },
       },
     },

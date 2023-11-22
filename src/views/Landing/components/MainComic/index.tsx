@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Carousel } from '@components/Carousel';
 import { apisCanvas } from 'src/services/apiConfig';
 
-import { MainComicGrid, Title } from './styles';
+import { MainComicGrid, TypographyTitle } from './styles';
 
 interface ImageObj {
   image_url: string;
@@ -34,7 +34,7 @@ export const MainComic = (): JSX.Element => {
   return (
     <MainComicGrid container>
       <Grid item xs={12} lg={12}>
-        <Title>{t('mainComic.title')}</Title>
+        <TypographyTitle variant="h2">{t('mainComic.title')}</TypographyTitle>
       </Grid>
       <Grid item xs={12} lg={8}>
         <Carousel images={images} />
