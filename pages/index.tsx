@@ -3,10 +3,11 @@ import React from 'react';
 import { Button } from 'baseui/button';
 import { useRouter } from 'next/router';
 
+import ChapterPreviewer from '@components/ChaptersPreview';
 import { Footer } from '@components/Footer';
 import { TopBar } from '@components/TopBar';
 import { Route } from 'src/constants/routes';
-import { MainComic } from 'src/views/Landing/components/MainComic';
+// import { MainComic } from 'src/views/Landing/components/MainComic';
 
 function Home() {
   const { push } = useRouter();
@@ -26,8 +27,8 @@ function Home() {
       <div style={{ marginBottom: '16rem' }}>
         <TopBar isAuthenticated={false} />
       </div>
-      <div>
-        <MainComic />
+      <div style={{ marginTop: '5rem', marginBottom: '5rem', width: '80%' }}>
+        <ChapterPreviewer />
       </div>
       <Button onClick={() => push(Route.editor)}>Editor</Button>
       <Button onClick={() => push(Route.profile)}>Perfil</Button>

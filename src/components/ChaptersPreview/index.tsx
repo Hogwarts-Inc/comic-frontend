@@ -6,12 +6,16 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TablePagination from '@mui/material/TablePagination';
+import { useRouter } from 'next/router';
 
+import { Route } from 'src/constants/routes';
 import { StoriettesParam, apisChapters } from 'src/services/apiConfig';
 
 import { Title, TableRowMui, CenterDivHorizontal, TableMui, CenterDivVertical, TableCellImg } from './styles';
 
 function ChapterPreviewer() {
+  const { push } = useRouter();
+
   const [page, setPage] = useState(0);
   const [dataChapter, setDataChapter] = useState<StoriettesParam[]>([]);
   const [rowPage, setRowPage] = useState(5);
@@ -34,6 +38,7 @@ function ChapterPreviewer() {
     const options = { day: 'numeric', month: 'short', year: 'numeric' } as Intl.DateTimeFormatOptions;
     return date.toLocaleDateString('en-US', options);
   };
+  console.log({ dataChapter });
 
   return (
     <>
@@ -42,11 +47,16 @@ function ChapterPreviewer() {
       <TableMui>
         <TableBody>
           {dataChapter.slice(page * rowPage, page * rowPage + rowPage).map((row, index) => (
-            <TableRowMui key={row.id}>
+            <TableRowMui
+              key={row.id}
+              onClick={() =>
+                push({
+                  pathname: `${Route.visualizer}/${row.id}`,
+                  query: { state: 'NASHE' },
+                })
+              }>
               {/* To do: this cell is going to be changed once the canvas has the img */}
-              <TableCellImg>
-                <img src={row.canvas[0].image_url} height={100} alt="url" />
-              </TableCellImg>
+              <TableCellImg>{/* <img src={row.canvas[0].image_url} height={100} alt="url" /> */}</TableCellImg>
               <TableCell>{row.title}</TableCell>
               <TableCell />
               <TableCell>{formatDate(row.updated_at).toString()}</TableCell>
