@@ -1,5 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
+import authReducer from './slices/auth/index';
 import { componentsReducer } from './slices/components/reducer';
 import { designEditorReducer } from './slices/design-editor/reducer';
 import { designsReducer } from './slices/designs/reducer';
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   resources,
   designs: designsReducer,
   components: componentsReducer,
+  auth: authReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
