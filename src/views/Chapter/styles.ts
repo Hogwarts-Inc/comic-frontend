@@ -8,7 +8,6 @@ export const CenterDivVertical = styled('div')({
 
 export const CenterDivHorizontal = styled('div')({
   display: 'flex',
-  flexDirection: 'row',
   justifyContent: 'center',
 });
 
@@ -25,8 +24,28 @@ export const TableCellImg = styled(TableCell)({
 export const TableMui = styled(Table)({
   border: 'none',
   boxShadow: 'none',
+  width: '80%',
+  margin: 'auto',
 });
 
-export const Title = styled(Typography)({
-  marginBottom: '2rem',
+export const Title = styled(Typography)(({ theme }) => ({
+  margin: '0',
+  color: theme.palette.text.primary,
+}));
+
+export const TitleWrapper = styled('div')({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  width: '80%',
+});
+
+export const Container = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+  margin: '4rem 0',
 });

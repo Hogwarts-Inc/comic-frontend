@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import { Typography } from '@mui/material';
+import { Typography, CircularProgress } from '@mui/material';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TablePagination from '@mui/material/TablePagination';
@@ -25,13 +25,16 @@ import {
 
 function ChapterPreviewer() {
   const { push } = useRouter();
-
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const [dataChapter, setDataChapter] = useState<StoriettesParam[]>([]);
   const [rowPage, setRowPage] = useState(5);
 
   useEffect(() => {
-    apisChapters.getChapters().then(({ data }) => setDataChapter(data));
+    apisChapters.getChapters().then(({ data }) => {
+      setDataChapter(data);
+      setLoading(false);
+    });
   }, []);
 
   const handleChangePagina = (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
@@ -56,7 +59,11 @@ function ChapterPreviewer() {
     });
   };
 
-  return (
+  return loading ? (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <CircularProgress />
+    </div>
+  ) : (
     <Container>
       {/* To do: add chapter name */}
       <TitleWrapper>
