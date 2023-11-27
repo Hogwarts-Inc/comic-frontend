@@ -8,7 +8,6 @@ export const CenterDivVertical = styled('div')({
 
 export const CenterDivHorizontal = styled('div')({
   display: 'flex',
-  flexDirection: 'row',
   justifyContent: 'center',
 });
 
@@ -48,5 +47,5 @@ export const Container = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  margin: '4rem 0 4rem 0',
+  margin: '4rem 0',
 });
