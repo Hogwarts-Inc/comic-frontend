@@ -50,6 +50,7 @@ function ChapterPreviewer() {
       {/* To do: add chapter name */}
       <TitleWrapper>
         <Title variant="h4">Nombre historieta</Title>
+        {/* To do: add search bar comonent */}
         <Typography style={{ margin: '0' }}>Search bar</Typography>
       </TitleWrapper>
       <TableMui>
