@@ -48,7 +48,13 @@ function ChapterPreviewer() {
     const options = { day: 'numeric', month: 'short', year: 'numeric' } as Intl.DateTimeFormatOptions;
     return date.toLocaleDateString('en-US', options);
   };
-  console.log({ dataChapter });
+
+  const handleClick = (id: number) => {
+    push({
+      pathname: `${Route.visualizer}/${id}`,
+      query: { id: id },
+    });
+  };
 
   return (
     <Container>
@@ -61,14 +67,7 @@ function ChapterPreviewer() {
       <TableMui>
         <TableBody>
           {dataChapter.slice(page * rowPage, page * rowPage + rowPage).map((row, index) => (
-            <TableRowMui
-              key={row.id}
-              onClick={() =>
-                push({
-                  pathname: `${Route.visualizer}/${row.id}`,
-                  query: { state: 'NASHE' },
-                })
-              }>
+            <TableRowMui key={row.id} onClick={() => handleClick(row.id)}>
               {/* To do: this cell is going to be changed once the canvas has the img */}
               <TableCellImg>
                 <img src={row.canvas[0]?.image_url} height={100} alt="url" />
