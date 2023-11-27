@@ -11,8 +11,16 @@
   "mainComic": {
     "title": "La historieta más larga del mundo."
   },
+  "characters": {
+    "title": "Personajes"
+  },
   "explore": {
-    "title": "Empeza a explorar otros capitulos y crear tus propias historias"
+    "title": "Empeza a explorar otros capitulos y crear tus propias historias",
+    "buttonText": "Explorar"
+  },
+  "event": {
+    "title": "Evento",
+    "descriptionUnavailable": "Descripción no disponible"
   },
   "uploads": {
     "title": "Subir",

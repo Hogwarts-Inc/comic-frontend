@@ -1,42 +1,64 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 
-import { Button } from 'baseui/button';
-import { useRouter } from 'next/router';
+import { getAccessToken } from '@auth0/nextjs-auth0';
+import { Grid } from '@mui/material';
+import { Fade } from 'react-awesome-reveal';
+import { useInView } from 'react-intersection-observer';
 
-import ChapterPreviewer from '@components/ChaptersPreview';
-import { Footer } from '@components/Footer';
-import { TopBar } from '@components/TopBar';
-import { Route } from 'src/constants/routes';
-// import { MainComic } from 'src/views/Landing/components/MainComic';
+import DefaultLayout from '@components/DefaultLayout';
+import useAppAuthentication from 'src/hooks/useAppAuthentication';
+import { Characters } from 'src/views/Landing/components/Characters';
+import { Event } from 'src/views/Landing/components/Event';
+import { Explore } from 'src/views/Landing/components/Explore';
+import { MainComic } from 'src/views/Landing/components/MainComic';
 
-function Home() {
-  const { push } = useRouter();
-  // TODO: Change this component when all the components for the landing page are ready
+const Home = ({ accessToken }: { accessToken: string }) => {
+  const [mainComicRef] = useInView();
+  const [exploreRef] = useInView();
+  const [charactersRef] = useInView();
+  const [eventRef] = useInView();
+  useAppAuthentication(accessToken);
+
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        flexDirection: 'column',
-        gap: '10px',
-        overflow: 'auto',
-      }}>
-      {/* To do: add authentication */}
-      <div style={{ marginBottom: '16rem' }}>
-        <TopBar isAuthenticated={false} />
-      </div>
-      <div style={{ marginTop: '5rem', marginBottom: '5rem', width: '80%' }}>
-        <ChapterPreviewer />
-      </div>
-      <Button onClick={() => push(Route.editor)}>Editor</Button>
-      <Button onClick={() => push(Route.profile)}>Perfil</Button>
-      <Button onClick={() => push(`${Route.visualizer}/1/1`)}>Visualizar</Button>
-      <div style={{ marginTop: '15rem' }} />
-      <Footer />
-    </div>
+    <DefaultLayout>
+      <Grid container direction="column" alignItems="center" spacing={30}>
+        <Grid item ref={mainComicRef}>
+          <Fade direction="up" triggerOnce={false}>
+            <MainComic />
+          </Fade>
+        </Grid>
+
+        <Grid item ref={exploreRef}>
+          <Fade direction="right" triggerOnce={false}>
+            <Explore />
+          </Fade>
+        </Grid>
+
+        <Grid item ref={charactersRef}>
+          <Fade direction="left" triggerOnce={false}>
+            <Characters />
+          </Fade>
+        </Grid>
+
+        <Grid item ref={eventRef}>
+          <Fade direction="right" triggerOnce={false}>
+            <Event />
+          </Fade>
+        </Grid>
+      </Grid>
+    </DefaultLayout>
   );
+};
+
+export async function getServerSideProps(ctx: any) {
+  let accessToken = '';
+  try {
+    accessToken = (await getAccessToken(ctx.req, ctx.res)).accessToken || '';
+  } catch (e) {
+    console.log(e);
+  }
+  return { props: { accessToken } };
 }
 
 export default Home;

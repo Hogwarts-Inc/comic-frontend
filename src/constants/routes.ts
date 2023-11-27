@@ -4,4 +4,6 @@ export const Route = {
   visualizer: '/visualizador',
   chapter: '/capitulo',
   home: '/',
+  logout: '/api/auth/logout',
+  login: '/api/auth/login',
 };

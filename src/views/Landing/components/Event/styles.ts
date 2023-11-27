@@ -1,28 +1,26 @@
 import { styled, Typography, Grid } from '@mui/material';
 
 export const GridItemCenter = styled(Grid)({
+  alignItems: 'center',
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
   justifyContent: 'center',
 });
 
 export const GridContainer = styled(Grid)({
+  marginBottom: '8rem',
   paddingLeft: '2rem',
   paddingRight: '2rem',
 });
 
 export const TypographyTitle = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.primary,
-  fontSize: '1.645rem',
-  textAlign: 'left',
   fontWeight: 'medium',
+  textAlign: 'left',
   width: '100%',
 }));
 
 export const TypographyDescription = styled(Typography)(({ theme }) => ({
   color: theme.customPalette.third.main,
-  fontSize: '0.725rem',
   textAlign: 'left',
-  fontWeight: 'medium',
 }));
