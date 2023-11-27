@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import { StoriettesParam, apisChapters } from 'src/services/apiConfig';
 
-import { Title } from './styles';
+import { Title, Loading, Img, Container, ImgWrapper } from './styles';
 
 function Chapter() {
   const router = useRouter();
@@ -25,18 +25,18 @@ function Chapter() {
   }, [id]);
 
   return loading ? (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <Loading>
       <CircularProgress />
-    </div>
+    </Loading>
   ) : (
-    <div style={{ display: 'flex', flexDirection: 'column', margin: '4rem 0' }}>
+    <Container>
       <Title variant="h4">{dataChapter.title}</Title>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <ImgWrapper>
         {dataChapter?.canvas?.map(item => (
-          <img src={item.image_url} alt="" style={{ width: '80vw', height: 'auto', marginRight: '10px' }} />
+          <Img src={item.image_url} alt="" />
         ))}
-      </div>
-    </div>
+      </ImgWrapper>
+    </Container>
   );
 }
 export default Chapter;
