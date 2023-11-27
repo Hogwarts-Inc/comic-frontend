@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import { Typography } from '@mui/material';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TablePagination from '@mui/material/TablePagination';
@@ -11,7 +12,16 @@ import { useRouter } from 'next/router';
 import { Route } from 'src/constants/routes';
 import { StoriettesParam, apisChapters } from 'src/services/apiConfig';
 
-import { Title, TableRowMui, CenterDivHorizontal, TableMui, CenterDivVertical, TableCellImg } from './styles';
+import {
+  Title,
+  TableRowMui,
+  CenterDivHorizontal,
+  TableMui,
+  CenterDivVertical,
+  TableCellImg,
+  TitleWrapper,
+  Container,
+} from './styles';
 
 function ChapterPreviewer() {
   const { push } = useRouter();
@@ -41,9 +51,13 @@ function ChapterPreviewer() {
   console.log({ dataChapter });
 
   return (
-    <>
+    <Container>
       {/* To do: add chapter name */}
-      <Title variant="h2">Nombre historita</Title>
+      <TitleWrapper>
+        <Title variant="h4">Nombre historieta</Title>
+        {/* To do: add search bar comonent */}
+        <Typography style={{ margin: '0' }}>Search bar</Typography>
+      </TitleWrapper>
       <TableMui>
         <TableBody>
           {dataChapter.slice(page * rowPage, page * rowPage + rowPage).map((row, index) => (
@@ -56,7 +70,9 @@ function ChapterPreviewer() {
                 })
               }>
               {/* To do: this cell is going to be changed once the canvas has the img */}
-              <TableCellImg>{/* <img src={row.canvas[0].image_url} height={100} alt="url" /> */}</TableCellImg>
+              <TableCellImg>
+                <img src={row.canvas[0]?.image_url} height={100} alt="url" />
+              </TableCellImg>
               <TableCell>{row.title}</TableCell>
               <TableCell />
               <TableCell>{formatDate(row.updated_at).toString()}</TableCell>
@@ -83,7 +99,7 @@ function ChapterPreviewer() {
           onRowsPerPageChange={handleChangeFilasPorPagina}
         />
       </CenterDivHorizontal>
-    </>
+    </Container>
   );
 }
 export default ChapterPreviewer;
