@@ -8,7 +8,7 @@ import { store } from 'src/store/store';
 
 //TO DO: Add types
 // type Canva = any;
-type CanvaCreation = { chapter_id: number; image: string };
+type CanvaCreation = { chapter_id: number; images: string[] };
 type CanvaParam = any;
 type StoriettesCreation = any;
 type StoriettesParam = any;
@@ -75,10 +75,12 @@ export const apisChapters = {
 export const apisCanvas = {
   getCanva: () => api.get('/canvas'),
   getCanvaById: (id: number) => api.get(`/canvas/${id}`),
-  postCanva: async ({ image, chapter_id }: CanvaCreation) => {
+  postCanva: async ({ images, chapter_id }: CanvaCreation) => {
     const data = new FormData();
-    const imageBinary = await (await fetch(image)).blob();
-    data.append('image', imageBinary);
+    for (const imageUrl of images) {
+      const imageBinary = await (await fetch(imageUrl)).blob();
+      data.append('image', imageBinary);
+    }
     data.append('chapter_id', `${chapter_id}`);
     return api.post('/canvas', data, {
       headers: { 'Content-Type': 'multipart/form-data' },

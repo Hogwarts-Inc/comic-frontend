@@ -7,3 +7,9 @@ export interface FontItem {
   name: string;
   url: string;
 }
+
+export interface ChapterData {
+  title: string;
+  description: string;
+  files: File[];
+}

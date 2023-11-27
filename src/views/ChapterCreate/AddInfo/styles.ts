@@ -1,5 +1,6 @@
 import { Grid, TextField, Typography, styled } from '@mui/material';
 
+import Button from '@components/Button';
 import theme from '@styles/theme';
 
 const commonTextFieldStyles = {
@@ -30,7 +31,8 @@ export const GridContainer = styled(Grid)({
   alignItems: 'center',
   justifyContent: 'center',
   width: '100%',
-  marginTop: '5rem',
+  marginTop: '2rem',
+  marginBottom: '10rem',
 });
 
 export const Title = styled(Typography)(({ theme: defaultTheme }) => ({
@@ -40,11 +42,7 @@ export const Title = styled(Typography)(({ theme: defaultTheme }) => ({
   textAlign: 'left',
   marginLeft: '4rem',
   marginTop: '2rem',
-  [defaultTheme.breakpoints.down('sm')]: {
-    marginBottom: '1rem',
-    fontSize: '18px',
-  },
-  [defaultTheme.breakpoints.between('sm', 'lg')]: {
+  [defaultTheme.breakpoints.between('xs', 'lg')]: {
     marginBottom: '2rem',
     fontSize: '35px',
   },
@@ -64,7 +62,11 @@ export const TitleTextField = styled(TextField)(({ theme: defaultTheme }) => ({
 
 export const DescriptionTextField = styled(TextField)({
   ...commonTextFieldStyles,
-  marginBottom: '5rem',
+  marginBottom: '2rem',
   marginLeft: '4rem',
   width: '70%',
+});
+
+export const NextButton = styled(Button)({
+  marginBottom: '2rem',
 });

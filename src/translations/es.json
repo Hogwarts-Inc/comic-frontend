@@ -52,6 +52,12 @@
     "chapterReview": {
       "createdCanvas": "Viñetas creadas",
       "publishButton": "Publicar"
+    },
+    "stepperLabels": [ "Agregar información del capítulo", "Agregar viñetas", "Publicar" ],
+    "validations": {
+      "title": "El título es requerido",
+      "description": "La descripción es requerida",
+      "canvas": "Debes agregar al menos una viñeta"
     }
   },
   "explore": {

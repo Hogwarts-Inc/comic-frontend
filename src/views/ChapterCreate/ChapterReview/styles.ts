@@ -1,5 +1,6 @@
 import { Grid, Typography, styled } from '@mui/material';
 
+import Button from '@components/Button';
 import theme from '@styles/theme';
 
 export const GridContainer = styled(Grid)({
@@ -13,37 +14,34 @@ export const GridContainer = styled(Grid)({
   alignItems: 'center',
   justifyContent: 'center',
   width: '100%',
-  marginTop: '5rem',
+  marginTop: '2rem',
+  marginBottom: '10rem',
 });
 
 export const Title = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
-  marginLeft: '4rem',
   fontWeight: 700,
   lineHeight: '52px',
-  textAlign: 'left',
+  marginBottom: '2rem',
+  marginLeft: '4rem',
   marginTop: '2rem',
-  [defaultTheme.breakpoints.down('sm')]: {
-    marginBottom: '1rem',
-    fontSize: '18px',
-  },
-  [defaultTheme.breakpoints.between('sm', 'lg')]: {
-    marginBottom: '2rem',
+  textAlign: 'left',
+  [defaultTheme.breakpoints.between('xs', 'lg')]: {
     fontSize: '35px',
   },
   [defaultTheme.breakpoints.up('lg')]: {
-    marginBottom: '2rem',
     fontSize: '42px',
   },
 }));
 
 export const SectionTitle = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
+  fontSize: '24px',
   fontWeight: 500,
-  marginLeft: '4rem',
   lineHeight: '22px',
+  marginBottom: '1rem',
+  marginLeft: '4rem',
   textAlign: 'left',
-  marginBottom: '2rem',
 }));
 
 export const SectionDescription = styled(Typography)(({ theme: defaultTheme }) => ({
@@ -53,7 +51,7 @@ export const SectionDescription = styled(Typography)(({ theme: defaultTheme }) =
   marginLeft: '4rem',
   textAlign: 'left',
   whiteSpace: 'pre-line',
-  marginBottom: '2rem',
+  marginBottom: '1rem',
 }));
 
 export const ThumbnailContainer = styled('div')(() => ({
@@ -65,8 +63,14 @@ export const ThumbnailContainer = styled('div')(() => ({
 }));
 
 export const Thumbnail = styled('img')(() => ({
-  width: '300px',
-  height: '300px',
+  width: '200px',
+  height: '200px',
   objectFit: 'cover',
   borderRadius: theme.shape.borderRadius,
 }));
+
+export const SubmitButton = styled(Button)({
+  display: 'block',
+  marginBottom: '2rem',
+  width: 'fit-content',
+});

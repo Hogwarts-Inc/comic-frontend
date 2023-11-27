@@ -5,41 +5,46 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import Button from '@components/Button';
-
-import { Title, GridContainer, TitleTextField, DescriptionTextField } from './styles';
+import { Title, GridContainer, TitleTextField, DescriptionTextField, NextButton } from './styles';
 
 interface AddInfoProps {
-  onNext: () => void;
-  values: {
-    title: string;
-    description: string;
-  };
-  handleChange: (e: React.ChangeEvent<any>) => void;
-  handleBlur: (e: React.FocusEvent<any>) => void;
   errors: {
     title?: string;
     description?: string;
   };
+  isValidating: boolean;
+  isSubmitting: boolean;
   touched: {
     title?: boolean;
     description?: boolean;
   };
-  isValidating: boolean;
-  isSubmitting: boolean;
+  values: {
+    title: string;
+    description: string;
+  };
+  handleBlur: (e: React.FocusEvent<any>) => void;
+  handleChange: (e: React.ChangeEvent<any>) => void;
+  validateField: (field: string) => void;
+  onNext: () => void;
 }
 
 export const AddInfo = ({
-  onNext,
-  values,
-  handleChange,
-  handleBlur,
   errors,
-  touched,
   isValidating,
   isSubmitting,
+  touched,
+  values,
+  handleBlur,
+  handleChange,
+  validateField,
+  onNext,
 }: AddInfoProps) => {
   const { t } = useTranslation();
+
+  const handleFieldChange = (e: React.ChangeEvent<any>) => {
+    handleChange(e);
+    validateField(e.target.name);
+  };
 
   return (
     <GridContainer container>
@@ -54,7 +59,7 @@ export const AddInfo = ({
           variant="outlined"
           label={t('common.title')}
           value={values.title}
-          onChange={handleChange}
+          onChange={handleFieldChange}
           onBlur={handleBlur}
           error={touched.title && Boolean(errors.title)}
           helperText={touched.title && errors.title}
@@ -71,21 +76,20 @@ export const AddInfo = ({
           variant="outlined"
           label={t('common.description')}
           value={values.description}
-          onChange={handleChange}
+          onChange={handleFieldChange}
           onBlur={handleBlur}
           error={touched.description && Boolean(errors.description)}
           helperText={touched.description && errors.description}
         />
       </Grid>
 
-      <Button
-        style={{ marginBottom: '4rem' }}
+      <NextButton
         variantType="gradient"
         size="large"
         onClick={onNext}
         disabled={isValidating || isSubmitting}>
         {t('common.next')}
-      </Button>
+      </NextButton>
     </GridContainer>
   );
 };

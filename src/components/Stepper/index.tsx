@@ -1,5 +1,3 @@
-/* eslint-disable indent */
-/* eslint-disable react/jsx-indent */
 import React from 'react';
 
 import { Button, Step, StepLabel, Stepper, Typography } from '@mui/material';
@@ -11,6 +9,7 @@ interface CustomStepperProps {
   steps: string[];
   activeStep: number;
   setActiveStep: React.Dispatch<React.SetStateAction<number>>;
+  styles?: React.CSSProperties;
   optionalSteps?: number[];
   onBack?: () => void;
   onNext?: () => void;
@@ -21,6 +20,7 @@ const CustomStepper = ({
   steps,
   activeStep,
   setActiveStep,
+  styles,
   optionalSteps,
   onBack,
   onNext,
@@ -42,9 +42,7 @@ const CustomStepper = ({
 
     setSkipped(newSkipped);
     setActiveStep(prevActiveStep => prevActiveStep + 1);
-    if (onNext) {
-      onNext();
-    }
+    onNext?.();
   };
 
   const handleSkip = () => {
@@ -69,7 +67,7 @@ const CustomStepper = ({
   return (
     <>
       <StepperContainer>
-        <Stepper activeStep={activeStep}>
+        <Stepper activeStep={activeStep} style={styles}>
           {steps.map((label, index) => {
             const stepProps: { completed?: boolean } = {};
             const labelProps: { optional?: React.ReactNode } = {};
@@ -100,13 +98,11 @@ const CustomStepper = ({
             <StyledButton onClick={handleSkip}>{t('common.skip')}</StyledButton>
           )}
           <Spacer />
-          {onNext
-            ? null
-            : activeStep < steps.length && (
-                <Button onClick={handleNext}>
-                  {activeStep === steps.length - 1 ? t('common.finish') : t('common.next')}
-                </Button>
-              )}
+          {onNext && activeStep < steps.length && (
+            <Button onClick={handleNext}>
+              {activeStep === steps.length - 1 ? t('common.finish') : t('common.next')}
+            </Button>
+          )}
           {onReset && activeStep === steps.length && <Button onClick={handleReset}>Reset</Button>}
         </ButtonRow>
       </StepperContainer>

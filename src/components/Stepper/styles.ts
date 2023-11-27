@@ -7,7 +7,7 @@ export const StepperContainer = styled(Box)({
 export const ButtonRow = styled(Box)({
   display: 'flex',
   flexDirection: 'row',
-  paddingTop: 2,
+  paddingTop: '1rem',
 });
 
 export const Spacer = styled(Box)({

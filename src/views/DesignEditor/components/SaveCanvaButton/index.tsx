@@ -17,10 +17,10 @@ export const SaveCanvaButton = () => {
   const uploadCanva = async () => {
     setIsLoading(true);
     try {
-      for (const { history, scenePosition } of scenes || []) {
-        if (history[scenePosition].preview) {
-          await apisCanvas.postCanva({ chapter_id: 1, image: history[scenePosition].preview as string });
-        }
+      const images = scenes?.map(({ history, scenePosition }) => history[scenePosition].preview).filter(Boolean) as string[];
+
+      if (images.length > 0) {
+        await apisCanvas.postCanva({ chapter_id: 1, images: images });
       }
     } catch (e) {
       // TODO handle error

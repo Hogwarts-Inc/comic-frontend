@@ -83,6 +83,27 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiStepIcon: {
+      styleOverrides: {
+        root: {
+          '.MuiStepIcon-root': {
+            color: 'lightgray',
+          },
+          '&.Mui-completed': {
+            color: '#1E0E62',
+            '& text': {
+              fill: 'white',
+            },
+          },
+          '&.Mui-active': {
+            color: '#1E0E62',
+            '& text': {
+              fill: 'white',
+            },
+          },
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {

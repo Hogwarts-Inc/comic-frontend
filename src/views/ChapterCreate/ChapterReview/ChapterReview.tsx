@@ -3,9 +3,7 @@ import React, { useState } from 'react';
 import { Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import Button from '@components/Button';
-
-import { Title, GridContainer, SectionTitle, SectionDescription, Thumbnail, ThumbnailContainer } from './styles';
+import { Title, GridContainer, SectionTitle, SectionDescription, Thumbnail, ThumbnailContainer, SubmitButton } from './styles';
 
 interface ChapterReviewProps {
   onNext: () => void;
@@ -54,14 +52,13 @@ export const ChapterReview = ({ onNext, values }: ChapterReviewProps) => {
         </ThumbnailContainer>
       </Grid>
 
-      <Button
-        style={{ marginBottom: '4rem' }}
+      <SubmitButton
         variantType="gradient"
         size="large"
         onClick={onPublish}
         isLoading={isLoading}>
         {t('chapterCreate.chapterReview.publishButton')}
-      </Button>
+      </SubmitButton>
     </GridContainer>
   );
 };

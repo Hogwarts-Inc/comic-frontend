@@ -1,29 +1,46 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Divider, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { DropzoneArea } from 'mui-file-dropzone';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 
-import Button from '@components/Button';
-import theme from '@styles/theme';
-
-import { Title, OutsideGridContainer, ColGridContainer, SectionTitle, SectionDescription } from './styles';
+import {
+  Title,
+  OutsideGridContainer,
+  ColGridContainer,
+  SectionTitle,
+  SectionDescription,
+  EditorButton,
+  NextButton,
+  DividerLine,
+  ItemGridContainer,
+  SecondItemGridContainer,
+} from './styles';
 
 interface AddCanvaProps {
-  onNext: () => void;
   values: any;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
+  onNext: () => void;
 }
 
-export const AddCanva = ({ onNext, values, setFieldValue }: AddCanvaProps) => {
+export const AddCanva = ({ values, setFieldValue, onNext }: AddCanvaProps) => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const handleFileChange = (fileObjects: File[]) => {
-    setFieldValue('files', fileObjects);
+  const [fileObjects, setFileObjects] = useState<File[]>([]);
+
+  useEffect(() => {
+    if (values.files.length > 0) {
+      setFieldValue('files', values.files);
+    }
+  }, [values.files, setFieldValue]);
+
+  const handleFileChange = (newFileObjects: File[]) => {
+    setFileObjects(newFileObjects);
+    setFieldValue('files', newFileObjects);
   };
 
   const onNavigateToEditor = () => {
@@ -37,7 +54,7 @@ export const AddCanva = ({ onNext, values, setFieldValue }: AddCanvaProps) => {
       </Grid>
 
       <ColGridContainer container>
-        <Grid item xs={5}>
+        <ItemGridContainer item xs={12} sm={5}>
           <SectionTitle>{t('chapterCreate.addCanva.uploadTitle')}</SectionTitle>
           <SectionDescription>{t('chapterCreate.addCanva.uploadDescription')}</SectionDescription>
 
@@ -47,53 +64,31 @@ export const AddCanva = ({ onNext, values, setFieldValue }: AddCanvaProps) => {
             onChange={handleFileChange}
             maxFileSize={5000000}
             filesLimit={3}
-            fileObjects={values.files}
+            fileObjects={fileObjects}
           />
 
-          <Button
-            style={{
-              display: 'block',
-              margin: '1rem auto 0',
-              width: 'fit-content',
-            }}
+          <NextButton
             variantType="gradient"
             size="large"
             onClick={onNext}
             disabled={values.files.length === 0}>
             {t('common.next')}
-          </Button>
-        </Grid>
+          </NextButton>
+        </ItemGridContainer>
 
-        <Divider
-          orientation="vertical"
+        <DividerLine
           flexItem
-          style={{
-            width: '1px',
-            marginLeft: '2rem',
-            backgroundColor: theme.palette.text.primary,
-          }}
         />
 
-        <Grid
-          item
-          xs={5}
-          style={{
-            marginLeft: '2rem',
-          }}>
+        <SecondItemGridContainer item xs={12} sm={5}>
           <SectionTitle>{t('chapterCreate.addCanva.navToEditorTitle')}</SectionTitle>
-          <Button
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              margin: '4rem auto 0 auto',
-              width: 'fit-content',
-            }}
+          <EditorButton
             variantType="gradient"
             size="large"
             onClick={onNavigateToEditor}>
             {t('chapterCreate.addCanva.navToEditorButton')}
-          </Button>
-        </Grid>
+          </EditorButton>
+        </SecondItemGridContainer>
       </ColGridContainer>
     </OutsideGridContainer>
   );

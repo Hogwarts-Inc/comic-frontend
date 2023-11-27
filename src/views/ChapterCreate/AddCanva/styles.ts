@@ -1,23 +1,7 @@
-import { Grid, TextField, Typography, styled } from '@mui/material';
+import { Divider, Grid, Typography, styled } from '@mui/material';
 
+import Button from '@components/Button';
 import theme from '@styles/theme';
-
-const commonTextFieldStyles = {
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      border: '1px solid transparent',
-      borderImage: theme.customPalette.gradientBox.main,
-      borderImageSlice: 1,
-      borderRadius: '1px',
-    },
-    '&:hover fieldset': {
-      borderColor: theme.customPalette.gradientBox.main,
-    },
-    '&.Mui-focused fieldset': {
-      borderColor: theme.customPalette.gradientBox.main,
-    },
-  },
-};
 
 export const OutsideGridContainer = styled(Grid)({
   border: '3px solid transparent',
@@ -30,19 +14,32 @@ export const OutsideGridContainer = styled(Grid)({
   alignItems: 'center',
   justifyContent: 'center',
   width: '100%',
-  marginTop: '5rem',
+  marginTop: '2rem',
+  marginBottom: '10rem',
 });
 
-export const ColGridContainer = styled(Grid)({
+export const ColGridContainer = styled(Grid)(({ theme: defaultTheme }) => ({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'flex-start',
   justifyContent: 'center',
   width: '100%',
   margin: 'auto',
-  marginLeft: '-1rem',
   marginBottom: '2rem',
-});
+  [defaultTheme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+  },
+}));
+
+export const ItemGridContainer = styled(Grid)(({
+  width: '100%',
+}));
+
+export const SecondItemGridContainer = styled(ItemGridContainer)(({ theme: defaultTheme }) => ({
+  [defaultTheme.breakpoints.up('sm')]: {
+    marginLeft: '2rem',
+  },
+}));
 
 export const Title = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
@@ -51,11 +48,7 @@ export const Title = styled(Typography)(({ theme: defaultTheme }) => ({
   textAlign: 'left',
   marginLeft: '4rem',
   marginTop: '2rem',
-  [defaultTheme.breakpoints.down('sm')]: {
-    marginBottom: '1rem',
-    fontSize: '18px',
-  },
-  [defaultTheme.breakpoints.between('sm', 'lg')]: {
+  [defaultTheme.breakpoints.between('xs', 'lg')]: {
     marginBottom: '2rem',
     fontSize: '35px',
   },
@@ -70,10 +63,8 @@ export const SectionTitle = styled(Typography)(({ theme: defaultTheme }) => ({
   fontWeight: 500,
   lineHeight: '22px',
   textAlign: 'left',
-  [defaultTheme.breakpoints.up('lg')]: {
-    marginBottom: '2rem',
-    fontSize: '24px',
-  },
+  marginBottom: '2rem',
+  fontSize: '24px',
 }));
 
 export const SectionDescription = styled(Typography)(({ theme: defaultTheme }) => ({
@@ -82,6 +73,7 @@ export const SectionDescription = styled(Typography)(({ theme: defaultTheme }) =
   lineHeight: '22px',
   textAlign: 'left',
   whiteSpace: 'pre-line',
+  marginBottom: '1rem',
 
   [defaultTheme.breakpoints.up('lg')]: {
     marginBottom: '2rem',
@@ -89,17 +81,32 @@ export const SectionDescription = styled(Typography)(({ theme: defaultTheme }) =
   },
 }));
 
-export const TitleTextField = styled(TextField)(({ theme: defaultTheme }) => ({
-  ...commonTextFieldStyles,
-  color: defaultTheme.palette.text.primary,
-  marginBottom: '2rem',
-  marginLeft: '4rem',
-  width: '70%',
-}));
-
-export const DescriptionTextField = styled(TextField)({
-  ...commonTextFieldStyles,
-  marginBottom: '5rem',
-  marginLeft: '4rem',
-  width: '70%',
+export const EditorButton = styled(Button)({
+  display: 'flex',
+  justifyContent: 'center',
+  margin: '4rem auto 0 auto',
+  width: 'fit-content',
 });
+
+export const NextButton = styled(Button)({
+  display: 'block',
+  margin: '1rem auto 0',
+  width: 'fit-content',
+});
+
+export const DividerLine = styled(Divider)(({ theme: defaultTheme }) => ({
+  backgroundColor: theme.palette.text.primary,
+  [defaultTheme.breakpoints.up('sm')]: {
+    width: '1px',
+    marginLeft: '2rem',
+    orientation: 'vertical',
+  },
+  [defaultTheme.breakpoints.down('sm')]: {
+    width: '100%',
+    height: '1px',
+    orientation: 'horizontal',
+    marginLeft: 0,
+    marginTop: '2rem',
+    marginBottom: '2rem',
+  },
+}));
