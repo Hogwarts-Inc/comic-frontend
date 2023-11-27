@@ -3,13 +3,23 @@
 import React, { useState, useEffect } from 'react';
 
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import { Typography } from '@mui/material';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TablePagination from '@mui/material/TablePagination';
 
 import { StoriettesParam, apisChapters } from 'src/services/apiConfig';
 
-import { Title, TableRowMui, CenterDivHorizontal, TableMui, CenterDivVertical, TableCellImg } from './styles';
+import {
+  Title,
+  TableRowMui,
+  CenterDivHorizontal,
+  TableMui,
+  CenterDivVertical,
+  TableCellImg,
+  TitleWrapper,
+  Container,
+} from './styles';
 
 function ChapterPreviewer() {
   const [page, setPage] = useState(0);
@@ -36,16 +46,19 @@ function ChapterPreviewer() {
   };
 
   return (
-    <>
+    <Container>
       {/* To do: add chapter name */}
-      <Title variant="h2">Nombre historita</Title>
+      <TitleWrapper>
+        <Title variant="h4">Nombre historieta</Title>
+        <Typography style={{ margin: '0' }}>Search bar</Typography>
+      </TitleWrapper>
       <TableMui>
         <TableBody>
           {dataChapter.slice(page * rowPage, page * rowPage + rowPage).map((row, index) => (
             <TableRowMui key={row.id}>
               {/* To do: this cell is going to be changed once the canvas has the img */}
               <TableCellImg>
-                <img src={row.canvas[0].image_url} height={100} alt="url" />
+                <img src={row.canvas[0]?.image_url} height={100} alt="url" />
               </TableCellImg>
               <TableCell>{row.title}</TableCell>
               <TableCell />
@@ -73,7 +86,7 @@ function ChapterPreviewer() {
           onRowsPerPageChange={handleChangeFilasPorPagina}
         />
       </CenterDivHorizontal>
-    </>
+    </Container>
   );
 }
 export default ChapterPreviewer;
