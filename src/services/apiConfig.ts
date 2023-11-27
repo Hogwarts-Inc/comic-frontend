@@ -1,7 +1,9 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
+import i18next from 'i18next';
 import { nanoid } from 'nanoid';
+import { toast } from 'react-toastify';
 
 import { Character, ResourceSliceState, setCharacters, setResources } from 'src/store/slices/resources/reducer';
 import { store } from 'src/store/store';
@@ -11,7 +13,8 @@ import { store } from 'src/store/store';
 type CanvaCreation = { chapter_id: number; images: string[] };
 type CanvaParam = any;
 type StoriettesCreation = any;
-type StoriettesParam = any;
+//To do: create canva type
+export type StoriettesParam = { title: string; id: number; updated_at: string; canvas: any[] };
 type CharacterCreation = any;
 type CharacterParam = any;
 export type ChapterCreation = {
@@ -33,7 +36,7 @@ export type Event = {
   name: string;
 };
 
-const { dispatch } = store;
+const { dispatch, getState } = store;
 
 const CONTENT_TYPE = {
   // Accept: '/',
@@ -45,15 +48,24 @@ const api = axios.create({
   headers: { ...CONTENT_TYPE },
 });
 
-// api.interceptors.request.use(async req => {
-//   const { user } = getState().auth;
-//   const mcid = user?.MCID;
-//   req.headers = { ...req.headers };
-//   if (mcid && !req?.headers?.masterCustomerId) {
-//     req.headers.masterCustomerId = mcid;
-//   }
-//   return req;
-// });
+api.interceptors.request.use(req => {
+  const { token } = getState().auth;
+  if (token) {
+    req.headers.Authorization = `Bearer ${token}`;
+  }
+  return req;
+});
+
+api.interceptors.response.use(
+  (response: AxiosResponse) => {
+    toast.success(i18next.t('toast.successCall'));
+    return response;
+  },
+  (error: AxiosError) => {
+    toast.error(i18next.t('toast.failCall'));
+    return Promise.reject(error);
+  },
+);
 
 //COMIC
 export const apisComic = {
@@ -65,7 +77,7 @@ export const apisComic = {
 
 //CHAPTERS
 export const apisChapters = {
-  getCChapters: () => api.get('/chapters'),
+  getChapters: () => api.get('/chapters'),
   getChaptersById: (id: number) => api.get(`/chapters/${id}`),
   postChapters: (data: ChapterCreation) => api.post('/chapters', data),
   patchChapters: (id: number, data: ChapterParam) => api.patch(`/chapters/${id}`, data),
