@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { Grid } from '@mui/material';
 import { DropzoneArea } from 'mui-file-dropzone';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+
+import { setChapterFiles } from 'src/store/slices/chapter-create/actions';
 
 import {
   Title,
@@ -29,18 +32,15 @@ interface AddCanvaProps {
 export const AddCanva = ({ values, setFieldValue, onNext }: AddCanvaProps) => {
   const { t } = useTranslation();
   const router = useRouter();
+  const dispatch = useDispatch();
 
-  const [fileObjects, setFileObjects] = useState<File[]>([]);
+  const createObjectURL = (file: File) => URL.createObjectURL(file);
 
-  useEffect(() => {
-    if (values.files.length > 0) {
-      setFieldValue('files', values.files);
-    }
-  }, [values.files, setFieldValue]);
+  const handleFileChange = (fileObjects: File[]) => {
+    setFieldValue('files', fileObjects);
 
-  const handleFileChange = (newFileObjects: File[]) => {
-    setFileObjects(newFileObjects);
-    setFieldValue('files', newFileObjects);
+    const newFileObjects = fileObjects.map(file => createObjectURL(file));
+    dispatch(setChapterFiles(newFileObjects));
   };
 
   const onNavigateToEditor = () => {
@@ -64,7 +64,7 @@ export const AddCanva = ({ values, setFieldValue, onNext }: AddCanvaProps) => {
             onChange={handleFileChange}
             maxFileSize={5000000}
             filesLimit={3}
-            fileObjects={fileObjects}
+            fileObjects={values.files}
           />
 
           <NextButton

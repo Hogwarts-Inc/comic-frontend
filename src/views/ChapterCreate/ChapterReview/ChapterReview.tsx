@@ -10,7 +10,7 @@ interface ChapterReviewProps {
   values: {
     title: string;
     description: string;
-    files: File[];
+    files: string[];
   };
 }
 
@@ -18,8 +18,6 @@ export const ChapterReview = ({ onNext, values }: ChapterReviewProps) => {
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
-
-  const createObjectURL = (file: File) => URL.createObjectURL(file);
 
   const onPublish = () => {
     setIsLoading(true);
@@ -47,7 +45,7 @@ export const ChapterReview = ({ onNext, values }: ChapterReviewProps) => {
         <SectionTitle>{t('chapterCreate.chapterReview.createdCanvas')}</SectionTitle>
         <ThumbnailContainer>
           {values.files.map((file, index) => (
-            <Thumbnail key={file.name} src={createObjectURL(file)} alt={`image-${index}`} />
+            <Thumbnail key={file} src={file} alt={`image-${index}`} />
           ))}
         </ThumbnailContainer>
       </Grid>

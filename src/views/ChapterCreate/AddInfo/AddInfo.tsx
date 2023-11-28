@@ -4,6 +4,9 @@ import React from 'react';
 
 import { Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+
+import { setChapterTitle, setChapterDescription } from 'src/store/slices/chapter-create/actions';
 
 import { Title, GridContainer, TitleTextField, DescriptionTextField, NextButton } from './styles';
 
@@ -39,11 +42,21 @@ export const AddInfo = ({
   validateField,
   onNext,
 }: AddInfoProps) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const handleFieldChange = (e: React.ChangeEvent<any>) => {
+  const handleTitleChange = (e: React.ChangeEvent<any>) => {
+    const newTitle = e.target.value;
     handleChange(e);
     validateField(e.target.name);
+    dispatch(setChapterTitle(newTitle));
+  };
+
+  const handleDescriptionChange = (e: React.ChangeEvent<any>) => {
+    const newDescription = e.target.value;
+    handleChange(e);
+    validateField(e.target.name);
+    dispatch(setChapterDescription(newDescription));
   };
 
   return (
@@ -59,7 +72,7 @@ export const AddInfo = ({
           variant="outlined"
           label={t('common.title')}
           value={values.title}
-          onChange={handleFieldChange}
+          onChange={handleTitleChange}
           onBlur={handleBlur}
           error={touched.title && Boolean(errors.title)}
           helperText={touched.title && errors.title}
@@ -76,7 +89,7 @@ export const AddInfo = ({
           variant="outlined"
           label={t('common.description')}
           value={values.description}
-          onChange={handleFieldChange}
+          onChange={handleDescriptionChange}
           onBlur={handleBlur}
           error={touched.description && Boolean(errors.description)}
           helperText={touched.description && errors.description}

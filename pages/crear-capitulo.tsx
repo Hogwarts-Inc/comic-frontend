@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+/* eslint-disable arrow-body-style */
+import React, { useEffect } from 'react';
 
 import { Box, Grid } from '@mui/material';
-import { Formik, Form, FormikErrors, FormikHelpers } from 'formik';
+import { Formik, Form, FormikHelpers } from 'formik';
 import { TFunction } from 'i18next';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
 import DefaultLayout from '@components/DefaultLayout';
 import CustomStepper from '@components/Stepper';
 import { ChapterData } from 'src/interfaces/common';
 import { apisCanvas, apisChapters } from 'src/services/apiConfig';
+import { resetChapterCreate, setActiveStep } from 'src/store/slices/chapter-create/actions';
+import { selectActiveStep, selectChapterData } from 'src/store/slices/chapter-create/selectors';
 import { AddCanva } from 'src/views/ChapterCreate/AddCanva/AddCanva';
 import { AddInfo } from 'src/views/ChapterCreate/AddInfo/AddInfo';
 import { ChapterReview } from 'src/views/ChapterCreate/ChapterReview/ChapterReview';
@@ -18,59 +22,54 @@ import { ChapterReview } from 'src/views/ChapterCreate/ChapterReview/ChapterRevi
 const createValidationSchema = (t: TFunction) => Yup.object({
   title: Yup.string().required(t('chapterCreate.validations.title')),
   description: Yup.string().required(t('chapterCreate.validations.description')),
-  // canvas: Yup.string().required(t('chapterCreate.validations.canvas')),
 });
-
-const initialValues: ChapterData = {
-  title: '',
-  description: '',
-  files: [],
-};
 
 const ChapterCreate = () => {
   const { t } = useTranslation();
   const router = useRouter();
+  const dispatch = useDispatch();
+  const chapterData = useSelector(selectChapterData);
+  const activeStep = useSelector(selectActiveStep);
 
   const steps = t('chapterCreate.stepperLabels', { returnObjects: true }) as string[];
   const validationSchema = createValidationSchema(t);
 
-  const [activeStep, setActiveStep] = useState(0);
+  useEffect(() => {
+    dispatch(resetChapterCreate());
 
-  const createObjectURL = (file: File) => URL.createObjectURL(file);
+    return () => {
+      dispatch(resetChapterCreate());
+    };
+  }, [dispatch]);
 
-  const onSubmit = (values: ChapterData, { setSubmitting, validateForm }: FormikHelpers<ChapterData>) => {
-    validateForm().then(async (errors: FormikErrors<ChapterData>) => {
-      if (!Object.keys(errors).length) {
-        try {
-          const chapterResponse = await apisChapters.postChapters({
-            title: values.title,
-            description: values.description,
-            active: true,
-            storiette_id: 1,
-          });
-          const chapterId = chapterResponse.data.id;
-          const imageUrls = values.files.map(file => createObjectURL(file));
+  const onSubmit = async (_: ChapterData, { setSubmitting }: FormikHelpers<ChapterData>) => {
+    try {
+      const chapterResponse = await apisChapters.postChapters({
+        title: chapterData.title,
+        description: chapterData.description,
+        active: true,
+        storiette_id: 1,
+      });
+      const chapterId = chapterResponse.data.id;
 
-          await apisCanvas.postCanva({ chapter_id: chapterId, images: imageUrls });
+      await apisCanvas.postCanva({ chapter_id: chapterId, images: chapterData.files });
+      dispatch(resetChapterCreate());
 
-          router.push('/');
-        } catch (e) {
-          // TODO handle error
-        }
-      }
-      setSubmitting(false);
-    });
+      router.push('/');
+    } catch (e) {
+      // TODO handle error
+    }
+    setSubmitting(false);
   };
 
   return (
     <DefaultLayout>
-      <Formik<ChapterData> initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+      <Formik<ChapterData> initialValues={chapterData} validationSchema={validationSchema} onSubmit={onSubmit}>
         {({
           errors,
           isSubmitting,
           isValidating,
           touched,
-          values,
           handleBlur,
           handleChange,
           handleSubmit,
@@ -84,7 +83,7 @@ const ChapterCreate = () => {
             const validateErrors = await validateForm();
 
             if (Object.keys(validateErrors).length === 0) {
-              setActiveStep(prevActiveStep => prevActiveStep + 1);
+              dispatch(setActiveStep(activeStep + 1));
             } else {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               const fieldsToTouch = Object.keys(validateErrors).reduce((acc: any, key) => {
@@ -104,9 +103,8 @@ const ChapterCreate = () => {
                   <Box sx={{ height: '8%' }} />
                   <CustomStepper
                     activeStep={activeStep}
-                    setActiveStep={setActiveStep}
+                    setActiveStep={(step) => dispatch(setActiveStep(step))}
                     steps={steps}
-                    onBack={() => console.log('ssd')}
                   />
                   {activeStep === 0 && (
                     <AddInfo
@@ -117,16 +115,16 @@ const ChapterCreate = () => {
                       isValidating={isValidating}
                       touched={touched}
                       validateField={validateField}
-                      values={values}
+                      values={chapterData}
                       onNext={handleNext}
                     />
                   )}
                   {activeStep === 1 && <AddCanva
                     setFieldValue={setFieldValue}
-                    values={values}
+                    values={chapterData}
                     onNext={handleNext}
                   />}
-                  {activeStep === 2 && <ChapterReview values={values} onNext={handleSubmit} />}
+                  {activeStep === 2 && <ChapterReview values={chapterData} onNext={handleSubmit} />}
                 </Grid>
               </Grid>
             </Form>

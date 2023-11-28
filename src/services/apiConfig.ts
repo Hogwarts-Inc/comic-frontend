@@ -89,9 +89,10 @@ export const apisCanvas = {
   getCanvaById: (id: number) => api.get(`/canvas/${id}`),
   postCanva: async ({ images, chapter_id }: CanvaCreation) => {
     const data = new FormData();
-    for (const imageUrl of images) {
-      const imageBinary = await (await fetch(imageUrl)).blob();
-      data.append('image', imageBinary);
+    for (const image of images) {
+      const response = await fetch(image);
+      const imageBlob = await response.blob();
+      data.append('images[]', imageBlob);
     }
     data.append('chapter_id', `${chapter_id}`);
     return api.post('/canvas', data, {

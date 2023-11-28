@@ -11,5 +11,5 @@ export interface FontItem {
 export interface ChapterData {
   title: string;
   description: string;
-  files: File[];
+  files: string[];
 }
