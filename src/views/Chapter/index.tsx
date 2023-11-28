@@ -13,11 +13,11 @@ function Chapter() {
   const { id } = router.query;
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [dataChapter, setDataChapter] = useState<StoriettesParam[]>([]);
+  const [dataChapter, setDataChapter] = useState<StoriettesParam | undefined>();
 
   useEffect(() => {
     if (id) {
-      apisChapters.getChaptersById(id).then(({ data }) => {
+      apisChapters.getChaptersById(+id).then(({ data }) => {
         setDataChapter(data);
         setLoading(false);
       });
@@ -30,7 +30,7 @@ function Chapter() {
     </Loading>
   ) : (
     <Container>
-      <Title variant="h4">{dataChapter.title}</Title>
+      <Title variant="h4">{dataChapter?.title}</Title>
       <ImgWrapper>
         {dataChapter?.canvas?.map(item => (
           <Img src={item.image_url} alt="" />
