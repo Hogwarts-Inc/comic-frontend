@@ -37,17 +37,14 @@ export const GridContainer = styled(Grid)({
 
 export const Title = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
-  fontWeight: 700,
-  lineHeight: '52px',
   marginLeft: '4rem',
   marginTop: '2rem',
   textAlign: 'left',
   [defaultTheme.breakpoints.between('xs', 'lg')]: {
-    fontSize: '35px',
+    fontSize: '2.188rem',
     marginBottom: '2rem',
   },
   [defaultTheme.breakpoints.up('lg')]: {
-    fontSize: '42px',
     marginBottom: '2rem',
   },
 }));

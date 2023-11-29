@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
+import { Route } from 'src/constants/routes';
 import { setChapterFiles } from 'src/store/slices/chapter-create/actions';
 
 import {
@@ -44,18 +45,18 @@ export const AddCanva = ({ values, setFieldValue, onNext }: AddCanvaProps) => {
   };
 
   const onNavigateToEditor = () => {
-    router.push('/editor');
+    router.push(Route.editor);
   };
 
   return (
     <OutsideGridContainer container>
       <Grid item xs={12}>
-        <Title>{t('chapterCreate.title')}</Title>
+        <Title variant="h3">{t('chapterCreate.title')}</Title>
       </Grid>
 
       <ColGridContainer container>
         <ItemGridContainer item xs={12} sm={5}>
-          <SectionTitle>{t('chapterCreate.addCanva.uploadTitle')}</SectionTitle>
+          <SectionTitle variant="h4">{t('chapterCreate.addCanva.uploadTitle')}</SectionTitle>
           <SectionDescription>{t('chapterCreate.addCanva.uploadDescription')}</SectionDescription>
 
           <DropzoneArea
@@ -81,7 +82,7 @@ export const AddCanva = ({ values, setFieldValue, onNext }: AddCanvaProps) => {
         />
 
         <SecondItemGridContainer item xs={12} sm={5}>
-          <SectionTitle>{t('chapterCreate.addCanva.navToEditorTitle')}</SectionTitle>
+          <SectionTitle variant="h4">{t('chapterCreate.addCanva.navToEditorTitle')}</SectionTitle>
           <EditorButton
             variantType="gradient"
             size="large"

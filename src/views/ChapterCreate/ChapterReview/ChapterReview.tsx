@@ -28,21 +28,21 @@ export const ChapterReview = ({ onNext, values }: ChapterReviewProps) => {
   return (
     <GridContainer container>
       <Grid item xs={12}>
-        <Title>{t('chapterCreate.title')}</Title>
+        <Title variant="h3">{t('chapterCreate.title')}</Title>
       </Grid>
 
       <Grid item xs={12}>
-        <SectionTitle>{t('common.title')}</SectionTitle>
+        <SectionTitle variant="h4">{t('common.title')}</SectionTitle>
         <SectionDescription>{values.title}</SectionDescription>
       </Grid>
 
       <Grid item xs={12}>
-        <SectionTitle>{t('common.description')}</SectionTitle>
+        <SectionTitle variant="h4">{t('common.description')}</SectionTitle>
         <SectionDescription>{values.description}</SectionDescription>
       </Grid>
 
       <Grid item xs={12}>
-        <SectionTitle>{t('chapterCreate.chapterReview.createdCanvas')}</SectionTitle>
+        <SectionTitle variant="h4">{t('chapterCreate.chapterReview.createdCanvas')}</SectionTitle>
         <ThumbnailContainer>
           {values.files.map((file, index) => (
             <Thumbnail key={file} src={file} alt={`image-${index}`} />

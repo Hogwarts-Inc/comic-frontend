@@ -62,7 +62,7 @@ export const AddInfo = ({
   return (
     <GridContainer container>
       <Grid item xs={12}>
-        <Title>{t('chapterCreate.title')}</Title>
+        <Title variant="h3">{t('chapterCreate.title')}</Title>
       </Grid>
 
       <Grid item xs={12}>

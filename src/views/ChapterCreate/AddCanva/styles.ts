@@ -43,41 +43,30 @@ export const SecondItemGridContainer = styled(ItemGridContainer)(({ theme: defau
 
 export const Title = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
-  fontWeight: 700,
-  lineHeight: '52px',
   marginLeft: '4rem',
   marginTop: '2rem',
   textAlign: 'left',
   [defaultTheme.breakpoints.between('xs', 'lg')]: {
-    fontSize: '35px',
+    fontSize: '2.188rem',
     marginBottom: '2rem',
   },
   [defaultTheme.breakpoints.up('lg')]: {
-    fontSize: '42px',
     marginBottom: '2rem',
   },
 }));
 
 export const SectionTitle = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
-  fontSize: '24px',
-  fontWeight: 500,
-  lineHeight: '22px',
-  marginBottom: '2rem',
+  marginBottom: '1rem',
   textAlign: 'left',
 }));
 
 export const SectionDescription = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
   fontWeight: 500,
-  lineHeight: '22px',
   marginBottom: '1rem',
   textAlign: 'left',
   whiteSpace: 'pre-line',
-  [defaultTheme.breakpoints.up('lg')]: {
-    fontSize: '16px',
-    marginBottom: '2rem',
-  },
 }));
 
 export const EditorButton = styled(Button)({
