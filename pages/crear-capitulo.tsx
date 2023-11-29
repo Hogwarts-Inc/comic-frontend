@@ -14,6 +14,7 @@ import DefaultLayout from '@components/DefaultLayout';
 import CustomStepper from '@components/Stepper';
 import { ChapterData } from 'src/interfaces/common';
 import { apisCanvas, apisChapters } from 'src/services/apiConfig';
+import { RootState } from 'src/store/rootReducer';
 import { resetChapterCreate, setActiveStep } from 'src/store/slices/chapter-create/actions';
 import { selectActiveStep, selectChapterData } from 'src/store/slices/chapter-create/selectors';
 import { AddCanva } from 'src/views/ChapterCreate/AddCanva/AddCanva';
@@ -29,8 +30,11 @@ const ChapterCreate = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const dispatch = useDispatch();
-  const chapterData = useSelector(selectChapterData);
-  const activeStep = useSelector(selectActiveStep);
+  const { chapterData, activeStep, id } = useSelector((state: RootState) => ({
+    chapterData: selectChapterData(state),
+    activeStep: selectActiveStep(state),
+    id: state.auth.id,
+  }));
 
   const steps = t('chapterCreate.stepperLabels', { returnObjects: true }) as string[];
   const validationSchema = createValidationSchema(t);
@@ -54,7 +58,7 @@ const ChapterCreate = () => {
       });
       const chapterId = chapterResponse.data.id;
 
-      await apisCanvas.postCanva({ chapter_id: chapterId, images: chapterData.files });
+      await apisCanvas.postCanva({ chapter_id: chapterId, images: chapterData.files, user_profile_id: id });
       dispatch(resetChapterCreate());
 
       router.push('/');

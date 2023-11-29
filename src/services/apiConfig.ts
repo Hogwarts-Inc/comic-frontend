@@ -10,7 +10,7 @@ import { store } from 'src/store/store';
 
 //TO DO: Add types
 // type Canva = any;
-type CanvaCreation = { chapter_id: number; images: string[] };
+type CanvaCreation = { chapter_id: number; images: string[], user_profile_id: number };
 type CanvaParam = any;
 type StoriettesCreation = any;
 //To do: create canva type
@@ -87,7 +87,7 @@ export const apisChapters = {
 export const apisCanvas = {
   getCanva: () => api.get('/canvas'),
   getCanvaById: (id: number) => api.get(`/canvas/${id}`),
-  postCanva: async ({ images, chapter_id }: CanvaCreation) => {
+  postCanva: async ({ images, chapter_id, user_profile_id }: CanvaCreation) => {
     const data = new FormData();
     for (const image of images) {
       const response = await fetch(image);
@@ -95,6 +95,7 @@ export const apisCanvas = {
       data.append('images[]', imageBlob);
     }
     data.append('chapter_id', `${chapter_id}`);
+    data.append('user_profile_id', `${user_profile_id}`);
     return api.post('/canvas', data, {
       headers: { 'Content-Type': 'multipart/form-data' },
       transformRequest: () => data,
@@ -168,4 +169,11 @@ export const apisCharacter = {
 //Event
 export const apisEvents = {
   getEvent: () => api.get<Event[]>('/conventions'),
+};
+
+//USER PROFILE
+export const apiUserProfile = {
+  postUserProfile: (token: any) => api.post('/user_profiles', {}, {
+    headers: { Authorization: `Bearer ${token}` },
+  }),
 };
