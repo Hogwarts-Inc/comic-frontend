@@ -61,17 +61,17 @@ export const AddCanva = ({ values, setFieldValue, onNext }: AddCanvaProps) => {
           <DropzoneArea
             acceptedFiles={['image/jpeg', 'image/png']}
             dropzoneText={t('chapterCreate.addCanva.dropZone')}
-            onChange={handleFileChange}
-            maxFileSize={5000000}
-            filesLimit={3}
             fileObjects={values.files}
+            filesLimit={3}
+            maxFileSize={1048576}
+            onChange={handleFileChange}
           />
 
           <NextButton
-            variantType="gradient"
+            disabled={values.files.length === 0}
             size="large"
-            onClick={onNext}
-            disabled={values.files.length === 0}>
+            variantType="gradient"
+            onClick={onNext}>
             {t('common.next')}
           </NextButton>
         </ItemGridContainer>

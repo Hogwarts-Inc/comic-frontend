@@ -9,13 +9,13 @@ export const GridContainer = styled(Grid)({
   borderImageSlice: 1,
   borderRadius: '10px',
 
+  alignItems: 'center',
   display: 'flex',
   flexDirection: 'row',
-  alignItems: 'center',
   justifyContent: 'center',
-  width: '100%',
-  marginTop: '2rem',
   marginBottom: '10rem',
+  marginTop: '2rem',
+  width: '100%',
 });
 
 export const Title = styled(Typography)(({ theme: defaultTheme }) => ({
@@ -48,25 +48,25 @@ export const SectionDescription = styled(Typography)(({ theme: defaultTheme }) =
   color: defaultTheme.palette.text.primary,
   fontWeight: 500,
   lineHeight: '22px',
+  marginBottom: '1rem',
   marginLeft: '4rem',
   textAlign: 'left',
   whiteSpace: 'pre-line',
-  marginBottom: '1rem',
 }));
 
 export const ThumbnailContainer = styled('div')(() => ({
   display: 'flex',
-  marginBottom: '2rem',
-  marginLeft: '4rem',
   flexWrap: 'wrap',
   gap: theme.spacing(5),
+  marginBottom: '2rem',
+  marginLeft: '4rem',
 }));
 
 export const Thumbnail = styled('img')(() => ({
-  width: '200px',
+  borderRadius: theme.shape.borderRadius,
   height: '200px',
   objectFit: 'cover',
-  borderRadius: theme.shape.borderRadius,
+  width: '200px',
 }));
 
 export const SubmitButton = styled(Button)({

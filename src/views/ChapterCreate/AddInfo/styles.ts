@@ -26,29 +26,29 @@ export const GridContainer = styled(Grid)({
   borderImageSlice: 1,
   borderRadius: '10px',
 
+  alignItems: 'center',
   display: 'flex',
   flexDirection: 'row',
-  alignItems: 'center',
   justifyContent: 'center',
-  width: '100%',
-  marginTop: '2rem',
   marginBottom: '10rem',
+  marginTop: '2rem',
+  width: '100%',
 });
 
 export const Title = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
   fontWeight: 700,
   lineHeight: '52px',
-  textAlign: 'left',
   marginLeft: '4rem',
   marginTop: '2rem',
+  textAlign: 'left',
   [defaultTheme.breakpoints.between('xs', 'lg')]: {
-    marginBottom: '2rem',
     fontSize: '35px',
+    marginBottom: '2rem',
   },
   [defaultTheme.breakpoints.up('lg')]: {
-    marginBottom: '2rem',
     fontSize: '42px',
+    marginBottom: '2rem',
   },
 }));
 

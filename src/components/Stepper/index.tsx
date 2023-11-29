@@ -7,20 +7,20 @@ import { useTranslation } from 'react-i18next';
 import { ButtonRow, Spacer, StepperContainer, StyledButton } from './styles';
 
 interface CustomStepperProps {
-  steps: string[];
   activeStep: number;
-  setActiveStep: (step: number) => void;
+  steps: string[];
   styles?: React.CSSProperties;
+  setActiveStep: (step: number) => void;
   onBack?: () => void;
   onNext?: () => void;
   onReset?: () => void;
 }
 
 const CustomStepper = ({
-  steps,
   activeStep,
-  setActiveStep,
+  steps,
   styles,
+  setActiveStep,
   onBack,
   onNext,
   onReset,

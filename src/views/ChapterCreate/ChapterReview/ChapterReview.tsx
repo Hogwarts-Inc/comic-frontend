@@ -51,10 +51,10 @@ export const ChapterReview = ({ onNext, values }: ChapterReviewProps) => {
       </Grid>
 
       <SubmitButton
-        variantType="gradient"
+        isLoading={isLoading}
         size="large"
-        onClick={onPublish}
-        isLoading={isLoading}>
+        variantType="gradient"
+        onClick={onPublish}>
         {t('chapterCreate.chapterReview.publishButton')}
       </SubmitButton>
     </GridContainer>

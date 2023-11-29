@@ -69,38 +69,38 @@ export const AddInfo = ({
         <TitleTextField
           id="title"
           name="title"
-          variant="outlined"
-          label={t('common.title')}
-          value={values.title}
-          onChange={handleTitleChange}
-          onBlur={handleBlur}
           error={touched.title && Boolean(errors.title)}
           helperText={touched.title && errors.title}
+          label={t('common.title')}
+          value={values.title}
+          variant="outlined"
+          onBlur={handleBlur}
+          onChange={handleTitleChange}
         />
       </Grid>
 
       <Grid item xs={12}>
         <DescriptionTextField
+          id="description"
+          name="description"
+          error={touched.description && Boolean(errors.description)}
+          helperText={touched.description && errors.description}
+          label={t('common.description')}
           maxRows={10}
           minRows={10}
           multiline
-          id="description"
-          name="description"
-          variant="outlined"
-          label={t('common.description')}
           value={values.description}
-          onChange={handleDescriptionChange}
+          variant="outlined"
           onBlur={handleBlur}
-          error={touched.description && Boolean(errors.description)}
-          helperText={touched.description && errors.description}
+          onChange={handleDescriptionChange}
         />
       </Grid>
 
       <NextButton
-        variantType="gradient"
+        disabled={isValidating || isSubmitting}
         size="large"
-        onClick={onNext}
-        disabled={isValidating || isSubmitting}>
+        variantType="gradient"
+        onClick={onNext}>
         {t('common.next')}
       </NextButton>
     </GridContainer>

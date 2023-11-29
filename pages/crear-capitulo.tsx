@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable arrow-body-style */
 import React, { useEffect } from 'react';
 
@@ -43,6 +44,7 @@ const ChapterCreate = () => {
   }, [dispatch]);
 
   const onSubmit = async (_: ChapterData, { setSubmitting }: FormikHelpers<ChapterData>) => {
+    setSubmitting(true);
     try {
       const chapterResponse = await apisChapters.postChapters({
         title: chapterData.title,
@@ -57,7 +59,7 @@ const ChapterCreate = () => {
 
       router.push('/');
     } catch (e) {
-      // TODO handle error
+      console.error(e); // TODO handle error with alert
     }
     setSubmitting(false);
   };
@@ -80,12 +82,12 @@ const ChapterCreate = () => {
           validateForm,
         }) => {
           const handleNext = async () => {
+            setSubmitting(true);
             const validateErrors = await validateForm();
 
             if (Object.keys(validateErrors).length === 0) {
               dispatch(setActiveStep(activeStep + 1));
             } else {
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               const fieldsToTouch = Object.keys(validateErrors).reduce((acc: any, key) => {
                 acc[key] = true;
                 return acc;

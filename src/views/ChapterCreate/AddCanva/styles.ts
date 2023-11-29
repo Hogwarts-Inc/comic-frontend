@@ -9,23 +9,23 @@ export const OutsideGridContainer = styled(Grid)({
   borderImageSlice: 1,
   borderRadius: '10px',
 
+  alignItems: 'center',
   display: 'flex',
   flexDirection: 'row',
-  alignItems: 'center',
   justifyContent: 'center',
-  width: '100%',
-  marginTop: '2rem',
   marginBottom: '10rem',
+  marginTop: '2rem',
+  width: '100%',
 });
 
 export const ColGridContainer = styled(Grid)(({ theme: defaultTheme }) => ({
+  alignItems: 'flex-start',
   display: 'flex',
   flexDirection: 'row',
-  alignItems: 'flex-start',
   justifyContent: 'center',
-  width: '100%',
   margin: 'auto',
   marginBottom: '2rem',
+  width: '100%',
   [defaultTheme.breakpoints.down('sm')]: {
     flexDirection: 'column',
   },
@@ -45,39 +45,38 @@ export const Title = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
   fontWeight: 700,
   lineHeight: '52px',
-  textAlign: 'left',
   marginLeft: '4rem',
   marginTop: '2rem',
+  textAlign: 'left',
   [defaultTheme.breakpoints.between('xs', 'lg')]: {
-    marginBottom: '2rem',
     fontSize: '35px',
+    marginBottom: '2rem',
   },
   [defaultTheme.breakpoints.up('lg')]: {
-    marginBottom: '2rem',
     fontSize: '42px',
+    marginBottom: '2rem',
   },
 }));
 
 export const SectionTitle = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
+  fontSize: '24px',
   fontWeight: 500,
   lineHeight: '22px',
-  textAlign: 'left',
   marginBottom: '2rem',
-  fontSize: '24px',
+  textAlign: 'left',
 }));
 
 export const SectionDescription = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
   fontWeight: 500,
   lineHeight: '22px',
+  marginBottom: '1rem',
   textAlign: 'left',
   whiteSpace: 'pre-line',
-  marginBottom: '1rem',
-
   [defaultTheme.breakpoints.up('lg')]: {
-    marginBottom: '2rem',
     fontSize: '16px',
+    marginBottom: '2rem',
   },
 }));
 
@@ -97,16 +96,16 @@ export const NextButton = styled(Button)({
 export const DividerLine = styled(Divider)(({ theme: defaultTheme }) => ({
   backgroundColor: theme.palette.text.primary,
   [defaultTheme.breakpoints.up('sm')]: {
-    width: '1px',
     marginLeft: '2rem',
     orientation: 'vertical',
+    width: '1px',
   },
   [defaultTheme.breakpoints.down('sm')]: {
-    width: '100%',
     height: '1px',
-    orientation: 'horizontal',
+    marginBottom: '2rem',
     marginLeft: 0,
     marginTop: '2rem',
-    marginBottom: '2rem',
+    orientation: 'horizontal',
+    width: '100%',
   },
 }));

@@ -15,6 +15,6 @@ export const Spacer = styled(Box)({
 });
 
 export const StyledButton = styled(Button)(({ theme }) => ({
-  marginRight: theme.spacing(1),
   color: 'inherit',
+  marginRight: theme.spacing(1),
 }));
