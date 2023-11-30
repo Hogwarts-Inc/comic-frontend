@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Box, Grid } from '@mui/material';
 import { Formik, Form, FormikHelpers } from 'formik';
@@ -38,20 +38,6 @@ const ChapterCreate = () => {
 
   const steps = t('chapterCreate.stepperLabels', { returnObjects: true }) as string[];
   const validationSchema = createValidationSchema(t);
-
-  useEffect(() => {
-    const handleRouteChange = (url: string) => {
-      if (!url.startsWith(Route.chapterCreate) && !url.startsWith(Route.editor)) {
-        dispatch(resetChapterCreate());
-      }
-    };
-
-    router.events.on('routeChangeStart', handleRouteChange);
-
-    return () => {
-      router.events.off('routeChangeStart', handleRouteChange);
-    };
-  }, [router, dispatch]);
 
   const onSubmit = async (_: ChapterData, { setSubmitting }: FormikHelpers<ChapterData>) => {
     setSubmitting(true);
