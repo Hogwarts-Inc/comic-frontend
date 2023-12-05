@@ -1,9 +1,9 @@
 import { createTheme } from '@mui/material/styles';
 // allow configuration using `createTheme`
 declare module '@mui/material/styles' {
-  interface Theme extends CustomTheme { }
+  interface Theme extends CustomTheme {}
   // allow configuration using `createTheme`
-  interface ThemeOptions extends CustomTheme { }
+  interface ThemeOptions extends CustomTheme {}
 }
 
 interface CustomTheme {
@@ -83,6 +83,7 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiIconButton: { styleOverrides: { sizeLarge: { fontSize: '40px', padding: 4 } } },
     MuiTypography: {
       styleOverrides: {
         root: {

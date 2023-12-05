@@ -39,7 +39,7 @@ const CONTENT_TYPE = {
 };
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL_BACKEND,
   headers: { ...CONTENT_TYPE },
 });
 
@@ -81,7 +81,27 @@ export const apisChapters = {
 //CANVAS
 export const apisCanvas = {
   getCanva: () => api.get('/canvas'),
-  getCanvaById: (id: number) => api.get(`/canvas/${id}`),
+  getCanvaById: (id: number) =>
+    api.get<{
+      chapter_id: number;
+      comments: [];
+      id: number;
+      image_url: string;
+      likes: number;
+      title: string;
+      user_attributes: {
+        email: string;
+        family_name: string;
+        given_name: string;
+        id: number;
+        image_ur: string;
+        name: string;
+        nft_url: string;
+        picture: string;
+        sub: string;
+      };
+      user_profile_id: string;
+    }>(`/canvas/${id}`),
   postCanva: async ({ image, chapter_id }: CanvaCreation) => {
     const data = new FormData();
     const imageBinary = await (await fetch(image)).blob();

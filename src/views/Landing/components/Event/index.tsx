@@ -18,8 +18,10 @@ export const Event = () => {
     });
   }, []);
 
-  const descriptionText = useMemo(() => eventData?.descriptions?.[0]?.text ??
-    t('event.descriptionUnavailable'), [eventData?.descriptions, t]);
+  const descriptionText = useMemo(
+    () => eventData?.descriptions?.[0]?.text ?? t('event.descriptionUnavailable'),
+    [eventData?.descriptions, t],
+  );
 
   if (!eventData) {
     return <CircularProgress />;
