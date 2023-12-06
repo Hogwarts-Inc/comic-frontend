@@ -5,10 +5,10 @@ import { HttpStatusCode } from 'axios';
 import DefaultLayout from '@components/DefaultLayout';
 import ErrorComponent from 'src/views/NotFound';
 
-const NotFoundPage = () => (
+const ForbiddenPage = () => (
   <DefaultLayout>
-    <ErrorComponent errorType={HttpStatusCode.NotFound} />
+    <ErrorComponent errorType={HttpStatusCode.Forbidden} />
   </DefaultLayout>
 );
 
-export default NotFoundPage;
+export default ForbiddenPage;

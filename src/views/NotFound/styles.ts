@@ -1,5 +1,6 @@
 import { Button, Typography, styled } from '@mui/material';
 
+import ForbiddenIcon from '../../components/Icons/401.svg';
 import NotFoundIcon from '../../components/Icons/404.svg';
 
 export const StyledContainer = styled('div')({
@@ -10,6 +11,11 @@ export const StyledContainer = styled('div')({
 });
 
 export const StyledNotFoundIcon = styled(NotFoundIcon)({
+  height: 'auto',
+  width: '80%',
+});
+
+export const StyledForbiddenIcon = styled(ForbiddenIcon)({
   height: 'auto',
   width: '80%',
 });

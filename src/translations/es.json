@@ -48,7 +48,8 @@
     "delete": "Eliminar"
   },
   "errorHandler": "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.",
-  "pageNotFound": "Página no encontrada",
+  "401": "Página no encontrada",
+  "404": "Acceso no permitido",
   "toast": {
     "successCall": "Solicitud exitosa",
     "failCall": "La solicitud ha fallado"
