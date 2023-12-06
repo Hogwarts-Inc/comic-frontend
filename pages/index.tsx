@@ -28,7 +28,6 @@ const Home = ({ accessToken }: { accessToken: string }) => {
             <MainComic />
           </Fade>
         </Grid>
-
         <Grid item ref={exploreRef}>
           <Fade direction="right" triggerOnce={false}>
             <Explore />

@@ -11,10 +11,10 @@ import { store } from 'src/store/store';
 //TO DO: Add types
 // type Canva = any;
 type CanvaCreation = { chapter_id: number; images: string[], user_profile_id: number };
-type CanvaParam = any;
+export type CanvaParam = { image_url: string; id: number };
 type StoriettesCreation = any;
 //To do: create canva type
-export type StoriettesParam = { title: string; id: number; updated_at: string; canvas: any[] };
+export type StoriettesParam = { title: string; id: number; updated_at: string; canvas: CanvaParam[] };
 type CharacterCreation = any;
 type CharacterParam = any;
 export type ChapterCreation = {

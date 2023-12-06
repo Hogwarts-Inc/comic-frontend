@@ -1,5 +1,6 @@
 export const Route = {
   home: '/',
+  chapter: '/capitulo',
   chapterCreate: '/crear-capitulo',
   editor: '/editor',
   login: '/api/auth/login',
