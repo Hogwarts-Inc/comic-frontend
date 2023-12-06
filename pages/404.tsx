@@ -1,7 +1,12 @@
 import React from 'react';
 
-function NotFound() {
-  return <div>NOT FOUND PAGE</div>;
-}
+import DefaultLayout from '@components/DefaultLayout';
+import NotFound from 'src/views/NotFound';
 
-export default NotFound;
+const NotFoundPage = () => (
+  <DefaultLayout>
+    <NotFound />
+  </DefaultLayout>
+);
+
+export default NotFoundPage;

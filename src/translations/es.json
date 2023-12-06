@@ -48,9 +48,10 @@
     "delete": "Eliminar"
   },
   "errorHandler": "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.",
+  "pageNotFound": "Página no encontrada",
   "toast": {
     "successCall": "Solicitud exitosa",
     "failCall": "La solicitud ha fallado"
-  }
-
+  },
+  "goToLanding": "Ir al inicio"
 }
