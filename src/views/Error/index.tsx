@@ -1,20 +1,31 @@
 import React from 'react';
 
-import { HttpStatusCode } from 'axios';
 import { useTranslation } from 'react-i18next';
 
-import { StyledContainer, StyledNotFoundIcon, StyledTypography, StyledButton, StyledForbiddenIcon } from './styles';
+import { HttpStatusCode } from 'src/utils/http-status-codes';
+
+import {
+  StyledContainer,
+  StyledNotFoundIcon,
+  StyledTypography,
+  StyledButton,
+  StyledForbiddenIcon,
+  StyledInternalServerErrorIcon,
+  StyledUnauthorizedIcon,
+} from './styles';
 
 const ErrorIcon = ({ errorType }: { errorType: HttpStatusCode }) => {
-  const { NotFound, Forbidden } = HttpStatusCode;
+  const { NotFound, Forbidden, Unauthorized } = HttpStatusCode;
 
   switch (errorType) {
-    case NotFound:
-      return <StyledNotFoundIcon />;
+    case Unauthorized:
+      return <StyledUnauthorizedIcon />;
     case Forbidden:
       return <StyledForbiddenIcon />;
+    case NotFound:
+      return <StyledNotFoundIcon />;
     default:
-      return null;
+      return <StyledInternalServerErrorIcon />;
   }
 };
 

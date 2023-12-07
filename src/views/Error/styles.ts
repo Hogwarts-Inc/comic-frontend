@@ -1,7 +1,9 @@
 import { Button, Typography, styled } from '@mui/material';
 
-import ForbiddenIcon from '../../components/Icons/401.svg';
+import UnauthorizedIcon from '../../components/Icons/401.svg';
+import ForbiddenIcon from '../../components/Icons/403.svg';
 import NotFoundIcon from '../../components/Icons/404.svg';
+import InternalServerErrorIcon from '../../components/Icons/500.svg';
 
 export const StyledContainer = styled('div')({
   alignItems: 'center',
@@ -16,6 +18,16 @@ export const StyledNotFoundIcon = styled(NotFoundIcon)({
 });
 
 export const StyledForbiddenIcon = styled(ForbiddenIcon)({
+  height: 'auto',
+  width: '80%',
+});
+
+export const StyledUnauthorizedIcon = styled(UnauthorizedIcon)({
+  height: 'auto',
+  width: '80%',
+});
+
+export const StyledInternalServerErrorIcon = styled(InternalServerErrorIcon)({
   height: 'auto',
   width: '80%',
 });

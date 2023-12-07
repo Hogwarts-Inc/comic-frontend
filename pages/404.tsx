@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { HttpStatusCode } from 'axios';
-
 import DefaultLayout from '@components/DefaultLayout';
-import ErrorComponent from 'src/views/NotFound';
+import { HttpStatusCode } from 'src/utils/http-status-codes';
+import ErrorComponent from 'src/views/Error';
 
 const NotFoundPage = () => (
   <DefaultLayout>
