@@ -23,7 +23,6 @@ const CustomStepper = ({
   setActiveStep,
   onBack,
   onNext,
-  onReset,
 }: CustomStepperProps) => {
   const { t } = useTranslation();
 
@@ -35,13 +34,6 @@ const CustomStepper = ({
   const handleBack = () => {
     setActiveStep(activeStep - 1);
     onBack?.();
-  };
-
-  const handleReset = () => {
-    if (onReset) {
-      setActiveStep(0);
-      onReset();
-    }
   };
 
   return (
@@ -72,7 +64,6 @@ const CustomStepper = ({
               {activeStep === steps.length - 1 ? t('common.finish') : t('common.next')}
             </Button>
           )}
-          {onReset && activeStep === steps.length && <Button onClick={handleReset}>Reset</Button>}
         </ButtonRow>
       </StepperContainer>
     </>

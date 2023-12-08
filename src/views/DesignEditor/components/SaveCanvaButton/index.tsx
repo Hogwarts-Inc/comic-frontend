@@ -31,7 +31,7 @@ export const SaveCanvaButton = () => {
         if (chapterData && chapterData.title && chapterData.description) {
           dispatch(setChapterFiles(images));
           dispatch(setActiveStep(2));
-          push(`${Route.chapterCreate}`);
+          push(Route.chapterCreate);
         } else {
           await apisCanvas.postCanva({ chapter_id: 1, images: images, user_profile_id: id });
           push(Route.home);
