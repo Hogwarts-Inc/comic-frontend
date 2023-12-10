@@ -10,14 +10,19 @@ import { store } from 'src/store/store';
 
 //TO DO: Add types
 // type Canva = any;
-type CanvaCreation = { chapter_id: number; image: string };
+type CanvaCreation = { chapter_id: number; images: string[] };
 export type CanvaParam = { image_url: string; id: number };
 type StoriettesCreation = any;
 //To do: create canva type
 export type StoriettesParam = { title: string; id: number; updated_at: string; canvas: CanvaParam[] };
 type CharacterCreation = any;
 type CharacterParam = any;
-type ChapterCreation = any;
+export type ChapterCreation = {
+  active: boolean;
+  description: string;
+  storiette_id: number;
+  title: string;
+};
 type ChapterParam = any;
 type GraphicResourcesCreation = any;
 type GraphicResourcesParam = any;
@@ -82,10 +87,13 @@ export const apisChapters = {
 export const apisCanvas = {
   getCanva: () => api.get('/canvas'),
   getCanvaById: (id: number) => api.get(`/canvas/${id}`),
-  postCanva: async ({ image, chapter_id }: CanvaCreation) => {
+  postCanva: async ({ images, chapter_id }: CanvaCreation) => {
     const data = new FormData();
-    const imageBinary = await (await fetch(image)).blob();
-    data.append('image', imageBinary);
+    for (const image of images) {
+      const response = await fetch(image);
+      const imageBlob = await response.blob();
+      data.append('images[]', imageBlob);
+    }
     data.append('chapter_id', `${chapter_id}`);
     return api.post('/canvas', data, {
       headers: { 'Content-Type': 'multipart/form-data' },
@@ -160,4 +168,9 @@ export const apisCharacter = {
 //Event
 export const apisEvents = {
   getEvent: () => api.get<Event[]>('/conventions'),
+};
+
+//USER PROFILE
+export const apiUserProfile = {
+  postUserProfile: () => api.post('/user_profiles', {}),
 };
