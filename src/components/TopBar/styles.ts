@@ -2,6 +2,13 @@ import { styled, Box, AppBar, Toolbar } from '@mui/material';
 
 import Button from '@components/Button';
 
+import LogoIcon from '../Icons/logo.svg'; //Logo preeliminar
+
+export const StyledLogoIcon = styled(LogoIcon)({
+  height: 'auto',
+  width: '5rem',
+});
+
 export const AppBarMui = styled(AppBar)(({ theme }) => ({
   position: 'sticky',
   top: 0,

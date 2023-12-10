@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Route } from 'src/constants/routes';
 
-import { AppBarMui, ToolbarMui, ButtonSignUp, ButtonLogIn, ButtonBox } from './styles';
+import { AppBarMui, ToolbarMui, ButtonSignUp, ButtonLogIn, ButtonBox, StyledLogoIcon } from './styles';
 
 interface TopBarProps {
   isAuthenticated: boolean;
@@ -31,15 +31,18 @@ export const TopBar = dynamic(
       setAnchorMenuUser(null);
     };
 
+    const onClickLogo = () => {
+      push(Route.home);
+    };
+
     return (
       <Grid container>
         <Grid item xs>
           <AppBarMui>
             <ToolbarMui disableGutters>
-              {/* To do: Add logo and remove Typography*/}
-              <Box>
-                <Typography>LOGO</Typography>
-              </Box>
+              <ButtonBox onClick={onClickLogo}>
+                <StyledLogoIcon>LOGO</StyledLogoIcon>
+              </ButtonBox>
               {isAuthenticated ? (
                 <Box>
                   {/* To do: add user picture */}
