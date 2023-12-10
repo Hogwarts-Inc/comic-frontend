@@ -13,7 +13,7 @@ export default function useAppAuthentication(accessToken: string) {
     if (token !== accessToken) {
       dispatch(setToken(accessToken));
       apisComic.getStoriettesById(1);
-      apiUserProfile.postUserProfile(accessToken)
+      apiUserProfile.postUserProfile()
         .then(response => {
           dispatch(setId(response.data.id));
           dispatch(setSub(response.data.sub));

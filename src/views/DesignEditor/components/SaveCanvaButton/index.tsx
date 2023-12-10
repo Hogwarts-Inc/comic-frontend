@@ -8,7 +8,6 @@ import Button from '@components/Button';
 import { Route } from 'src/constants/routes';
 import useDesignEditorContext from 'src/hooks/useDesignEditorContext';
 import { apisCanvas } from 'src/services/apiConfig';
-import { RootState } from 'src/store/rootReducer';
 import { setActiveStep, setChapterFiles } from 'src/store/slices/chapter-create/actions';
 import { selectChapterData } from 'src/store/slices/chapter-create/selectors';
 
@@ -18,7 +17,6 @@ export const SaveCanvaButton = () => {
   const { scenes } = useDesignEditorContext();
   const dispatch = useDispatch();
   const chapterData = useSelector(selectChapterData);
-  const { id } = useSelector((state: RootState) => state.auth);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -33,7 +31,7 @@ export const SaveCanvaButton = () => {
           dispatch(setActiveStep(2));
           push(Route.chapterCreate);
         } else {
-          await apisCanvas.postCanva({ chapter_id: 1, images: images, user_profile_id: id });
+          await apisCanvas.postCanva({ chapter_id: 1, images: images });
           push(Route.home);
         }
       }

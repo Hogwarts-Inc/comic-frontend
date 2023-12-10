@@ -30,10 +30,9 @@ const ChapterCreate = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const dispatch = useDispatch();
-  const { chapterData, activeStep, id } = useSelector((state: RootState) => ({
+  const { chapterData, activeStep } = useSelector((state: RootState) => ({
     chapterData: selectChapterData(state),
     activeStep: selectActiveStep(state),
-    id: state.auth.id,
   }));
 
   const steps = t('chapterCreate.stepperLabels', { returnObjects: true }) as string[];
@@ -50,7 +49,7 @@ const ChapterCreate = () => {
       });
       const chapterId = chapterResponse.data.id;
 
-      await apisCanvas.postCanva({ chapter_id: chapterId, images: chapterData.files, user_profile_id: id });
+      await apisCanvas.postCanva({ chapter_id: chapterId, images: chapterData.files });
       dispatch(resetChapterCreate());
 
       router.push(Route.home);
