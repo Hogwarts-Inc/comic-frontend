@@ -19,7 +19,7 @@ export const getServerSideProps = (async ctx => {
   try {
     accessToken = (await getAccessToken(ctx.req, ctx.res)).accessToken || '';
   } catch (e) {
-    console.log(e);
+    console.error('Error fetching access token:', e);
   }
   return { props: { accessToken } };
 }) satisfies GetServerSideProps<{ accessToken: string }>;
@@ -39,7 +39,6 @@ const Home = ({ accessToken }: { accessToken: string }) => {
             <MainComic />
           </Fade>
         </Grid>
-
         <Grid item ref={exploreRef}>
           <Fade direction="right" triggerOnce={false}>
             <Explore />

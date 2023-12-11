@@ -1,7 +1,13 @@
 import React from 'react';
 
-function NotFound() {
-  return <div>NOT FOUND PAGE</div>;
-}
+import DefaultLayout from '@components/DefaultLayout';
+import { HttpStatusCode } from 'src/utils/http-status-codes';
+import ErrorComponent from 'src/views/Error';
 
-export default NotFound;
+const NotFoundPage = () => (
+  <DefaultLayout>
+    <ErrorComponent errorType={HttpStatusCode.NotFound} />
+  </DefaultLayout>
+);
+
+export default NotFoundPage;

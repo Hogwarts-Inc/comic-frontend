@@ -85,6 +85,27 @@ const theme = createTheme({
   components: {
     MuiOutlinedInput: { styleOverrides: { root: { borderRadius: 10 } } },
     MuiIconButton: { styleOverrides: { sizeLarge: { fontSize: '40px', padding: 4 } } },
+    MuiStepIcon: {
+      styleOverrides: {
+        root: {
+          '.MuiStepIcon-root': {
+            color: 'lightgray',
+          },
+          '&.Mui-completed': {
+            color: '#1E0E62',
+            '& text': {
+              fill: 'white',
+            },
+          },
+          '&.Mui-active': {
+            color: '#1E0E62',
+            '& text': {
+              fill: 'white',
+            },
+          },
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {

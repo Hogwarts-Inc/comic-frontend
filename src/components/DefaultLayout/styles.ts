@@ -19,4 +19,5 @@ export const ContentContainer = styled('div')({
 export const ChildContainer = styled('div')({
   display: 'flex',
   flex: 1,
+  justifyContent: 'center',
 });
