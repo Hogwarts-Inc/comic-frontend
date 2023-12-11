@@ -51,6 +51,9 @@
   "toast": {
     "successCall": "Solicitud exitosa",
     "failCall": "La solicitud ha fallado"
+  },
+  "send": "enviar",
+  "canva": {
+    "noComments": "No hay comentarios, ¡se el primero!"
   }
-
 }

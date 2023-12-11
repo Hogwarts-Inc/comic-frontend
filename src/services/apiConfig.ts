@@ -115,6 +115,16 @@ export const apisCanvas = {
   patchCanva: (id: number, data: CanvaParam) => api.patch(`/canvas/${id}`, data),
 };
 
+export const apisCanvasLike = {
+  postCanvasLike: (canvaId: string) => api.post('likes', { canva_id: canvaId }),
+  deleteCanvasLike: (id: number) => api.delete(`/likes/${id}`),
+};
+
+export const apisCanvasComment = {
+  postCanvasComment: (canvaId: string, comment: string) =>
+    api.post('opinions', { canva_id: canvaId, text: comment, active: true }),
+};
+
 //GRAPHIC RESOURCES
 export const apisGraphicResources = {
   getGraphicResources: () =>

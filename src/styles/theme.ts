@@ -83,6 +83,7 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiOutlinedInput: { styleOverrides: { root: { borderRadius: 10 } } },
     MuiIconButton: { styleOverrides: { sizeLarge: { fontSize: '40px', padding: 4 } } },
     MuiTypography: {
       styleOverrides: {
