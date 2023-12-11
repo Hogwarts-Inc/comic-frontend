@@ -17,6 +17,7 @@ import {
 import Button from '@components/Button';
 import DefaultLayout from '@components/DefaultLayout';
 import useAppAuthentication from 'src/hooks/useAppAuthentication';
+import useIsMobile from 'src/hooks/useIsMobile';
 import { apisCanvasComment, apisCanvasLike } from 'src/services/apiConfig';
 
 import { ArrowBack, Canva, ChatBubble, ChatBubbleOutline, CommentsContainer, FavoriteBorder, Paper } from './styles';
@@ -33,6 +34,7 @@ export type VisualizerProps = {
 export default function Visualizer(props: VisualizerProps) {
   useAppAuthentication(props.accessToken);
   const { back, asPath, query } = useRouter();
+  const isMobile = useIsMobile();
   const { t } = useTranslation();
   const [currentUserLikes, setCurrentUserLikes] = useState(props.currentUserLikes);
   const [showInput, setShowInput] = useState(false);
@@ -95,7 +97,14 @@ export default function Visualizer(props: VisualizerProps) {
                   {props.username}
                 </Typography>
               </Grid>
-              <Grid container xs item alignItems="center" justifyContent="center" gap="2rem">
+              <Grid
+                container
+                xs
+                item
+                alignItems="center"
+                justifyContent="center"
+                gap="2rem"
+                direction={isMobile ? 'column' : 'row'}>
                 <Canva container item xs alignItems="center" justifyContent="center" image={props.image} />
                 <Grid container item xs direction="column" gap="1rem" style={{ height: '100%' }}>
                   <CommentsContainer

@@ -14,7 +14,12 @@ const IconCommonStyle = css`
   stroke-width: 0.1px;
 `;
 export const ArrowBack = styled(ArrowBackIcon)(IconCommonStyle);
-export const Paper = styled(PaperComponent)({ padding: '1rem', borderRadius: 30, width: '60%' });
+export const Paper = styled(PaperComponent)({
+  padding: '1rem',
+  borderRadius: 30,
+  width: '80%',
+  maxWidth: '1500px',
+});
 export const Canva = styled(Grid)<{ image: string }>(({ image }) => ({
   backgroundImage: `url(${image})`,
   backgroundRepeat: 'no-repeat',
