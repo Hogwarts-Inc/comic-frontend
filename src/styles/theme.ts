@@ -8,6 +8,7 @@ declare module '@mui/material/styles' {
 
 interface CustomTheme {
   customPalette: {
+    like: { main: string };
     third: { main: string };
     violet: { main: string };
     violetDark: { main: string };
@@ -42,6 +43,7 @@ const theme = createTheme({
     },
   },
   customPalette: {
+    like: { main: 'red' },
     third: {
       main: '#7079BE',
     },
@@ -85,6 +87,27 @@ const theme = createTheme({
   components: {
     MuiOutlinedInput: { styleOverrides: { root: { borderRadius: 10 } } },
     MuiIconButton: { styleOverrides: { sizeLarge: { fontSize: '40px', padding: 4 } } },
+    MuiStepIcon: {
+      styleOverrides: {
+        root: {
+          '.MuiStepIcon-root': {
+            color: 'lightgray',
+          },
+          '&.Mui-completed': {
+            color: '#1E0E62',
+            '& text': {
+              fill: 'white',
+            },
+          },
+          '&.Mui-active': {
+            color: '#1E0E62',
+            '& text': {
+              fill: 'white',
+            },
+          },
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {
