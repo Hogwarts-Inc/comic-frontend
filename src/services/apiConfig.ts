@@ -30,6 +30,7 @@ export type Event = {
   image_url: string;
   name: string;
 };
+export type User = { id: number; name: string; email: string; picture: string };
 
 const { dispatch, getState } = store;
 
@@ -160,4 +161,10 @@ export const apisCharacter = {
 //Event
 export const apisEvents = {
   getEvent: () => api.get<Event[]>('/conventions'),
+};
+
+//Event
+export const apisUser = {
+  getUser: () => api.get<User>('/user_profiles/info'),
+  getCanvasByUser: () => api.get<CanvaParam[]>('/user_profiles/canvas'),
 };

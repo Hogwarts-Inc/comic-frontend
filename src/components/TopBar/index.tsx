@@ -20,7 +20,7 @@ export const TopBar = dynamic(
     const { push } = useRouter();
 
     const userMenuOptions = [
-      { title: t('topBar.menu.profile') },
+      { title: t('topBar.menu.profile'), handler: () => push(Route.profile) },
       { title: t('topBar.menu.logout'), handler: () => push(Route.logout) },
     ];
 
