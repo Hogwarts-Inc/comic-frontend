@@ -41,7 +41,7 @@ export const TopBar = dynamic(
           <AppBarMui>
             <ToolbarMui disableGutters>
               <ButtonBox onClick={onClickLogo}>
-                <StyledLogoIcon>LOGO</StyledLogoIcon>
+                <StyledLogoIcon/>
               </ButtonBox>
               {isAuthenticated ? (
                 <Box>
