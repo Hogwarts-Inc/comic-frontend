@@ -108,6 +108,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          maxHeight: '50px',
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {

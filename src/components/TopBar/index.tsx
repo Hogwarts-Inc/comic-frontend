@@ -23,7 +23,7 @@ export const TopBar = dynamic(
     useEffect(() => {
       if (accessToken) {
         apiUserProfile.getUserProfile({}).then(({ data }) => {
-          setUserProfile(data.picture);
+          setUserProfile(data.image_url);
         });
       }
     }, [accessToken]);
