@@ -12,7 +12,6 @@ export const Box = styled('div')({
   height: '420px',
   justifyContent: 'center',
   margin: '0 auto',
-  width: '100%',
 });
 
 export const Content = styled('div')(() => ({

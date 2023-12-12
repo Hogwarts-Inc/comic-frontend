@@ -8,16 +8,51 @@ import { toast } from 'react-toastify';
 import { Character, ResourceSliceState, setCharacters, setResources } from 'src/store/slices/resources/reducer';
 import { store } from 'src/store/store';
 
+type UserAttributes = {
+  email: string;
+  family_name: string;
+  given_name: string;
+  id: number;
+  image_url: string;
+  name: string;
+  nft_url: string | null;
+  sub: string;
+  updated_at: string;
+};
+
+type Comment = {
+  id: number;
+  text: string;
+  user_attributes: UserAttributes;
+};
+
+type CanvaResponse = {
+  chapter_id: number;
+  comments: Comment[];
+  id: number;
+  image_url: string;
+  likes: number;
+  title: string;
+  user_attributes: UserAttributes;
+  user_profile_id: string;
+  current_user_likes: boolean;
+};
+
 //TO DO: Add types
 // type Canva = any;
-type CanvaCreation = { chapter_id: number; image: string };
+type CanvaCreation = { chapter_id: number; images: string[] };
 export type CanvaParam = { image_url: string; id: number };
 type StoriettesCreation = any;
 //To do: create canva type
 export type StoriettesParam = { title: string; id: number; updated_at: string; canvas: CanvaParam[] };
 type CharacterCreation = any;
 type CharacterParam = any;
-type ChapterCreation = any;
+export type ChapterCreation = {
+  active: boolean;
+  description: string;
+  storiette_id: number;
+  title: string;
+};
 type ChapterParam = any;
 type GraphicResourcesCreation = any;
 type GraphicResourcesParam = any;
@@ -40,7 +75,7 @@ const CONTENT_TYPE = {
 };
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL_BACKEND,
   headers: { ...CONTENT_TYPE },
 });
 
@@ -82,11 +117,15 @@ export const apisChapters = {
 //CANVAS
 export const apisCanvas = {
   getCanva: () => api.get('/canvas'),
-  getCanvaById: (id: number) => api.get(`/canvas/${id}`),
-  postCanva: async ({ image, chapter_id }: CanvaCreation) => {
+  getCanvaById: ({ canvaId, token }: { canvaId: number; token: string }) =>
+    api.get<CanvaResponse>(`/canvas/${canvaId}`, { headers: { Authorization: `Bearer ${token}` } }),
+  postCanva: async ({ images, chapter_id }: CanvaCreation) => {
     const data = new FormData();
-    const imageBinary = await (await fetch(image)).blob();
-    data.append('image', imageBinary);
+    for (const image of images) {
+      const response = await fetch(image);
+      const imageBlob = await response.blob();
+      data.append('images[]', imageBlob);
+    }
     data.append('chapter_id', `${chapter_id}`);
     return api.post('/canvas', data, {
       headers: { 'Content-Type': 'multipart/form-data' },
@@ -94,6 +133,16 @@ export const apisCanvas = {
     });
   },
   patchCanva: (id: number, data: CanvaParam) => api.patch(`/canvas/${id}`, data),
+};
+
+export const apisCanvasLike = {
+  postCanvasLike: (canvaId: number) => api.post('likes', { canva_id: canvaId }),
+  deleteCanvasLike: (id: number) => api.delete(`/likes/${id}`),
+};
+
+export const apisCanvasComment = {
+  postCanvasComment: (canvaId: number, comment: string) =>
+    api.post('opinions', { canva_id: canvaId, text: comment, active: true }),
 };
 
 //GRAPHIC RESOURCES
@@ -163,8 +212,10 @@ export const apisEvents = {
   getEvent: () => api.get<Event[]>('/conventions'),
 };
 
-//Event
-export const apisUser = {
-  getUser: () => api.get<User>('/user_profiles/info'),
+//USER PROFILE
+export const apiUserProfile = {
+  postUserProfile: () => api.post('/user_profiles', {}),
+  getUserProfile: ({ token }: { token?: string }) =>
+    api.get('/user_profiles/info', { headers: { Authorization: `Bearer ${token}` } }),
   getCanvasByUser: () => api.get<CanvaParam[]>('/user_profiles/canvas'),
 };

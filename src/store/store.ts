@@ -9,6 +9,7 @@ import rootReducer from './rootReducer';
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['chapterCreate'],
   // whitelist: ['appData', 'auth'],
 };
 

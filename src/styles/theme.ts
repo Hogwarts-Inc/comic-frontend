@@ -1,9 +1,9 @@
 import { createTheme } from '@mui/material/styles';
 // allow configuration using `createTheme`
 declare module '@mui/material/styles' {
-  interface Theme extends CustomTheme { }
+  interface Theme extends CustomTheme {}
   // allow configuration using `createTheme`
-  interface ThemeOptions extends CustomTheme { }
+  interface ThemeOptions extends CustomTheme {}
 }
 
 interface CustomTheme {
@@ -83,6 +83,29 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiOutlinedInput: { styleOverrides: { root: { borderRadius: 10 } } },
+    MuiIconButton: { styleOverrides: { sizeLarge: { fontSize: '40px', padding: 4 } } },
+    MuiStepIcon: {
+      styleOverrides: {
+        root: {
+          '.MuiStepIcon-root': {
+            color: 'lightgray',
+          },
+          '&.Mui-completed': {
+            color: '#1E0E62',
+            '& text': {
+              fill: 'white',
+            },
+          },
+          '&.Mui-active': {
+            color: '#1E0E62',
+            '& text': {
+              fill: 'white',
+            },
+          },
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {

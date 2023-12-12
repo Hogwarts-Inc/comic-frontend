@@ -1,6 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
 import authReducer from './slices/auth/index';
+import { createChapterReducer } from './slices/chapter-create/reducer';
 import { componentsReducer } from './slices/components/reducer';
 import { designEditorReducer } from './slices/design-editor/reducer';
 import { designsReducer } from './slices/designs/reducer';
@@ -9,6 +10,7 @@ import resources from './slices/resources/reducer';
 import { uploadsReducer } from './slices/uploads/reducer';
 
 const rootReducer = combineReducers({
+  chapterCreate: createChapterReducer,
   designEditor: designEditorReducer,
   fonts: fontsReducer,
   uploads: uploadsReducer,

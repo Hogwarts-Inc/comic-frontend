@@ -7,7 +7,7 @@ import { Footer } from '@components/Footer';
 import { TopBar } from '@components/TopBar';
 import { RootState } from 'src/store/rootReducer';
 
-import { LayoutContainer } from './styles';
+import { ChildContainer, ContentContainer, LayoutContainer } from './styles';
 
 interface DefaultLayoutProps {
   children: ReactNode;
@@ -21,8 +21,10 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
         <TopBar isAuthenticated={isAuthenticated} />
       </Grid>
       <Grid container xs item overflow="scroll" justifyContent="center">
-        {children}
-        <Footer />
+        <ContentContainer>
+          <ChildContainer>{children}</ChildContainer>
+          <Footer />
+        </ContentContainer>
       </Grid>
     </LayoutContainer>
   );

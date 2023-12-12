@@ -54,7 +54,7 @@ function ChapterPreviewer() {
 
   const handleClick = (id: number) => {
     push({
-      pathname: `${Route.visualizer}/${id}`,
+      pathname: `${Route.chapter}/${id}`,
       query: { id: id },
     });
   };
