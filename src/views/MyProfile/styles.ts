@@ -6,7 +6,7 @@ export const Title = styled(Typography)(({ theme }) => ({
 }));
 
 export const Name = styled(Typography)(({ theme }) => ({
-  margin: '0 0 0 1rem',
+  margin: '0 0 0 2rem',
   color: theme.palette.text.primary,
 }));
 
