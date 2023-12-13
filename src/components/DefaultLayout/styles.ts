@@ -8,3 +8,16 @@ export const LayoutContainer = styled(Grid)({
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
 });
+
+export const ContentContainer = styled('div')({
+  display: 'flex',
+  height: '100%',
+  width: '100%',
+  flexDirection: 'column',
+});
+
+export const ChildContainer = styled('div')({
+  display: 'flex',
+  flex: 1,
+  justifyContent: 'center',
+});
