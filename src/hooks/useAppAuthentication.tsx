@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { apisComic } from 'src/services/apiConfig';
+import { apiUserProfile } from 'src/services/apiConfig';
 import { RootState } from 'src/store/rootReducer';
-import { setToken } from 'src/store/slices/auth';
+import { setId, setSub, setToken } from 'src/store/slices/auth';
 
 export default function useAppAuthentication(accessToken: string) {
   const dispatch = useDispatch();
@@ -13,7 +12,15 @@ export default function useAppAuthentication(accessToken: string) {
   useEffect(() => {
     if (token !== accessToken) {
       dispatch(setToken(accessToken));
-      apisComic.getStoriettesById(1);
+      apiUserProfile
+        .postUserProfile()
+        .then(response => {
+          dispatch(setId(response.data.id));
+          dispatch(setSub(response.data.sub));
+        })
+        .catch(error => {
+          console.error(error); // TODO handle error with alert
+        });
     }
   }, [token, accessToken, dispatch]);
 }

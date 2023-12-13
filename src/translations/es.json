@@ -1,4 +1,31 @@
 {
+  "common": {
+    "add": "Añadir",
+    "back": "Atrás",
+    "cancel": "Cancelar",
+    "confirmPassword": "Confirmar contraseña",
+    "create": "Crear",
+    "delete": "Eliminar",
+    "description": "Descripción",
+    "edit": "Editar",
+    "finish": "Finalizar",
+    "email": "Email",
+    "event": "Evento",
+    "import": "Importar",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "name": "Nombre",
+    "next": "Siguiente",
+    "optional": "Opcional",
+    "password": "Contraseña",
+    "profile": "Mi perfil",
+    "save": "Guardar",
+    "signup": "Crear cuenta",
+    "skip": "Saltear",
+    "title": "Título",
+    "upload": "Subir",
+    "send": "Enviar"
+  },
   "panels": {
     "panelsList": {
       "characters": "Personajes",
@@ -13,6 +40,26 @@
   },
   "characters": {
     "title": "Personajes"
+  },
+  "chapterCreate": {
+    "title": "Agregar Capítulo",
+    "addCanva": {
+      "uploadTitle": "Sube tus propios archivos",
+      "uploadDescription": "Puedes subir tu propia viñeta creada previamente y agregarla al capítulo. \nAsegúrate que sea un archivo PNG. \nPuedes subir hasta 3 viñetas en esta instancia. ",
+      "navToEditorTitle": "Utiliza el editor gráfico",
+      "navToEditorButton": "Ir al editor",
+      "dropZone": "Arrastra y suelta tus archivos aquí"
+    },
+    "chapterReview": {
+      "createdCanvas": "Viñetas creadas",
+      "publishButton": "Publicar"
+    },
+    "stepperLabels": ["Agregar información del capítulo", "Agregar viñetas", "Publicar"],
+    "validations": {
+      "title": "El título es requerido",
+      "description": "La descripción es requerida",
+      "canvas": "Debes agregar al menos una viñeta"
+    }
   },
   "explore": {
     "title": "Empeza a explorar otros capitulos y crear tus propias historias",
@@ -55,6 +102,9 @@
   "toast": {
     "successCall": "Solicitud exitosa",
     "failCall": "La solicitud ha fallado"
+  },
+  "canva": {
+    "noComments": "No hay comentarios, ¡sé el primero!"
   },
   "goToLanding": "Ir al inicio"
 }

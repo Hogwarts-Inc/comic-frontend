@@ -19,7 +19,7 @@ export function Explore() {
         <Box>
           <Content>
             <TypographyDescription variant="h3">{t('explore.title')}</TypographyDescription>
-            <Button variantType="gradient" size="large" onClick={() => push(Route.visualizer)}>
+            <Button variantType="gradient" size="large" onClick={() => push(Route.chapter)}>
               {t('explore.buttonText')}
             </Button>
           </Content>
