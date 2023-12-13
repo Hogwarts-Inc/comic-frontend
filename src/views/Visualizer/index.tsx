@@ -2,7 +2,7 @@
 import React, { useMemo, useState } from 'react';
 
 import { Favorite } from '@mui/icons-material';
-import { Avatar, Grid, IconButton, TextField, Typography } from '@mui/material';
+import { Grid, IconButton, TextField, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import {
@@ -16,11 +16,31 @@ import {
 
 import Button from '@components/Button';
 import DefaultLayout from '@components/DefaultLayout';
+import theme from '@styles/theme';
 import useAppAuthentication from 'src/hooks/useAppAuthentication';
 import useIsMobile from 'src/hooks/useIsMobile';
 import { apisCanvasComment, apisCanvasLike } from 'src/services/apiConfig';
 
-import { ArrowBack, Canva, ChatBubble, ChatBubbleOutline, CommentsContainer, FavoriteBorder, Paper } from './styles';
+import {
+  ArrowBack,
+  BoxContainer,
+  ButtonContainer,
+  Canva,
+  ChatBubble,
+  ChatBubbleOutline,
+  CommentContainer,
+  CommentProfile,
+  CommentsContainer,
+  Container,
+  FavoriteBorder,
+  InputContainer,
+  LikeContainer,
+  Paper,
+  ProfilePicture,
+  RigthContainer,
+  SubContainer,
+  TitleContainer,
+} from './styles';
 
 export type VisualizerProps = {
   image: string;
@@ -91,7 +111,7 @@ export default function Visualizer(props: VisualizerProps) {
 
   return (
     <DefaultLayout>
-      <Grid container item direction="column" padding="1rem" gap="1rem">
+      <Container container item>
         <Grid item>
           <IconButton size="large" onClick={back}>
             <ArrowBack fontSize="inherit" />
@@ -99,42 +119,28 @@ export default function Visualizer(props: VisualizerProps) {
         </Grid>
         <Grid container item xs justifyContent="center">
           <Paper elevation={3}>
-            <Grid container xs direction="column" gap="1rem" alignSelf="center" style={{ height: '100%' }}>
-              <Grid container item padding="1rem" paddingTop="0" paddingBottom="0.5rem" alignItems="center" gap="1rem">
-                <Avatar src={props.profilePicture} style={{ width: '3rem', height: '3rem' }} />
+            <SubContainer container xs>
+              <TitleContainer container item>
+                <ProfilePicture src={props.profilePicture} />
                 <Typography variant="h4" margin={0}>
                   {props.username}
                 </Typography>
-              </Grid>
-              <Grid
-                container
-                xs
-                item
-                alignItems="center"
-                justifyContent="center"
-                gap="2rem"
-                direction={isMobile ? 'column' : 'row'}>
-                <Canva container item xs alignItems="center" justifyContent="center" image={props.image} />
-                <Grid container item xs direction="column" gap="1rem" style={{ height: '100%' }}>
-                  <CommentsContainer
-                    container
-                    item
-                    xs
-                    direction="column"
-                    overflow="scroll"
-                    flexWrap="nowrap"
-                    gap="1rem">
+              </TitleContainer>
+              <BoxContainer container xs item direction={isMobile ? 'column' : 'row'}>
+                <Canva container item xs image={props.image} />
+                <RigthContainer container item xs>
+                  <CommentsContainer container item xs>
                     {comments.length ? (
                       comments.map(({ username, comment: commentText, profilePicture }) => (
-                        <Grid container item alignItems="center" gap="1rem">
-                          <Avatar src={profilePicture} style={{ width: '2rem', height: '2rem' }} />
+                        <CommentContainer container item>
+                          <CommentProfile src={profilePicture} />
                           <Typography margin={0} variant="h6">
                             {username}
                           </Typography>
                           <Typography margin={0} variant="body2">
                             {commentText}
                           </Typography>
-                        </Grid>
+                        </CommentContainer>
                       ))
                     ) : (
                       <Typography margin="auto" variant="h6">
@@ -142,12 +148,12 @@ export default function Visualizer(props: VisualizerProps) {
                       </Typography>
                     )}
                   </CommentsContainer>
-                  <Grid container item alignItems="flex-start" gap="1rem">
+                  <ButtonContainer container item>
                     {!!props.accessToken && (
-                      <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                      <LikeContainer>
                         <IconButton size="large" onClick={() => handleLike(!currentUserLikes)}>
                           {currentUserLikes ? (
-                            <Favorite fontSize="inherit" sx={{ color: 'red' }} />
+                            <Favorite fontSize="inherit" sx={{ color: theme.customPalette.like.main }} />
                           ) : (
                             <FavoriteBorder fontSize="inherit" />
                           )}
@@ -155,7 +161,7 @@ export default function Visualizer(props: VisualizerProps) {
                         <Typography variant="subtitle2" margin={0}>
                           {likes}
                         </Typography>
-                      </div>
+                      </LikeContainer>
                     )}
                     {!!props.accessToken && (
                       <IconButton size="large">
@@ -175,9 +181,9 @@ export default function Visualizer(props: VisualizerProps) {
                     <WhatsappShareButton url={url} style={{ margin: '4px' }}>
                       <WhatsappIcon size={40} round />
                     </WhatsappShareButton>
-                  </Grid>
+                  </ButtonContainer>
                   {showInput && (
-                    <Grid container item alignItems="center" gap="1rem">
+                    <InputContainer container item>
                       <Grid item xs>
                         <TextField
                           variant="outlined"
@@ -193,14 +199,14 @@ export default function Visualizer(props: VisualizerProps) {
                       <Button variant="contained" sx={{ marginBottom: 0.5 }} onClick={commentHandler}>
                         {t('common.send')}
                       </Button>
-                    </Grid>
+                    </InputContainer>
                   )}
-                </Grid>
-              </Grid>
-            </Grid>
+                </RigthContainer>
+              </BoxContainer>
+            </SubContainer>
           </Paper>
         </Grid>
-      </Grid>
+      </Container>
     </DefaultLayout>
   );
 }

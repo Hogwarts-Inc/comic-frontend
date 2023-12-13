@@ -8,6 +8,7 @@ declare module '@mui/material/styles' {
 
 interface CustomTheme {
   customPalette: {
+    like: { main: string };
     third: { main: string };
     violet: { main: string };
     violetDark: { main: string };
@@ -42,6 +43,7 @@ const theme = createTheme({
     },
   },
   customPalette: {
+    like: { main: 'red' },
     third: {
       main: '#7079BE',
     },

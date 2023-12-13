@@ -53,10 +53,7 @@ function ChapterPreviewer() {
   };
 
   const handleClick = (id: number) => {
-    push({
-      pathname: `${Route.chapter}/${id}`,
-      query: { id: id },
-    });
+    push(`${Route.chapter}/${id}`);
   };
 
   return loading ? (
