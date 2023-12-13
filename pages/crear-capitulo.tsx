@@ -12,6 +12,7 @@ import * as Yup from 'yup';
 import DefaultLayout from '@components/DefaultLayout';
 import CustomStepper from '@components/Stepper';
 import { Route } from 'src/constants/routes';
+import withAuth from 'src/hoc/withAuth';
 import { ChapterData } from 'src/interfaces/common';
 import { apisCanvas, apisChapters } from 'src/services/apiConfig';
 import { RootState } from 'src/store/rootReducer';
@@ -132,4 +133,4 @@ const ChapterCreate = () => {
   );
 };
 
-export default ChapterCreate;
+export default withAuth(ChapterCreate);
