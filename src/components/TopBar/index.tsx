@@ -1,26 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Avatar, Box, Typography, Grid, MenuItem, IconButton, Menu } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import { Route } from 'src/constants/routes';
+import { apiUserProfile } from 'src/services/apiConfig';
+import { RootState } from 'src/store/rootReducer';
 
 import { AppBarMui, ToolbarMui, ButtonSignUp, ButtonLogIn, ButtonBox } from './styles';
 
-interface TopBarProps {
-  isAuthenticated: boolean;
-}
-
 export const TopBar = dynamic(
-  Promise.resolve(({ isAuthenticated }: TopBarProps) => {
-    const [anchorMenuUser, setAnchorMenuUser] = useState<null | HTMLElement>(null);
+  Promise.resolve(() => {
     const { t } = useTranslation();
     const { push } = useRouter();
+    const accessToken = useSelector((state: RootState) => state.auth.token);
+    const [anchorMenuUser, setAnchorMenuUser] = useState<null | HTMLElement>(null);
+    const [userProfile, setUserProfile] = useState('');
+
+    useEffect(() => {
+      if (accessToken) {
+        apiUserProfile.getUserProfile({}).then(({ data }) => {
+          setUserProfile(data.picture);
+        });
+      }
+    }, [accessToken]);
 
     const userMenuOptions = [
-      { title: t('topBar.menu.profile') },
+      { title: t('topBar.menu.profile'), handler: () => push(Route.profile) },
       { title: t('topBar.menu.logout'), handler: () => push(Route.logout) },
     ];
 
@@ -40,11 +49,10 @@ export const TopBar = dynamic(
               <Box>
                 <Typography>LOGO</Typography>
               </Box>
-              {isAuthenticated ? (
+              {accessToken ? (
                 <Box>
-                  {/* To do: add user picture */}
                   <IconButton onClick={handleOpenUserMenu}>
-                    <Avatar src="/static/images/avatar/2.jpg" />
+                    <Avatar src={userProfile} />
                   </IconButton>
                   <Menu
                     sx={{ mt: '45px' }}

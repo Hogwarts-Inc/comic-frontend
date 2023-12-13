@@ -11,7 +11,7 @@ export const BoxContainer = styled(Box)({
 });
 
 export const BoxMui = styled(Box)(({ theme }) => ({
-  height: '110px',
+  height: 'fit-content',
   width: '100%',
   background: theme.customPalette.gradient.main,
   display: 'flex',

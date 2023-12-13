@@ -23,7 +23,8 @@
     "signup": "Crear cuenta",
     "skip": "Saltear",
     "title": "Título",
-    "upload": "Subir"
+    "upload": "Subir",
+    "send": "Enviar"
   },
   "panels": {
     "panelsList": {
@@ -42,7 +43,7 @@
   },
   "chapterCreate": {
     "title": "Agregar Capítulo",
-    "addCanva":{
+    "addCanva": {
       "uploadTitle": "Sube tus propios archivos",
       "uploadDescription": "Puedes subir tu propia viñeta creada previamente y agregarla al capítulo. \nAsegúrate que sea un archivo PNG. \nPuedes subir hasta 3 viñetas en esta instancia. ",
       "navToEditorTitle": "Utiliza el editor gráfico",
@@ -53,7 +54,7 @@
       "createdCanvas": "Viñetas creadas",
       "publishButton": "Publicar"
     },
-    "stepperLabels": [ "Agregar información del capítulo", "Agregar viñetas", "Publicar" ],
+    "stepperLabels": ["Agregar información del capítulo", "Agregar viñetas", "Publicar"],
     "validations": {
       "title": "El título es requerido",
       "description": "La descripción es requerida",
@@ -101,6 +102,9 @@
   "toast": {
     "successCall": "Solicitud exitosa",
     "failCall": "La solicitud ha fallado"
+  },
+  "canva": {
+    "noComments": "No hay comentarios, ¡sé el primero!"
   },
   "goToLanding": "Ir al inicio"
 }
