@@ -10,7 +10,7 @@ import { Route } from 'src/constants/routes';
 import { apiUserProfile } from 'src/services/apiConfig';
 import { RootState } from 'src/store/rootReducer';
 
-import { AppBarMui, ToolbarMui, ButtonSignUp, ButtonLogIn, ButtonBox } from './styles';
+import { AppBarMui, ToolbarMui, ButtonSignUp, ButtonLogIn, ButtonBox, StyledLogoIcon } from './styles';
 
 export const TopBar = dynamic(
   Promise.resolve(() => {
@@ -40,15 +40,18 @@ export const TopBar = dynamic(
       setAnchorMenuUser(null);
     };
 
+    const onClickLogo = () => {
+      push(Route.home);
+    };
+
     return (
       <Grid container>
         <Grid item xs>
           <AppBarMui>
             <ToolbarMui disableGutters>
-              {/* To do: Add logo and remove Typography*/}
-              <Box>
-                <Typography>LOGO</Typography>
-              </Box>
+              <ButtonBox onClick={onClickLogo}>
+                <StyledLogoIcon />
+              </ButtonBox>
               {accessToken ? (
                 <Box>
                   <IconButton onClick={handleOpenUserMenu}>
