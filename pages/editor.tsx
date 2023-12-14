@@ -7,4 +7,4 @@ function Editor() {
   return <DesignEditor />;
 }
 
-export default withAuth(Editor);
+export default withAuth(Editor, true);
