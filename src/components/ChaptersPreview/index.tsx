@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import { Typography, CircularProgress } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TablePagination from '@mui/material/TablePagination';
@@ -65,8 +65,6 @@ function ChapterPreviewer() {
       {/* To do: add chapter name */}
       <TitleWrapper>
         <Title variant="h4">Nombre historieta</Title>
-        {/* To do: add search bar comonent */}
-        <Typography style={{ margin: '0' }}>Search bar</Typography>
       </TitleWrapper>
       <TableMui>
         <TableBody>

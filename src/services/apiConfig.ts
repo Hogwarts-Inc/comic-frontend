@@ -110,6 +110,7 @@ export const apisComic = {
 export const apisChapters = {
   getChapters: () => api.get('/chapters'),
   getChaptersById: (id: number) => api.get(`/chapters/${id}`),
+  getChaptersCheckQueue: (id: number) => api.get(`/chapters/${id}/check_queue`),
   postChapters: (data: ChapterCreation) => api.post('/chapters', data),
   patchChapters: (id: number, data: ChapterParam) => api.patch(`/chapters/${id}`, data),
 };

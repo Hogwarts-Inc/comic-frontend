@@ -106,5 +106,11 @@
   "canva": {
     "noComments": "No hay comentarios, ¡sé el primero!"
   },
-  "goToLanding": "Ir al inicio"
+  "goToLanding": "Ir al inicio",
+  "dialogUserQueue": {
+    "title": "En fila",
+    "description": "En este momento, otro usuario está creando una viñeta para este capítulo. ¿Prefieres esperar o crear tu propio capítulo y una viñeta nueva?.",
+    "cancel": "Cancelar",
+    "createChapter": "Crear capitulo"
+  }
 }

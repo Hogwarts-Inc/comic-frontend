@@ -1,4 +1,5 @@
-import { Typography, styled } from '@mui/material';
+import { AddCircleOutline } from '@mui/icons-material';
+import { Button, Typography, styled } from '@mui/material';
 
 export const Title = styled(Typography)(({ theme }) => ({
   margin: '0',
@@ -28,3 +29,15 @@ export const ImgWrapper = styled('div')({
   display: 'flex',
   flexDirection: 'column',
 });
+
+export const AddCanvaButton = styled(Button)({
+  position: 'absolute',
+  bottom: 10,
+  right: 18,
+  borderRadius: '50%',
+  boxShadow: 'none',
+  maxWidth: '68px',
+  minWidth: '68px',
+});
+
+export const AddCircleOutlineStyle = styled(AddCircleOutline)({ fontSize: 68, color: 'black' });
