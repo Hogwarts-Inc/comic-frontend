@@ -48,7 +48,7 @@ export const Characters = () => {
       </Grid>
 
       <GridItemCenter item xs={12}>
-        <TypographyName variant="h1">{currentCharacter.name}</TypographyName>
+        <TypographyName variant="h1">{currentCharacter?.name}</TypographyName>
       </GridItemCenter>
 
       <Grid item xs={2} sm={3} md={4} lg={4} xl={4} />
@@ -60,7 +60,7 @@ export const Characters = () => {
       <Grid item xs={2} sm={3} md={4} lg={4} xl={4} />
 
       <GridItemCenter item xs={12}>
-        {currentCharacter.descriptions.map(description => (
+        {currentCharacter?.descriptions.map(description => (
           <TypographyDescription variant="h4" key={description.id}>
             {description.text}
           </TypographyDescription>

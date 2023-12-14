@@ -33,7 +33,7 @@ const Home = ({ accessToken }: { accessToken: string }) => {
 
   return (
     <DefaultLayout>
-      <Grid container item gap={60} xs direction="column" alignItems="center">
+      <Grid container item gap={32} xs direction="column" alignItems="center">
         <Grid item ref={mainComicRef}>
           <Fade direction="up" triggerOnce={false}>
             <MainComic />

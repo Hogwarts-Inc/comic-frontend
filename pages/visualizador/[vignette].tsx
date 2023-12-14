@@ -41,7 +41,7 @@ export const getServerSideProps = (async context => {
         currentUserLikes: dataApi.current_user_likes,
         accessToken,
         currentUserUsername: userApi.name,
-        currentUserProfilePicture: userApi.picture,
+        currentUserProfilePicture: userApi.image_url,
       };
     } catch (e) {
       console.error('Error fetching data:', e);
