@@ -38,5 +38,10 @@ export const StyledTypography = styled(Typography)({
 
 export const StyledButton = styled(Button)(({ theme }) => ({
   color: theme.palette.text.primary,
-  marginTop: '2rem',
 }));
+
+export const StyledButtonLogIn = styled(Button)({
+  boxShadow: 'none',
+  background: 'transparent',
+  margin: '1rem',
+});
