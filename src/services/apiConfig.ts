@@ -44,7 +44,13 @@ type CanvaCreation = { chapter_id: number; images: string[] };
 export type CanvaParam = { image_url: string; id: number };
 type StoriettesCreation = any;
 //To do: create canva type
-export type StoriettesParam = { title: string; id: number; updated_at: string; canvas: CanvaParam[] };
+export type StoriettesParam = {
+  title: string;
+  id: number;
+  updated_at: string;
+  canvas: CanvaParam[];
+  chapter_like_count: number;
+};
 type CharacterCreation = any;
 type CharacterParam = any;
 export type ChapterCreation = {
@@ -65,6 +71,7 @@ export type Event = {
   image_url: string;
   name: string;
 };
+export type User = { id: number; name: string; email: string; picture: string };
 
 const { dispatch, getState } = store;
 
@@ -109,6 +116,7 @@ export const apisComic = {
 export const apisChapters = {
   getChapters: () => api.get('/chapters'),
   getChaptersById: (id: number) => api.get(`/chapters/${id}`),
+  getChaptersCheckQueue: (id: number) => api.get(`/chapters/${id}/check_queue`),
   postChapters: (data: ChapterCreation) => api.post('/chapters', data),
   patchChapters: (id: number, data: ChapterParam) => api.patch(`/chapters/${id}`, data),
 };

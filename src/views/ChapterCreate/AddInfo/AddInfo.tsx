@@ -96,11 +96,7 @@ export const AddInfo = ({
         />
       </Grid>
 
-      <NextButton
-        disabled={isValidating || isSubmitting}
-        size="large"
-        variantType="gradient"
-        onClick={onNext}>
+      <NextButton disabled={isValidating || isSubmitting} size="large" variantType="gradient" onClick={onNext}>
         {t('common.next')}
       </NextButton>
     </GridContainer>

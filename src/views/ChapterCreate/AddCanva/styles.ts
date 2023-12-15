@@ -8,14 +8,12 @@ export const OutsideGridContainer = styled(Grid)({
   borderImage: theme.customPalette.gradientBox.main,
   borderImageSlice: 1,
   borderRadius: '10px',
-
   alignItems: 'center',
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
-  marginBottom: '10rem',
-  marginTop: '2rem',
   width: '100%',
+  minWidth: '60vw',
 });
 
 export const ColGridContainer = styled(Grid)(({ theme: defaultTheme }) => ({
@@ -31,9 +29,9 @@ export const ColGridContainer = styled(Grid)(({ theme: defaultTheme }) => ({
   },
 }));
 
-export const ItemGridContainer = styled(Grid)(({
+export const ItemGridContainer = styled(Grid)({
   width: '100%',
-}));
+});
 
 export const SecondItemGridContainer = styled(ItemGridContainer)(({ theme: defaultTheme }) => ({
   [defaultTheme.breakpoints.up('sm')]: {
@@ -77,7 +75,6 @@ export const EditorButton = styled(Button)({
 });
 
 export const NextButton = styled(Button)({
-  display: 'block',
   margin: '1rem auto 0',
   width: 'fit-content',
 });

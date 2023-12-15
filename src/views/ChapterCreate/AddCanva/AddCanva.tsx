@@ -25,9 +25,9 @@ import {
 } from './styles';
 
 interface AddCanvaProps {
-  values: any;
-  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
-  onNext: () => void;
+  values?: any;
+  setFieldValue?: (field: string, value: any, shouldValidate?: boolean) => void;
+  onNext?: () => void;
 }
 
 export const AddCanva = ({ values, setFieldValue, onNext }: AddCanvaProps) => {
@@ -38,7 +38,7 @@ export const AddCanva = ({ values, setFieldValue, onNext }: AddCanvaProps) => {
   const createObjectURL = (file: File) => URL.createObjectURL(file);
 
   const handleFileChange = (fileObjects: File[]) => {
-    setFieldValue('files', fileObjects);
+    setFieldValue?.('files', fileObjects);
 
     const newFileObjects = fileObjects.map(file => createObjectURL(file));
     dispatch(setChapterFiles(newFileObjects));
@@ -62,31 +62,22 @@ export const AddCanva = ({ values, setFieldValue, onNext }: AddCanvaProps) => {
           <DropzoneArea
             acceptedFiles={['image/jpeg', 'image/png']}
             dropzoneText={t('chapterCreate.addCanva.dropZone')}
-            fileObjects={values.files}
+            fileObjects={values?.files}
             filesLimit={3}
             maxFileSize={1048576}
             onChange={handleFileChange}
           />
 
-          <NextButton
-            disabled={values.files.length === 0}
-            size="large"
-            variantType="gradient"
-            onClick={onNext}>
+          <NextButton disabled={values?.files.length === 0} size="large" variantType="gradient" onClick={onNext}>
             {t('common.next')}
           </NextButton>
         </ItemGridContainer>
 
-        <DividerLine
-          flexItem
-        />
+        <DividerLine flexItem />
 
         <SecondItemGridContainer item xs={12} sm={5}>
           <SectionTitle variant="h4">{t('chapterCreate.addCanva.navToEditorTitle')}</SectionTitle>
-          <EditorButton
-            variantType="gradient"
-            size="large"
-            onClick={onNavigateToEditor}>
+          <EditorButton variantType="gradient" size="large" onClick={onNavigateToEditor}>
             {t('chapterCreate.addCanva.navToEditorButton')}
           </EditorButton>
         </SecondItemGridContainer>

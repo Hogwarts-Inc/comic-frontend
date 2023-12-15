@@ -21,10 +21,11 @@ import { AddCanva } from 'src/views/ChapterCreate/AddCanva/AddCanva';
 import { AddInfo } from 'src/views/ChapterCreate/AddInfo/AddInfo';
 import { ChapterReview } from 'src/views/ChapterCreate/ChapterReview/ChapterReview';
 
-const createValidationSchema = (t: TFunction) => Yup.object({
-  title: Yup.string().required(t('chapterCreate.validations.title')),
-  description: Yup.string().required(t('chapterCreate.validations.description')),
-});
+const createValidationSchema = (t: TFunction) =>
+  Yup.object({
+    title: Yup.string().required(t('chapterCreate.validations.title')),
+    description: Yup.string().required(t('chapterCreate.validations.description')),
+  });
 
 const ChapterCreate = () => {
   const { t } = useTranslation();
@@ -96,32 +97,31 @@ const ChapterCreate = () => {
           return (
             <Form>
               <Grid container direction="row" justifyContent="center">
-                <Grid item>
-                  <Box sx={{ height: '8%' }} />
+                <Grid container item style={{ paddingTop: '2rem', width: '80%' }}>
                   <CustomStepper
                     activeStep={activeStep}
-                    setActiveStep={(step) => dispatch(setActiveStep(step))}
+                    setActiveStep={step => dispatch(setActiveStep(step))}
                     steps={steps}
                   />
-                  {activeStep === 0 && (
-                    <AddInfo
-                      errors={errors}
-                      handleBlur={handleBlur}
-                      handleChange={handleChange}
-                      isSubmitting={isSubmitting}
-                      isValidating={isValidating}
-                      touched={touched}
-                      validateField={validateField}
-                      values={chapterData}
-                      onNext={handleNext}
-                    />
-                  )}
-                  {activeStep === 1 && <AddCanva
-                    setFieldValue={setFieldValue}
-                    values={chapterData}
-                    onNext={handleNext}
-                  />}
-                  {activeStep === 2 && <ChapterReview values={chapterData} onNext={handleSubmit} />}
+                  <Grid container item style={{ padding: '2rem 0' }}>
+                    {activeStep === 0 && (
+                      <AddInfo
+                        errors={errors}
+                        handleBlur={handleBlur}
+                        handleChange={handleChange}
+                        isSubmitting={isSubmitting}
+                        isValidating={isValidating}
+                        touched={touched}
+                        validateField={validateField}
+                        values={chapterData}
+                        onNext={handleNext}
+                      />
+                    )}
+                    {activeStep === 1 && (
+                      <AddCanva setFieldValue={setFieldValue} values={chapterData} onNext={handleNext} />
+                    )}
+                    {activeStep === 2 && <ChapterReview values={chapterData} onNext={handleSubmit} />}
+                  </Grid>
                 </Grid>
               </Grid>
             </Form>
