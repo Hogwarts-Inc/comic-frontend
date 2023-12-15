@@ -8,10 +8,10 @@ import Button from '@components/Button';
 import { DialogAddCanva } from '@components/DialogAddCanva';
 import { DialogUserQueue } from '@components/DialogUserQueue';
 import { Route } from 'src/constants/routes';
+import useIsMobile from 'src/hooks/useIsMobile';
 import { StoriettesParam, apisChapters } from 'src/services/apiConfig';
 
 import { Title, Loading, Img, Container, ImgWrapper, AddCanvaButton, AddCircleOutlineStyle } from './styles';
-import useIsMobile from 'src/hooks/useIsMobile';
 
 function Chapter() {
   const {
