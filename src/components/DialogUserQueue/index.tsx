@@ -33,7 +33,7 @@ export const DialogUserQueue = ({ openDialog, setOpenDialog }: DialogUserQueuePa
           <Button variantType="gradient" size="large" onClick={handleClose}>
             {t('dialogUserQueue.cancel')}
           </Button>
-          <Button variantType="gradient" size="large" onClick={() => push(`${Route.chapterCreate}`)} autoFocus>
+          <Button variantType="gradient" size="large" onClick={() => push(Route.chapterCreate)} autoFocus>
             {t('dialogUserQueue.createChapter')}
           </Button>
         </DialogActionsStyle>
