@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 
-import { Box, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Formik, Form, FormikHelpers } from 'formik';
 import { TFunction } from 'i18next';
 import { useRouter } from 'next/router';
