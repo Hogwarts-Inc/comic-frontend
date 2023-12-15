@@ -7,6 +7,14 @@ export const GridItemCenter = styled(Grid)({
   justifyContent: 'center',
 });
 
+export const GridItemName = styled(GridItemCenter)({
+  marginTop: '1rem',
+});
+
+export const GridItemImages = styled(GridItemCenter)({
+  marginTop: '2rem',
+});
+
 export const TypographyTitle = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.primary,
   textAlign: 'center',

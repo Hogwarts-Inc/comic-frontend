@@ -8,7 +8,15 @@ import { Carousel } from '@components/Carousel';
 import { apisCharacter } from 'src/services/apiConfig';
 import { RootState } from 'src/store/rootReducer';
 
-import { GridContainer, TypographyDescription, TypographyTitle, TypographyName, GridItemCenter } from './styles';
+import {
+  GridContainer,
+  TypographyDescription,
+  TypographyTitle,
+  TypographyName,
+  GridItemCenter,
+  GridItemName,
+  GridItemImages,
+} from './styles';
 
 export const Characters = () => {
   const dispatch = useDispatch();
@@ -47,15 +55,15 @@ export const Characters = () => {
         <TypographyTitle variant="h3">{t('characters.title')}</TypographyTitle>
       </Grid>
 
-      <GridItemCenter item xs={12}>
+      <GridItemName item xs={12}>
         <TypographyName variant="h1">{currentCharacter?.name}</TypographyName>
-      </GridItemCenter>
+      </GridItemName>
 
       <Grid item xs={2} sm={3} md={4} lg={4} xl={4} />
 
-      <GridItemCenter item xs={8} sm={6} md={4} lg={4} xl={4}>
+      <GridItemImages item xs={8} sm={6} md={4} lg={4} xl={4}>
         <Carousel images={images} displayMode="reduced" setCurrentIndex={updateCurrentCharacterIndex} />
-      </GridItemCenter>
+      </GridItemImages>
 
       <Grid item xs={2} sm={3} md={4} lg={4} xl={4} />
 
