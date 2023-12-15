@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { DialogContent, Dialog } from '@mui/material';
+import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Route } from 'src/constants/routes';
 import { apisCanvas } from 'src/services/apiConfig';
 import { RootState } from 'src/store/rootReducer';
 import { resetAddCanva, setActiveStep } from 'src/store/slices/add-canva/actions';
@@ -18,14 +20,12 @@ interface DialogAddCanvaParams {
 
 export const DialogAddCanva = ({ chapterId, openDialog, setOpenDialog }: DialogAddCanvaParams) => {
   const dispatch = useDispatch();
+  const { push } = useRouter();
+
   const { canvaData, activeStep } = useSelector((state: RootState) => ({
     canvaData: selectCanvaData(state),
     activeStep: selectActiveStep(state),
   }));
-
-  useEffect(() => {
-    dispatch(resetAddCanva());
-  }, []);
 
   const handleClose = () => {
     setOpenDialog(false);
@@ -43,6 +43,7 @@ export const DialogAddCanva = ({ chapterId, openDialog, setOpenDialog }: DialogA
       dispatch(resetAddCanva());
 
       handleClose();
+      push(Route.home);
     } catch (e) {
       console.error(e);
     }
