@@ -52,7 +52,7 @@ export const SaveCanvaButton = () => {
         {t('navbar.save')}
       </Button>
       {isDialogOpen && (
-        <DialogAddCanva chapterId={1} openDialog={isDialogOpen} setOpenDialog={setIsDialogOpen} />
+        <DialogAddCanva openDialog={isDialogOpen} setOpenDialog={setIsDialogOpen} />
       )}
     </>
   );

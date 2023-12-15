@@ -13,12 +13,11 @@ import { AddCanva } from 'src/views/ChapterCreate/AddCanva/AddCanva';
 import { DataReview } from 'src/views/ChapterCreate/ChapterReview/DataReview';
 
 interface DialogAddCanvaParams {
-  chapterId: number | undefined;
   openDialog: boolean;
   setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const DialogAddCanva = ({ chapterId, openDialog, setOpenDialog }: DialogAddCanvaParams) => {
+export const DialogAddCanva = ({ openDialog, setOpenDialog }: DialogAddCanvaParams) => {
   const dispatch = useDispatch();
   const { push } = useRouter();
 
@@ -37,9 +36,7 @@ export const DialogAddCanva = ({ chapterId, openDialog, setOpenDialog }: DialogA
 
   const handleSubmit = async () => {
     try {
-      if (chapterId) {
-        await apisCanvas.postCanva({ chapter_id: chapterId, images: canvaData.files });
-      }
+      await apisCanvas.postCanva({ chapter_id: canvaData.chapterId, images: canvaData.files });
       dispatch(resetAddCanva());
 
       handleClose();
