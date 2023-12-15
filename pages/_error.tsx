@@ -19,10 +19,8 @@ const ErrorPage = ({ statusCode }: ErrorProps) => (
 ErrorPage.getInitialProps = ({ res, err, query }: NextPageContext) => {
   let statusCode = HttpStatusCode.InternalServerError;
 
-  if (res) {
-    statusCode = res.statusCode as HttpStatusCode;
-  } else if (err) {
-    statusCode = err.statusCode as HttpStatusCode;
+  if (res || err) {
+    statusCode = (res || err)?.statusCode as HttpStatusCode;
   } else if (query.statusCode) {
     const queryStatusCode = parseInt(query.statusCode as string, 10);
     if (Object.values(HttpStatusCode).includes(queryStatusCode)) {

@@ -12,6 +12,7 @@
     "email": "Email",
     "event": "Evento",
     "import": "Importar",
+    "loading:": "Cargando...",
     "login": "Iniciar sesión",
     "logout": "Cerrar sesión",
     "name": "Nombre",
