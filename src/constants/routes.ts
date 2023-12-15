@@ -7,4 +7,6 @@ export const Route = {
   logout: '/api/auth/logout',
   profile: '/perfil',
   visualizer: '/visualizador',
+  unauthorizedError: '/_error?statusCode=401',
+  forbiddenError: '/_error?statusCode=403',
 };

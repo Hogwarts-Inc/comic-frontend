@@ -12,6 +12,7 @@
     "email": "Email",
     "event": "Evento",
     "import": "Importar",
+    "loading:": "Cargando...",
     "login": "Iniciar sesión",
     "logout": "Cerrar sesión",
     "name": "Nombre",
@@ -60,6 +61,11 @@
       "description": "La descripción es requerida",
       "canvas": "Debes agregar al menos una viñeta"
     }
+  },
+  "addCanva": {
+    "title": "Agregar Viñetas",
+    "createdCanvas": "Viñetas creadas",
+    "publishButton": "Publicar"
   },
   "explore": {
     "title": "Empeza a explorar otros capitulos y crear tus propias historias",

@@ -14,15 +14,22 @@ import {
 } from './styles';
 
 interface ChapterReviewProps {
+  context: 'chapter' | 'canva';
   onNext: () => void;
   values: {
-    title: string;
-    description: string;
+    title?: string;
+    description?: string;
     files: string[];
   };
 }
 
-export const ChapterReview = ({ onNext, values }: ChapterReviewProps) => {
+const TitleView = ({ context }: { context: 'chapter' | 'canva' }) => {
+  const { t } = useTranslation();
+  const title = context === 'chapter' ? t('chapterCreate.title') : t('addCanva.title');
+  return <Title variant="h3">{title}</Title>;
+};
+
+export const DataReview = ({ context, onNext, values }: ChapterReviewProps) => {
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -36,18 +43,22 @@ export const ChapterReview = ({ onNext, values }: ChapterReviewProps) => {
   return (
     <GridContainer container>
       <Grid item xs={12}>
-        <Title variant="h3">{t('chapterCreate.title')}</Title>
+        <TitleView context={context} />
       </Grid>
 
-      <Grid item xs={12}>
-        <SectionTitle variant="h4">{t('common.title')}</SectionTitle>
-        <SectionDescription>{values.title}</SectionDescription>
-      </Grid>
+      {context === 'chapter' && (
+        <>
+          <Grid item xs={12}>
+            <SectionTitle variant="h4">{t('common.title')}</SectionTitle>
+            <SectionDescription>{values.title}</SectionDescription>
+          </Grid>
 
-      <Grid item xs={12}>
-        <SectionTitle variant="h4">{t('common.description')}</SectionTitle>
-        <SectionDescription>{values.description}</SectionDescription>
-      </Grid>
+          <Grid item xs={12}>
+            <SectionTitle variant="h4">{t('common.description')}</SectionTitle>
+            <SectionDescription>{values.description}</SectionDescription>
+          </Grid>
+        </>
+      )}
 
       <Grid item xs={12}>
         <SectionTitle variant="h4">{t('chapterCreate.chapterReview.createdCanvas')}</SectionTitle>

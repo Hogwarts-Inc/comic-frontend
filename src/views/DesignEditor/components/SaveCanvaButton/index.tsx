@@ -7,8 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '@components/Button';
 import { Route } from 'src/constants/routes';
 import useDesignEditorContext from 'src/hooks/useDesignEditorContext';
-import { apisCanvas } from 'src/services/apiConfig';
-import { setActiveStep, setChapterFiles } from 'src/store/slices/chapter-create/actions';
+import { setActiveStep as setActiveStepCanva, setCanvaFiles } from 'src/store/slices/add-canva/actions';
+import { selectCanvaData } from 'src/store/slices/add-canva/selectors';
+import { setActiveStep as setActiveStepChapter, setChapterFiles } from 'src/store/slices/chapter-create/actions';
 import { selectChapterData } from 'src/store/slices/chapter-create/selectors';
 
 export const SaveCanvaButton = () => {
@@ -17,6 +18,7 @@ export const SaveCanvaButton = () => {
   const { scenes } = useDesignEditorContext();
   const dispatch = useDispatch();
   const chapterData = useSelector(selectChapterData);
+  const canvaData = useSelector(selectCanvaData);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,11 +30,12 @@ export const SaveCanvaButton = () => {
       if (images.length > 0) {
         if (chapterData && chapterData.title && chapterData.description) {
           dispatch(setChapterFiles(images));
-          dispatch(setActiveStep(2));
+          dispatch(setActiveStepChapter(2));
           push(Route.chapterCreate);
-        } else {
-          await apisCanvas.postCanva({ chapter_id: 1, images: images });
-          push(Route.home);
+        } else if (canvaData) {
+          dispatch(setCanvaFiles(images));
+          dispatch(setActiveStepCanva(1));
+          push(Route.chapterCreate);
         }
       }
     } catch (e) {
