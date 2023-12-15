@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { Character, ResourceSliceState, setCharacters, setResources } from 'src/store/slices/resources/reducer';
 import { store } from 'src/store/store';
 
-type UserAttributes = {
+export type UserAttributes = {
   email: string;
   family_name: string;
   given_name: string;
@@ -216,4 +216,5 @@ export const apiUserProfile = {
   postUserProfile: () => api.post('/user_profiles', {}),
   getUserProfile: ({ token }: { token?: string }) =>
     api.get<UserAttributes>('/user_profiles/info', { headers: { Authorization: `Bearer ${token}` } }),
+  getCanvasByUser: () => api.get<CanvaParam[]>('/user_profiles/canvas'),
 };
