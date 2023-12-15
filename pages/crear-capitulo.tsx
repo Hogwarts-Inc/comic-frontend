@@ -20,7 +20,7 @@ import { resetChapterCreate, setActiveStep } from 'src/store/slices/chapter-crea
 import { selectActiveStep, selectChapterData } from 'src/store/slices/chapter-create/selectors';
 import { AddCanva } from 'src/views/ChapterCreate/AddCanva/AddCanva';
 import { AddInfo } from 'src/views/ChapterCreate/AddInfo/AddInfo';
-import { ChapterReview } from 'src/views/ChapterCreate/ChapterReview/ChapterReview';
+import { DataReview } from 'src/views/ChapterCreate/ChapterReview/DataReview';
 
 const createValidationSchema = (t: TFunction) =>
   Yup.object({
@@ -119,9 +119,9 @@ const ChapterCreate = () => {
                       />
                     )}
                     {activeStep === 1 && (
-                      <AddCanva setFieldValue={setFieldValue} values={chapterData} onNext={handleNext} />
+                      <AddCanva context="chapter" setFieldValue={setFieldValue} values={chapterData} onNext={handleNext} />
                     )}
-                    {activeStep === 2 && <ChapterReview values={chapterData} onNext={handleSubmit} />}
+                    {activeStep === 2 && <DataReview context="chapter" values={chapterData} onNext={handleSubmit} />}
                   </Grid>
                 </Grid>
               </Grid>

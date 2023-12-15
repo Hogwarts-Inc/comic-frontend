@@ -62,6 +62,11 @@
       "canvas": "Debes agregar al menos una viñeta"
     }
   },
+  "addCanva": {
+    "title": "Agregar Viñetas",
+    "createdCanvas": "Viñetas creadas",
+    "publishButton": "Publicar"
+  },
   "explore": {
     "title": "Empeza a explorar otros capitulos y crear tus propias historias",
     "buttonText": "Explorar"

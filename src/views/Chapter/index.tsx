@@ -82,7 +82,7 @@ function Chapter() {
         <AddCanvaButton variant="text" onClick={handleClickOpen}>
           <AddCircleOutlineStyle />
         </AddCanvaButton>
-        <DialogAddCanva openDialog={openDialogAddCanva} setOpenDialog={setOpenDialogAddCanva} />
+        <DialogAddCanva chapterId={dataChapter?.id} openDialog={openDialogAddCanva} setOpenDialog={setOpenDialogAddCanva} />
         <DialogUserQueue openDialog={openDialogUserQueue} setOpenDialog={setOpenDialogUserQueue} />
       </Container>
     </Grid>
