@@ -44,7 +44,13 @@ type CanvaCreation = { chapter_id: number; images: string[] };
 export type CanvaParam = { image_url: string; id: number };
 type StoriettesCreation = any;
 //To do: create canva type
-export type StoriettesParam = { title: string; id: number; updated_at: string; canvas: CanvaParam[] };
+export type StoriettesParam = {
+  title: string;
+  id: number;
+  updated_at: string;
+  canvas: CanvaParam[];
+  chapter_like_count: number;
+};
 type CharacterCreation = any;
 type CharacterParam = any;
 export type ChapterCreation = {

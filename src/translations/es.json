@@ -77,7 +77,7 @@
     "title": "Texto",
     "add": "Añadir texto"
   },
-  "volver": "Volver",
+  "back": "Volver",
   "navbar": {
     "import": "Importar",
     "save": "Guardar"
@@ -111,6 +111,9 @@
     "title": "En fila",
     "description": "En este momento, otro usuario está creando una viñeta para este capítulo. ¿Prefieres esperar o crear tu propio capítulo y una viñeta nueva?.",
     "cancel": "Cancelar",
+    "createChapter": "Crear capitulo"
+  },
+  "chaptersPreview": {
     "createChapter": "Crear capitulo"
   }
 }

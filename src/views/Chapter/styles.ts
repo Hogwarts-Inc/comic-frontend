@@ -1,15 +1,16 @@
 import { AddCircleOutline } from '@mui/icons-material';
-import { Button, Typography, styled } from '@mui/material';
+import { Button, Grid, Typography, styled } from '@mui/material';
 
 export const Title = styled(Typography)(({ theme }) => ({
   margin: '0',
   color: theme.palette.text.primary,
 }));
 
-export const Container = styled('div')({
-  display: 'flex',
+export const Container = styled(Grid)({
+  alignSelf: 'center',
   flexDirection: 'column',
-  margin: '4rem 0',
+  margin: '2rem 0',
+  width: '80%',
 });
 
 export const Loading = styled('div')({
@@ -20,7 +21,7 @@ export const Loading = styled('div')({
 });
 
 export const Img = styled('img')({
-  width: '80vw',
+  width: '100%',
   height: 'auto',
   marginRight: '10px',
 });

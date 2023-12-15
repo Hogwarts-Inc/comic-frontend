@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { DialogContent } from '@mui/material';
+import { DialogContent, Dialog } from '@mui/material';
 
 import { AddCanva } from 'src/views/ChapterCreate/AddCanva/AddCanva';
-
-import { DialogStyle } from './styles';
 
 interface DialogAddCanvaParams {
   openDialog: boolean;
@@ -17,10 +15,12 @@ export const DialogAddCanva = ({ openDialog, setOpenDialog }: DialogAddCanvaPara
   };
 
   return (
-    <DialogStyle open={openDialog} onClose={handleClose}>
-      <DialogContent>
-        <AddCanva />
-      </DialogContent>
-    </DialogStyle>
+    <div>
+      <Dialog open={openDialog} onClose={handleClose} maxWidth={false}>
+        <DialogContent>
+          <AddCanva />
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 };
