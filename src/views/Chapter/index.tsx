@@ -4,25 +4,28 @@ import React, { useEffect, useState } from 'react';
 import { CircularProgress } from '@mui/material';
 import { useRouter } from 'next/router';
 
+import { Route } from 'src/constants/routes';
 import { StoriettesParam, apisChapters } from 'src/services/apiConfig';
 
 import { Title, Loading, Img, Container, ImgWrapper } from './styles';
 
 function Chapter() {
-  const router = useRouter();
-  const { id } = router.query;
+  const {
+    query: { chapter },
+    push,
+  } = useRouter();
 
   const [loading, setLoading] = useState<boolean>(true);
   const [dataChapter, setDataChapter] = useState<StoriettesParam | undefined>();
 
   useEffect(() => {
-    if (id) {
-      apisChapters.getChaptersById(+id).then(({ data }) => {
+    if (chapter) {
+      apisChapters.getChaptersById(+chapter).then(({ data }) => {
         setDataChapter(data);
         setLoading(false);
       });
     }
-  }, [id]);
+  }, [chapter]);
 
   return loading ? (
     <Loading>
@@ -33,7 +36,7 @@ function Chapter() {
       <Title variant="h4">{dataChapter?.title}</Title>
       <ImgWrapper>
         {dataChapter?.canvas?.map(item => (
-          <Img src={item.image_url} alt="" />
+          <Img src={item.image_url} alt="" onClick={() => push(`${Route.visualizer}/${item.id}`)} />
         ))}
       </ImgWrapper>
     </Container>

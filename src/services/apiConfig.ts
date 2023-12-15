@@ -215,6 +215,6 @@ export const apisEvents = {
 export const apiUserProfile = {
   postUserProfile: () => api.post('/user_profiles', {}),
   getUserProfile: ({ token }: { token?: string }) =>
-    api.get('/user_profiles/info', { headers: { Authorization: `Bearer ${token}` } }),
+    api.get<UserAttributes>('/user_profiles/info', { headers: { Authorization: `Bearer ${token}` } }),
   getCanvasByUser: () => api.get<CanvaParam[]>('/user_profiles/canvas'),
 };
