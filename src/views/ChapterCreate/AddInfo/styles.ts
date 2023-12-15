@@ -30,8 +30,6 @@ export const GridContainer = styled(Grid)({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
-  marginBottom: '10rem',
-  marginTop: '2rem',
   width: '100%',
 });
 

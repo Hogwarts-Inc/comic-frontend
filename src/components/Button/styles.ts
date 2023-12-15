@@ -21,7 +21,7 @@ const sizeStyles: Record<'small' | 'medium' | 'large', CSSObject> = {
   },
   medium: {
     fontSize: '0.8rem',
-    padding: '4px 12px',
+    padding: '8px 24px',
     color: theme.palette.common.white,
   },
   large: {

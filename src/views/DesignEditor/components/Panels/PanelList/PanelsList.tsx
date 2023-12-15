@@ -25,7 +25,7 @@ function PanelsList() {
         justifyContent={isMobile ? 'space-between' : 'center'}
         margin={isMobile ? '1rem' : undefined}
         marginBottom={0}>
-        <Button onClick={back}>{t('volver')}</Button>
+        <Button onClick={back}>{t('back')}</Button>
         {isMobile && <SaveCanvaButton />}
       </Grid>
       <WhiteContainer container item xs isMobile={!!isMobile}>
