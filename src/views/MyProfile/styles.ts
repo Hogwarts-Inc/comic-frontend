@@ -1,7 +1,6 @@
-import { Grid, Typography, styled } from '@mui/material';
+import { Avatar, Grid, Typography, styled } from '@mui/material';
 
 export const Title = styled(Typography)(({ theme }) => ({
-  // margin: '0 0 0 1rem',
   color: theme.palette.text.primary,
 }));
 
@@ -16,8 +15,21 @@ export const Description = styled(Typography)(({ theme }) => ({
 
 export const Container = styled('div')({
   margin: '2rem',
+  minWidth: '90%',
 });
 
 export const ProfileInfoWrapp = styled(Grid)({
   marginBottom: '3rem',
 });
+
+export const UserInfo = styled(Grid)({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+});
+
+export const AvatarStyles = styled(Avatar)({ width: '8vw', height: '8vw' });
+
+export const GridUserCanva = styled(Grid)({ display: 'flex', justifyContent: 'flex-start' });
+
+export const ImageCanva = styled('img')({ width: '99%', height: 'auto' });

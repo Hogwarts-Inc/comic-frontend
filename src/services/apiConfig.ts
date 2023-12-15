@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { Character, ResourceSliceState, setCharacters, setResources } from 'src/store/slices/resources/reducer';
 import { store } from 'src/store/store';
 
-type UserAttributes = {
+export type UserAttributes = {
   email: string;
   family_name: string;
   given_name: string;
@@ -65,7 +65,6 @@ export type Event = {
   image_url: string;
   name: string;
 };
-export type User = { id: number; name: string; email: string; picture: string };
 
 const { dispatch, getState } = store;
 
