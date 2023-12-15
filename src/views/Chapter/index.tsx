@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { CircularProgress, Grid } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
 import Button from '@components/Button';
 import { DialogAddCanva } from '@components/DialogAddCanva';
@@ -10,6 +11,7 @@ import { DialogUserQueue } from '@components/DialogUserQueue';
 import { Route } from 'src/constants/routes';
 import useIsMobile from 'src/hooks/useIsMobile';
 import { StoriettesParam, apisChapters } from 'src/services/apiConfig';
+import { setCanvaChapter } from 'src/store/slices/add-canva/actions';
 
 import { Title, Loading, Img, Container, ImgWrapper, AddCanvaButton, AddCircleOutlineStyle } from './styles';
 
@@ -21,6 +23,7 @@ function Chapter() {
   } = useRouter();
   const { t } = useTranslation();
   const isMobile = useIsMobile();
+  const dispatch = useDispatch();
 
   const [openDialogAddCanva, setOpenDialogAddCanva] = useState<boolean>(false);
   const [openDialogUserQueue, setOpenDialogUserQueue] = useState<boolean>(false);
@@ -46,6 +49,7 @@ function Chapter() {
           setLoading(false);
 
           if (status === 200) {
+            dispatch(setCanvaChapter(+chapter));
             setOpenDialogAddCanva(true);
           }
         })
@@ -82,7 +86,7 @@ function Chapter() {
         <AddCanvaButton variant="text" onClick={handleClickOpen}>
           <AddCircleOutlineStyle />
         </AddCanvaButton>
-        <DialogAddCanva chapterId={dataChapter?.id} openDialog={openDialogAddCanva} setOpenDialog={setOpenDialogAddCanva} />
+        <DialogAddCanva openDialog={openDialogAddCanva} setOpenDialog={setOpenDialogAddCanva} />
         <DialogUserQueue openDialog={openDialogUserQueue} setOpenDialog={setOpenDialogUserQueue} />
       </Container>
     </Grid>

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import withAuth from 'src/hoc/withAuth';
+import withCanvaData from 'src/hoc/withCanvaData';
 import DesignEditor from 'src/views/DesignEditor';
 
 function Editor() {
   return <DesignEditor />;
 }
 
-export default withAuth(Editor, true);
+export default withCanvaData(Editor);

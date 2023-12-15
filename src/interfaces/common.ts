@@ -16,4 +16,5 @@ export interface ChapterData {
 
 export interface CanvaData {
   files: string[];
+  chapterId: number;
 }

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '@components/Button';
+import { DialogAddCanva } from '@components/DialogAddCanva';
 import { Route } from 'src/constants/routes';
 import useDesignEditorContext from 'src/hooks/useDesignEditorContext';
 import { setActiveStep as setActiveStepCanva, setCanvaFiles } from 'src/store/slices/add-canva/actions';
@@ -21,6 +22,7 @@ export const SaveCanvaButton = () => {
   const canvaData = useSelector(selectCanvaData);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const uploadCanva = async () => {
     setIsLoading(true);
@@ -35,7 +37,7 @@ export const SaveCanvaButton = () => {
         } else if (canvaData) {
           dispatch(setCanvaFiles(images));
           dispatch(setActiveStepCanva(1));
-          push(Route.chapterCreate);
+          setIsDialogOpen(true);
         }
       }
     } catch (e) {
@@ -45,8 +47,13 @@ export const SaveCanvaButton = () => {
   };
 
   return (
-    <Button onClick={uploadCanva} isLoading={isLoading}>
-      {t('navbar.save')}
-    </Button>
+    <>
+      <Button onClick={uploadCanva} isLoading={isLoading}>
+        {t('navbar.save')}
+      </Button>
+      {isDialogOpen && (
+        <DialogAddCanva openDialog={isDialogOpen} setOpenDialog={setIsDialogOpen} />
+      )}
+    </>
   );
 };

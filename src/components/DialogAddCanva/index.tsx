@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { DialogContent, Dialog } from '@mui/material';
+import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Route } from 'src/constants/routes';
 import { apisCanvas } from 'src/services/apiConfig';
 import { RootState } from 'src/store/rootReducer';
 import { resetAddCanva, setActiveStep } from 'src/store/slices/add-canva/actions';
@@ -11,21 +13,18 @@ import { AddCanva } from 'src/views/ChapterCreate/AddCanva/AddCanva';
 import { DataReview } from 'src/views/ChapterCreate/ChapterReview/DataReview';
 
 interface DialogAddCanvaParams {
-  chapterId: number | undefined;
   openDialog: boolean;
   setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const DialogAddCanva = ({ chapterId, openDialog, setOpenDialog }: DialogAddCanvaParams) => {
+export const DialogAddCanva = ({ openDialog, setOpenDialog }: DialogAddCanvaParams) => {
   const dispatch = useDispatch();
+  const { push } = useRouter();
+
   const { canvaData, activeStep } = useSelector((state: RootState) => ({
     canvaData: selectCanvaData(state),
     activeStep: selectActiveStep(state),
   }));
-
-  useEffect(() => {
-    dispatch(resetAddCanva());
-  }, []);
 
   const handleClose = () => {
     setOpenDialog(false);
@@ -37,12 +36,11 @@ export const DialogAddCanva = ({ chapterId, openDialog, setOpenDialog }: DialogA
 
   const handleSubmit = async () => {
     try {
-      if (chapterId) {
-        await apisCanvas.postCanva({ chapter_id: chapterId, images: canvaData.files });
-      }
+      await apisCanvas.postCanva({ chapter_id: canvaData.chapterId, images: canvaData.files });
       dispatch(resetAddCanva());
 
       handleClose();
+      push(Route.home);
     } catch (e) {
       console.error(e);
     }
