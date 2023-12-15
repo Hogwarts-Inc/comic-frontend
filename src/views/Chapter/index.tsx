@@ -33,15 +33,21 @@ function Chapter() {
   const handleClickOpen = () => {
     setLoading(true);
     if (chapter) {
-      apisChapters.getChaptersCheckQueue(+chapter).then(({ status }) => {
-        setLoading(false);
+      apisChapters
+        .getChaptersCheckQueue(+chapter)
+        .then(({ status }) => {
+          setLoading(false);
 
-        if (status === 200) {
-          setOpenDialogAddCanva(true);
-        } else {
-          setOpenDialogUserQueue(true);
-        }
-      });
+          if (status === 200) {
+            setOpenDialogAddCanva(true);
+          }
+        })
+        .catch(error => {
+          setLoading(false);
+          if (error.response && error.response.status === 422) {
+            setOpenDialogUserQueue(true);
+          }
+        });
     }
   };
 
