@@ -1,6 +1,7 @@
 import React from 'react';
 
 import DefaultLayout from '@components/DefaultLayout';
+import withAuth from 'src/hoc/withAuth';
 import MyProfile from 'src/views/MyProfile';
 
 function Profile() {
@@ -11,4 +12,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default withAuth(Profile);

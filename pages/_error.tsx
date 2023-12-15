@@ -16,8 +16,18 @@ const ErrorPage = ({ statusCode }: ErrorProps) => (
   </DefaultLayout>
 );
 
-ErrorPage.getInitialProps = ({ res, err }: NextPageContext) => {
-  const statusCode = res ? res.statusCode : err ? err.statusCode : HttpStatusCode.InternalServerError;
+ErrorPage.getInitialProps = ({ res, err, query }: NextPageContext) => {
+  let statusCode = HttpStatusCode.InternalServerError;
+
+  if (res || err) {
+    statusCode = (res || err)?.statusCode as HttpStatusCode;
+  } else if (query.statusCode) {
+    const queryStatusCode = parseInt(query.statusCode as string, 10);
+    if (Object.values(HttpStatusCode).includes(queryStatusCode)) {
+      statusCode = queryStatusCode as HttpStatusCode;
+    }
+  }
+
   return { statusCode };
 };
 

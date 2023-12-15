@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
 import { Route } from 'src/constants/routes';
+import { setCanvaFiles } from 'src/store/slices/add-canva/actions';
 import { setChapterFiles } from 'src/store/slices/chapter-create/actions';
 
 import {
@@ -25,12 +26,19 @@ import {
 } from './styles';
 
 interface AddCanvaProps {
+  context: 'chapter' | 'canva';
   values?: any;
   setFieldValue?: (field: string, value: any, shouldValidate?: boolean) => void;
   onNext?: () => void;
 }
 
-export const AddCanva = ({ values, setFieldValue, onNext }: AddCanvaProps) => {
+const TitleView = ({ context }: { context: 'chapter' | 'canva' }) => {
+  const { t } = useTranslation();
+  const title = context === 'chapter' ? t('chapterCreate.title') : t('addCanva.title');
+  return <Title variant="h3">{title}</Title>;
+};
+
+export const AddCanva = ({ context, values, setFieldValue, onNext }: AddCanvaProps) => {
   const { t } = useTranslation();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -41,7 +49,11 @@ export const AddCanva = ({ values, setFieldValue, onNext }: AddCanvaProps) => {
     setFieldValue?.('files', fileObjects);
 
     const newFileObjects = fileObjects.map(file => createObjectURL(file));
-    dispatch(setChapterFiles(newFileObjects));
+    if (context === 'chapter') {
+      dispatch(setChapterFiles(newFileObjects));
+    } else {
+      dispatch(setCanvaFiles(newFileObjects));
+    }
   };
 
   const onNavigateToEditor = () => {
@@ -51,7 +63,7 @@ export const AddCanva = ({ values, setFieldValue, onNext }: AddCanvaProps) => {
   return (
     <OutsideGridContainer container>
       <Grid item xs={12}>
-        <Title variant="h3">{t('chapterCreate.title')}</Title>
+        <TitleView context={context} />
       </Grid>
 
       <ColGridContainer container>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 
-import { Box, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Formik, Form, FormikHelpers } from 'formik';
 import { TFunction } from 'i18next';
 import { useRouter } from 'next/router';
@@ -12,6 +12,7 @@ import * as Yup from 'yup';
 import DefaultLayout from '@components/DefaultLayout';
 import CustomStepper from '@components/Stepper';
 import { Route } from 'src/constants/routes';
+import withAuth from 'src/hoc/withAuth';
 import { ChapterData } from 'src/interfaces/common';
 import { apisCanvas, apisChapters } from 'src/services/apiConfig';
 import { RootState } from 'src/store/rootReducer';
@@ -19,7 +20,7 @@ import { resetChapterCreate, setActiveStep } from 'src/store/slices/chapter-crea
 import { selectActiveStep, selectChapterData } from 'src/store/slices/chapter-create/selectors';
 import { AddCanva } from 'src/views/ChapterCreate/AddCanva/AddCanva';
 import { AddInfo } from 'src/views/ChapterCreate/AddInfo/AddInfo';
-import { ChapterReview } from 'src/views/ChapterCreate/ChapterReview/ChapterReview';
+import { DataReview } from 'src/views/ChapterCreate/ChapterReview/DataReview';
 
 const createValidationSchema = (t: TFunction) =>
   Yup.object({
@@ -118,9 +119,9 @@ const ChapterCreate = () => {
                       />
                     )}
                     {activeStep === 1 && (
-                      <AddCanva setFieldValue={setFieldValue} values={chapterData} onNext={handleNext} />
+                      <AddCanva context="chapter" setFieldValue={setFieldValue} values={chapterData} onNext={handleNext} />
                     )}
-                    {activeStep === 2 && <ChapterReview values={chapterData} onNext={handleSubmit} />}
+                    {activeStep === 2 && <DataReview context="chapter" values={chapterData} onNext={handleSubmit} />}
                   </Grid>
                 </Grid>
               </Grid>
@@ -132,4 +133,4 @@ const ChapterCreate = () => {
   );
 };
 
-export default ChapterCreate;
+export default withAuth(ChapterCreate);

@@ -1,5 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
+import { addCanvaReducer } from './slices/add-canva/reducer';
 import authReducer from './slices/auth/index';
 import { createChapterReducer } from './slices/chapter-create/reducer';
 import { componentsReducer } from './slices/components/reducer';
@@ -10,6 +11,7 @@ import resources from './slices/resources/reducer';
 import { uploadsReducer } from './slices/uploads/reducer';
 
 const rootReducer = combineReducers({
+  addCanva: addCanvaReducer,
   chapterCreate: createChapterReducer,
   designEditor: designEditorReducer,
   fonts: fontsReducer,

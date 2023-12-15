@@ -13,3 +13,8 @@ export interface ChapterData {
   description: string;
   files: string[];
 }
+
+export interface CanvaData {
+  files: string[];
+  chapterId: number;
+}

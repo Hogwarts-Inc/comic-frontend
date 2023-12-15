@@ -1,7 +1,9 @@
 import React from 'react';
 
+import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 
+import { Route } from 'src/constants/routes';
 import { HttpStatusCode } from 'src/utils/http-status-codes';
 
 import {
@@ -12,6 +14,7 @@ import {
   StyledForbiddenIcon,
   StyledInternalServerErrorIcon,
   StyledUnauthorizedIcon,
+  StyledButtonLogIn,
 } from './styles';
 
 const ErrorIcon = ({ errorType }: { errorType: HttpStatusCode }) => {
@@ -31,11 +34,16 @@ const ErrorIcon = ({ errorType }: { errorType: HttpStatusCode }) => {
 
 const ErrorComponent = ({ errorType }: { errorType: HttpStatusCode }) => {
   const { t } = useTranslation();
+  const { push } = useRouter();
 
   return (
     <StyledContainer>
       <ErrorIcon errorType={errorType} />
       <StyledTypography variant="h4">{t(`${errorType}`)}</StyledTypography>
+      {errorType === HttpStatusCode.Unauthorized && (
+        <StyledButtonLogIn onClick={() => push(Route.login)} size="medium">
+          {t('common.login')}
+        </StyledButtonLogIn>)}
       <StyledButton aria-label="home" href="/">
         {t('goToLanding')}
       </StyledButton>
