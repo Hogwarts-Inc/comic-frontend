@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 interface CarouselProps {
   translateX?: string;
   displayMode?: 'full' | 'reduced';
+  isClickable?: boolean;
 }
 
 export const Wrapper = styled('div')({
@@ -42,10 +43,13 @@ export const CarouselContainer = styled('div')<CarouselProps>(props => ({
   transform: props.translateX ? `translateX(${props.translateX})` : 'none',
 }));
 
-export const CarouselSlot = styled('div')<CarouselProps>(props => ({
+export const CarouselSlot = styled('div')<CarouselProps>(({ displayMode, isClickable }) => ({
   flex: '1 0 100%',
-  flexBasis: props.displayMode === 'reduced' ? '100%' : '75%',
+  flexBasis: displayMode === 'reduced' ? '100%' : '75%',
   marginRight: '5%',
+  '&:hover': {
+    cursor: isClickable ? 'pointer' : 'auto',
+  },
 }));
 
 export const CarouselSlotImage = styled('img')({

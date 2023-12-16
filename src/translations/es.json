@@ -122,5 +122,6 @@
   "chaptersPreview": {
     "createChapter": "Crear capitulo"
   },
-  "yourCreations": "Tus creaciones"
+  "yourCreations": "Tus creaciones",
+  "noCreations": "No tienes historietas creadas."
 }

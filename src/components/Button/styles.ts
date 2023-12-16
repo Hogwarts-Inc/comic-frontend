@@ -33,7 +33,7 @@ const sizeStyles: Record<'small' | 'medium' | 'large', CSSObject> = {
 
 export const ButtonMui = styled(Button, {
   shouldForwardProp: props => !['isLoading', 'isSelected', 'variantType', 'size'].includes(props as string),
-})<ButtonOwnProps>(({ isSelected, variantType, size = 'medium', isLoading }) => {
+})<ButtonOwnProps>(({ isSelected, variantType, size = 'medium', isLoading, style: styleProp }) => {
   let styles: CSSObject = {
     background: theme.customPalette.violet.main,
     backgroundColor: isSelected ? theme.customPalette.violetDark.main : theme.customPalette.violet.main,
@@ -77,6 +77,7 @@ export const ButtonMui = styled(Button, {
     ...styles,
     ...sizeStyles[size ?? 'medium'],
     ...(isLoading ? { color: 'transparent', transition: undefined } : {}),
+    ...styleProp,
   };
   return styles;
 });

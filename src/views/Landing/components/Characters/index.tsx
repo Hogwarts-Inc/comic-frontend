@@ -42,7 +42,13 @@ export const Characters = () => {
     }
   }, [characters.length, dispatch]);
 
-  const images = useMemo(() => characters.map(character => character.images[0].url), [characters]);
+  const images = useMemo(
+    () =>
+      characters.map(character => ({
+        url: character.images[0].url,
+      })),
+    [characters],
+  );
   const currentCharacter = useMemo(() => characters[currentCharacterIndex], [characters, currentCharacterIndex]);
 
   if (loading) {

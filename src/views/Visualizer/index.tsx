@@ -75,7 +75,7 @@ export default function Visualizer(props: VisualizerProps) {
         if (like) {
           await apisCanvasLike.postCanvasLike(+query.vignette);
         } else {
-          // TODO add delete like
+          await apisCanvasLike.deleteCanvasLike(+query.vignette);
         }
       } catch (e) {
         setCurrentUserLikes(prevCurrentUserLikes);

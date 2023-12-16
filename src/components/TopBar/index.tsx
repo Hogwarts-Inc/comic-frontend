@@ -21,11 +21,13 @@ export const TopBar = dynamic(
     const [userProfile, setUserProfile] = useState('');
 
     useEffect(() => {
-      if (accessToken) {
-        apiUserProfile.getUserProfile({}).then(({ data }) => {
+      if (!accessToken) return;
+      apiUserProfile
+        .getUserProfile({})
+        .then(({ data }) => {
           setUserProfile(data.image_url);
-        });
-      }
+        })
+        .catch(e => console.log(e));
     }, [accessToken]);
 
     const userMenuOptions = [

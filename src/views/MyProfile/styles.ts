@@ -13,9 +13,10 @@ export const Description = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.primary,
 }));
 
-export const Container = styled('div')({
-  margin: '2rem',
-  minWidth: '90%',
+export const Container = styled(Grid)({
+  width: '90%',
+  flexDirection: 'column',
+  alignSelf: 'center',
 });
 
 export const ProfileInfoWrapp = styled(Grid)({
@@ -32,4 +33,4 @@ export const AvatarStyles = styled(Avatar)({ width: '8vw', height: '8vw' });
 
 export const GridUserCanva = styled(Grid)({ display: 'flex', justifyContent: 'flex-start' });
 
-export const ImageCanva = styled('img')({ width: '99%', height: 'auto' });
+export const ImageCanva = styled('img')({ width: '99%', height: 'auto', '&:hover': { cursor: 'pointer' } });
