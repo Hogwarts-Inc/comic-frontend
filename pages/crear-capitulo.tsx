@@ -47,7 +47,7 @@ const ChapterCreate = () => {
         title: chapterData.title,
         description: chapterData.description,
         active: true,
-        storiette_id: 1,
+        storiette_id: 2,
       });
       const chapterId = chapterResponse.data.id;
 
@@ -119,7 +119,12 @@ const ChapterCreate = () => {
                       />
                     )}
                     {activeStep === 1 && (
-                      <AddCanva context="chapter" setFieldValue={setFieldValue} values={chapterData} onNext={handleNext} />
+                      <AddCanva
+                        context="chapter"
+                        setFieldValue={setFieldValue}
+                        values={chapterData}
+                        onNext={handleNext}
+                      />
                     )}
                     {activeStep === 2 && <DataReview context="chapter" values={chapterData} onNext={handleSubmit} />}
                   </Grid>

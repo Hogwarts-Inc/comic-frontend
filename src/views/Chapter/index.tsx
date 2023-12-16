@@ -13,7 +13,7 @@ import useIsMobile from 'src/hooks/useIsMobile';
 import { StoriettesParam, apisChapters } from 'src/services/apiConfig';
 import { setCanvaChapter } from 'src/store/slices/add-canva/actions';
 
-import { Title, Loading, Img, Container, ImgWrapper, AddCanvaButton, AddCircleOutlineStyle } from './styles';
+import { Title, Loading, Img, Container, AddCanvaButton, AddCircleOutlineStyle } from './styles';
 
 function Chapter() {
   const {
@@ -77,12 +77,12 @@ function Chapter() {
         <Button onClick={back}>{t('back')}</Button>
       </Grid>
       <Container container item>
-        <Title variant="h4">{dataChapter?.title}</Title>
-        <ImgWrapper>
+        <Title variant="h3">{dataChapter?.title}</Title>
+        <Grid>
           {dataChapter?.canvas?.map(item => (
             <Img src={item.image_url} alt="" onClick={() => push(`${Route.visualizer}/${item.id}`)} />
           ))}
-        </ImgWrapper>
+        </Grid>
         <AddCanvaButton variant="text" onClick={handleClickOpen}>
           <AddCircleOutlineStyle />
         </AddCanvaButton>

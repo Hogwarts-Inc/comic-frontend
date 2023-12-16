@@ -8,20 +8,16 @@ import { apisCanvas } from 'src/services/apiConfig';
 
 import { MainComicGrid, TypographyTitle } from './styles';
 
-interface ImageObj {
-  image_url: string;
-}
-
 export const MainComic = (): JSX.Element => {
   const { t } = useTranslation();
 
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<{ url: string; id: number }[]>([]);
 
   useEffect(() => {
     const fetchCanva = async () => {
       try {
         const response = await apisCanvas.getCanva();
-        const imageUrls = response.data.map((obj: ImageObj) => obj.image_url);
+        const imageUrls = response.data.map(obj => ({ url: obj.image_url, id: obj.id }));
         setImages(imageUrls);
       } catch (error) {
         console.error('Error fetching canvas:', error);

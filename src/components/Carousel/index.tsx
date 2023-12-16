@@ -5,7 +5,10 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import { Grid, Hidden } from '@mui/material';
+import { useRouter } from 'next/router';
 import { useSwipeable } from 'react-swipeable';
+
+import { Route } from 'src/constants/routes';
 
 import {
   Wrapper,
@@ -20,7 +23,7 @@ import {
 } from './styles';
 
 interface CarouselProps {
-  images: string[];
+  images: { url: string; id?: number }[];
   displayMode?: 'full' | 'reduced';
   // eslint-disable-next-line no-unused-vars
   setCurrentIndex?: (index: number) => void;
@@ -28,6 +31,7 @@ interface CarouselProps {
 
 export const Carousel = ({ images, displayMode = 'full', setCurrentIndex = () => {} }: CarouselProps) => {
   const [index, setIndex] = useState(0);
+  const { push } = useRouter();
   const numItems = images.length;
   const transformValue = `-${index * ((displayMode === 'reduced' ? 100 : 75) + 5)}%`;
 
@@ -84,8 +88,12 @@ export const Carousel = ({ images, displayMode = 'full', setCurrentIndex = () =>
         <Grid item lg={8} xs={12}>
           <ImagesContainer>
             <CarouselContainer translateX={transformValue}>
-              {images.map(url => (
-                <CarouselSlot key={url} displayMode={displayMode}>
+              {images.map(({ url, id }) => (
+                <CarouselSlot
+                  key={url}
+                  displayMode={displayMode}
+                  isClickable={!!id}
+                  onClick={() => id && push(`${Route.visualizer}/${id}`)}>
                   <CarouselSlotImage src={url} alt="Carousel Image" />
                 </CarouselSlot>
               ))}

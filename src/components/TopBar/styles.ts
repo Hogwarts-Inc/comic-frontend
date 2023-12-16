@@ -39,4 +39,7 @@ export const ButtonLogIn = styled(Button)({
 export const ButtonBox = styled(Box)({
   display: 'flex',
   flexDirection: 'row',
+  '&:hover': {
+    cursor: 'pointer',
+  },
 });

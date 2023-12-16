@@ -26,9 +26,9 @@ export const getServerSideProps = (async context => {
   if (context.query.vignette) {
     try {
       const { data: dataApi } = await apisCanvas.getCanvaById({ token: accessToken, canvaId: +context.query.vignette });
-      const { data: userApi } = await apiUserProfile.getUserProfile({ token: accessToken });
+      const image = (await fetch(dataApi.image_url)).url;
       data = {
-        image: dataApi.image_url,
+        image,
         comments: dataApi.comments.map(comment => ({
           comment: comment.text,
           profilePicture: comment.user_attributes.image_url,
@@ -40,9 +40,15 @@ export const getServerSideProps = (async context => {
         likes: dataApi.likes,
         currentUserLikes: dataApi.current_user_likes,
         accessToken,
-        currentUserUsername: userApi.name,
-        currentUserProfilePicture: userApi.image_url,
+        currentUserUsername: '',
+        currentUserProfilePicture: '',
       };
+    } catch (e) {
+      console.error('Error fetching data:', e);
+    }
+    try {
+      const { data: userApi } = await apiUserProfile.getUserProfile({ token: accessToken });
+      data = { ...data, currentUserUsername: userApi.name, currentUserProfilePicture: userApi.image_url };
     } catch (e) {
       console.error('Error fetching data:', e);
     }

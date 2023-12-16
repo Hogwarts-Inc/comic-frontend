@@ -94,10 +94,9 @@ api.interceptors.request.use(req => {
 });
 
 api.interceptors.response.use(
-  (response: AxiosResponse) => {
-    toast.success(i18next.t('toast.successCall'));
-    return response;
-  },
+  (response: AxiosResponse) =>
+    // toast.success(i18next.t('toast.successCall'));
+    response,
   (error: AxiosError) => {
     toast.error(i18next.t('toast.failCall'));
     return Promise.reject(error);
@@ -115,7 +114,7 @@ export const apisComic = {
 //CHAPTERS
 export const apisChapters = {
   getChapters: () => api.get('/chapters'),
-  getChaptersById: (id: number) => api.get(`/chapters/${id}`),
+  getChaptersById: (id: number) => api.get<StoriettesParam>(`/chapters/${id}`),
   getChaptersCheckQueue: (id: number) => api.get(`/chapters/${id}/check_queue`),
   postChapters: (data: ChapterCreation) => api.post('/chapters', data),
   patchChapters: (id: number, data: ChapterParam) => api.patch(`/chapters/${id}`, data),
@@ -123,7 +122,7 @@ export const apisChapters = {
 
 //CANVAS
 export const apisCanvas = {
-  getCanva: () => api.get('/canvas'),
+  getCanva: () => api.get<CanvaResponse[]>('/canvas'),
   getCanvaById: ({ canvaId, token }: { canvaId: number; token: string }) =>
     api.get<CanvaResponse>(`/canvas/${canvaId}`, { headers: { Authorization: `Bearer ${token}` } }),
   postCanva: async ({ images, chapter_id }: CanvaCreation) => {
@@ -144,7 +143,7 @@ export const apisCanvas = {
 
 export const apisCanvasLike = {
   postCanvasLike: (canvaId: number) => api.post('likes', { canva_id: canvaId }),
-  deleteCanvasLike: (id: number) => api.delete(`/likes/${id}`),
+  deleteCanvasLike: (canvaId: number) => api.delete(`/canvas/${canvaId}/remove_like`),
 };
 
 export const apisCanvasComment = {
@@ -224,5 +223,13 @@ export const apiUserProfile = {
   postUserProfile: () => api.post('/user_profiles', {}),
   getUserProfile: ({ token }: { token?: string }) =>
     api.get<UserAttributes>('/user_profiles/info', { headers: { Authorization: `Bearer ${token}` } }),
-  getCanvasByUser: () => api.get<CanvaParam[]>('/user_profiles/canvas'),
+  getCanvasByUser: () =>
+    api.get<
+      {
+        canva_id: number;
+        comments: Comment[];
+        image_url: string;
+        likes: string;
+      }[]
+    >('/user_profiles/canvas'),
 };

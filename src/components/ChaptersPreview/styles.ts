@@ -13,6 +13,9 @@ export const CenterDivHorizontal = styled('div')({
 
 export const TableRowMui = styled(TableRow)({
   background: 'rgba(217, 217, 217, 0.39)',
+  '&:hover': {
+    cursor: 'pointer',
+  },
 });
 export const TableCellImg = styled(TableCell)({
   padding: 0,
@@ -41,6 +44,7 @@ export const TitleWrapper = styled('div')({
   marginLeft: 'auto',
   marginRight: 'auto',
   width: '80%',
+  marginBottom: '1rem',
 });
 
 export const Container = styled('div')({

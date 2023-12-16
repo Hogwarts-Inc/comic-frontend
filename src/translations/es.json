@@ -12,7 +12,7 @@
     "email": "Email",
     "event": "Evento",
     "import": "Importar",
-    "loading:": "Cargando...",
+    "loading": "Cargando...",
     "login": "Iniciar sesión",
     "logout": "Cerrar sesión",
     "name": "Nombre",
@@ -122,5 +122,6 @@
   "chaptersPreview": {
     "createChapter": "Crear capitulo"
   },
-  "yourCreations": "Tus creaciones"
+  "yourCreations": "Tus creaciones",
+  "noCreations": "No tienes historietas creadas."
 }
