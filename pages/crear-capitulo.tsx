@@ -14,7 +14,7 @@ import CustomStepper from '@components/Stepper';
 import { Route } from 'src/constants/routes';
 import withAuth from 'src/hoc/withAuth';
 import { ChapterData } from 'src/interfaces/common';
-import { apisCanvas, apisChapters } from 'src/services/apiConfig';
+import { apisCanvas, apisChapters, apisComic } from 'src/services/apiConfig';
 import { RootState } from 'src/store/rootReducer';
 import { resetChapterCreate, setActiveStep } from 'src/store/slices/chapter-create/actions';
 import { selectActiveStep, selectChapterData } from 'src/store/slices/chapter-create/selectors';
@@ -43,11 +43,12 @@ const ChapterCreate = () => {
   const onSubmit = async (_: ChapterData, { setSubmitting }: FormikHelpers<ChapterData>) => {
     setSubmitting(true);
     try {
+      const { data } = await apisComic.getStoriettes();
       const chapterResponse = await apisChapters.postChapters({
         title: chapterData.title,
         description: chapterData.description,
         active: true,
-        storiette_id: 2,
+        storiette_id: data[0].id,
       });
       const chapterId = chapterResponse.data.id;
 
