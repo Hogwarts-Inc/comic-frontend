@@ -1,27 +1,25 @@
-import React, { useMemo } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable indent */
+import React from 'react';
 
-import dynamic from 'next/dynamic';
-import { Client as Styletron } from 'styletron-engine-atomic';
+import { Client, Server } from 'styletron-engine-atomic';
 import { Provider as StyletronProvider } from 'styletron-react';
 
 import GraphicEditor from './GraphicEditor';
 
-const DesignEditor = dynamic(
-  Promise.resolve(() => {
-    const engine = useMemo(
-      () =>
-        new Styletron({
-          hydrate: document.getElementsByClassName('_styletron_hydrate_') as never,
-        }),
-      [],
-    );
-    return (
-      <StyletronProvider value={engine}>
-        <GraphicEditor />
-      </StyletronProvider>
-    );
-  }),
-  { ssr: false },
+const getHydrateClass = () => document.getElementsByClassName('_styletron_hydrate_');
+
+const engine =
+  typeof window === 'undefined'
+    ? new Server()
+    : new Client({
+        hydrate: getHydrateClass() as any,
+      });
+
+const DesignEditor = () => (
+  <StyletronProvider value={engine}>
+    <GraphicEditor />
+  </StyletronProvider>
 );
 
 export default DesignEditor;
