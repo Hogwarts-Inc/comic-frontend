@@ -27,6 +27,7 @@ export const DialogAddCanva = ({ openDialog, setOpenDialog }: DialogAddCanvaPara
   }));
 
   const handleClose = () => {
+    dispatch(setActiveStep(0));
     setOpenDialog(false);
   };
 
@@ -50,9 +51,7 @@ export const DialogAddCanva = ({ openDialog, setOpenDialog }: DialogAddCanvaPara
     <div>
       <Dialog open={openDialog} onClose={handleClose} maxWidth={false}>
         <DialogContent>
-          {activeStep === 0 && (
-            <AddCanva context="canva" onNext={handleNext} />
-          )}
+          {activeStep === 0 && <AddCanva context="canva" values={canvaData} onNext={handleNext} />}
           {activeStep === 1 && <DataReview context="canva" values={canvaData} onNext={handleSubmit} />}
         </DialogContent>
       </Dialog>
