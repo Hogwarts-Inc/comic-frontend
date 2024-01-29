@@ -3,15 +3,9 @@ import React, { useState } from 'react';
 import { Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import {
-  Title,
-  GridContainer,
-  SectionTitle,
-  SectionDescription,
-  Thumbnail,
-  ThumbnailContainer,
-  SubmitButton,
-} from './styles';
+import { TitleView } from '@components/AddCanvaTitleView';
+
+import { GridContainer, SectionTitle, SectionDescription, Thumbnail, ThumbnailContainer, SubmitButton } from './styles';
 
 interface ChapterReviewProps {
   context: 'chapter' | 'canva';
@@ -22,12 +16,6 @@ interface ChapterReviewProps {
     files: string[];
   };
 }
-
-const TitleView = ({ context }: { context: 'chapter' | 'canva' }) => {
-  const { t } = useTranslation();
-  const title = context === 'chapter' ? t('chapterCreate.title') : t('addCanva.title');
-  return <Title variant="h3">{title}</Title>;
-};
 
 export const DataReview = ({ context, onNext, values }: ChapterReviewProps) => {
   const { t } = useTranslation();

@@ -8,12 +8,12 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
+import { TitleView } from '@components/AddCanvaTitleView';
 import { Route } from 'src/constants/routes';
 import { setCanvaFiles } from 'src/store/slices/add-canva/actions';
 import { setChapterFiles } from 'src/store/slices/chapter-create/actions';
 
 import {
-  Title,
   OutsideGridContainer,
   ColGridContainer,
   SectionTitle,
@@ -31,12 +31,6 @@ interface AddCanvaProps {
   setFieldValue?: (field: string, value: any, shouldValidate?: boolean) => void;
   onNext?: () => void;
 }
-
-const TitleView = ({ context }: { context: 'chapter' | 'canva' }) => {
-  const { t } = useTranslation();
-  const title = context === 'chapter' ? t('chapterCreate.title') : t('addCanva.title');
-  return <Title variant="h3">{title}</Title>;
-};
 
 export const AddCanva = ({ context, values, setFieldValue, onNext }: AddCanvaProps) => {
   const { t } = useTranslation();
