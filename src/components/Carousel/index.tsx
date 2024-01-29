@@ -65,27 +65,24 @@ export const Carousel = ({ images, displayMode = 'full', setCurrentIndex = () =>
   return (
     <Wrapper {...handlers}>
       <Grid container spacing={2}>
-        <Grid item lg={1} xs={12}>
-          <Hidden only={['xs', 'sm', 'md']}>
+        <Hidden only={['xs', 'sm', 'md']}>
+          <Grid item lg={1}>
             {index > 0 && (
               <CarouselButtonFirst displayMode={displayMode} onClick={handleFirst}>
                 <KeyboardDoubleArrowLeftIcon />
               </CarouselButtonFirst>
             )}
-          </Hidden>
-        </Grid>
-
-        <Grid item lg={1} xs={12}>
-          <Hidden only={['xs', 'sm', 'md']}>
+          </Grid>
+          <Grid item lg={1}>
             {index > 0 && (
               <CarouselButtonPrev onClick={handlePrev}>
                 <KeyboardArrowLeftIcon />
               </CarouselButtonPrev>
             )}
-          </Hidden>
-        </Grid>
+          </Grid>
+        </Hidden>
 
-        <Grid item lg={8} xs={12}>
+        <Grid item lg={8}>
           <ImagesContainer>
             <CarouselContainer translateX={transformValue}>
               {images.map(({ url, id }) => (
@@ -100,26 +97,22 @@ export const Carousel = ({ images, displayMode = 'full', setCurrentIndex = () =>
             </CarouselContainer>
           </ImagesContainer>
         </Grid>
-
-        <Grid item lg={1} xs={12}>
-          <Hidden only={['xs', 'sm', 'md']}>
+        <Hidden only={['xs', 'sm', 'md']}>
+          <Grid item lg={1}>
             {index < numItems - 1 && (
               <CarouselButtonNext onClick={handleNext}>
                 <KeyboardArrowRightIcon />
               </CarouselButtonNext>
             )}
-          </Hidden>
-        </Grid>
-
-        <Grid item lg={1} xs={12}>
-          <Hidden only={['xs', 'sm', 'md']}>
+          </Grid>
+          <Grid item lg={1}>
             {index < numItems - 1 && (
               <CarouselButtonLast displayMode={displayMode} onClick={handleLast}>
                 <KeyboardDoubleArrowRightIcon />
               </CarouselButtonLast>
             )}
-          </Hidden>
-        </Grid>
+          </Grid>
+        </Hidden>
       </Grid>
     </Wrapper>
   );

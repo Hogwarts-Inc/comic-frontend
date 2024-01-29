@@ -15,16 +15,14 @@ export function Explore() {
 
   return (
     <Grid container justifyContent="center" alignItems="center">
-      <Grid item xs={12} lg={12}>
-        <Box>
-          <Content>
-            <TypographyDescription variant="h3">{t('explore.title')}</TypographyDescription>
-            <Button variantType="gradient" size="large" onClick={() => push(Route.chapter)}>
-              {t('explore.buttonText')}
-            </Button>
-          </Content>
-        </Box>
-      </Grid>
+      <Box>
+        <Content>
+          <TypographyDescription variant="h3">{t('explore.title')}</TypographyDescription>
+          <Button variantType="gradient" size="large" onClick={() => push(Route.chapter)}>
+            {t('explore.buttonText')}
+          </Button>
+        </Content>
+      </Box>
     </Grid>
   );
 }

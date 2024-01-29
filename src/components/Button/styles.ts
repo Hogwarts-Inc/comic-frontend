@@ -16,18 +16,15 @@ interface ButtonOwnProps {
 const sizeStyles: Record<'small' | 'medium' | 'large', CSSObject> = {
   small: {
     fontSize: '0.6rem',
-    padding: '3px 8px',
-    color: theme.palette.common.white,
+    padding: '0.1875rem 0.5rem',
   },
   medium: {
-    fontSize: '0.8rem',
-    padding: '8px 24px',
-    color: theme.palette.common.white,
+    fontSize: '.85rem',
+    padding: '0.75rem 2rem',
   },
   large: {
     fontSize: '1rem',
-    padding: '24px 60px',
-    color: theme.palette.common.white,
+    padding: '1rem 4rem',
   },
 };
 
@@ -37,8 +34,8 @@ export const ButtonMui = styled(Button, {
   let styles: CSSObject = {
     background: theme.customPalette.violet.main,
     backgroundColor: isSelected ? theme.customPalette.violetDark.main : theme.customPalette.violet.main,
-    borderRadius: '20px',
-    boxShadow: `0px 4px 4px 0px ${theme.customPalette.blackTransparent.main}`,
+    borderRadius: '1.25rem',
+    boxShadow: `0px 0.25rem 0.25rem 0px ${theme.customPalette.blackTransparent.main}`,
     '&:hover': {
       background: theme.customPalette.violetDark.main,
     },
@@ -47,6 +44,7 @@ export const ButtonMui = styled(Button, {
     overflow: 'hidden',
     textTransform: 'none',
     transition: 'all 0.5s ease-in-out',
+    color: theme.palette.common.white,
   };
 
   if (variantType === 'gradient') {
@@ -69,7 +67,7 @@ export const ButtonMui = styled(Button, {
       '&:hover:before': {
         opacity: '1',
       },
-      borderRadius: '100px',
+      borderRadius: '6.25rem',
     };
   }
 

@@ -10,7 +10,7 @@ import { Route } from 'src/constants/routes';
 import { apiUserProfile } from 'src/services/apiConfig';
 import { RootState } from 'src/store/rootReducer';
 
-import { AppBarMui, ToolbarMui, ButtonSignUp, ButtonLogIn, ButtonBox, StyledLogoIcon } from './styles';
+import { AppBarMui, ButtonSignUp, ButtonLogIn, ButtonBox, StyledLogoIcon } from './styles';
 
 export const TopBar = dynamic(
   Promise.resolve(() => {
@@ -50,48 +50,46 @@ export const TopBar = dynamic(
       <Grid container>
         <Grid item xs>
           <AppBarMui>
-            <ToolbarMui disableGutters>
-              <ButtonBox onClick={onClickLogo}>
-                <StyledLogoIcon />
+            <ButtonBox onClick={onClickLogo}>
+              <StyledLogoIcon />
+            </ButtonBox>
+            {accessToken ? (
+              <Box>
+                <IconButton style={{ padding: 0 }} onClick={handleOpenUserMenu}>
+                  <Avatar src={userProfile} sx={{ height: '4rem', width: '4rem' }} />
+                </IconButton>
+                <Menu
+                  sx={{ mt: '2.8125rem' }}
+                  id="menu-appbar"
+                  anchorEl={anchorMenuUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorMenuUser)}
+                  onClose={handleCloseUserMenu}>
+                  {userMenuOptions.map(({ title, handler }) => (
+                    <MenuItem key={title} onClick={() => handler?.()} style={{ minHeight: 0 }}>
+                      <Typography textAlign="center">{title}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            ) : (
+              <ButtonBox>
+                <ButtonLogIn onClick={() => push(Route.login)} size="medium">
+                  {t('topBar.login')}
+                </ButtonLogIn>
+                <ButtonSignUp onClick={() => push(Route.login)} size="medium" variant="outlined">
+                  {t('topBar.signup')}
+                </ButtonSignUp>
               </ButtonBox>
-              {accessToken ? (
-                <Box>
-                  <IconButton onClick={handleOpenUserMenu}>
-                    <Avatar src={userProfile} />
-                  </IconButton>
-                  <Menu
-                    sx={{ mt: '45px' }}
-                    id="menu-appbar"
-                    anchorEl={anchorMenuUser}
-                    anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                    }}
-                    open={Boolean(anchorMenuUser)}
-                    onClose={handleCloseUserMenu}>
-                    {userMenuOptions.map(({ title, handler }) => (
-                      <MenuItem key={title} onClick={() => handler?.()}>
-                        <Typography textAlign="center">{title}</Typography>
-                      </MenuItem>
-                    ))}
-                  </Menu>
-                </Box>
-              ) : (
-                <ButtonBox>
-                  <ButtonLogIn onClick={() => push(Route.login)} size="medium">
-                    {t('topBar.login')}
-                  </ButtonLogIn>
-                  <ButtonSignUp onClick={() => push(Route.login)} size="medium" variant="outlined">
-                    {t('topBar.signup')}
-                  </ButtonSignUp>
-                </ButtonBox>
-              )}
-            </ToolbarMui>
+            )}
           </AppBarMui>
         </Grid>
       </Grid>
