@@ -68,10 +68,10 @@ export default function Visualizer(props: VisualizerProps) {
 
   const handleLike = useCallback(
     debounce(
-      async (like: boolean, likesProp: number, currentUserLikesProp: boolean) => {
+      async (like: boolean, currentLikesCount: number, currentUserHasLiked: boolean) => {
         if (query.vignette) {
-          const prevCurrentUserLikes = currentUserLikesProp;
-          const prevLikes = likesProp;
+          const prevCurrentUserLikes = currentUserHasLiked;
+          const prevLikes = currentLikesCount;
           setCurrentUserLikes(like);
           setLikes(prevValue => prevValue + (like ? 1 : -1));
           try {
