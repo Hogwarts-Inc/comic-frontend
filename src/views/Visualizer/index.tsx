@@ -1,8 +1,9 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { Favorite } from '@mui/icons-material';
 import { Grid, IconButton, TextField, Typography } from '@mui/material';
+import { debounce } from 'lodash';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import {
@@ -65,24 +66,31 @@ export default function Visualizer(props: VisualizerProps) {
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState(props.comments);
 
-  const handleLike = async (like: boolean) => {
-    if (query.vignette) {
-      const prevCurrentUserLikes = currentUserLikes;
-      const prevLikes = likes;
-      setCurrentUserLikes(like);
-      setLikes(prevValue => prevValue + (like ? 1 : -1));
-      try {
-        if (like) {
-          await apisCanvasLike.postCanvasLike(+query.vignette);
-        } else {
-          await apisCanvasLike.deleteCanvasLike(+query.vignette);
+  const handleLike = useCallback(
+    debounce(
+      async (like: boolean, currentLikesCount: number, currentUserHasLiked: boolean) => {
+        if (query.vignette) {
+          const prevCurrentUserLikes = currentUserHasLiked;
+          const prevLikes = currentLikesCount;
+          setCurrentUserLikes(like);
+          setLikes(prevValue => prevValue + (like ? 1 : -1));
+          try {
+            if (like) {
+              await apisCanvasLike.postCanvasLike(+query.vignette);
+            } else {
+              await apisCanvasLike.deleteCanvasLike(+query.vignette);
+            }
+          } catch (e) {
+            setCurrentUserLikes(prevCurrentUserLikes);
+            setLikes(prevLikes);
+          }
         }
-      } catch (e) {
-        setCurrentUserLikes(prevCurrentUserLikes);
-        setLikes(prevLikes);
-      }
-    }
-  };
+      },
+      500,
+      { leading: true, trailing: false },
+    ),
+    [query],
+  );
 
   const url = useMemo(() => `${process.env.NEXT_PUBLIC_BASE_URL}${asPath}`, [asPath]);
 
@@ -151,7 +159,7 @@ export default function Visualizer(props: VisualizerProps) {
                   <ButtonContainer container item>
                     {!!props.accessToken && (
                       <LikeContainer>
-                        <IconButton size="large" onClick={() => handleLike(!currentUserLikes)}>
+                        <IconButton size="large" onClick={() => handleLike(!currentUserLikes, likes, currentUserLikes)}>
                           {currentUserLikes ? (
                             <Favorite fontSize="inherit" sx={{ color: theme.customPalette.like.main }} />
                           ) : (
