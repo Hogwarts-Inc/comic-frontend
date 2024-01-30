@@ -56,10 +56,10 @@ export const TopBar = dynamic(
             {accessToken ? (
               <Box>
                 <IconButton style={{ padding: 0 }} onClick={handleOpenUserMenu}>
-                  <Avatar src={userProfile} sx={{ height: '4rem', width: '4rem' }} />
+                  <Avatar src={userProfile} sx={{ height: '3rem', width: '3rem' }} />
                 </IconButton>
                 <Menu
-                  sx={{ mt: '2.8125rem' }}
+                  sx={{ mt: '3.25rem' }}
                   id="menu-appbar"
                   anchorEl={anchorMenuUser}
                   anchorOrigin={{

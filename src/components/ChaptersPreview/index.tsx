@@ -70,21 +70,16 @@ function ChapterPreviewer() {
       <CircularProgress />
     </div>
   ) : (
-    <Grid item container direction="column">
-      <Grid
-        container
-        item
-        xs="auto"
-        justifyContent={isMobile ? 'space-between' : 'left'}
-        margin={isMobile ? '1rem' : '1rem 1rem 0 '}>
+    <Grid item container direction="column" maxHeight="100%">
+      <Grid container item xs="auto" justifyContent="space-between" margin={isMobile ? '1rem' : '1rem 1rem 0'}>
         <Button onClick={back}>{t('back')}</Button>
+        <Button variantType="gradient" size="medium" onClick={() => push(`${Route.chapterCreate}`)}>
+          {t('chaptersPreview.createChapter')}
+        </Button>
       </Grid>
       <Container>
         <TitleWrapper>
           <Title variant="h4">{dataComic[0]?.title}</Title>
-          <Button variantType="gradient" size="medium" onClick={() => push(`${Route.chapterCreate}`)}>
-            {t('chaptersPreview.createChapter')}
-          </Button>
         </TitleWrapper>
         <TableMui>
           <TableBody>
@@ -94,7 +89,6 @@ function ChapterPreviewer() {
                   <img src={row.canvas[0]?.image_url} height={100} alt="url" />
                 </TableCellImg>
                 <TableCell>{row.title}</TableCell>
-                <TableCell />
                 <TableCell>{formatDate(row.updated_at).toString()}</TableCell>
                 <TableCell>
                   <CenterDivVertical>

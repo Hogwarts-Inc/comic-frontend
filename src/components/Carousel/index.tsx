@@ -64,16 +64,16 @@ export const Carousel = ({ images, displayMode = 'full', setCurrentIndex = () =>
 
   return (
     <Wrapper {...handlers}>
-      <Grid container spacing={2}>
+      <Grid container item>
         <Hidden only={['xs', 'sm', 'md']}>
-          <Grid item lg={1}>
+          <Grid container item lg={1} justifyContent="flex-end">
             {index > 0 && (
               <CarouselButtonFirst displayMode={displayMode} onClick={handleFirst}>
                 <KeyboardDoubleArrowLeftIcon />
               </CarouselButtonFirst>
             )}
           </Grid>
-          <Grid item lg={1}>
+          <Grid container item lg={1}>
             {index > 0 && (
               <CarouselButtonPrev onClick={handlePrev}>
                 <KeyboardArrowLeftIcon />
@@ -98,14 +98,14 @@ export const Carousel = ({ images, displayMode = 'full', setCurrentIndex = () =>
           </ImagesContainer>
         </Grid>
         <Hidden only={['xs', 'sm', 'md']}>
-          <Grid item lg={1}>
+          <Grid container item lg={1} justifyContent="flex-end">
             {index < numItems - 1 && (
               <CarouselButtonNext onClick={handleNext}>
                 <KeyboardArrowRightIcon />
               </CarouselButtonNext>
             )}
           </Grid>
-          <Grid item lg={1}>
+          <Grid container item lg={1}>
             {index < numItems - 1 && (
               <CarouselButtonLast displayMode={displayMode} onClick={handleLast}>
                 <KeyboardDoubleArrowRightIcon />

@@ -20,7 +20,7 @@ const sizeStyles: Record<'small' | 'medium' | 'large', CSSObject> = {
   },
   medium: {
     fontSize: '0.85rem',
-    padding: '0.75rem 2rem',
+    padding: '0.75rem 1rem',
   },
   large: {
     fontSize: '1rem',

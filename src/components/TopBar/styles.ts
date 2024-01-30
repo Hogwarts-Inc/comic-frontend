@@ -5,14 +5,14 @@ import Button from '@components/Button';
 import LogoIcon from '../Icons/logo.svg'; //Logo preeliminar
 
 export const StyledLogoIcon = styled(LogoIcon)({
-  height: '4rem',
+  height: '3rem',
   width: 'auto',
 });
 
 export const AppBarMui = styled(AppBar)(({ theme }) => ({
   position: 'sticky',
   top: 0,
-  height: '6rem',
+  height: '4.5rem',
   width: '100%',
   background: theme.customPalette.gradient.main,
   display: 'flex',

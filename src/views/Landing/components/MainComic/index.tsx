@@ -29,7 +29,7 @@ export const MainComic = (): JSX.Element => {
 
   return (
     <MainComicGrid container>
-      <Grid item xs={12} lg={12}>
+      <Grid container item xs={12} lg={12} justifyContent="center">
         <TypographyTitle variant="h2">{t('mainComic.title')}</TypographyTitle>
       </Grid>
       <Grid item xs={12} lg={10}>

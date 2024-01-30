@@ -7,7 +7,8 @@ export const GridItemCenter = styled(Grid)({
   justifyContent: 'center',
 });
 
-export const GridContainer = styled(Grid)({
+export const Container = styled('div')({
+  display: 'flex',
   marginBottom: '8rem',
   paddingLeft: '2rem',
   paddingRight: '2rem',

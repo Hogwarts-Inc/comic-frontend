@@ -56,7 +56,7 @@ export const Characters = () => {
   }
 
   return (
-    <GridContainer container spacing={2}>
+    <GridContainer container>
       <Grid item xs={12}>
         <TypographyTitle variant="h3">{t('characters.title')}</TypographyTitle>
       </Grid>

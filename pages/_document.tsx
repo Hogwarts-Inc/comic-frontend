@@ -1,8 +1,17 @@
 import React from 'react';
 
+import { styled } from '@mui/material';
 import Document, { DocumentContext, DocumentInitialProps, Html, Head, Main, NextScript } from 'next/document';
 
-import theme from '@styles/theme';
+const StyledHtml = styled(Html)(({ theme }) => ({
+  fontSize: '16px',
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '12px',
+  },
+  [theme.breakpoints.between('sm', 'md')]: {
+    fontSize: '14px',
+  },
+}));
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
@@ -13,10 +22,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html
-        style={{
-          fontSize: theme.breakpoints.down('sm') ? '12px' : theme.breakpoints.between('sm', 'md') ? '14px' : '16px',
-        }}>
+      <StyledHtml>
         <Head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
@@ -29,7 +35,7 @@ class MyDocument extends Document {
           <Main />
           <NextScript />
         </body>
-      </Html>
+      </StyledHtml>
     );
   }
 }
