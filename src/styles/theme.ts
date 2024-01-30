@@ -137,6 +137,21 @@ const theme = createTheme({
           fontWeight: '500',
           lineHeight: '2.125rem',
         },
+        h5: {
+          fontSize: '1.25rem', //20px
+          fontWeight: '500',
+          lineHeight: '1.75rem',
+        },
+        h6: {
+          fontSize: '1rem', //16px
+          fontWeight: '500',
+          lineHeight: '1.5rem',
+        },
+        body1: {
+          fontSize: '1rem', //16px
+          fontWeight: '400',
+          lineHeight: '1.5rem',
+        },
       },
     },
   },
