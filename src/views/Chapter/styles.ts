@@ -9,8 +9,8 @@ export const Title = styled(Typography)(({ theme }) => ({
 export const Container = styled(Grid)({
   alignSelf: 'center',
   flexDirection: 'column',
-  margin: '2rem 0',
-  width: '80%',
+  margin: '1rem 0',
+  width: '90%',
 });
 
 export const Loading = styled('div')({
@@ -36,14 +36,16 @@ export const ImgWrapper = styled('div')({
   flexDirection: 'column',
 });
 
-export const AddCanvaButton = styled(Button)({
+export const AddCanvaButton = styled(Button)<{ isFooterVisible: boolean }>(({ isFooterVisible }) => ({
   position: 'absolute',
-  bottom: 10,
-  right: 18,
+  bottom: isFooterVisible ? '6.5rem' : '1rem',
+  right: '1rem',
   borderRadius: '50%',
   boxShadow: 'none',
   maxWidth: '68px',
   minWidth: '68px',
-});
+  maxHeight: 'none',
+  padding: 0,
+}));
 
 export const AddCircleOutlineStyle = styled(AddCircleOutline)({ fontSize: 68, color: 'black' });
