@@ -53,7 +53,12 @@ export const TitleContainer = styled(Grid)({
 export const ProfilePicture = styled(Avatar)({ width: '3rem', height: '3rem' });
 export const BoxContainer = styled(Grid)({ alignItems: 'center', justifyContent: 'center', gap: '2rem' });
 export const RigthContainer = styled(Grid)({ flexDirection: 'column', gap: '1rem', height: '100%' });
-export const CommentContainer = styled(Grid)({ alignItems: 'center', gap: '1rem' });
+export const CommentContainer = styled(Grid)({
+  alignItems: 'center',
+  gap: '1rem',
+  paddingLeft: '0.5rem',
+  paddingTop: '0.5rem',
+});
 export const CommentProfile = styled(Avatar)({ width: '2.5rem', height: '2.5rem' });
 export const ButtonContainer = styled(Grid)({ alignItems: 'flex-start', gap: '1rem' });
 export const LikeContainer = styled('div')({ display: 'flex', alignItems: 'center', flexDirection: 'column' });
