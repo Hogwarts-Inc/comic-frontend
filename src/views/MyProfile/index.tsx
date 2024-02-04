@@ -56,19 +56,19 @@ function MyProfile() {
           <Description>Conecta tu wallet para poder reclamar tus NFTs</Description> */}
           </Grid>
         </ProfileInfoWrapp>
-        <Grid container xs direction="column">
+        <Grid container xs gap={2} direction="column">
           <Grid item>
             <Title variant="h4">{t('yourCreations')}</Title>
           </Grid>
           <Grid item container xs marginBottom="1rem">
             {dataCanvaByUser?.length ? (
               dataCanvaByUser?.map(canva => (
-                <GridUserCanva item xs={4}>
+                <GridUserCanva container xs={4}>
                   <ImageCanva onClick={() => push(`${Route.visualizer}/${canva.id}`)} src={canva.image_url} />
                 </GridUserCanva>
               ))
             ) : (
-              <Title variant="h6" alignSelf="center">
+              <Title variant="h5" alignSelf="center" width="100%" textAlign="center">
                 {t('noCreations')}
               </Title>
             )}
