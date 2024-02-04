@@ -8,7 +8,9 @@ export const Footer = () => (
     <TypographyDescription>
       Startup Framework contains components and complex blocks which can easily be integrated into almost any design.
     </TypographyDescription>
-    <TextButton>Privacy Policy</TextButton>
-    <TextButton>Terms</TextButton>
+    <div style={{ display: 'flex' }}>
+      <TextButton>Privacy Policy</TextButton>
+      <TextButton>Terms</TextButton>
+    </div>
   </BoxMui>
 );

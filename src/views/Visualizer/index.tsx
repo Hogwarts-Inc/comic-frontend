@@ -118,10 +118,10 @@ export default function Visualizer(props: VisualizerProps) {
   };
 
   return (
-    <DefaultLayout>
+    <DefaultLayout disableFooter={isMobile}>
       <Container container item>
         <Grid item>
-          <IconButton size="large" onClick={back}>
+          <IconButton size="large" style={{ fontSize: '2.5rem' }} onClick={back}>
             <ArrowBack fontSize="inherit" />
           </IconButton>
         </Grid>
@@ -142,10 +142,10 @@ export default function Visualizer(props: VisualizerProps) {
                       comments.map(({ username, comment: commentText, profilePicture }) => (
                         <CommentContainer container item>
                           <CommentProfile src={profilePicture} />
-                          <Typography margin={0} variant="h6">
+                          <Typography margin={0} variant="h5">
                             {username}
                           </Typography>
-                          <Typography margin={0} variant="body2">
+                          <Typography margin={0} variant="body1">
                             {commentText}
                           </Typography>
                         </CommentContainer>
@@ -159,7 +159,10 @@ export default function Visualizer(props: VisualizerProps) {
                   <ButtonContainer container item>
                     {!!props.accessToken && (
                       <LikeContainer>
-                        <IconButton size="large" onClick={() => handleLike(!currentUserLikes, likes, currentUserLikes)}>
+                        <IconButton
+                          style={{ fontSize: '3rem' }}
+                          size="large"
+                          onClick={() => handleLike(!currentUserLikes, likes, currentUserLikes)}>
                           {currentUserLikes ? (
                             <Favorite fontSize="inherit" sx={{ color: theme.customPalette.like.main }} />
                           ) : (
@@ -172,7 +175,7 @@ export default function Visualizer(props: VisualizerProps) {
                       </LikeContainer>
                     )}
                     {!!props.accessToken && (
-                      <IconButton size="large">
+                      <IconButton size="large" style={{ fontSize: '3rem' }}>
                         {showInput ? (
                           <ChatBubble fontSize="inherit" onClick={() => setShowInput(!showInput)} />
                         ) : (
@@ -180,14 +183,14 @@ export default function Visualizer(props: VisualizerProps) {
                         )}
                       </IconButton>
                     )}
-                    <FacebookShareButton url={url} style={{ margin: '4px' }}>
-                      <FacebookIcon size={40} round />
+                    <FacebookShareButton url={url} style={{ margin: '0.25rem' }}>
+                      <FacebookIcon size="3rem" round />
                     </FacebookShareButton>
-                    <TwitterShareButton url={url} style={{ margin: '4px' }}>
-                      <XIcon size={40} round />
+                    <TwitterShareButton url={url} style={{ margin: '0.25rem' }}>
+                      <XIcon size="3rem" round />
                     </TwitterShareButton>
-                    <WhatsappShareButton url={url} style={{ margin: '4px' }}>
-                      <WhatsappIcon size={40} round />
+                    <WhatsappShareButton url={url} style={{ margin: '0.25rem' }}>
+                      <WhatsappIcon size="3rem" round />
                     </WhatsappShareButton>
                   </ButtonContainer>
                   {showInput && (

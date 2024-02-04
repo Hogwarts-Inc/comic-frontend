@@ -9,9 +9,10 @@ import { ChildContainer, ContentContainer, LayoutContainer } from './styles';
 
 interface DefaultLayoutProps {
   children: ReactNode;
+  disableFooter?: boolean;
 }
 
-const DefaultLayout = ({ children }: DefaultLayoutProps) => (
+const DefaultLayout = ({ children, disableFooter = false }: DefaultLayoutProps) => (
   <LayoutContainer container direction="column">
     <Grid item>
       <TopBar />
@@ -19,7 +20,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => (
     <Grid container xs item overflow="scroll" justifyContent="center">
       <ContentContainer>
         <ChildContainer>{children}</ChildContainer>
-        <Footer />
+        {!disableFooter && <Footer />}
       </ContentContainer>
     </Grid>
   </LayoutContainer>
