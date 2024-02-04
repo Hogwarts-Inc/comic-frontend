@@ -119,7 +119,7 @@ export default function Visualizer(props: VisualizerProps) {
 
   return (
     <DefaultLayout disableFooter={isMobile}>
-      <Container container item>
+      <Container container>
         <Grid item>
           <IconButton size="large" style={{ fontSize: '2.5rem' }} onClick={back}>
             <ArrowBack fontSize="inherit" />

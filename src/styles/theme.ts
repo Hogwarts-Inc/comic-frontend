@@ -85,6 +85,15 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiGrid: {
+      styleOverrides: {
+        root: {
+          '&.MuiGrid-item': {
+            padding: '0',
+          },
+        },
+      },
+    },
     MuiOutlinedInput: { styleOverrides: { root: { borderRadius: 10 } } },
     MuiIconButton: { styleOverrides: { sizeLarge: { fontSize: '40px', padding: 4 } } },
     MuiStepIcon: {

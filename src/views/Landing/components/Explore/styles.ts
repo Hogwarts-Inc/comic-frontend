@@ -9,7 +9,7 @@ export const Box = styled('div')({
   borderImageSlice: 1,
   borderRadius: '10px',
   display: 'flex',
-  padding: '6rem 0',
+  padding: '4rem 0',
   justifyContent: 'center',
   margin: '0 auto',
   width: '90%',

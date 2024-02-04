@@ -28,7 +28,6 @@ export const TableMui = styled(Table)({
   border: 'none',
   boxShadow: 'none',
   width: '80%',
-  margin: 'auto',
 });
 
 export const Title = styled(Typography)(({ theme }) => ({
@@ -51,5 +50,8 @@ export const Container = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  margin: '4rem 0',
+  alignItems: 'center',
+  justifyContent: 'center',
+  maxWidth: '100%',
+  overflow: 'scroll',
 });

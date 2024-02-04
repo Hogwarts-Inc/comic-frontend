@@ -7,9 +7,7 @@ export const GridItemCenter = styled(Grid)({
   justifyContent: 'center',
 });
 
-export const GridItemName = styled(GridItemCenter)({
-  marginTop: '1rem',
-});
+export const GridItemName = styled(GridItemCenter)({});
 
 export const GridItemImages = styled(GridItemCenter)({
   marginTop: '2rem',
@@ -23,13 +21,8 @@ export const TypographyTitle = styled(Typography)(({ theme }) => ({
 export const TypographyName = styled(Typography)(({ theme }) => ({
   color: theme.customPalette.third.main,
   textAlign: 'center',
-  [theme.breakpoints.down('sm')]: {
-    lineHeight: '3rem',
-    fontSize: '3.125rem',
-  },
-  [theme.breakpoints.between('sm', 'lg')]: {
-    fontSize: '3.563rem',
-  },
+  fontSize: '3.563rem',
+  lineHeight: '4.375rem',
 }));
 
 export const TypographyDescription = styled(Typography)(({ theme }) => ({
@@ -38,7 +31,4 @@ export const TypographyDescription = styled(Typography)(({ theme }) => ({
   textAlign: 'center',
 }));
 
-export const GridContainer = styled(Grid)({
-  paddingLeft: '2rem',
-  paddingRight: '2rem',
-});
+export const GridContainer = styled(Grid)({});

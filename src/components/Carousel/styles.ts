@@ -23,10 +23,10 @@ export const CarouselButton = styled('div')<CarouselProps>({
   width: '3%',
 });
 
-export const CarouselButtonPrev = styled(CarouselButton)({ left: '8%' });
-export const CarouselButtonFirst = styled(CarouselButton)({ left: '5%' });
-export const CarouselButtonNext = styled(CarouselButton)({ right: '8%' });
-export const CarouselButtonLast = styled(CarouselButton)({ right: '5%' });
+export const CarouselButtonPrev = styled(CarouselButton)({ width: '1.5rem' });
+export const CarouselButtonFirst = styled(CarouselButton)({ width: '1.5rem' });
+export const CarouselButtonNext = styled(CarouselButton)({ width: '1.5rem' });
+export const CarouselButtonLast = styled(CarouselButton)({ width: '1.5rem' });
 
 export const ImagesContainer = styled('div')({
   position: 'relative',
@@ -46,7 +46,6 @@ export const CarouselContainer = styled('div')<CarouselProps>(props => ({
 export const CarouselSlot = styled('div')<CarouselProps>(({ displayMode, isClickable }) => ({
   flex: '1 0 100%',
   flexBasis: displayMode === 'reduced' ? '100%' : '75%',
-  marginRight: '5%',
   '&:hover': {
     cursor: isClickable ? 'pointer' : 'auto',
   },
