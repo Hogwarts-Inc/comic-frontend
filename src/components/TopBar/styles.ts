@@ -1,28 +1,26 @@
-import { styled, Box, AppBar, Toolbar } from '@mui/material';
+import { styled, Box, AppBar } from '@mui/material';
 
 import Button from '@components/Button';
 
 import LogoIcon from '../Icons/logo.svg'; //Logo preeliminar
 
 export const StyledLogoIcon = styled(LogoIcon)({
-  height: 'auto',
-  width: '5rem',
+  height: '4rem',
+  width: 'auto',
 });
 
 export const AppBarMui = styled(AppBar)(({ theme }) => ({
   position: 'sticky',
   top: 0,
-  height: '70px',
+  height: '6rem',
   width: '100%',
   background: theme.customPalette.gradient.main,
-}));
-
-export const ToolbarMui = styled(Toolbar)({
-  justifyContent: 'space-between',
+  display: 'flex',
+  flexDirection: 'row',
   alignItems: 'center',
-  paddingLeft: '1rem',
-  paddingRight: '1rem',
-});
+  justifyContent: 'space-between',
+  padding: '0 1rem',
+}));
 
 export const ButtonSignUp = styled(Button)(({ theme }) => ({
   background: 'transparent',
@@ -42,4 +40,5 @@ export const ButtonBox = styled(Box)({
   '&:hover': {
     cursor: 'pointer',
   },
+  alignItems: 'center',
 });

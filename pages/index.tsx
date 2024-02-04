@@ -33,26 +33,24 @@ const Home = ({ accessToken }: { accessToken: string }) => {
 
   return (
     <DefaultLayout>
-      <Grid container item gap={32} xs direction="column" alignItems="center">
-        <Grid item ref={mainComicRef}>
+      <Grid container item gap="32rem" xs direction="column" alignItems="center">
+        <Grid container item ref={mainComicRef}>
           <Fade direction="up" triggerOnce={false}>
             <MainComic />
           </Fade>
         </Grid>
-        <Grid item ref={exploreRef}>
-          <Fade direction="right" triggerOnce={false}>
+        <Grid container item ref={exploreRef}>
+          <Fade style={{ width: '100%' }} direction="right" triggerOnce={false}>
             <Explore />
           </Fade>
         </Grid>
-
-        <Grid item ref={charactersRef}>
-          <Fade direction="left" triggerOnce={false}>
+        <Grid container item ref={charactersRef}>
+          <Fade style={{ width: '100%' }} direction="left" triggerOnce={false}>
             <Characters />
           </Fade>
         </Grid>
-
-        <Grid item ref={eventRef}>
-          <Fade direction="right" triggerOnce={false}>
+        <Grid container item ref={eventRef}>
+          <Fade style={{ width: '100%' }} direction="right" triggerOnce={false}>
             <Event />
           </Fade>
         </Grid>

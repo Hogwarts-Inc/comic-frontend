@@ -34,16 +34,8 @@ export const TypographyName = styled(Typography)(({ theme }) => ({
 
 export const TypographyDescription = styled(Typography)(({ theme }) => ({
   color: theme.customPalette.third.main,
-  textAlign: 'justify',
-  [theme.breakpoints.down('sm')]: {
-    width: '90%',
-  },
-  [theme.breakpoints.between('sm', 'lg')]: {
-    width: '80%',
-  },
-  [theme.breakpoints.up('lg')]: {
-    width: '70%',
-  },
+  width: '80%',
+  textAlign: 'center',
 }));
 
 export const GridContainer = styled(Grid)({

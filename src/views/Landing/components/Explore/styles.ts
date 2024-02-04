@@ -9,9 +9,10 @@ export const Box = styled('div')({
   borderImageSlice: 1,
   borderRadius: '10px',
   display: 'flex',
-  height: '420px',
+  padding: '6rem 0',
   justifyContent: 'center',
   margin: '0 auto',
+  width: '90%',
 });
 
 export const Content = styled('div')(() => ({
@@ -28,13 +29,5 @@ export const TypographyDescription = styled(Typography)(({ theme: defaultTheme }
   color: defaultTheme.palette.text.primary,
   textAlign: 'center',
   padding: '0 1rem',
-  [defaultTheme.breakpoints.down('sm')]: {
-    marginBottom: '1rem',
-  },
-  [defaultTheme.breakpoints.between('sm', 'lg')]: {
-    marginBottom: '2rem',
-  },
-  [defaultTheme.breakpoints.up('lg')]: {
-    marginBottom: '3rem',
-  },
+  marginBottom: '3rem',
 }));

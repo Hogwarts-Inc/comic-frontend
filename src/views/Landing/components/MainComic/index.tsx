@@ -32,7 +32,7 @@ export const MainComic = (): JSX.Element => {
       <Grid item xs={12} lg={12}>
         <TypographyTitle variant="h2">{t('mainComic.title')}</TypographyTitle>
       </Grid>
-      <Grid item xs={12} lg={8}>
+      <Grid item xs={12} lg={10}>
         <Carousel images={images} />
       </Grid>
     </MainComicGrid>
