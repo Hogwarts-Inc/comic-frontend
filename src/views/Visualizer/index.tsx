@@ -140,7 +140,7 @@ export default function Visualizer(props: VisualizerProps) {
                   <CommentsContainer container item xs>
                     {comments.length ? (
                       comments.map(({ username, comment: commentText, profilePicture }) => (
-                        <CommentContainer container item>
+                        <CommentContainer container>
                           <CommentProfile src={profilePicture} />
                           <Typography margin={0} variant="h5">
                             {username}

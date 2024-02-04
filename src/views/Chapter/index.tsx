@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { CircularProgress, Grid } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '@components/Button';
 import { DialogAddCanva } from '@components/DialogAddCanva';
@@ -11,11 +11,12 @@ import { DialogUserQueue } from '@components/DialogUserQueue';
 import { Route } from 'src/constants/routes';
 import useIsMobile from 'src/hooks/useIsMobile';
 import { StoriettesParam, apisChapters } from 'src/services/apiConfig';
+import { RootState } from 'src/store/rootReducer';
 import { setCanvaChapter } from 'src/store/slices/add-canva/actions';
 
 import { Title, Loading, Img, Container, AddCanvaButton, AddCircleOutlineStyle } from './styles';
 
-function Chapter() {
+function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
   const {
     query: { chapter },
     push,
@@ -24,6 +25,7 @@ function Chapter() {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
+  const accessToken = useSelector((state: RootState) => state.auth.token);
 
   const [openDialogAddCanva, setOpenDialogAddCanva] = useState<boolean>(false);
   const [openDialogUserQueue, setOpenDialogUserQueue] = useState<boolean>(false);
@@ -83,9 +85,11 @@ function Chapter() {
             <Img src={item.image_url} alt="" onClick={() => push(`${Route.visualizer}/${item.id}`)} />
           ))}
         </Grid>
-        <AddCanvaButton variant="text" onClick={handleClickOpen}>
-          <AddCircleOutlineStyle />
-        </AddCanvaButton>
+        {!!accessToken && (
+          <AddCanvaButton variant="text" onClick={handleClickOpen} isFooterVisible={isFooterVisible}>
+            <AddCircleOutlineStyle />
+          </AddCanvaButton>
+        )}
         <DialogAddCanva openDialog={openDialogAddCanva} setOpenDialog={setOpenDialogAddCanva} />
         <DialogUserQueue openDialog={openDialogUserQueue} setOpenDialog={setOpenDialogUserQueue} />
       </Container>

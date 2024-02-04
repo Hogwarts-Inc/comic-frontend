@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { ReactNode } from 'react';
 
 import { Grid } from '@mui/material';
@@ -10,9 +11,10 @@ import { ChildContainer, ContentContainer, LayoutContainer } from './styles';
 interface DefaultLayoutProps {
   children: ReactNode;
   disableFooter?: boolean;
+  onFooterIsShowed?: (value: boolean) => void;
 }
 
-const DefaultLayout = ({ children, disableFooter = false }: DefaultLayoutProps) => (
+const DefaultLayout = ({ children, disableFooter = false, onFooterIsShowed }: DefaultLayoutProps) => (
   <LayoutContainer container direction="column">
     <Grid item>
       <TopBar />
@@ -20,7 +22,7 @@ const DefaultLayout = ({ children, disableFooter = false }: DefaultLayoutProps) 
     <Grid container xs item overflow="scroll" justifyContent="center">
       <ContentContainer>
         <ChildContainer>{children}</ChildContainer>
-        {!disableFooter && <Footer />}
+        {!disableFooter && <Footer onFooterIsShowed={onFooterIsShowed} />}
       </ContentContainer>
     </Grid>
   </LayoutContainer>

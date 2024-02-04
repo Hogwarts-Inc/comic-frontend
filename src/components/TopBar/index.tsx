@@ -19,6 +19,7 @@ export const TopBar = dynamic(
     const accessToken = useSelector((state: RootState) => state.auth.token);
     const [anchorMenuUser, setAnchorMenuUser] = useState<null | HTMLElement>(null);
     const [userProfile, setUserProfile] = useState('');
+    const router = useRouter();
 
     useEffect(() => {
       if (!accessToken) return;
@@ -82,10 +83,17 @@ export const TopBar = dynamic(
               </Box>
             ) : (
               <ButtonBox>
-                <ButtonLogIn onClick={() => push(Route.login)} size="medium">
+                <ButtonLogIn
+                  onClick={() => {
+                    push(`${Route.login}?returnTo=${router.asPath}`);
+                  }}
+                  size="medium">
                   {t('topBar.login')}
                 </ButtonLogIn>
-                <ButtonSignUp onClick={() => push(Route.login)} size="medium" variant="outlined">
+                <ButtonSignUp
+                  onClick={() => push(`${Route.login}?returnTo=${router.asPath}`)}
+                  size="medium"
+                  variant="outlined">
                   {t('topBar.signup')}
                 </ButtonSignUp>
               </ButtonBox>

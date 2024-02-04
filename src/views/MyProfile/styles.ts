@@ -20,7 +20,7 @@ export const Container = styled(Grid)({
 });
 
 export const ProfileInfoWrapp = styled(Grid)({
-  marginBottom: '3rem',
+  marginBottom: '2rem',
 });
 
 export const UserInfo = styled(Grid)({
@@ -33,4 +33,4 @@ export const AvatarStyles = styled(Avatar)({ width: '8vw', height: '8vw' });
 
 export const GridUserCanva = styled(Grid)({ display: 'flex', justifyContent: 'flex-start' });
 
-export const ImageCanva = styled('img')({ width: '99%', height: 'auto', '&:hover': { cursor: 'pointer' } });
+export const ImageCanva = styled('img')({ width: '99%', height: 'fit-content', '&:hover': { cursor: 'pointer' } });
