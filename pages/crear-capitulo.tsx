@@ -99,13 +99,13 @@ const ChapterCreate = () => {
           return (
             <Form>
               <Grid container direction="row" justifyContent="center">
-                <Grid container item style={{ paddingTop: '2rem', width: '80%' }}>
+                <Grid container item style={{ padding: '2rem 0', width: '80%' }}>
                   <CustomStepper
                     activeStep={activeStep}
                     setActiveStep={step => dispatch(setActiveStep(step))}
                     steps={steps}
                   />
-                  <Grid container item style={{ padding: '2rem 0' }}>
+                  <Grid container item style={{ paddingTop: '1rem' }}>
                     {activeStep === 0 && (
                       <AddInfo
                         errors={errors}

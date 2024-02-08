@@ -14,6 +14,7 @@ export const OutsideGridContainer = styled(Grid)({
   justifyContent: 'center',
   width: '100%',
   minWidth: '60vw',
+  padding: '2rem',
 });
 
 export const ColGridContainer = styled(Grid)(({ theme: defaultTheme }) => ({
@@ -22,7 +23,6 @@ export const ColGridContainer = styled(Grid)(({ theme: defaultTheme }) => ({
   flexDirection: 'row',
   justifyContent: 'center',
   margin: 'auto',
-  marginBottom: '2rem',
   width: '100%',
   [defaultTheme.breakpoints.down('sm')]: {
     flexDirection: 'column',
@@ -31,24 +31,16 @@ export const ColGridContainer = styled(Grid)(({ theme: defaultTheme }) => ({
 
 export const ItemGridContainer = styled(Grid)({
   width: '100%',
+  gap: '1rem',
 });
-
-export const SecondItemGridContainer = styled(ItemGridContainer)(({ theme: defaultTheme }) => ({
-  [defaultTheme.breakpoints.up('sm')]: {
-    marginLeft: '2rem',
-  },
-}));
 
 export const SectionTitle = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
-  marginBottom: '1rem',
-  textAlign: 'left',
 }));
 
 export const SectionDescription = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
   fontWeight: 500,
-  marginBottom: '1rem',
   textAlign: 'left',
   whiteSpace: 'pre-line',
 }));
@@ -56,7 +48,7 @@ export const SectionDescription = styled(Typography)(({ theme: defaultTheme }) =
 export const EditorButton = styled(Button)({
   display: 'flex',
   justifyContent: 'center',
-  margin: '4rem auto 0 auto',
+  margin: '0 auto',
   width: 'fit-content',
 });
 
@@ -68,15 +60,13 @@ export const NextButton = styled(Button)({
 export const DividerLine = styled(Divider)(({ theme: defaultTheme }) => ({
   backgroundColor: theme.palette.text.primary,
   [defaultTheme.breakpoints.up('sm')]: {
-    marginLeft: '2rem',
+    margin: '0 2rem',
     orientation: 'vertical',
     width: '1px',
   },
   [defaultTheme.breakpoints.down('sm')]: {
     height: '1px',
-    marginBottom: '2rem',
-    marginLeft: 0,
-    marginTop: '2rem',
+    margin: '2rem 0 2rem',
     orientation: 'horizontal',
     width: '100%',
   },

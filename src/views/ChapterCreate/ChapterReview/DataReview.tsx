@@ -29,7 +29,7 @@ export const DataReview = ({ context, onNext, values }: ChapterReviewProps) => {
   };
 
   return (
-    <GridContainer container>
+    <GridContainer container gap="2rem" padding="2rem">
       <Grid item xs={12}>
         <TitleView context={context} />
       </Grid>
@@ -48,7 +48,7 @@ export const DataReview = ({ context, onNext, values }: ChapterReviewProps) => {
         </>
       )}
 
-      <Grid item xs={12}>
+      <Grid container item xs={12} gap="1rem" direction="column">
         <SectionTitle variant="h4">{t('chapterCreate.chapterReview.createdCanvas')}</SectionTitle>
         <ThumbnailContainer>
           {values.files.map((file, index) => (

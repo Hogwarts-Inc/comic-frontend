@@ -49,7 +49,9 @@
       "uploadDescription": "Puedes subir tu propia viñeta creada previamente y agregarla al capítulo. \nAsegúrate que sea un archivo PNG. \nPuedes subir hasta 3 viñetas en esta instancia. ",
       "navToEditorTitle": "Utiliza el editor gráfico",
       "navToEditorButton": "Ir al editor",
-      "dropZone": "Arrastra y suelta tus archivos aquí"
+      "dropZone": "Arrastra y suelta tus archivos aquí",
+      "fileRejected": "El archivo {{fileName}} ha sido rechazado, peso máximo 1MB.",
+      "maximunExceeded": "Has excedido el número máximo de viñetas permitidas, el máximo son {{max}}"
     },
     "chapterReview": {
       "createdCanvas": "Viñetas creadas",
