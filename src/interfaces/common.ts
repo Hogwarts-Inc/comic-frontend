@@ -8,13 +8,11 @@ export interface FontItem {
   url: string;
 }
 
+export type ContextType = 'chapter' | 'canva';
+
 export interface ChapterData {
   title: string;
   description: string;
   files: string[];
-}
-
-export interface CanvaData {
-  files: string[];
-  chapterId: number;
+  chapterId?: number;
 }

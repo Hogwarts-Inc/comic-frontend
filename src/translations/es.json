@@ -64,6 +64,7 @@
       "canvas": "Debes agregar al menos una viñeta"
     }
   },
+  "confirmNavigateToEditor": "Si navegas al editor gráfico, perderás los archivos que has subido. ¿Estás seguro que quieres continuar?",
   "addCanva": {
     "title": "Agregar Viñetas",
     "createdCanvas": "Viñetas creadas",

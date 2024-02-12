@@ -12,7 +12,7 @@ import { Route } from 'src/constants/routes';
 import useIsMobile from 'src/hooks/useIsMobile';
 import { StoriettesParam, apisChapters } from 'src/services/apiConfig';
 import { RootState } from 'src/store/rootReducer';
-import { setCanvaChapter } from 'src/store/slices/add-canva/actions';
+import { resetCanvaCreate, setChapterId } from 'src/store/slices/canva-creator/reducer';
 
 import { Title, Loading, Img, Container, AddCanvaButton, AddCircleOutlineStyle } from './styles';
 
@@ -51,7 +51,8 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
           setLoading(false);
 
           if (status === 200) {
-            dispatch(setCanvaChapter(+chapter));
+            dispatch(resetCanvaCreate());
+            dispatch(setChapterId(+chapter));
             setOpenDialogAddCanva(true);
           }
         })

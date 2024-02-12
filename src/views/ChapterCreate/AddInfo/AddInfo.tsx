@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
 import Button from '@components/Button';
-import { setChapterTitle, setChapterDescription } from 'src/store/slices/chapter-create/actions';
+import { setChapterDescription, setChapterTitle } from 'src/store/slices/canva-creator/reducer';
 
 import { Title, GridContainer, TitleTextField, DescriptionTextField } from './styles';
 

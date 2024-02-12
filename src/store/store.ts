@@ -10,7 +10,6 @@ import rootReducer from './rootReducer';
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['chapterCreate'],
 };
 
 export const store = configureStore({
