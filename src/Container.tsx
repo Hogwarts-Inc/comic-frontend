@@ -46,7 +46,7 @@ function Container({ children }: { children: React.ReactNode }) {
       style={{
         flex: 1,
         display: 'flex',
-        height: '100vh',
+        height: '100%',
         width: '100vw',
       }}>
       {children}
