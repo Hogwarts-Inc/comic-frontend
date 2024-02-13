@@ -9,22 +9,30 @@ import { useInView } from 'react-intersection-observer';
 
 import DefaultLayout from '@components/DefaultLayout';
 import useAppAuthentication from 'src/hooks/useAppAuthentication';
+import { apisCanvas } from 'src/services/apiConfig';
 import { Characters } from 'src/views/Landing/components/Characters';
 import { Event } from 'src/views/Landing/components/Event';
 import { Explore } from 'src/views/Landing/components/Explore';
-import { MainComic } from 'src/views/Landing/components/MainComic';
+import { Images, MainComic } from 'src/views/Landing/components/MainComic';
 
 export const getServerSideProps = (async ctx => {
   let accessToken = '';
+  let images: Images[] = [];
   try {
     accessToken = (await getAccessToken(ctx.req, ctx.res)).accessToken || '';
   } catch (e) {
     console.error('Error fetching access token:', e);
   }
-  return { props: { accessToken } };
+  try {
+    const { data } = await apisCanvas.getCanva();
+    images = data.map(obj => ({ url: obj.image_url, id: obj.id }));
+  } catch (e) {
+    console.error('Error fetching images:', e);
+  }
+  return { props: { accessToken, images } };
 }) satisfies GetServerSideProps<{ accessToken: string }>;
 
-const Home = ({ accessToken }: { accessToken: string }) => {
+const Home = ({ accessToken, images }: { accessToken: string; images: Images[] }) => {
   const [mainComicRef] = useInView();
   const [exploreRef] = useInView();
   const [charactersRef] = useInView();
@@ -35,9 +43,7 @@ const Home = ({ accessToken }: { accessToken: string }) => {
     <DefaultLayout>
       <Grid container item gap="20rem" xs direction="column" alignItems="center">
         <Grid container item ref={mainComicRef}>
-          <Fade direction="up" triggerOnce={false}>
-            <MainComic />
-          </Fade>
+          <MainComic images={images} />
         </Grid>
         <Grid container item ref={exploreRef}>
           <Fade style={{ width: '100%' }} direction="right" triggerOnce={false}>
