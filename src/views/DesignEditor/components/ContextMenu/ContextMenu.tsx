@@ -2,13 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 
-import { useActiveObject, useContextMenuRequest, useEditor } from '@layerhub-io/react';
+import { useContextMenuRequest, useEditor } from '@layerhub-io/react';
 import { useStyletron } from 'baseui';
+import { useTranslation } from 'react-i18next';
 
 import BringToFront from '../../../../components/Icons/BringToFront';
 import Delete from '../../../../components/Icons/Delete';
 import Duplicate from '../../../../components/Icons/Duplicate';
-import Elements from '../../../../components/Icons/Elements';
 import Locked from '../../../../components/Icons/Locked';
 import Paste from '../../../../components/Icons/Paste';
 import SendToBack from '../../../../components/Icons/SendToBack';
@@ -51,15 +51,8 @@ function ContextMenuItem({
 function ContextMenu() {
   const contextMenuRequest = useContextMenuRequest();
   const editor = useEditor();
-  const activeObject: any = useActiveObject();
-  const handleAsComponentHandler = async () => {
-    if (editor) {
-      const component: any = await editor.scene.exportAsComponent();
-      if (component) {
-        console.log({ component });
-      }
-    }
-  };
+  const { t } = useTranslation();
+
   if (!contextMenuRequest || !contextMenuRequest.target) {
     return <></>;
   }
@@ -85,7 +78,7 @@ function ContextMenu() {
             editor.objects.copy();
             editor.cancelContextMenuRequest();
           }}
-          label="copy">
+          label={t('editor.copy')}>
           <Duplicate size={24} />
         </ContextMenuItem>
         <ContextMenuItem
@@ -93,7 +86,7 @@ function ContextMenu() {
             editor.objects.paste();
             editor.cancelContextMenuRequest();
           }}
-          label="paste">
+          label={t('editor.paste')}>
           <Paste size={24} />
         </ContextMenuItem>
         <ContextMenuItem
@@ -102,7 +95,7 @@ function ContextMenu() {
             editor.objects.remove();
             editor.cancelContextMenuRequest();
           }}
-          label="delete">
+          label={t('editor.delete')}>
           <Delete size={24} />
         </ContextMenuItem>
       </div>
@@ -129,7 +122,7 @@ function ContextMenu() {
               editor.objects.copy();
               editor.cancelContextMenuRequest();
             }}
-            label="copy">
+            label={t('editor.copy')}>
             <Duplicate size={24} />
           </ContextMenuItem>
           <ContextMenuItem
@@ -137,7 +130,7 @@ function ContextMenu() {
               editor.objects.paste();
               editor.cancelContextMenuRequest();
             }}
-            label="paste">
+            label={t('editor.paste')}>
             <Paste size={24} />
           </ContextMenuItem>
           <ContextMenuItem
@@ -145,7 +138,7 @@ function ContextMenu() {
               editor.objects.remove();
               editor.cancelContextMenuRequest();
             }}
-            label="delete">
+            label={t('editor.delete')}>
             <Delete size={24} />
           </ContextMenuItem>
           <div style={{ margin: '0.5rem 0' }} />
@@ -154,7 +147,7 @@ function ContextMenu() {
               editor.objects.bringForward();
               editor.cancelContextMenuRequest();
             }}
-            label="bring forward">
+            label={t('editor.bringToFront')}>
             <BringToFront size={24} />
           </ContextMenuItem>
           <ContextMenuItem
@@ -162,16 +155,8 @@ function ContextMenu() {
               editor.objects.sendBackwards();
               editor.cancelContextMenuRequest();
             }}
-            label="send backward">
+            label={t('editor.sentToBack')}>
             <SendToBack size={24} />
-          </ContextMenuItem>
-          <ContextMenuItem
-            onClick={() => {
-              handleAsComponentHandler();
-              editor.cancelContextMenuRequest();
-            }}
-            label="Save as component">
-            <Elements size={24} />
           </ContextMenuItem>
           <div style={{ margin: '0.5rem 0' }} />
           <ContextMenuItem
@@ -179,20 +164,9 @@ function ContextMenu() {
               editor.objects.lock();
               editor.cancelContextMenuRequest();
             }}
-            label="lock">
+            label={t('editor.block')}>
             <Locked size={24} />
           </ContextMenuItem>
-          {activeObject?.type === 'StaticImage' && (
-            <ContextMenuItem
-              onClick={() => {
-                // handleAsComponentHandler()
-                editor.objects.setAsBackgroundImage();
-                editor.cancelContextMenuRequest();
-              }}
-              label="Set as background image">
-              <Elements size={24} />
-            </ContextMenuItem>
-          )}
         </div>
       ) : (
         <div // @ts-ignore
@@ -213,7 +187,7 @@ function ContextMenu() {
               editor.objects.unlock();
               editor.cancelContextMenuRequest();
             }}
-            label="unlock">
+            label={t('editor.unBlock')}>
             <Unlocked size={24} />
           </ContextMenuItem>
         </div>

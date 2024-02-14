@@ -126,5 +126,27 @@
     "createChapter": "Crear capitulo"
   },
   "yourCreations": "Tus creaciones",
-  "noCreations": "No tienes historietas creadas."
+  "noCreations": "No tienes historietas creadas.",
+  "editor": {
+    "zoomOut": "Alejar",
+    "zoomIn": "Acercar",
+    "bringToFront": "Traer al frente",
+    "sendToBack": "Enviar al fondo",
+    "clipToFrame": "Fijar al marco",
+    "layers": "Capas",
+    "align": "Alinear",
+    "block": "Bloquear",
+    "unBlock": "Desbloquear",
+    "unGroup": "Desagrupar",
+    "group": "Agrupar",
+    "delete": "Eliminar",
+    "duplicate": "Duplicar",
+    "opacity": "Opacidad",
+    "flip": "Voltear",
+    "groupName": "Grupo",
+    "flipVertical": "Voltear verticalmente",
+    "flipHorizontal": "Voltear horizontalmente",
+    "copy": "Copiar",
+    "paste": "Pegar"
+  }
 }

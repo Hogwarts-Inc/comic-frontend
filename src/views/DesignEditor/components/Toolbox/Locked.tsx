@@ -4,11 +4,13 @@ import { useEditor } from '@layerhub-io/react';
 import { Block } from 'baseui/block';
 import { Button, SIZE, KIND } from 'baseui/button';
 import { PLACEMENT, StatefulTooltip } from 'baseui/tooltip';
+import { useTranslation } from 'react-i18next';
 
 import UnlockedIcon from '../../../../components/Icons/Unlocked';
 
 function Locked() {
   const editor = useEditor();
+  const { t } = useTranslation();
 
   return (
     <Block
@@ -19,7 +21,7 @@ function Locked() {
         padding: '0 12px',
         justifyContent: 'flex-end',
       }}>
-      <StatefulTooltip placement={PLACEMENT.bottom} showArrow accessibilityType="tooltip" content="Unlock">
+      <StatefulTooltip placement={PLACEMENT.left} showArrow accessibilityType="tooltip" content={t('editor.unBlock')}>
         <Button
           onClick={() => {
             editor.objects.unlock();
