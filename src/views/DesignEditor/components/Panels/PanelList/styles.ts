@@ -13,6 +13,7 @@ export const ButtonsContainer = styled(Grid)(() => ({
   gap: '1rem',
   padding: '1rem',
 }));
+
 export const ButtonContainer = styled('div')({
   width: '100%',
   display: 'flex',

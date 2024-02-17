@@ -6,6 +6,7 @@ import { Block } from 'baseui/block';
 import { Button, SIZE, KIND } from 'baseui/button';
 import { PLACEMENT, StatefulPopover } from 'baseui/popover';
 import { StatefulTooltip } from 'baseui/tooltip';
+import { useTranslation } from 'react-i18next';
 
 import FlipHorizontal from '../../../../../components/Icons/FlipHorizontal';
 import FlipVertical from '../../../../../components/Icons/FlipVertical';
@@ -14,6 +15,7 @@ function Flip() {
   const editor = useEditor();
   const activeObject = useActiveObject() as any;
   const [state, setState] = React.useState({ flipX: false, flipY: false });
+  const { t } = useTranslation();
 
   React.useEffect(() => {
     if (activeObject) {
@@ -46,7 +48,7 @@ function Flip() {
               onClick={flipHorizontally}
               kind={KIND.tertiary}
               size={SIZE.mini}>
-              Flip horizontally
+              {t('editor.flipHorizontal')}
             </Button>
           </Block>
           <Button
@@ -55,14 +57,14 @@ function Flip() {
             onClick={flipVertically}
             kind={KIND.tertiary}
             size={SIZE.mini}>
-            Flip vertically
+            {t('editor.flipVertical')}
           </Button>
         </Block>
       }>
       <Block>
-        <StatefulTooltip placement={PLACEMENT.bottom} showArrow accessibilityType="tooltip" content="Layers">
+        <StatefulTooltip placement={PLACEMENT.bottom} showArrow accessibilityType="tooltip">
           <Button size={SIZE.compact} kind={KIND.tertiary}>
-            Flip
+            {t('editor.flip')}
           </Button>
         </StatefulTooltip>
       </Block>

@@ -9,6 +9,7 @@ import { Input } from 'baseui/input';
 import { StatefulPopover, PLACEMENT } from 'baseui/popover';
 import { Slider } from 'baseui/slider';
 import { StatefulTooltip } from 'baseui/tooltip';
+import { useTranslation } from 'react-i18next';
 
 import OpacityIcon from '../../../../../components/Icons/Opacity';
 
@@ -19,6 +20,7 @@ function Opacity() {
     opacityTemp: number;
   }>({ opacity: 0, opacityTemp: 0 });
   const activeObject = useActiveObject() as Required<ILayer>;
+  const { t } = useTranslation();
 
   React.useEffect(() => {
     if (activeObject) {
@@ -58,7 +60,7 @@ function Opacity() {
       content={
         <Block width="200px" backgroundColor="#ffffff" padding="20px">
           <Block $style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Block $style={{ fontSize: '14px' }}>Opacity</Block>
+            <Block $style={{ fontSize: '14px' }}>{t('editor.opacity')}</Block>
             <Block width="52px" />
           </Block>
 
@@ -125,7 +127,7 @@ function Opacity() {
         </Block>
       }>
       <Block>
-        <StatefulTooltip placement={PLACEMENT.bottom} showArrow accessibilityType="tooltip" content="Opacity">
+        <StatefulTooltip placement={PLACEMENT.left} showArrow accessibilityType="tooltip" content={t('editor.opacity')}>
           <Button kind={KIND.tertiary} size={SIZE.mini}>
             <OpacityIcon size={24} />
           </Button>

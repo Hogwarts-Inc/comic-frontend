@@ -23,7 +23,7 @@ export function PanelListItem({ label, icon, name }: { label: string; icon: stri
         }}
         isSelected={name === activePanel}
         fullWidth
-        style={{ aspectRatio: '1/1', height: '100%', width: 76, maxHeight: 'none' }}>
+        style={{ aspectRatio: '1/1', height: '100%', width: '4.75rem', maxHeight: 'none' }}>
         <ButtonContainer>
           <Icon size="2.25rem" />
           <ButtonText>{label}</ButtonText>
