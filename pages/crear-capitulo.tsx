@@ -16,8 +16,8 @@ import withAuth from 'src/hoc/withAuth';
 import { ChapterData } from 'src/interfaces/common';
 import { apisCanvas, apisChapters, apisComic } from 'src/services/apiConfig';
 import { RootState } from 'src/store/rootReducer';
-import { resetChapterCreate, setActiveStep } from 'src/store/slices/chapter-create/actions';
-import { selectActiveStep, selectChapterData } from 'src/store/slices/chapter-create/selectors';
+import { resetCanvaCreate, setActiveStep } from 'src/store/slices/canva-creator/reducer';
+import { selectActiveStep, selectCanvaData } from 'src/store/slices/canva-creator/selectors';
 import { AddCanva } from 'src/views/ChapterCreate/AddCanva/AddCanva';
 import { AddInfo } from 'src/views/ChapterCreate/AddInfo/AddInfo';
 import { DataReview } from 'src/views/ChapterCreate/ChapterReview/DataReview';
@@ -33,7 +33,7 @@ const ChapterCreate = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { chapterData, activeStep } = useSelector((state: RootState) => ({
-    chapterData: selectChapterData(state),
+    chapterData: selectCanvaData(state),
     activeStep: selectActiveStep(state),
   }));
 
@@ -53,9 +53,8 @@ const ChapterCreate = () => {
       const chapterId = chapterResponse.data.id;
 
       await apisCanvas.postCanva({ chapter_id: chapterId, images: chapterData.files });
-      dispatch(resetChapterCreate());
-
       router.push(Route.home);
+      dispatch(resetCanvaCreate());
     } catch (e) {
       console.error(e); // TODO handle error with alert
     }
@@ -127,7 +126,14 @@ const ChapterCreate = () => {
                         onNext={handleNext}
                       />
                     )}
-                    {activeStep === 2 && <DataReview context="chapter" values={chapterData} onNext={handleSubmit} />}
+                    {activeStep === 2 && (
+                      <DataReview
+                        isSubmitting={isSubmitting}
+                        context="chapter"
+                        values={chapterData}
+                        onNext={handleSubmit}
+                      />
+                    )}
                   </Grid>
                 </Grid>
               </Grid>

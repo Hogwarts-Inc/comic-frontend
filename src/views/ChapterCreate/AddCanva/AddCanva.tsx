@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-restricted-globals */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-vars */
 import React from 'react';
@@ -10,8 +12,9 @@ import { useDispatch } from 'react-redux';
 
 import { TitleView } from '@components/AddCanvaTitleView';
 import { Route } from 'src/constants/routes';
-import { setCanvaFiles } from 'src/store/slices/add-canva/actions';
-import { setChapterFiles } from 'src/store/slices/chapter-create/actions';
+import { ContextType } from 'src/interfaces/common';
+import { setCanvaFiles } from 'src/store/slices/canva-creator/reducer';
+import { toBase64 } from 'src/utils/data';
 
 import {
   OutsideGridContainer,
@@ -25,7 +28,7 @@ import {
 } from './styles';
 
 interface AddCanvaProps {
-  context: 'chapter' | 'canva';
+  context: ContextType;
   values?: any;
   setFieldValue?: (field: string, value: any, shouldValidate?: boolean) => void;
   onNext?: () => void;
@@ -36,21 +39,23 @@ export const AddCanva = ({ context, values, setFieldValue, onNext }: AddCanvaPro
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const createObjectURL = (file: File) => URL.createObjectURL(file);
-
-  const handleFileChange = (fileObjects: File[]) => {
+  const handleFileChange = async (fileObjects: File[]) => {
     setFieldValue?.('files', fileObjects);
 
-    const newFileObjects = fileObjects.map(file => createObjectURL(file));
-    if (context === 'chapter') {
-      dispatch(setChapterFiles(newFileObjects));
-    } else {
-      dispatch(setCanvaFiles(newFileObjects));
-    }
+    const newFileObjects = await Promise.all(fileObjects.map(toBase64));
+    dispatch(setCanvaFiles(newFileObjects));
   };
 
   const onNavigateToEditor = () => {
-    router.push(Route.editor);
+    if (values?.files?.length) {
+      if (confirm(t('confirmNavigateToEditor'))) {
+        setFieldValue?.('files', []);
+        dispatch(setCanvaFiles([]));
+        router.push(Route.editor);
+      }
+    } else {
+      router.push(Route.editor);
+    }
   };
 
   return (
@@ -71,6 +76,7 @@ export const AddCanva = ({ context, values, setFieldValue, onNext }: AddCanvaPro
             filesLimit={3}
             maxFileSize={1000000}
             onChange={handleFileChange}
+            initialFiles={values?.files}
             dropzoneClass="customDropzone"
             showPreviews={false}
             showAlerts={['error']}
