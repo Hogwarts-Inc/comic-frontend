@@ -29,7 +29,7 @@ export const Event = () => {
 
   return (
     <Container>
-      <Grid item container spacing={4}>
+      <Grid item container xs>
         <GridItemCenter item xs={12} md={6} lg={6}>
           <TypographyTitle variant="h2">{t('event.title')}</TypographyTitle>
           <br />
