@@ -49,9 +49,15 @@ input[type='number'] {
 body {
   margin: 0;
   font-family: 'Poppins';
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
+}
+
+html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 .customDropzone {
@@ -67,4 +73,10 @@ body {
     align-items: center;
     justify-content: space-around;
   }
+}
+
+#__next {
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
