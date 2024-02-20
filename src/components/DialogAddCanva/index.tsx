@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Route } from 'src/constants/routes';
-import { apisCanvas } from 'src/services/apiConfig';
+import { apisCanvas } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
 import { resetCanvaCreate, setActiveStep } from 'src/store/slices/canva-creator/reducer';
 import { selectActiveStep, selectCanvaData } from 'src/store/slices/canva-creator/selectors';

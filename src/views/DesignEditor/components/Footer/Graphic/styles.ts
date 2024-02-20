@@ -24,7 +24,9 @@ export const SceneButtonContainer = styled(Block)<{ top: string; left: string }>
   padding: '0.5rem 0',
 }));
 
-export const CloseButton = styled(Block)<{ isOpen: boolean }>(({ isOpen }) => ({
+export const CloseButton = styled(Block, {
+  shouldForwardProp: props => !['isOpen'].includes(props as string),
+})<{ isOpen: boolean }>(({ isOpen }) => ({
   padding: '0.5rem',
   cursor: 'pointer',
   display: 'flex',

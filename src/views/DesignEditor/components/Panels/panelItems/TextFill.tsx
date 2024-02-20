@@ -5,6 +5,10 @@ import { Block } from 'baseui/block';
 import { Delete } from 'baseui/icon';
 import { throttle } from 'lodash';
 import { HexColorPicker } from 'react-colorful';
+import { useTranslation } from 'react-i18next';
+
+import useAppContext from 'src/hooks/useAppContext';
+import useIsMobile from 'src/hooks/useIsMobile';
 
 import Scrollable from '../../../../../components/Scrollable';
 
@@ -26,6 +30,9 @@ const PRESET_COLORS = [
 function TextFill() {
   const activeObject = useActiveObject();
   const editor = useEditor();
+  const { t } = useTranslation();
+  const { setActiveSubMenu } = useAppContext();
+  const isMobile = useIsMobile();
 
   const updateObjectFill = throttle((color: string) => {
     if (activeObject) {
@@ -43,17 +50,25 @@ function TextFill() {
           justifyContent: 'space-between',
           padding: '1.5rem',
         }}>
-        <Block>Text Fill</Block>
+        <Block>{t('editor.textFill')}</Block>
 
-        <Block $style={{ cursor: 'pointer', display: 'flex' }}>
+        <Block onClick={() => setActiveSubMenu('')} $style={{ cursor: 'pointer', display: 'flex' }}>
           <Delete size={24} />
         </Block>
       </Block>
       <Scrollable>
-        <Block padding="0 1.5rem">
-          <HexColorPicker onChange={updateObjectFill} style={{ width: '100%' }} />
+        <Block
+          style={{
+            padding: '0 1.5rem',
+            display: isMobile ? 'flex' : 'block',
+            flexDirection: isMobile ? 'row' : 'column',
+            gap: isMobile ? '1rem' : '0',
+          }}>
+          <HexColorPicker onChange={updateObjectFill} style={{ width: isMobile ? '50%' : '100%' }} />
           <Block>
-            <Block $style={{ padding: '0.75rem 0', fontWeight: 500, fontSize: '14px' }}>Preset colors</Block>
+            <Block $style={{ padding: '0.75rem 0', fontWeight: 500, fontSize: '14px' }}>
+              {t('editor.defaultColors')}
+            </Block>
             <Block $style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', gap: '0.25rem' }}>
               {PRESET_COLORS.map(color => (
                 <Block

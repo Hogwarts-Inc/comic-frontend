@@ -6,8 +6,10 @@ import { useSelector } from 'react-redux';
 
 import { RootState } from 'src/store/rootReducer';
 
+import FontSelector from './FontSelector';
 import Images from './Images';
 import Text from './Text';
+import TextFill from './TextFill';
 import Uploads from './Uploads';
 
 function ImagesConvertor() {
@@ -39,4 +41,6 @@ export default {
   Images: ImagesConvertor,
   Characters: CharacterConvertor,
   Shapes: ShapesConvertor,
+  FontSelector,
+  TextFill,
 } as { [key: string]: () => React.JSX.Element };

@@ -10,7 +10,7 @@ import { DialogAddCanva } from '@components/DialogAddCanva';
 import { DialogUserQueue } from '@components/DialogUserQueue';
 import { Route } from 'src/constants/routes';
 import useIsMobile from 'src/hooks/useIsMobile';
-import { StoriettesParam, apisChapters } from 'src/services/apiConfig';
+import { StoriettesParam, apisChapters } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
 import { resetCanvaCreate, setChapterId } from 'src/store/slices/canva-creator/reducer';
 

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { apiUserProfile } from 'src/services/apiConfig';
+import { apiUserProfile } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
 import { setId, setSub, setToken } from 'src/store/slices/auth';
 
