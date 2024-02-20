@@ -1,52 +1,9 @@
 /* eslint-disable consistent-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
-import axios from 'axios';
-import mime from 'mime/lite';
+import { createAction } from '@reduxjs/toolkit';
 
 import { IUpload, Uploading } from '../../../interfaces/editor';
-import api from '../../../services/api';
-import { uniqueFilename } from '../../../utils/unique';
 
 export const setUploads = createAction<IUpload[]>('uploads/setUploads');
 export const setUploading = createAction<Uploading>('uploads/setUploading');
 export const closeUploading = createAction('uploads/closeUploading');
-
-export const getUploads = createAsyncThunk<void, never, { rejectValue: Record<string, string[]> }>(
-  'uploads/getUploads',
-  async (_, { rejectWithValue, dispatch }) => {
-    try {
-      const uploads = await api.getUploads();
-      dispatch(setUploads(uploads));
-    } catch (err) {
-      return rejectWithValue((err as any).response?.data?.error.data || null);
-    }
-  },
-);
-
-export const uploadFile = createAsyncThunk<void, { file: File }, any>(
-  'uploads/uploadFile',
-  async (args, { dispatch }) => {
-    const { file } = args;
-    setUploading({
-      progress: 0,
-      status: 'IN_PROGRESS',
-    });
-    const updatedFileName = uniqueFilename(file.name);
-    const updatedFile = new File([file], updatedFileName);
-    const response = await api.getSignedURLForUpload({ name: updatedFileName });
-    await axios.put(response.url, updatedFile, {
-      headers: { 'Content-Type': mime.getType(updatedFileName) as string },
-      onUploadProgress: progressEvent => {
-        const percentCompleted = Math.round((progressEvent.loaded * 100) / (progressEvent?.total || 1));
-        setUploading({
-          progress: percentCompleted,
-          status: 'IN_PROGRESS',
-        });
-      },
-    });
-    const uploadedFile = await api.updateUploadFile({ name: updatedFileName });
-    dispatch(closeUploading());
-    dispatch(setUploads([uploadedFile]));
-  },
-);

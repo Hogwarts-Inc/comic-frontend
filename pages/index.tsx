@@ -9,7 +9,7 @@ import { useInView } from 'react-intersection-observer';
 
 import DefaultLayout from '@components/DefaultLayout';
 import useAppAuthentication from 'src/hooks/useAppAuthentication';
-import { apisCanvas } from 'src/services/apiConfig';
+import { apisCanvas } from 'src/services/api';
 import { Characters } from 'src/views/Landing/components/Characters';
 import { Event } from 'src/views/Landing/components/Event';
 import { Explore } from 'src/views/Landing/components/Explore';

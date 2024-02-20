@@ -20,7 +20,7 @@ import DefaultLayout from '@components/DefaultLayout';
 import theme from '@styles/theme';
 import useAppAuthentication from 'src/hooks/useAppAuthentication';
 import useIsMobile from 'src/hooks/useIsMobile';
-import { apisCanvasComment, apisCanvasLike } from 'src/services/apiConfig';
+import { apisCanvasComment, apisCanvasLike } from 'src/services/api';
 
 import {
   ArrowBack,

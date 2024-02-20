@@ -147,6 +147,10 @@
     "flipVertical": "Voltear verticalmente",
     "flipHorizontal": "Voltear horizontalmente",
     "copy": "Copiar",
-    "paste": "Pegar"
+    "paste": "Pegar",
+    "textFill": "Color de texto",
+    "defaultColors": "Colores predeterminados",
+    "selectAFont": "Selecciona una fuente",
+    "searchFont": "Buscar fuente"
   }
 }

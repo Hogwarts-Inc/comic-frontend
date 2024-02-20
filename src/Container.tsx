@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
 import useAppContext from './hooks/useAppContext';
-import { apisCharacter, apisGraphicResources } from './services/apiConfig';
+import { apisCharacter, apisGraphicResources } from './services/api';
 
 function Container({ children }: { children: React.ReactNode }) {
   const containerRef = useRef<HTMLDivElement>(null);

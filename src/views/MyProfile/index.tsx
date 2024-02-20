@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import Button from '@components/Button';
 import { Route } from 'src/constants/routes';
 import useIsMobile from 'src/hooks/useIsMobile';
-import { CanvaParam, apiUserProfile, UserAttributes } from 'src/services/apiConfig';
+import { CanvaParam, apiUserProfile, UserAttributes } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
 
 import { Container, ProfileInfoWrapp, Title, Name, UserInfo, AvatarStyles, GridUserCanva, ImageCanva } from './styles';

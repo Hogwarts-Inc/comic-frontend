@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { Route } from 'src/constants/routes';
-import { apiUserProfile } from 'src/services/apiConfig';
+import { apiUserProfile } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
 
 import { AppBarMui, ButtonSignUp, ButtonLogIn, ButtonBox, StyledLogoIcon } from './styles';
