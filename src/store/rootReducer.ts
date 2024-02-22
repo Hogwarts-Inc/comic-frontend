@@ -3,6 +3,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { addCanvaReducer } from './slices/add-canva/reducer';
 import authReducer from './slices/auth/index';
 import { createChapterReducer } from './slices/chapter-create/reducer';
+import chapterQueueReducer from './slices/chapter-queue/index';
 import { componentsReducer } from './slices/components/reducer';
 import { designEditorReducer } from './slices/design-editor/reducer';
 import { designsReducer } from './slices/designs/reducer';
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   designs: designsReducer,
   components: componentsReducer,
   auth: authReducer,
+  chapterQueue: chapterQueueReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

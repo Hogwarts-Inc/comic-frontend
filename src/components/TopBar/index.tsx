@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
-import { Avatar, Box, Typography, Grid, MenuItem, IconButton, Menu } from '@mui/material';
+import { Avatar, Box, Typography, Grid, MenuItem, IconButton, Menu, Button } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import { Route } from 'src/constants/routes';
-import { apiUserProfile } from 'src/services/apiConfig';
+import { apiUserProfile, apisChapters } from 'src/services/apiConfig';
 import { RootState } from 'src/store/rootReducer';
+import { resetChapterQueue } from 'src/store/slices/chapter-queue';
 
 import { AppBarMui, ButtonSignUp, ButtonLogIn, ButtonBox, StyledLogoIcon } from './styles';
+import { handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
 
 export const TopBar = dynamic(
   Promise.resolve(() => {
@@ -20,6 +23,8 @@ export const TopBar = dynamic(
     const [anchorMenuUser, setAnchorMenuUser] = useState<null | HTMLElement>(null);
     const [userProfile, setUserProfile] = useState('');
     const router = useRouter();
+    const { isWaiting, isCreating, chapterId } = useSelector((state: RootState) => state.chapterQueue);
+    const dispatch = useDispatch();
 
     useEffect(() => {
       if (!accessToken) return;
@@ -56,6 +61,9 @@ export const TopBar = dynamic(
             </ButtonBox>
             {accessToken ? (
               <Box>
+                {(isWaiting || isCreating) && (
+                  <Button onClick={() => handleRemoveFromQueue(chapterId, dispatch)}>Remove from queue</Button>
+                )}
                 <IconButton style={{ padding: 0 }} onClick={handleOpenUserMenu}>
                   <Avatar src={userProfile} sx={{ height: '3rem', width: '3rem' }} />
                 </IconButton>

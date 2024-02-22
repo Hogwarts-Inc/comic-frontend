@@ -41,7 +41,7 @@ export const DialogAddCanva = ({ openDialog, setOpenDialog }: DialogAddCanvaPara
       dispatch(resetAddCanva());
 
       handleClose();
-      push(Route.home);
+      push(Route.chapter);
     } catch (e) {
       console.error(e);
     }
