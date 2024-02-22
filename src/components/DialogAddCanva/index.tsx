@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Route } from 'src/constants/routes';
+import { handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
 import { apisCanvas } from 'src/services/apiConfig';
 import { RootState } from 'src/store/rootReducer';
 import { resetAddCanva, setActiveStep } from 'src/store/slices/add-canva/actions';
@@ -27,6 +28,7 @@ export const DialogAddCanva = ({ openDialog, setOpenDialog }: DialogAddCanvaPara
   }));
 
   const handleClose = () => {
+    handleRemoveFromQueue(canvaData.chapterId, dispatch);
     dispatch(setActiveStep(0));
     setOpenDialog(false);
   };

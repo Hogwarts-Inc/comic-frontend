@@ -37,7 +37,7 @@ export const DialogLastThreeCanva = ({
   const [threeCanvas, setThreeCanvas] = useState<any[]>([]);
 
   const handleClose = () => {
-    dispatch(resetChapterQueue());
+    handleRemoveFromQueue(chapterId, dispatch);
     setOpenDialog(false);
   };
 
