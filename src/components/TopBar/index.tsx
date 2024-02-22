@@ -5,15 +5,13 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
 
 import { Route } from 'src/constants/routes';
-import { apiUserProfile, apisChapters } from 'src/services/apiConfig';
+import { handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
+import { apiUserProfile } from 'src/services/apiConfig';
 import { RootState } from 'src/store/rootReducer';
-import { resetChapterQueue } from 'src/store/slices/chapter-queue';
 
 import { AppBarMui, ButtonSignUp, ButtonLogIn, ButtonBox, StyledLogoIcon } from './styles';
-import { handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
 
 export const TopBar = dynamic(
   Promise.resolve(() => {

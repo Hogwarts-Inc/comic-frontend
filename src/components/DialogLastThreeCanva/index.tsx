@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import Button from '@components/Button';
 import { handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
 import { apisChapters } from 'src/services/apiConfig';
-import { resetChapterQueue } from 'src/store/slices/chapter-queue';
 
 import {
   DialogActionsStyle,
