@@ -118,6 +118,10 @@ export const apisChapters = {
   getChaptersCheckQueue: (id: number) => api.get(`/chapters/${id}/check_queue`),
   postChapters: (data: ChapterCreation) => api.post('/chapters', data),
   patchChapters: (id: number, data: ChapterParam) => api.patch(`/chapters/${id}`, data),
+  getAddUserToQueue: (id: number) => api.get(`/chapters/${id}/add_user_to_queue`),
+  getUserQueuePlace: (id: number) => api.get<any>(`/chapters/${id}/user_position_in_queue`),
+  removeUserFromQueue: (id: number) => api.get<any>(`/chapters/${id}/remove_user_from_queue`),
+  getTheeLastCanva: (id: number) => api.get<any[]>(`/chapters/${id}/last_three_canvas`),
 };
 
 //CANVAS

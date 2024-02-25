@@ -79,7 +79,7 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
             if (error.response && error.response.status === 422) {
               if (error.position === 1) {
                 dispatch(setChapterId(+chapter));
-                setOpenDialogAddCanva(true);
+                setOpenDialogThreeCanvas(true);
               } else if (!isWaiting) {
                 setOpenDialogUserQueue(true);
               }

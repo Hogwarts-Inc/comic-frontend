@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import Button from '@components/Button';
 import { handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
-import { apisChapters } from 'src/services/apiConfig';
+import { apisChapters } from 'src/services/api';
 
 import {
   DialogActionsStyle,
@@ -46,9 +46,11 @@ export const DialogLastThreeCanva = ({
   };
 
   useEffect(() => {
-    apisChapters.getTheeLastCanva(chapterId).then(({ data }) => {
-      setThreeCanvas(data);
-    });
+    if (openDialog) {
+      apisChapters.getTheeLastCanva(chapterId).then(({ data }) => {
+        setThreeCanvas(data);
+      });
+    }
   }, []);
 
   return (

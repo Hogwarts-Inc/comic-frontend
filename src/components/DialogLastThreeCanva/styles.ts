@@ -10,7 +10,7 @@ export const DialogTitleStyle = styled(DialogTitle)({ textAlign: 'center', fontS
 
 export const DialogContentTextStyle = styled(DialogContentText)({ textAlign: 'center' });
 
-export const DialogContainer = styled('div')({ padding: '1rem', width: '600px' });
+export const DialogContainer = styled('div')({ padding: '1rem' });
 
 export const DialogContentStyle = styled(DialogContent)({ padding: '1rem' });
 
@@ -21,7 +21,6 @@ export const ThumbnailContainer = styled('div')(({ theme }) => ({
   gap: theme.spacing(5),
   marginBottom: '2rem',
   marginTop: '2rem',
-  // width: '100%',
 }));
 
 export const Thumbnail = styled('img')(({ theme }) => ({

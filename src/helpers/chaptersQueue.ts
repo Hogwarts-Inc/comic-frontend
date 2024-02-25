@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-import { apisChapters } from 'src/services/apiConfig';
+import { apisChapters } from 'src/services/api';
 import { resetChapterQueue } from 'src/store/slices/chapter-queue';
 
 export const getUserQueuePosition = (chapter: number) => apisChapters.getUserQueuePlace(chapter);
