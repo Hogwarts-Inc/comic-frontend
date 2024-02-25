@@ -1,13 +1,4 @@
-// TODO: Remove unused options
 export const BASE_ITEMS = [
-  // {
-  //   id: 'templates',
-  //   name: 'Templates',
-  // },
-  // {
-  //   id: 'customize',
-  //   name: 'Customize',
-  // },
   {
     id: 'images',
     name: 'Images',
@@ -28,14 +19,6 @@ export const BASE_ITEMS = [
     id: 'uploads',
     name: 'Uploads',
   },
-  // {
-  //   id: 'pixabay',
-  //   name: 'Pixabay',
-  // },
-  // {
-  //   id: 'layers',
-  //   name: 'Layers',
-  // },
 ];
 
 export type PanelType = 'Images' | 'Text' | 'Shapes' | 'Characters' | 'Uploads' | '';

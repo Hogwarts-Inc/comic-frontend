@@ -56,6 +56,7 @@ function Opacity() {
 
   return (
     <StatefulPopover
+      dismissOnClickOutside
       placement={PLACEMENT.bottomLeft}
       content={
         <Block width="200px" backgroundColor="#ffffff" padding="20px">
