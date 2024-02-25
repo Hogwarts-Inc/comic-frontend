@@ -14,8 +14,8 @@ import { Route } from 'src/constants/routes';
 import useIsMobile from 'src/hooks/useIsMobile';
 import { StoriettesParam, apisChapters } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
-import { setChapterQueue } from 'src/store/slices/chapter-queue';
 import { resetCanvaCreate, setChapterId } from 'src/store/slices/canva-creator/reducer';
+import { setChapterQueue } from 'src/store/slices/chapter-queue';
 
 import { Title, Loading, Img, Container, AddCanvaButton, AddCircleOutlineStyle } from './styles';
 
@@ -97,7 +97,6 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
   const handleWait = async () => {
     if (!chapter) return;
     setLoading(true);
-
     const { status: userAddedStatus, data: userAddedData } = await apisChapters.getAddUserToQueue(+chapter);
     try {
       if (userAddedStatus === 200 && userAddedData.position !== 1) {
@@ -117,11 +116,11 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
       }
       setOpenDialogUserQueue(false);
     } catch (error: any) {
-      setLoading(false);
       if (error.response?.status === 422) {
         setOpenDialogUserQueue(true);
       }
     }
+    setLoading(false);
   };
 
   return loading ? (
