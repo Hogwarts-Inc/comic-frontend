@@ -39,7 +39,7 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
 
   const { chapterId, isWaiting, position } = useSelector((state: RootState) => state.chapterQueue);
 
-  const isUserTurn = chapter && chapterId === +chapter && position === 1;
+  const isUserTurn = useMemo(()=> chapter && chapterId === +chapter && position === 1,[chapter,chapterId,position]);
   const [openDialogAddCanva, setOpenDialogAddCanva] = useState<boolean>(!!isUserTurn);
 
   useEffect(() => {
