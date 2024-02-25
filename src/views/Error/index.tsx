@@ -43,7 +43,8 @@ const ErrorComponent = ({ errorType }: { errorType: HttpStatusCode }) => {
       {errorType === HttpStatusCode.Unauthorized && (
         <StyledButtonLogIn onClick={() => push(Route.login)} size="medium">
           {t('common.login')}
-        </StyledButtonLogIn>)}
+        </StyledButtonLogIn>
+      )}
       <StyledButton aria-label="home" href="/">
         {t('goToLanding')}
       </StyledButton>

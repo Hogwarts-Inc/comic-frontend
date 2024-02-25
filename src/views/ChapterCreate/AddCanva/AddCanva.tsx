@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-restricted-globals */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-vars */
 import React from 'react';
@@ -10,8 +12,9 @@ import { useDispatch } from 'react-redux';
 
 import { TitleView } from '@components/AddCanvaTitleView';
 import { Route } from 'src/constants/routes';
-import { setCanvaFiles } from 'src/store/slices/add-canva/actions';
-import { setChapterFiles } from 'src/store/slices/chapter-create/actions';
+import { ContextType } from 'src/interfaces/common';
+import { setCanvaFiles } from 'src/store/slices/canva-creator/reducer';
+import { toBase64 } from 'src/utils/data';
 
 import {
   OutsideGridContainer,
@@ -22,11 +25,10 @@ import {
   NextButton,
   DividerLine,
   ItemGridContainer,
-  SecondItemGridContainer,
 } from './styles';
 
 interface AddCanvaProps {
-  context: 'chapter' | 'canva';
+  context: ContextType;
   values?: any;
   setFieldValue?: (field: string, value: any, shouldValidate?: boolean) => void;
   onNext?: () => void;
@@ -37,31 +39,33 @@ export const AddCanva = ({ context, values, setFieldValue, onNext }: AddCanvaPro
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const createObjectURL = (file: File) => URL.createObjectURL(file);
-
-  const handleFileChange = (fileObjects: File[]) => {
+  const handleFileChange = async (fileObjects: File[]) => {
     setFieldValue?.('files', fileObjects);
 
-    const newFileObjects = fileObjects.map(file => createObjectURL(file));
-    if (context === 'chapter') {
-      dispatch(setChapterFiles(newFileObjects));
-    } else {
-      dispatch(setCanvaFiles(newFileObjects));
-    }
+    const newFileObjects = await Promise.all(fileObjects.map(toBase64));
+    dispatch(setCanvaFiles(newFileObjects));
   };
 
   const onNavigateToEditor = () => {
-    router.push(Route.editor);
+    if (values?.files?.length) {
+      if (confirm(t('confirmNavigateToEditor'))) {
+        setFieldValue?.('files', []);
+        dispatch(setCanvaFiles([]));
+        router.push(Route.editor);
+      }
+    } else {
+      router.push(Route.editor);
+    }
   };
 
   return (
-    <OutsideGridContainer container>
-      <Grid item xs={12}>
+    <OutsideGridContainer container gap="2rem">
+      <Grid container item xs={12}>
         <TitleView context={context} />
       </Grid>
 
-      <ColGridContainer container>
-        <ItemGridContainer item xs={12} sm={5}>
+      <ColGridContainer container xs>
+        <ItemGridContainer container item xs={12} sm>
           <SectionTitle variant="h4">{t('chapterCreate.addCanva.uploadTitle')}</SectionTitle>
           <SectionDescription>{t('chapterCreate.addCanva.uploadDescription')}</SectionDescription>
 
@@ -70,23 +74,37 @@ export const AddCanva = ({ context, values, setFieldValue, onNext }: AddCanvaPro
             dropzoneText={t('chapterCreate.addCanva.dropZone')}
             fileObjects={values?.files}
             filesLimit={3}
-            maxFileSize={1048576}
+            maxFileSize={1000000}
             onChange={handleFileChange}
+            initialFiles={values?.files}
+            dropzoneClass="customDropzone"
+            showPreviews={false}
+            showAlerts={['error']}
+            getDropRejectMessage={(rejectedFile: File) =>
+              t('chapterCreate.addCanva.fileRejected', {
+                fileName: rejectedFile.name,
+              })
+            }
+            getFileLimitExceedMessage={(filesLimit: number) =>
+              t('chapterCreate.addCanva.maximunExceeded', { max: filesLimit })
+            }
           />
 
-          <NextButton disabled={values?.files.length === 0} size="large" variantType="gradient" onClick={onNext}>
+          <NextButton disabled={values?.files.length === 0} size="large" onClick={onNext}>
             {t('common.next')}
           </NextButton>
         </ItemGridContainer>
 
         <DividerLine flexItem />
 
-        <SecondItemGridContainer item xs={12} sm={5}>
-          <SectionTitle variant="h4">{t('chapterCreate.addCanva.navToEditorTitle')}</SectionTitle>
-          <EditorButton variantType="gradient" size="large" onClick={onNavigateToEditor}>
+        <ItemGridContainer container item xs={12} sm gap="2rem" direction="column" margin="auto">
+          <SectionTitle variant="h4" textAlign="center">
+            {t('chapterCreate.addCanva.navToEditorTitle')}
+          </SectionTitle>
+          <EditorButton size="large" onClick={onNavigateToEditor}>
             {t('chapterCreate.addCanva.navToEditorButton')}
           </EditorButton>
-        </SecondItemGridContainer>
+        </ItemGridContainer>
       </ColGridContainer>
     </OutsideGridContainer>
   );

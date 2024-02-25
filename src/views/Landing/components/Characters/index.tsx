@@ -2,10 +2,9 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 
 import { CircularProgress, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Carousel } from '@components/Carousel';
-import { apisCharacter } from 'src/services/apiConfig';
 import { RootState } from 'src/store/rootReducer';
 
 import {
@@ -19,7 +18,6 @@ import {
 } from './styles';
 
 export const Characters = () => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const characters = useSelector((state: RootState) => state.resources.characters);
   const [currentCharacterIndex, setCurrentCharacterIndex] = useState(0);
@@ -35,12 +33,10 @@ export const Characters = () => {
   );
 
   useEffect(() => {
-    if (characters.length === 0) {
-      apisCharacter.getCharacters().finally(() => setLoading(false));
-    } else {
+    if (characters.length) {
       setLoading(false);
     }
-  }, [characters.length, dispatch]);
+  }, [characters.length]);
 
   const images = useMemo(
     () =>

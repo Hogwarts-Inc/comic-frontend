@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from 'react';
 
@@ -11,8 +12,10 @@ import '@styles/styles.css';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
-
 import 'react-toastify/dist/ReactToastify.css';
+import { Client, Server } from 'styletron-engine-atomic';
+import { Provider as StyletronProvider } from 'styletron-react';
+
 import { Route } from 'src/constants/routes';
 import Container from 'src/Container';
 import { getUserQueuePosition } from 'src/helpers/chaptersQueue';
@@ -50,27 +53,38 @@ const QueueHandler = () => {
   return <></>;
 };
 
+const getHydrateClass = () => document.getElementsByClassName('_styletron_hydrate_');
+
+const engine =
+  typeof window === 'undefined'
+    ? new Server()
+    : new Client({
+        hydrate: getHydrateClass() as any,
+      });
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <UserProvider>
-      <Provider>
-        <QueueHandler />
-        <ToastContainer
-          position="bottom-right"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
-        <Container>
-          <Component {...pageProps} />
-        </Container>
-      </Provider>
-    </UserProvider>
+    <StyletronProvider value={engine}>
+      <UserProvider>
+        <Provider>
+          <QueueHandler />
+          <ToastContainer
+            position="bottom-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+          <Container>
+            <Component {...pageProps} />
+          </Container>
+        </Provider>
+      </UserProvider>
+    </StyletronProvider>
   );
 }
 

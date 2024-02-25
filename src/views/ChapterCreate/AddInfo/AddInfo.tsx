@@ -6,9 +6,10 @@ import { Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
-import { setChapterTitle, setChapterDescription } from 'src/store/slices/chapter-create/actions';
+import Button from '@components/Button';
+import { setChapterDescription, setChapterTitle } from 'src/store/slices/canva-creator/reducer';
 
-import { Title, GridContainer, TitleTextField, DescriptionTextField, NextButton } from './styles';
+import { Title, GridContainer, TitleTextField, DescriptionTextField } from './styles';
 
 interface AddInfoProps {
   errors: {
@@ -60,7 +61,7 @@ export const AddInfo = ({
   };
 
   return (
-    <GridContainer container>
+    <GridContainer container gap="2rem" padding="2rem">
       <Grid item xs={12}>
         <Title variant="h3">{t('chapterCreate.title')}</Title>
       </Grid>
@@ -96,9 +97,9 @@ export const AddInfo = ({
         />
       </Grid>
 
-      <NextButton disabled={isValidating || isSubmitting} size="large" variantType="gradient" onClick={onNext}>
+      <Button disabled={isValidating || isSubmitting} size="large" variantType="gradient" onClick={onNext}>
         {t('common.next')}
-      </NextButton>
+      </Button>
     </GridContainer>
   );
 };

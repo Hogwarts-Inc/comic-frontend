@@ -1,35 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import { TitleView } from '@components/AddCanvaTitleView';
+import { ContextType } from 'src/interfaces/common';
 
 import { GridContainer, SectionTitle, SectionDescription, Thumbnail, ThumbnailContainer, SubmitButton } from './styles';
 
 interface ChapterReviewProps {
-  context: 'chapter' | 'canva';
+  context: ContextType;
   onNext: () => void;
   values: {
     title?: string;
     description?: string;
     files: string[];
   };
+  isSubmitting: boolean;
 }
 
-export const DataReview = ({ context, onNext, values }: ChapterReviewProps) => {
+export const DataReview = ({ context, onNext, values, isSubmitting }: ChapterReviewProps) => {
   const { t } = useTranslation();
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const onPublish = () => {
-    setIsLoading(true);
-    onNext();
-    setIsLoading(false);
-  };
-
   return (
-    <GridContainer container>
+    <GridContainer container gap="2rem" padding="2rem">
       <Grid item xs={12}>
         <TitleView context={context} />
       </Grid>
@@ -48,7 +42,7 @@ export const DataReview = ({ context, onNext, values }: ChapterReviewProps) => {
         </>
       )}
 
-      <Grid item xs={12}>
+      <Grid container item xs={12} gap="1rem" direction="column">
         <SectionTitle variant="h4">{t('chapterCreate.chapterReview.createdCanvas')}</SectionTitle>
         <ThumbnailContainer>
           {values.files.map((file, index) => (
@@ -57,7 +51,7 @@ export const DataReview = ({ context, onNext, values }: ChapterReviewProps) => {
         </ThumbnailContainer>
       </Grid>
 
-      <SubmitButton isLoading={isLoading} size="large" variantType="gradient" onClick={onPublish}>
+      <SubmitButton isLoading={isSubmitting} size="large" variantType="gradient" onClick={onNext}>
         {t('chapterCreate.chapterReview.publishButton')}
       </SubmitButton>
     </GridContainer>

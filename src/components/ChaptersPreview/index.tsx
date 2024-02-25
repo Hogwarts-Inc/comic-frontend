@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import Button from '@components/Button';
 import { Route } from 'src/constants/routes';
 import useIsMobile from 'src/hooks/useIsMobile';
-import { StoriettesParam, apisChapters, apisComic } from 'src/services/apiConfig';
+import { StoriettesParam, apisChapters, apisComic } from 'src/services/api';
 
 import {
   Title,
@@ -66,7 +66,7 @@ function ChapterPreviewer() {
   };
 
   return loading ? (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
       <CircularProgress />
     </div>
   ) : (

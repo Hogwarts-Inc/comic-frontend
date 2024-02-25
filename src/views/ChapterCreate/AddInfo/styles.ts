@@ -35,33 +35,21 @@ export const GridContainer = styled(Grid)({
 
 export const Title = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
-  marginLeft: '4rem',
-  marginTop: '2rem',
   textAlign: 'left',
   [defaultTheme.breakpoints.between('xs', 'lg')]: {
     fontSize: '2.188rem',
-    marginBottom: '2rem',
-  },
-  [defaultTheme.breakpoints.up('lg')]: {
-    marginBottom: '2rem',
   },
 }));
 
 export const TitleTextField = styled(TextField)(({ theme: defaultTheme }) => ({
   ...commonTextFieldStyles,
   color: defaultTheme.palette.text.primary,
-  marginBottom: '2rem',
-  marginLeft: '4rem',
-  width: '70%',
+  width: '100%',
 }));
 
 export const DescriptionTextField = styled(TextField)({
   ...commonTextFieldStyles,
-  marginBottom: '2rem',
-  marginLeft: '4rem',
-  width: '70%',
+  width: '100%',
 });
 
-export const NextButton = styled(Button)({
-  marginBottom: '2rem',
-});
+export const NextButton = styled(Button)({});

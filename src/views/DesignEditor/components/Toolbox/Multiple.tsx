@@ -1,10 +1,12 @@
 import React from 'react';
 
 import { Block } from 'baseui/block';
+import { useTranslation } from 'react-i18next';
 
 import Common from './Common';
 
 function Multiple() {
+  const { t } = useTranslation();
   return (
     <Block
       $style={{
@@ -14,7 +16,7 @@ function Multiple() {
         padding: '0 12px',
         justifyContent: 'space-between',
       }}>
-      <Block>Multiple</Block>
+      <Block>{t('editor.groupName')}</Block>
       <Common />
     </Block>
   );

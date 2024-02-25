@@ -18,26 +18,21 @@ export const GridContainer = styled(Grid)({
 
 export const SectionTitle = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
-  marginBottom: '1rem',
-  marginLeft: '4rem',
   textAlign: 'left',
 }));
 
 export const SectionDescription = styled(Typography)(({ theme: defaultTheme }) => ({
   color: defaultTheme.palette.text.primary,
   fontWeight: 500,
-  marginBottom: '1rem',
-  marginLeft: '4rem',
   textAlign: 'left',
   whiteSpace: 'pre-line',
 }));
 
 export const ThumbnailContainer = styled('div')(() => ({
   display: 'flex',
+  justifyContent: 'space-around',
   flexWrap: 'wrap',
-  gap: theme.spacing(5),
-  marginBottom: '2rem',
-  marginLeft: '4rem',
+  gap: '1rem',
 }));
 
 export const Thumbnail = styled('img')(() => ({
@@ -48,6 +43,5 @@ export const Thumbnail = styled('img')(() => ({
 }));
 
 export const SubmitButton = styled(Button)({
-  marginBottom: '2rem',
   width: 'fit-content',
 });

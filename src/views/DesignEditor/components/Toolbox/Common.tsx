@@ -7,6 +7,7 @@ import { Button, SIZE, KIND } from 'baseui/button';
 import { Checkbox } from 'baseui/checkbox';
 import { StatefulPopover } from 'baseui/popover';
 import { StatefulTooltip, PLACEMENT } from 'baseui/tooltip';
+import { useTranslation } from 'react-i18next';
 
 import Opacity from './Shared/Opacity';
 import AlignBottom from '../../../../components/Icons/AlignBottom';
@@ -27,6 +28,7 @@ function CommonLayers() {
   const editor = useEditor();
   const [checked, setChecked] = React.useState(true);
   const activeObject = useActiveObject() as any;
+  const { t } = useTranslation();
 
   React.useEffect(() => {
     if (activeObject) {
@@ -44,14 +46,14 @@ function CommonLayers() {
               onClick={() => editor.objects.bringToFront()}
               kind={KIND.tertiary}
               size={SIZE.mini}>
-              Bring to front
+              {t('editor.bringToFront')}
             </Button>
             <Button
               startEnhancer={<SendToBack size={24} />}
               onClick={() => editor.objects.sendToBack()}
               kind={KIND.tertiary}
               size={SIZE.mini}>
-              Send to back
+              {t('editor.sendToBack')}
             </Button>
           </Block>
 
@@ -84,14 +86,14 @@ function CommonLayers() {
                 setChecked(!checked);
               }}
             />
-            <Block>Clip to frame</Block>
+            <Block>{t('editor.clipToFrame')}</Block>
           </Block>
         </Block>
       }
       returnFocus
       autoFocus>
       <Block>
-        <StatefulTooltip placement={PLACEMENT.bottom} showArrow accessibilityType="tooltip" content="Layers">
+        <StatefulTooltip placement={PLACEMENT.left} showArrow accessibilityType="tooltip" content={t('editor.layers')}>
           <Button size={SIZE.mini} kind={KIND.tertiary}>
             <LayersIcon size={19} />
           </Button>
@@ -102,6 +104,8 @@ function CommonLayers() {
 }
 function CommonAlign() {
   const editor = useEditor();
+  const { t } = useTranslation();
+
   return (
     <StatefulPopover
       placement={PLACEMENT.bottomRight}
@@ -130,7 +134,7 @@ function CommonAlign() {
       returnFocus
       autoFocus>
       <Block>
-        <StatefulTooltip placement={PLACEMENT.bottom} showArrow accessibilityType="tooltip" content="Align">
+        <StatefulTooltip placement={PLACEMENT.left} showArrow accessibilityType="tooltip" content={t('editor.align')}>
           <Button size={SIZE.mini} kind={KIND.tertiary}>
             <AlignCenter size={24} />
           </Button>
@@ -144,6 +148,7 @@ function LockUnlock() {
   const [state, setState] = React.useState<{ locked: boolean }>({ locked: false });
   const editor = useEditor();
   const activeObject = useActiveObject() as any;
+  const { t } = useTranslation();
 
   React.useEffect(() => {
     if (activeObject) {
@@ -152,7 +157,7 @@ function LockUnlock() {
   }, [activeObject]);
 
   return state.locked ? (
-    <StatefulTooltip placement={PLACEMENT.bottom} showArrow accessibilityType="tooltip" content="Lock">
+    <StatefulTooltip placement={PLACEMENT.left} showArrow accessibilityType="tooltip" content={t('editor.block')}>
       <Button
         onClick={() => {
           editor.objects.unlock();
@@ -164,7 +169,7 @@ function LockUnlock() {
       </Button>
     </StatefulTooltip>
   ) : (
-    <StatefulTooltip placement={PLACEMENT.bottom} showArrow accessibilityType="tooltip" content="Lock">
+    <StatefulTooltip placement={PLACEMENT.left} showArrow accessibilityType="tooltip" content={t('editor.block')}>
       <Button
         onClick={() => {
           editor.objects.lock();
@@ -181,6 +186,7 @@ function LockUnlock() {
 function Common() {
   const [state, setState] = React.useState({ isGroup: false, isMultiple: false });
   const activeObject = useActiveObject() as any;
+  const { t } = useTranslation();
 
   const editor = useEditor();
 
@@ -216,7 +222,7 @@ function Common() {
           }}
           size={SIZE.compact}
           kind={KIND.tertiary}>
-          Ungroup
+          {t('editor.unGroup')}
         </Button>
       ) : state.isMultiple ? (
         <Button
@@ -226,7 +232,7 @@ function Common() {
           }}
           size={SIZE.compact}
           kind={KIND.tertiary}>
-          Group
+          {t('editor.group')}
         </Button>
       ) : null}
 
@@ -235,12 +241,12 @@ function Common() {
       <CommonAlign />
       <Opacity />
       <LockUnlock />
-      <StatefulTooltip placement={PLACEMENT.bottom} showArrow accessibilityType="tooltip" content="Duplicate">
+      <StatefulTooltip placement={PLACEMENT.left} showArrow accessibilityType="tooltip" content={t('editor.duplicate')}>
         <Button onClick={() => editor.objects.clone()} size={SIZE.mini} kind={KIND.tertiary}>
           <DuplicateIcon size={22} />
         </Button>
       </StatefulTooltip>
-      <StatefulTooltip placement={PLACEMENT.bottom} showArrow accessibilityType="tooltip" content="Delete">
+      <StatefulTooltip placement={PLACEMENT.left} showArrow accessibilityType="tooltip" content={t('editor.delete')}>
         <Button onClick={() => editor.objects.remove()} size={SIZE.mini} kind={KIND.tertiary}>
           <DeleteIcon size={24} />
         </Button>

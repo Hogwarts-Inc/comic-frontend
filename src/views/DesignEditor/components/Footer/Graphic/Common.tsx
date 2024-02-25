@@ -10,6 +10,7 @@ import { Input } from 'baseui/input';
 import { Slider } from 'baseui/slider';
 import { PLACEMENT } from 'baseui/toast';
 import { StatefulTooltip } from 'baseui/tooltip';
+import { useTranslation } from 'react-i18next';
 
 import { DesignEditorContext } from 'src/contexts/DesignEditor';
 
@@ -35,6 +36,7 @@ function Common() {
   const editor = useEditor();
   const zoomRatio: number = useZoomRatio();
   const { setScenes, setCurrentScene, currentScene, scenes } = useContext(DesignEditorContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setOptions(currentOptions => ({ ...currentOptions, zoomRatio: Math.round(zoomRatio * 100) }));
@@ -97,16 +99,17 @@ function Common() {
   return (
     <Container container item xs>
       <Grid container item xs="auto">
-        <Button kind={KIND.tertiary} size={SIZE.compact}>
-          <Icons.Layers size={20} />
-        </Button>
-      </Grid>
-      <Grid container item xs alignItems="center" justifyContent="center" wrap="nowrap">
         <Button kind={KIND.tertiary} size={SIZE.compact} onClick={() => editor.zoom.zoomToFit()}>
           <Icons.Compress size={16} />
         </Button>
+      </Grid>
+      <Grid container item xs alignItems="center" justifyContent="center" wrap="nowrap">
         <Block>
-          <StatefulTooltip placement={PLACEMENT.bottom} showArrow accessibilityType="tooltip" content="Zoom Out">
+          <StatefulTooltip
+            placement={PLACEMENT.bottom}
+            showArrow
+            accessibilityType="tooltip"
+            content={t('editor.zoomOut')}>
             <Button kind={KIND.tertiary} size={SIZE.compact} onClick={() => editor.zoom.zoomOut()}>
               <Icons.RemoveCircleOutline size={24} />
             </Button>
@@ -140,7 +143,11 @@ function Common() {
           max={zoomMax}
         />
         <Block>
-          <StatefulTooltip placement={PLACEMENT.bottom} showArrow accessibilityType="tooltip" content="Zoom Out">
+          <StatefulTooltip
+            placement={PLACEMENT.bottom}
+            showArrow
+            accessibilityType="tooltip"
+            content={t('editor.zoomIn')}>
             <Button kind={KIND.tertiary} size={SIZE.compact} onClick={() => editor.zoom.zoomIn()}>
               <Icons.AddCircleOutline size={24} />
             </Button>

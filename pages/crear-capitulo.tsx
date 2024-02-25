@@ -14,10 +14,10 @@ import CustomStepper from '@components/Stepper';
 import { Route } from 'src/constants/routes';
 import withAuth from 'src/hoc/withAuth';
 import { ChapterData } from 'src/interfaces/common';
-import { apisCanvas, apisChapters, apisComic } from 'src/services/apiConfig';
+import { apisCanvas, apisChapters, apisComic } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
-import { resetChapterCreate, setActiveStep } from 'src/store/slices/chapter-create/actions';
-import { selectActiveStep, selectChapterData } from 'src/store/slices/chapter-create/selectors';
+import { resetCanvaCreate, setActiveStep } from 'src/store/slices/canva-creator/reducer';
+import { selectActiveStep, selectCanvaData } from 'src/store/slices/canva-creator/selectors';
 import { AddCanva } from 'src/views/ChapterCreate/AddCanva/AddCanva';
 import { AddInfo } from 'src/views/ChapterCreate/AddInfo/AddInfo';
 import { DataReview } from 'src/views/ChapterCreate/ChapterReview/DataReview';
@@ -33,7 +33,7 @@ const ChapterCreate = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { chapterData, activeStep } = useSelector((state: RootState) => ({
-    chapterData: selectChapterData(state),
+    chapterData: selectCanvaData(state),
     activeStep: selectActiveStep(state),
   }));
 
@@ -53,9 +53,8 @@ const ChapterCreate = () => {
       const chapterId = chapterResponse.data.id;
 
       await apisCanvas.postCanva({ chapter_id: chapterId, images: chapterData.files });
-      dispatch(resetChapterCreate());
-
       router.push(Route.home);
+      dispatch(resetCanvaCreate());
     } catch (e) {
       console.error(e); // TODO handle error with alert
     }
@@ -99,13 +98,13 @@ const ChapterCreate = () => {
           return (
             <Form>
               <Grid container direction="row" justifyContent="center">
-                <Grid container item style={{ paddingTop: '2rem', width: '80%' }}>
+                <Grid container item style={{ padding: '2rem 0', width: '80%' }}>
                   <CustomStepper
                     activeStep={activeStep}
                     setActiveStep={step => dispatch(setActiveStep(step))}
                     steps={steps}
                   />
-                  <Grid container item style={{ padding: '2rem 0' }}>
+                  <Grid container item style={{ paddingTop: '1rem' }}>
                     {activeStep === 0 && (
                       <AddInfo
                         errors={errors}
@@ -127,7 +126,14 @@ const ChapterCreate = () => {
                         onNext={handleNext}
                       />
                     )}
-                    {activeStep === 2 && <DataReview context="chapter" values={chapterData} onNext={handleSubmit} />}
+                    {activeStep === 2 && (
+                      <DataReview
+                        isSubmitting={isSubmitting}
+                        context="chapter"
+                        values={chapterData}
+                        onNext={handleSubmit}
+                      />
+                    )}
                   </Grid>
                 </Grid>
               </Grid>

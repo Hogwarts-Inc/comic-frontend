@@ -12,10 +12,10 @@ import { DialogLastThreeCanva } from '@components/DialogLastThreeCanva';
 import { DialogUserQueue } from '@components/DialogUserQueue';
 import { Route } from 'src/constants/routes';
 import useIsMobile from 'src/hooks/useIsMobile';
-import { StoriettesParam, apisChapters } from 'src/services/apiConfig';
+import { StoriettesParam, apisChapters } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
-import { setCanvaChapter } from 'src/store/slices/add-canva/actions';
 import { setChapterQueue } from 'src/store/slices/chapter-queue';
+import { resetCanvaCreate, setChapterId } from 'src/store/slices/canva-creator/reducer';
 
 import { Title, Loading, Img, Container, AddCanvaButton, AddCircleOutlineStyle } from './styles';
 
@@ -69,7 +69,8 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
                   isCreating: true,
                 }),
               );
-              dispatch(setCanvaChapter(+chapter));
+              dispatch(resetCanvaCreate());
+              dispatch(setChapterId(+chapter));
               setOpenDialogThreeCanvas(true);
             } else {
               toast.error('Surgio un error inesperado y no pudimos agregarte a la cola, intentalo nuevamente.');
@@ -77,7 +78,7 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
           } catch (error: any) {
             if (error.response && error.response.status === 422) {
               if (error.position === 1) {
-                dispatch(setCanvaChapter(+chapter));
+                dispatch(setChapterId(+chapter));
                 setOpenDialogAddCanva(true);
               } else if (!isWaiting) {
                 setOpenDialogUserQueue(true);
@@ -110,13 +111,18 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
             isCreating: false,
           }),
         );
+        dispatch(resetCanvaCreate());
+        dispatch(setChapterId(+chapter));
         toast.success('Fuiste agregado a la cola correctamente.');
       } else {
         toast.error('Surgio un error inesperado y no pudimos agregarte a la cola, intentalo nuevamente.');
       }
       setOpenDialogUserQueue(false);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      setLoading(false);
+      if (error.response && error.response.status === 422) {
+        setOpenDialogUserQueue(true);
+      }
     }
   };
 

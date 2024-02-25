@@ -17,7 +17,7 @@ function PanelsList() {
   const { back } = useRouter();
   const isMobile = useIsMobile();
   return (
-    <Container container item xs direction="column" isMobile={!!isMobile} wrap="nowrap">
+    <Container container xs direction="column" isMobile={!!isMobile} wrap="nowrap">
       <Grid
         container
         item
@@ -28,8 +28,8 @@ function PanelsList() {
         <Button onClick={back}>{t('back')}</Button>
         {isMobile && <SaveCanvaButton />}
       </Grid>
-      <WhiteContainer container item xs isMobile={!!isMobile}>
-        <ButtonsContainer container item wrap="nowrap" direction={isMobile ? 'row' : 'column'}>
+      <WhiteContainer container xs isMobile={!!isMobile}>
+        <ButtonsContainer container wrap="nowrap" direction={isMobile ? 'row' : 'column'}>
           {BASE_ITEMS.map(panelListItem => (
             <PanelListItem
               label={t(`panels.panelsList.${panelListItem.id}`)}

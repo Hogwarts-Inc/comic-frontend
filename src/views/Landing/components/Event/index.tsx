@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { CircularProgress, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import { apisEvents, Event as EventType } from 'src/services/apiConfig';
+import { apisEvents, Event as EventType } from 'src/services/api';
 
 import { GridItemCenter, TypographyDescription, TypographyTitle, Container } from './styles';
 
@@ -29,7 +29,7 @@ export const Event = () => {
 
   return (
     <Container>
-      <Grid item container spacing={4}>
+      <Grid item container xs>
         <GridItemCenter item xs={12} md={6} lg={6}>
           <TypographyTitle variant="h2">{t('event.title')}</TypographyTitle>
           <br />

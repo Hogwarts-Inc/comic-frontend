@@ -13,6 +13,7 @@ export const ButtonsContainer = styled(Grid)(() => ({
   gap: '1rem',
   padding: '1rem',
 }));
+
 export const ButtonContainer = styled('div')({
   width: '100%',
   display: 'flex',
@@ -20,7 +21,9 @@ export const ButtonContainer = styled('div')({
   flexDirection: 'column',
 });
 
-export const Container = styled(Grid)<{ isMobile: boolean }>(({ theme, isMobile }) => ({
+export const Container = styled(Grid, {
+  shouldForwardProp: props => !['isMobile'].includes(props as string),
+})<{ isMobile: boolean }>(({ theme, isMobile }) => ({
   gap: '1rem',
   height: '100%',
   ...(isMobile
@@ -35,7 +38,9 @@ export const Container = styled(Grid)<{ isMobile: boolean }>(({ theme, isMobile 
       }),
 }));
 
-export const WhiteContainer = styled(Grid)<{ isMobile: boolean }>(({ theme, isMobile }) => ({
+export const WhiteContainer = styled(Grid, {
+  shouldForwardProp: props => !['isMobile'].includes(props as string),
+})<{ isMobile: boolean }>(({ theme, isMobile }) => ({
   background: theme.palette.common.white,
   borderTopLeftRadius: '1.875rem',
   justifyContent: 'center',

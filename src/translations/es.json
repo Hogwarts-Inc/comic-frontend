@@ -49,7 +49,9 @@
       "uploadDescription": "Puedes subir tu propia viñeta creada previamente y agregarla al capítulo. \nAsegúrate que sea un archivo PNG. \nPuedes subir hasta 3 viñetas en esta instancia. ",
       "navToEditorTitle": "Utiliza el editor gráfico",
       "navToEditorButton": "Ir al editor",
-      "dropZone": "Arrastra y suelta tus archivos aquí"
+      "dropZone": "Arrastra y suelta tus archivos aquí",
+      "fileRejected": "El archivo {{fileName}} ha sido rechazado, peso máximo 1MB.",
+      "maximunExceeded": "Has excedido el número máximo de viñetas permitidas, el máximo son {{max}}"
     },
     "chapterReview": {
       "createdCanvas": "Viñetas creadas",
@@ -62,6 +64,7 @@
       "canvas": "Debes agregar al menos una viñeta"
     }
   },
+  "confirmNavigateToEditor": "Si navegas al editor gráfico, perderás los archivos que has subido. ¿Estás seguro que quieres continuar?",
   "addCanva": {
     "title": "Agregar Viñetas",
     "createdCanvas": "Viñetas creadas",
@@ -130,5 +133,31 @@
     "createChapter": "Crear capitulo"
   },
   "yourCreations": "Tus creaciones",
-  "noCreations": "No tienes historietas creadas."
+  "noCreations": "No tienes historietas creadas.",
+  "editor": {
+    "zoomOut": "Alejar",
+    "zoomIn": "Acercar",
+    "bringToFront": "Traer al frente",
+    "sendToBack": "Enviar al fondo",
+    "clipToFrame": "Fijar al marco",
+    "layers": "Capas",
+    "align": "Alinear",
+    "block": "Bloquear",
+    "unBlock": "Desbloquear",
+    "unGroup": "Desagrupar",
+    "group": "Agrupar",
+    "delete": "Eliminar",
+    "duplicate": "Duplicar",
+    "opacity": "Opacidad",
+    "flip": "Voltear",
+    "groupName": "Grupo",
+    "flipVertical": "Voltear verticalmente",
+    "flipHorizontal": "Voltear horizontalmente",
+    "copy": "Copiar",
+    "paste": "Pegar",
+    "textFill": "Color de texto",
+    "defaultColors": "Colores predeterminados",
+    "selectAFont": "Selecciona una fuente",
+    "searchFont": "Buscar fuente"
+  }
 }

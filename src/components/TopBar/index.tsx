@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { Route } from 'src/constants/routes';
 import { handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
-import { apiUserProfile } from 'src/services/apiConfig';
+import { apiUserProfile } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
 
 import { AppBarMui, ButtonSignUp, ButtonLogIn, ButtonBox, StyledLogoIcon } from './styles';

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useEditor } from '@layerhub-io/react';
 import { useStyletron } from 'baseui';
@@ -7,9 +7,11 @@ import { Block } from 'baseui/block';
 import { Delete } from 'baseui/icon';
 import { Input, SIZE } from 'baseui/input';
 import { groupBy } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useDebounce } from 'use-debounce';
 
+import useIsMobile from 'src/hooks/useIsMobile';
 import { IFontFamily } from 'src/interfaces/editor';
 
 import Search from '../../../../../components/Icons/Search';
@@ -22,18 +24,20 @@ import { useAppDispatch } from '../../../../../store/store';
 import { loadFonts } from '../../../../../utils/fonts';
 
 export default function FontSelector() {
-  const [hasMore, setHasMore] = React.useState(true);
-  const [pageNumber, setPageNumber] = React.useState(1);
-  const [query, setQuery] = React.useState('');
+  const [hasMore, setHasMore] = useState(true);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [query, setQuery] = useState('');
   const { setActiveSubMenu } = useAppContext();
   const fonts = useSelector(selectFonts);
-  const [commonFonts, setCommonFonts] = React.useState<IFontFamily[]>([]);
+  const [commonFonts, setCommonFonts] = useState<IFontFamily[]>([]);
   const [searchQuery] = useDebounce(query, 250);
   const [css] = useStyletron();
   const editor = useEditor();
   const dispath = useAppDispatch();
+  const { t } = useTranslation();
+  const isMobile = useIsMobile();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const grouped = groupBy(fonts, 'family');
     const standardFonts = Object.keys(grouped).map(key => {
       const familyFonts = grouped[key];
@@ -61,7 +65,7 @@ export default function FontSelector() {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispath(
       queryFonts({
         query: searchQuery,
@@ -75,9 +79,9 @@ export default function FontSelector() {
     } else {
       setHasMore(false);
     }
-  }, [searchQuery]);
+  }, [dispath, pageNumber, searchQuery]);
 
-  const fetchData = React.useCallback(() => {
+  const fetchData = useCallback(() => {
     if (!searchQuery) {
       dispath(
         queryFonts({
@@ -89,7 +93,7 @@ export default function FontSelector() {
     }
 
     setPageNumber(pageNumber + 1);
-  }, [pageNumber, searchQuery]);
+  }, [dispath, pageNumber, searchQuery]);
 
   return (
     <Block $style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -101,7 +105,7 @@ export default function FontSelector() {
           justifyContent: 'space-between',
           padding: '1.5rem',
         }}>
-        <Block>Select a font</Block>
+        <Block>{t('editor.selectAFont')}</Block>
 
         <Block onClick={() => setActiveSubMenu('')} $style={{ cursor: 'pointer', display: 'flex' }}>
           <Delete size={24} />
@@ -119,14 +123,14 @@ export default function FontSelector() {
           }}
           clearable
           onChange={e => setQuery((e.target as any).value)}
-          placeholder="Search font"
+          placeholder={t('editor.searchFont')}
           size={SIZE.compact}
           startEnhancer={<Search size={16} />}
         />
       </Block>
 
       <Scrollable>
-        <Block $style={{ padding: '0 1.5rem', display: 'grid', gap: '0.2rem' }}>
+        <Block $style={{ padding: isMobile ? '0 1.5rem 1rem 1.5rem' : '0 1.5rem', display: 'grid', gap: '0.2rem' }}>
           <InfiniteScrolling fetchData={fetchData} hasMore={hasMore}>
             <Block $style={{ display: 'grid' }}>
               {commonFonts.map(font => (
@@ -145,7 +149,6 @@ export default function FontSelector() {
                   })}
                   id={font.id}>
                   <img src={font.preview} />
-                  {/* <LazyLoadImage url={font.preview} /> */}
                 </div>
               ))}
             </Block>
