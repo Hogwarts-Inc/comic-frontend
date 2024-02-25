@@ -1,21 +1,20 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState, useMemo } from 'react';
 
 import { CircularProgress, Grid } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 import Button from '@components/Button';
 import { DialogAddCanva } from '@components/DialogAddCanva';
 import { DialogLastThreeCanva } from '@components/DialogLastThreeCanva';
 import { DialogUserQueue } from '@components/DialogUserQueue';
 import { Route } from 'src/constants/routes';
+import { addUserToQueue } from 'src/helpers/chaptersQueue';
 import useIsMobile from 'src/hooks/useIsMobile';
 import { StoriettesParam, apisChapters } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
-import { resetCanvaCreate, setChapterId } from 'src/store/slices/canva-creator/reducer';
-import { setChapterQueue } from 'src/store/slices/chapter-queue';
 
 import { Title, Loading, Img, Container, AddCanvaButton, AddCircleOutlineStyle } from './styles';
 
@@ -27,20 +26,22 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
   } = useRouter();
   const { t } = useTranslation();
   const isMobile = useIsMobile();
-  const dispatch = useDispatch();
   const accessToken = useSelector((state: RootState) => state.auth.token);
+  const { chapterId, isWaiting, isCreating, position } = useSelector((state: RootState) => state.chapterQueue);
 
-  const [openDialogUserQueue, setOpenDialogUserQueue] = useState<boolean>(false);
-  const { chapterId, isWaiting, position } = useSelector((state: RootState) => state.chapterQueue);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const [dataChapter, setDataChapter] = useState<StoriettesParam | undefined>();
 
   const isUserTurn = useMemo(() => chapter && chapterId === +chapter && position === 1, [chapter, chapterId, position]);
 
-  const [openDialogThreeCanvas, setOpenDialogThreeCanvas] = useState<boolean>(!!isUserTurn);
-
-  const [loading, setLoading] = useState<boolean>(true);
-  const [dataChapter, setDataChapter] = useState<StoriettesParam | undefined>();
-
+  const [openDialogUserQueue, setOpenDialogUserQueue] = useState<boolean>(false);
+  const [openDialogThreeCanvas, setOpenDialogThreeCanvas] = useState<boolean>(false);
   const [openDialogAddCanva, setOpenDialogAddCanva] = useState<boolean>(false);
+
+  useEffect(() => {
+    setOpenDialogThreeCanvas(!!isUserTurn);
+  }, [isUserTurn]);
 
   useEffect(() => {
     if (chapter) {
@@ -52,74 +53,28 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
   }, [chapter]);
 
   const handleClickOpen = async () => {
+    if (!chapter) return;
     setLoading(true);
-    if (chapter) {
-      try {
-        const { status: checkQueueStatus } = await apisChapters.getChaptersCheckQueue(+chapter);
-        if (checkQueueStatus === 200) {
-          try {
-            const { status: userAddedStatus, data: userAddedData } = await apisChapters.getAddUserToQueue(+chapter);
-            setLoading(false);
-            if (userAddedData.position === 1 && userAddedStatus === 200) {
-              dispatch(
-                setChapterQueue({
-                  chapterId: +chapter,
-                  position: userAddedData.position,
-                  isWaiting: false,
-                  isCreating: true,
-                }),
-              );
-              dispatch(resetCanvaCreate());
-              dispatch(setChapterId(+chapter));
-              setOpenDialogThreeCanvas(true);
-            } else {
-              toast.error('Surgio un error inesperado y no pudimos agregarte a la cola, intentalo nuevamente.');
-            }
-          } catch (error: any) {
-            if (error.response?.status === 422) {
-              if (!isWaiting) {
-                setOpenDialogUserQueue(true);
-              }
-            }
-          }
-        }
-      } catch (error: any) {
-        setLoading(false);
-        if (error.response && error.response.status === 422) {
-          setOpenDialogUserQueue(true);
-        } else {
-          console.error(error);
-        }
+    try {
+      const { status: checkQueueStatus } = await apisChapters.getChaptersCheckQueue(+chapter);
+      if (checkQueueStatus === 200) {
+        addUserToQueue(+chapter);
+      }
+    } catch (error: any) {
+      if (error.response && error.response.status === 422 && !isWaiting) {
+        setOpenDialogUserQueue(true);
+      } else {
+        console.error(error);
       }
     }
+    setLoading(false);
   };
 
   const handleWait = async () => {
     if (!chapter) return;
     setLoading(true);
-    const { status: userAddedStatus, data: userAddedData } = await apisChapters.getAddUserToQueue(+chapter);
-    try {
-      if (userAddedStatus === 200 && userAddedData.position !== 1) {
-        dispatch(
-          setChapterQueue({
-            chapterId: +chapter,
-            position: userAddedData.position,
-            isWaiting: true,
-            isCreating: false,
-          }),
-        );
-        dispatch(resetCanvaCreate());
-        dispatch(setChapterId(+chapter));
-        toast.success('Fuiste agregado a la cola correctamente.');
-      } else {
-        toast.error('Surgio un error inesperado y no pudimos agregarte a la cola, intentalo nuevamente.');
-      }
-      setOpenDialogUserQueue(false);
-    } catch (error: any) {
-      if (error.response?.status === 422) {
-        setOpenDialogUserQueue(true);
-      }
-    }
+    await addUserToQueue(+chapter);
+    setOpenDialogUserQueue(false);
     setLoading(false);
   };
 
@@ -144,12 +99,8 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
             <Img src={item.image_url} alt="" onClick={() => push(`${Route.visualizer}/${item.id}`)} />
           ))}
         </Grid>
-        {!!accessToken && (
-          <AddCanvaButton
-            variant="text"
-            onClick={handleClickOpen}
-            isFooterVisible={isFooterVisible}
-            disabled={isWaiting}>
+        {!!accessToken && !isWaiting && !isCreating && (
+          <AddCanvaButton variant="text" onClick={handleClickOpen} isFooterVisible={isFooterVisible}>
             <AddCircleOutlineStyle />
           </AddCanvaButton>
         )}

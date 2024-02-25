@@ -14,14 +14,14 @@ import Toolbox from './components/Toolbox';
 
 const GraphicEditor = () => {
   const isMobile = useIsMobile();
-  const { chapterId } = useSelector((state: RootState) => state.chapterQueue);
+  const { chapterId, isCreating } = useSelector((state: RootState) => state.chapterQueue);
 
-  useEffect(
-    () => () => {
-      handleRemoveFromQueue(chapterId);
-    },
-    [],
-  );
+  // useEffect(
+  //   () => () => {
+  //     if (isCreating) handleRemoveFromQueue(chapterId);
+  //   },
+  //   [isCreating],
+  // );
 
   return (
     <Grid container wrap="nowrap" direction={isMobile ? 'column' : 'row'}>

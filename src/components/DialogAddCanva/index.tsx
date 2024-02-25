@@ -21,7 +21,7 @@ interface DialogAddCanvaParams {
 export const DialogAddCanva = ({ openDialog, setOpenDialog }: DialogAddCanvaParams) => {
   const dispatch = useDispatch();
   const { push } = useRouter();
-  const { isWaiting } = useSelector((state: RootState) => state.chapterQueue);
+  const { isCreating } = useSelector((state: RootState) => state.chapterQueue);
 
   const { canvaData, activeStep } = useSelector((state: RootState) => ({
     canvaData: selectCanvaData(state),
@@ -30,7 +30,7 @@ export const DialogAddCanva = ({ openDialog, setOpenDialog }: DialogAddCanvaPara
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleClose = () => {
-    if (isWaiting) {
+    if (isCreating && canvaData.chapterId) {
       handleRemoveFromQueue(canvaData.chapterId);
     }
     setOpenDialog(false);
@@ -45,9 +45,7 @@ export const DialogAddCanva = ({ openDialog, setOpenDialog }: DialogAddCanvaPara
     setIsSubmitting(true);
     try {
       await apisCanvas.postCanva({ chapter_id: canvaData.chapterId, images: canvaData.files });
-      dispatch(resetCanvaCreate());
-
-      handleClose();
+      setOpenDialog(false);
       push(Route.chapter);
     } catch (e) {
       console.error(e);
