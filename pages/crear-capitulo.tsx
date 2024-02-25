@@ -53,7 +53,7 @@ const ChapterCreate = () => {
       const chapterId = chapterResponse.data.id;
 
       await apisCanvas.postCanva({ chapter_id: chapterId, images: chapterData.files });
-      router.push(Route.home);
+      router.push(Route.chapter);
       dispatch(resetCanvaCreate());
     } catch (e) {
       console.error(e); // TODO handle error with alert
