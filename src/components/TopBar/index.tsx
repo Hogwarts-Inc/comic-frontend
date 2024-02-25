@@ -21,7 +21,7 @@ export const TopBar = dynamic(
     const [anchorMenuUser, setAnchorMenuUser] = useState<null | HTMLElement>(null);
     const [userProfile, setUserProfile] = useState('');
     const router = useRouter();
-    const { isWaiting, isCreating, chapterId } = useSelector((state: RootState) => state.chapterQueue);
+    const { isWaiting, chapterId } = useSelector((state: RootState) => state.chapterQueue);
 
     useEffect(() => {
       if (!accessToken) return;
@@ -59,7 +59,7 @@ export const TopBar = dynamic(
             {accessToken ? (
               <Box>
                 <ButtonBox>
-                  {(isWaiting || isCreating) && (
+                  {isWaiting && (
                     <ButtonSignUp onClick={() => handleRemoveFromQueue(chapterId)} variant="outlined">
                       {t('topBar.removeQueue')}
                     </ButtonSignUp>
