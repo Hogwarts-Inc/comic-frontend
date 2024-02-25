@@ -22,6 +22,14 @@ export const AppBarMui = styled(AppBar)(({ theme }) => ({
   padding: '0 1rem',
 }));
 
+export const ButtonWaiting = styled(Button)(({ theme }) => ({
+  background: 'transparent',
+  margin: '1rem',
+  border: `1px solid ${theme.palette.common.white}`,
+  textAlign: 'left',
+  fontWeight: 'normal',
+}));
+
 export const ButtonSignUp = styled(Button)(({ theme }) => ({
   background: 'transparent',
   margin: '1rem',

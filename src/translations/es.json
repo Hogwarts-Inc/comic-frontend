@@ -94,7 +94,7 @@
   "topBar": {
     "login": "Iniciar sesión",
     "signup": " Crear cuenta",
-    "removeQueue": "Abandonar cola",
+    "removeQueue": "Abandonar fila en : ",
     "menu": {
       "profile": "Mi perfil",
       "logout": "Cerrar sesión"

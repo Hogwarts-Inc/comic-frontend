@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import StopCircleTwoToneIcon from '@mui/icons-material/StopCircleTwoTone';
 import { Avatar, Box, Typography, Grid, MenuItem, IconButton, Menu } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -8,10 +9,10 @@ import { useSelector } from 'react-redux';
 
 import { Route } from 'src/constants/routes';
 import { handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
-import { apiUserProfile } from 'src/services/api';
+import { StoriettesParam, apiUserProfile, apisChapters } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
 
-import { AppBarMui, ButtonSignUp, ButtonLogIn, ButtonBox, StyledLogoIcon } from './styles';
+import { AppBarMui, ButtonSignUp, ButtonLogIn, ButtonBox, StyledLogoIcon, ButtonWaiting } from './styles';
 
 export const TopBar = dynamic(
   Promise.resolve(() => {
@@ -22,6 +23,15 @@ export const TopBar = dynamic(
     const [userProfile, setUserProfile] = useState('');
     const router = useRouter();
     const { isWaiting, chapterId } = useSelector((state: RootState) => state.chapterQueue);
+    const [currentChapterQueue, setCurrentChapterQueue] = useState<StoriettesParam | undefined>();
+
+    useEffect(() => {
+      if (isWaiting && chapterId) {
+        apisChapters.getChaptersById(chapterId).then(({ data }) => {
+          setCurrentChapterQueue(data);
+        });
+      }
+    }, [chapterId, isWaiting]);
 
     useEffect(() => {
       if (!accessToken) return;
@@ -60,9 +70,13 @@ export const TopBar = dynamic(
               <Box>
                 <ButtonBox>
                   {isWaiting && (
-                    <ButtonSignUp onClick={() => handleRemoveFromQueue(chapterId)} variant="outlined">
+                    <ButtonWaiting
+                      onClick={() => handleRemoveFromQueue(chapterId)}
+                      variant="outlined"
+                      endIcon={<StopCircleTwoToneIcon style={{ marginLeft: '0.2rem' }} />}>
                       {t('topBar.removeQueue')}
-                    </ButtonSignUp>
+                      {currentChapterQueue?.title}
+                    </ButtonWaiting>
                   )}
                   <IconButton style={{ padding: 0 }} onClick={handleOpenUserMenu}>
                     <Avatar src={userProfile} sx={{ height: '3rem', width: '3rem' }} />
