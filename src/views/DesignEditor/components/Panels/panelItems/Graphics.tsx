@@ -1,28 +1,31 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useEditor } from '@layerhub-io/react';
-import { ILayer, LayerType } from '@layerhub-io/types';
 import { useStyletron } from 'baseui';
 import { Block } from 'baseui/block';
 
 import useIsMobile from 'src/hooks/useIsMobile';
-import { Character, Resource } from 'src/store/slices/resources/reducer';
+import { Resource } from 'src/store/slices/resources/reducer';
+import { toBase64 } from 'src/utils/data';
 
 import { CloseSideBar } from './Common/CloseSideBar';
-import { CharacterContainer } from './styles';
+import { ImageContainer } from './styles';
 import Scrollable from '../../../../../components/Scrollable';
 
-export function ImageItem({ preview, onClick }: { preview: any; onClick?: (option: any) => void }) {
+export const GraphicItem = ({ preview, onClick }: { preview: string; onClick: (option: any) => void }) => {
   const [css] = useStyletron();
   return (
     <div
       onClick={onClick}
       className={css({
         position: 'relative',
+        height: '84px',
         background: '#f8f8fb',
         cursor: 'pointer',
+        padding: '12px',
         borderRadius: '8px',
         overflow: 'hidden',
         '::before:hover': {
@@ -62,28 +65,42 @@ export function ImageItem({ preview, onClick }: { preview: any; onClick?: (optio
           },
         })}
       />
-      <img
-        src={preview}
+      <div
         className={css({
-          width: '100%',
+          backgroundImage: `url(${preview.replace('data:application/octet-stream', 'data:image/svg+xml')})`,
           height: '100%',
-          objectFit: 'contain',
-          pointerEvents: 'none',
-          verticalAlign: 'middle',
+          width: 'auto',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'contain',
+          backgroundPosition: 'center',
+          backgroundOrigin: 'border-box',
         })}
       />
     </div>
   );
-}
-function Images({ title, images }: { title: string; images: (Character | Resource)[] }) {
-  const editor = useEditor();
-  const isMobile = useIsMobile();
+};
 
-  const addObject = useCallback(
+const Graphics = ({ title, images }: { title: string; images: Resource[] }) => {
+  const editor = useEditor();
+  const [vectors, setVectors] = useState<string[]>([]);
+  const isMobile = useIsMobile();
+  useEffect(() => {
+    Promise.all(
+      images.map(async image => {
+        const data = await fetch(image.url);
+
+        const blob = await data.blob();
+
+        return toBase64(blob);
+      }),
+    ).then(setVectors);
+  }, [images]);
+
+  const addObject = React.useCallback(
     (url: string) => {
       if (editor) {
-        const options: Partial<ILayer> = {
-          type: LayerType.STATIC_IMAGE,
+        const options = {
+          type: 'StaticVector',
           src: url,
         };
         editor.objects.add(options);
@@ -107,44 +124,15 @@ function Images({ title, images }: { title: string; images: (Character | Resourc
       </Block>
       <Scrollable>
         <Block padding="0 1.5rem 1.5rem 1.5rem">
-          <div
-            style={{
-              display: 'grid',
-              gap: '8px',
-              gridTemplateColumns: (images[0] as Character)?.images
-                ? undefined
-                : `repeat(${isMobile ? '4' : '2'}, 1fr)`,
-            }}>
-            {images.map(image => {
-              if ((image as Character)?.images) {
-                return (
-                  <>
-                    <Block>{(image as Character).name}</Block>
-                    <CharacterContainer isMobile={!!isMobile}>
-                      {(image as Character)?.images.map(characterImage => (
-                        <ImageItem
-                          key={characterImage.id}
-                          onClick={() => addObject(characterImage.url)}
-                          preview={characterImage.url}
-                        />
-                      ))}
-                    </CharacterContainer>
-                  </>
-                );
-              }
-              return (
-                <ImageItem
-                  key={image.id}
-                  onClick={() => addObject((image as Resource).url)}
-                  preview={(image as Resource).url}
-                />
-              );
-            })}
-          </div>
+          <ImageContainer isMobile={!!isMobile}>
+            {vectors.map((vector, index) => (
+              <GraphicItem onClick={() => addObject(vector)} key={index} preview={vector} />
+            ))}
+          </ImageContainer>
         </Block>
       </Scrollable>
     </Block>
   );
-}
+};
 
-export default Images;
+export default Graphics;

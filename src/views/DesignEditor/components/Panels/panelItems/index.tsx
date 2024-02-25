@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/rootReducer';
 
 import FontSelector from './FontSelector';
+import Graphics from './Graphics';
 import Images from './Images';
 import Text from './Text';
 import TextFill from './TextFill';
@@ -27,7 +28,7 @@ function CharacterConvertor() {
 function ShapesConvertor() {
   const { t } = useTranslation();
   const { shapes } = useSelector((state: RootState) => state.resources);
-  return <Images title={t('panels.panelsList.shapes')} images={shapes} />;
+  return <Graphics title={t('panels.panelsList.shapes')} images={shapes} />;
 }
 
 function TextConvertor() {

@@ -1,7 +1,8 @@
+/* eslint-disable react/no-array-index-key */
 // TODO remove commented items if not needed, when the text component is ready
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useEditor } from '@layerhub-io/react';
 import { ILayer, LayerType } from '@layerhub-io/types';
@@ -12,9 +13,10 @@ import { useTranslation } from 'react-i18next';
 
 import useIsMobile from 'src/hooks/useIsMobile';
 import { Resource } from 'src/store/slices/resources/reducer';
+import { toBase64 } from 'src/utils/data';
 
 import { CloseSideBar } from './Common/CloseSideBar';
-import { ImageItem } from './Images';
+import { GraphicItem } from './Graphics';
 import { ImageContainer } from './styles';
 import Scrollable from '../../../../../components/Scrollable';
 import { FontItem } from '../../../../../interfaces/common';
@@ -24,6 +26,32 @@ export default function Text({ images }: { images: Resource[] }) {
   const editor = useEditor();
   const { t } = useTranslation();
   const isMobile = useIsMobile();
+
+  const [vectors, setVectors] = useState<string[]>([]);
+  useEffect(() => {
+    Promise.all(
+      images.map(async image => {
+        const data = await fetch(image.url);
+
+        const blob = await data.blob();
+
+        return toBase64(blob);
+      }),
+    ).then(setVectors);
+  }, [images]);
+
+  const addImage = React.useCallback(
+    (url: string) => {
+      if (editor) {
+        const options = {
+          type: 'StaticVector',
+          src: url,
+        };
+        editor.objects.add(options);
+      }
+    },
+    [editor],
+  );
 
   const addObject = useCallback(async () => {
     if (editor) {
@@ -48,19 +76,6 @@ export default function Text({ images }: { images: Resource[] }) {
     }
   }, [editor]);
 
-  const addImage = useCallback(
-    async (url: string) => {
-      if (editor) {
-        const options: Partial<ILayer> = {
-          type: LayerType.STATIC_IMAGE,
-          src: url,
-        };
-        await editor.objects.add(options);
-      }
-    },
-    [editor],
-  );
-
   return (
     <Block $style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
       <Block
@@ -75,7 +90,7 @@ export default function Text({ images }: { images: Resource[] }) {
         <CloseSideBar />
       </Block>
       <Scrollable>
-        <Block padding="0 1.5rem">
+        <Block padding="0 1.5rem 1.5rem 1.5rem">
           <Button
             onClick={addObject}
             size={SIZE.compact}
@@ -89,8 +104,8 @@ export default function Text({ images }: { images: Resource[] }) {
             {t('text.add')}
           </Button>
           <ImageContainer isMobile={!!isMobile}>
-            {images.map(image => (
-              <ImageItem key={image.id} onClick={() => addImage(image.url)} preview={image.url} />
+            {vectors.map((url, index) => (
+              <GraphicItem key={index} onClick={() => addImage(url)} preview={url} />
             ))}
           </ImageContainer>
         </Block>
