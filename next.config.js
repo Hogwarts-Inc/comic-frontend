@@ -6,6 +6,7 @@ const nextConfig = {
       test: /\.svg$/,
       use: ['@svgr/webpack'],
     });
+    config.externals.push('pino-pretty', 'lokijs', 'encoding');
 
     return config;
   },

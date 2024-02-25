@@ -15,6 +15,9 @@ export const getServerSideProps = (async context => {
     accessToken: '',
     currentUserProfilePicture: '',
     currentUserUsername: '',
+    walletAddress: '',
+    tokenID: '',
+    transferred: false,
   };
   let accessToken = '';
   try {
@@ -35,6 +38,9 @@ export const getServerSideProps = (async context => {
           username: comment.user_attributes.name,
           id: `${comment.id}`,
         })),
+        walletAddress: dataApi.nft_data.wallet_address,
+        tokenID: dataApi.nft_data.token_id,
+        transferred: dataApi.nft_data.transferred,
         username: dataApi.user_attributes.name,
         profilePicture: dataApi.user_attributes.image_url,
         likes: dataApi.likes,

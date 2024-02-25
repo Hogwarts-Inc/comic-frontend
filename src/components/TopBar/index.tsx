@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Avatar, Box, Typography, Grid, MenuItem, IconButton, Menu } from '@mui/material';
+import { useDisconnect, useWeb3ModalAccount } from '@web3modal/ethers/react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +22,9 @@ export const TopBar = dynamic(
     const [userProfile, setUserProfile] = useState('');
     const router = useRouter();
 
+    const { isConnected } = useWeb3ModalAccount();
+    const { disconnect } = useDisconnect();
+
     useEffect(() => {
       if (!accessToken) return;
       apiUserProfile
@@ -33,7 +37,16 @@ export const TopBar = dynamic(
 
     const userMenuOptions = [
       { title: t('topBar.menu.profile'), handler: () => push(Route.profile) },
-      { title: t('topBar.menu.logout'), handler: () => push(Route.logout) },
+      {
+        title: t('topBar.menu.logout'),
+        handler: () => {
+          if (isConnected) {
+            disconnect().then(() => push(Route.logout));
+          } else {
+            push(Route.logout);
+          }
+        },
+      },
     ];
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {

@@ -26,9 +26,16 @@ type Comment = {
   user_attributes: UserAttributes;
 };
 
+type NftData = {
+  wallet_address: string;
+  token_id: string;
+  transferred: boolean;
+};
+
 type CanvaResponse = {
   chapter_id: number;
   comments: Comment[];
+  nft_data: NftData;
   id: number;
   image_url: string;
   likes: number;

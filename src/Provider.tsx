@@ -10,6 +10,7 @@ import { Provider as ReduxProvier } from 'react-redux';
 
 import { AppProvider } from './contexts/AppContext';
 import { DesignEditorProvider } from './contexts/DesignEditor';
+import { Web3ModalProvider } from './contexts/Web3Modal';
 import { store } from './store/store';
 import theme from './styles/theme';
 import './translations';
@@ -20,11 +21,13 @@ function Provider({ children }: { children: React.ReactNode }) {
       <ThemeProvider theme={theme}>
         <DesignEditorProvider>
           <TimerProvider>
-            <AppProvider>
-              <ScenifyProvider>
-                <I18nextProvider i18n={i18next}>{children}</I18nextProvider>
-              </ScenifyProvider>
-            </AppProvider>
+            <Web3ModalProvider>
+              <AppProvider>
+                <ScenifyProvider>
+                  <I18nextProvider i18n={i18next}>{children}</I18nextProvider>
+                </ScenifyProvider>
+              </AppProvider>
+            </Web3ModalProvider>
           </TimerProvider>
         </DesignEditorProvider>
       </ThemeProvider>
