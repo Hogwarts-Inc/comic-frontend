@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 
 import { CircularProgress, Grid } from '@mui/material';
 import { useRouter } from 'next/router';
@@ -39,7 +39,7 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
 
   const { chapterId, isWaiting, position } = useSelector((state: RootState) => state.chapterQueue);
 
-  const isUserTurn = useMemo(()=> chapter && chapterId === +chapter && position === 1,[chapter,chapterId,position]);
+  const isUserTurn = useMemo(() => chapter && chapterId === +chapter && position === 1, [chapter, chapterId, position]);
   const [openDialogAddCanva, setOpenDialogAddCanva] = useState<boolean>(!!isUserTurn);
 
   useEffect(() => {
@@ -77,10 +77,7 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
             }
           } catch (error: any) {
             if (error.response?.status === 422) {
-              if (error.position === 1) {
-                dispatch(setChapterId(+chapter));
-                setOpenDialogThreeCanvas(true);
-              } else if (!isWaiting) {
+              if (!isWaiting) {
                 setOpenDialogUserQueue(true);
               }
             }
@@ -99,6 +96,7 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
 
   const handleWait = async () => {
     if (!chapter) return;
+    setLoading(true);
 
     const { status: userAddedStatus, data: userAddedData } = await apisChapters.getAddUserToQueue(+chapter);
     try {
@@ -120,7 +118,7 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
       setOpenDialogUserQueue(false);
     } catch (error: any) {
       setLoading(false);
-      if (error.response && error.response.status === 422) {
+      if (error.response?.status === 422) {
         setOpenDialogUserQueue(true);
       }
     }
@@ -148,7 +146,11 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
           ))}
         </Grid>
         {!!accessToken && (
-          <AddCanvaButton variant="text" onClick={handleClickOpen} isFooterVisible={isFooterVisible}>
+          <AddCanvaButton
+            variant="text"
+            onClick={handleClickOpen}
+            isFooterVisible={isFooterVisible}
+            disabled={isWaiting}>
             <AddCircleOutlineStyle />
           </AddCanvaButton>
         )}

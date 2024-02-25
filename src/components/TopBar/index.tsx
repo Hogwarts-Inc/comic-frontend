@@ -4,7 +4,7 @@ import { Avatar, Box, Typography, Grid, MenuItem, IconButton, Menu, Button } fro
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Route } from 'src/constants/routes';
 import { handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
@@ -22,7 +22,6 @@ export const TopBar = dynamic(
     const [userProfile, setUserProfile] = useState('');
     const router = useRouter();
     const { isWaiting, isCreating, chapterId } = useSelector((state: RootState) => state.chapterQueue);
-    const dispatch = useDispatch();
 
     useEffect(() => {
       if (!accessToken) return;
@@ -60,7 +59,7 @@ export const TopBar = dynamic(
             {accessToken ? (
               <Box>
                 {(isWaiting || isCreating) && (
-                  <Button onClick={() => handleRemoveFromQueue(chapterId, dispatch)}>Remove from queue</Button>
+                  <Button onClick={() => handleRemoveFromQueue(chapterId)}>Remove from queue</Button>
                 )}
                 <IconButton style={{ padding: 0 }} onClick={handleOpenUserMenu}>
                   <Avatar src={userProfile} sx={{ height: '3rem', width: '3rem' }} />

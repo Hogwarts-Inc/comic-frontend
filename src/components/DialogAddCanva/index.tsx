@@ -21,6 +21,7 @@ interface DialogAddCanvaParams {
 export const DialogAddCanva = ({ openDialog, setOpenDialog }: DialogAddCanvaParams) => {
   const dispatch = useDispatch();
   const { push } = useRouter();
+  const { isWaiting, isCreating } = useSelector((state: RootState) => state.chapterQueue);
 
   const { canvaData, activeStep } = useSelector((state: RootState) => ({
     canvaData: selectCanvaData(state),
@@ -29,7 +30,9 @@ export const DialogAddCanva = ({ openDialog, setOpenDialog }: DialogAddCanvaPara
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleClose = () => {
-    handleRemoveFromQueue(canvaData.chapterId, dispatch);
+    if (isWaiting || isCreating) {
+      handleRemoveFromQueue(canvaData.chapterId);
+    }
     setOpenDialog(false);
   };
 

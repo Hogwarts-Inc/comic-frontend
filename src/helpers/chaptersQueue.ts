@@ -2,10 +2,13 @@ import { toast } from 'react-toastify';
 
 import { apisChapters } from 'src/services/api';
 import { resetChapterQueue } from 'src/store/slices/chapter-queue';
+import { store } from 'src/store/store';
 
 export const getUserQueuePosition = (chapter: number) => apisChapters.getUserQueuePlace(chapter);
 
-export const handleRemoveFromQueue = async (chapterId: number, dispatch: any) => {
+export const handleRemoveFromQueue = async (chapterId: number) => {
+  const { dispatch } = store;
+
   try {
     const { status } = await apisChapters.removeUserFromQueue(chapterId);
     if (status === 200) {

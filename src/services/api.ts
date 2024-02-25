@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosResponse, AxiosError } from 'axios';
@@ -5,6 +6,7 @@ import i18next from 'i18next';
 import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 
+import { CanvaChapter } from 'src/interfaces/common';
 import { Character, ResourceSliceState, setCharacters, setResources } from 'src/store/slices/resources/reducer';
 import { store } from 'src/store/store';
 
@@ -121,7 +123,7 @@ export const apisChapters = {
   getAddUserToQueue: (id: number) => api.get(`/chapters/${id}/add_user_to_queue`),
   getUserQueuePlace: (id: number) => api.get<any>(`/chapters/${id}/user_position_in_queue`),
   removeUserFromQueue: (id: number) => api.get<any>(`/chapters/${id}/remove_user_from_queue`),
-  getTheeLastCanva: (id: number) => api.get<any[]>(`/chapters/${id}/last_three_canvas`),
+  getTheeLastCanva: (id: number) => api.get<CanvaChapter[]>(`/chapters/${id}/last_three_canvas`),
 };
 
 //CANVAS

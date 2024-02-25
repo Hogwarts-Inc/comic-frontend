@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 
 import Button from '@components/Button';
 import { handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
+import { CanvaChapter } from 'src/interfaces/common';
 import { apisChapters } from 'src/services/api';
 
 import {
@@ -32,11 +32,10 @@ export const DialogLastThreeCanva = ({
   setOpenDialogAddCanva,
 }: DialogUserQueueParams) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const [threeCanvas, setThreeCanvas] = useState<any[]>([]);
+  const [threeCanvas, setThreeCanvas] = useState<CanvaChapter>();
 
   const handleClose = () => {
-    handleRemoveFromQueue(chapterId, dispatch);
+    handleRemoveFromQueue(chapterId);
     setOpenDialog(false);
   };
 
@@ -51,7 +50,7 @@ export const DialogLastThreeCanva = ({
         setThreeCanvas(data);
       });
     }
-  }, []);
+  }, [openDialog, chapterId]);
 
   return (
     <DialogStyle open={openDialog} onClose={handleClose}>
@@ -66,14 +65,7 @@ export const DialogLastThreeCanva = ({
           </ThumbnailContainer>
         </DialogContentStyle>
         <DialogActionsStyle>
-          <Button
-            variantType="gradient"
-            size="large"
-            onClick={() => {
-              handleRemoveFromQueue(chapterId, dispatch);
-              setOpenDialog(false);
-            }}
-            autoFocus>
+          <Button variantType="gradient" size="large" onClick={handleClose} autoFocus>
             {t('dialogLastCanvas.cancel')}
           </Button>
           <Button variantType="gradient" size="large" onClick={handleNext} autoFocus>
