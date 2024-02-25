@@ -94,7 +94,8 @@
   "topBar": {
     "login": "Iniciar sesión",
     "signup": " Crear cuenta",
-    "removeQueue": "Abandonar fila en : ",
+    "removeQueueWeb": "Abandonar fila en : ",
+    "removeQueueMobile": "Abandonar fila",
     "menu": {
       "profile": "Mi perfil",
       "logout": "Cerrar sesión"

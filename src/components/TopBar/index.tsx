@@ -13,11 +13,13 @@ import { StoriettesParam, apiUserProfile, apisChapters } from 'src/services/api'
 import { RootState } from 'src/store/rootReducer';
 
 import { AppBarMui, ButtonSignUp, ButtonLogIn, ButtonBox, StyledLogoIcon, ButtonWaiting } from './styles';
+import useIsMobile from 'src/hooks/useIsMobile';
 
 export const TopBar = dynamic(
   Promise.resolve(() => {
     const { t } = useTranslation();
     const { push } = useRouter();
+    const isMobile = useIsMobile();
     const accessToken = useSelector((state: RootState) => state.auth.token);
     const [anchorMenuUser, setAnchorMenuUser] = useState<null | HTMLElement>(null);
     const [userProfile, setUserProfile] = useState('');
@@ -74,8 +76,9 @@ export const TopBar = dynamic(
                       onClick={() => handleRemoveFromQueue(chapterId)}
                       variant="outlined"
                       endIcon={<StopCircleTwoToneIcon style={{ marginLeft: '0.2rem' }} />}>
-                      {t('topBar.removeQueue')}
-                      {currentChapterQueue?.title}
+                      {isMobile
+                        ? t('topBar.removeQueueMobile')
+                        : `${t('topBar.removeQueueWeb')} ${currentChapterQueue?.title}`}
                     </ButtonWaiting>
                   )}
                   <IconButton style={{ padding: 0 }} onClick={handleOpenUserMenu}>
