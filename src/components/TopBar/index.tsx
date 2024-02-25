@@ -31,16 +31,28 @@ export const TopBar = dynamic(
         .catch(e => console.log(e));
     }, [accessToken]);
 
+    const handleCloseUserMenu = () => {
+      setAnchorMenuUser(null);
+    };
     const userMenuOptions = [
-      { title: t('topBar.menu.profile'), handler: () => push(Route.profile) },
-      { title: t('topBar.menu.logout'), handler: () => push(Route.logout) },
+      {
+        title: t('topBar.menu.profile'),
+        handler: () => {
+          push(Route.profile);
+          handleCloseUserMenu();
+        },
+      },
+      {
+        title: t('topBar.menu.logout'),
+        handler: () => {
+          push(Route.logout);
+          handleCloseUserMenu();
+        },
+      },
     ];
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
       setAnchorMenuUser(event.currentTarget);
-    };
-    const handleCloseUserMenu = () => {
-      setAnchorMenuUser(null);
     };
 
     const onClickLogo = () => {

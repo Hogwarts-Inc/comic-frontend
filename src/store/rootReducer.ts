@@ -7,7 +7,7 @@ import { fontsReducer } from './slices/fonts/reducer';
 import resources from './slices/resources/reducer';
 import { uploadsReducer } from './slices/uploads/reducer';
 
-const rootReducer = combineReducers({
+const combinedReducer = combineReducers({
   canvaCreator: canvaCreatorReducer,
   designEditor: designEditorReducer,
   fonts: fontsReducer,
@@ -16,6 +16,13 @@ const rootReducer = combineReducers({
   auth: authReducer,
 });
 
+const rootReducer: typeof combinedReducer = (state, action) => {
+  let newState = state;
+  if (action.type === 'RESET') {
+    newState = undefined;
+  }
+  return combinedReducer(newState, action);
+};
 export type RootState = ReturnType<typeof rootReducer>;
 
 export default rootReducer;
