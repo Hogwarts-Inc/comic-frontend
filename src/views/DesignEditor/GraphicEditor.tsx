@@ -11,6 +11,7 @@ import Toolbox from './components/Toolbox';
 
 const GraphicEditor = () => {
   const isMobile = useIsMobile();
+
   return (
     <Grid container wrap="nowrap" direction={isMobile ? 'column' : 'row'}>
       <Grid container item xs="auto" direction={isMobile ? 'column' : 'row'}>

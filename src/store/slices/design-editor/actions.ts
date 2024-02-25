@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { createAction } from '@reduxjs/toolkit';
 
 import { Page } from '../../../interfaces/common';

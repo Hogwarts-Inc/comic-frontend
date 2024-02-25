@@ -94,6 +94,8 @@
   "topBar": {
     "login": "Iniciar sesión",
     "signup": " Crear cuenta",
+    "removeQueueWeb": "Abandonar fila en : ",
+    "removeQueueMobile": "Abandonar fila",
     "menu": {
       "profile": "Mi perfil",
       "logout": "Cerrar sesión"
@@ -119,8 +121,15 @@
   "dialogUserQueue": {
     "title": "En fila",
     "description": "En este momento, otro usuario está creando una viñeta para este capítulo. ¿Prefieres esperar o crear tu propio capítulo y una viñeta nueva?.",
-    "cancel": "Cancelar",
+    "wait": "Esperar",
     "createChapter": "Crear capitulo"
+  },
+  "dialogLastCanvas": {
+    "title": "Preparate para empezar!",
+    "next": "Siguiente",
+    "cancel": "Cancelar",
+    "description": "Continúa la historia, aquí están las últimas tres viñetas como fuente de inspiración.",
+    "footer": "Toma en cuenta que algunas de estas viñetas quizás no aparezcan en el capítulo, ya que aún no han sido aprobadas por un administrador."
   },
   "chaptersPreview": {
     "createChapter": "Crear capitulo"
