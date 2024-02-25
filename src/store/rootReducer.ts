@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { combineReducers } from '@reduxjs/toolkit';
 
 import authReducer from './slices/auth/index';
