@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Avatar, Box, Typography, Grid, MenuItem, IconButton, Menu, Button } from '@mui/material';
+import { Avatar, Box, Typography, Grid, MenuItem, IconButton, Menu } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
