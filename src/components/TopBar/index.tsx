@@ -58,12 +58,16 @@ export const TopBar = dynamic(
             </ButtonBox>
             {accessToken ? (
               <Box>
-                {(isWaiting || isCreating) && (
-                  <Button onClick={() => handleRemoveFromQueue(chapterId)}>Remove from queue</Button>
-                )}
-                <IconButton style={{ padding: 0 }} onClick={handleOpenUserMenu}>
-                  <Avatar src={userProfile} sx={{ height: '3rem', width: '3rem' }} />
-                </IconButton>
+                <ButtonBox>
+                  {(isWaiting || isCreating) && (
+                    <ButtonSignUp onClick={() => handleRemoveFromQueue(chapterId)} variant="outlined">
+                      {t('topBar.removeQueue')}
+                    </ButtonSignUp>
+                  )}
+                  <IconButton style={{ padding: 0 }} onClick={handleOpenUserMenu}>
+                    <Avatar src={userProfile} sx={{ height: '3rem', width: '3rem' }} />
+                  </IconButton>
+                </ButtonBox>
                 <Menu
                   sx={{ mt: '3.25rem' }}
                   id="menu-appbar"

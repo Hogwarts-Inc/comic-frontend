@@ -38,11 +38,10 @@ const QueueHandler = () => {
 
         if (userCurrentPosition === 1) {
           push(`${Route.chapter}/${chapterId}`);
-          console.log(3);
 
           dispatch(setChapterQueue({ chapterId, isWaiting: false, position: userCurrentPosition, isCreating: true }));
         }
-      }, 3000);
+      }, 30000);
     }
     return () => {
       if (interval) {
