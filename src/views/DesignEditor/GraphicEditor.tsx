@@ -1,11 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Grid } from '@mui/material';
-import { useSelector } from 'react-redux';
 
-import { handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
 import useIsMobile from 'src/hooks/useIsMobile';
-import { RootState } from 'src/store/rootReducer';
 
 import Canvas from './components/Canvas';
 import Graphic from './components/Footer/Graphic';
@@ -14,14 +11,6 @@ import Toolbox from './components/Toolbox';
 
 const GraphicEditor = () => {
   const isMobile = useIsMobile();
-  const { chapterId, isCreating } = useSelector((state: RootState) => state.chapterQueue);
-
-  // useEffect(
-  //   () => () => {
-  //     if (isCreating) handleRemoveFromQueue(chapterId);
-  //   },
-  //   [isCreating],
-  // );
 
   return (
     <Grid container wrap="nowrap" direction={isMobile ? 'column' : 'row'}>
