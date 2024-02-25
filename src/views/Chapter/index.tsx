@@ -76,7 +76,7 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
               toast.error('Surgio un error inesperado y no pudimos agregarte a la cola, intentalo nuevamente.');
             }
           } catch (error: any) {
-            if (error.response && error.response.status === 422) {
+            if (error.response?.status === 422) {
               if (error.position === 1) {
                 dispatch(setChapterId(+chapter));
                 setOpenDialogThreeCanvas(true);
