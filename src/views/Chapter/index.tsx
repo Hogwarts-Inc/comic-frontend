@@ -31,16 +31,16 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
   const accessToken = useSelector((state: RootState) => state.auth.token);
 
   const [openDialogUserQueue, setOpenDialogUserQueue] = useState<boolean>(false);
+  const { chapterId, isWaiting, position } = useSelector((state: RootState) => state.chapterQueue);
 
-  const [openDialogThreeCanvas, setOpenDialogThreeCanvas] = useState<boolean>(false);
+  const isUserTurn = useMemo(() => chapter && chapterId === +chapter && position === 1, [chapter, chapterId, position]);
+
+  const [openDialogThreeCanvas, setOpenDialogThreeCanvas] = useState<boolean>(!!isUserTurn);
 
   const [loading, setLoading] = useState<boolean>(true);
   const [dataChapter, setDataChapter] = useState<StoriettesParam | undefined>();
 
-  const { chapterId, isWaiting, position } = useSelector((state: RootState) => state.chapterQueue);
-
-  const isUserTurn = useMemo(() => chapter && chapterId === +chapter && position === 1, [chapter, chapterId, position]);
-  const [openDialogAddCanva, setOpenDialogAddCanva] = useState<boolean>(!!isUserTurn);
+  const [openDialogAddCanva, setOpenDialogAddCanva] = useState<boolean>(false);
 
   useEffect(() => {
     if (chapter) {
