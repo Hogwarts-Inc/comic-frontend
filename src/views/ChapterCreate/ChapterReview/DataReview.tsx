@@ -2,13 +2,13 @@ import React from 'react';
 
 import { Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
 import { TitleView } from '@components/AddCanvaTitleView';
 import { ContextType } from 'src/interfaces/common';
+import { resetChapterQueue } from 'src/store/slices/chapter-queue';
 
 import { GridContainer, SectionTitle, SectionDescription, Thumbnail, ThumbnailContainer, SubmitButton } from './styles';
-import { resetChapterQueue } from 'src/store/slices/chapter-queue';
-import { useDispatch } from 'react-redux';
 
 interface ChapterReviewProps {
   context: ContextType;
