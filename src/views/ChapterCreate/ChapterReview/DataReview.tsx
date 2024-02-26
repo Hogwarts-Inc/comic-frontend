@@ -2,9 +2,11 @@ import React from 'react';
 
 import { Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
 import { TitleView } from '@components/AddCanvaTitleView';
 import { ContextType } from 'src/interfaces/common';
+import { resetChapterQueue } from 'src/store/slices/chapter-queue';
 
 import { GridContainer, SectionTitle, SectionDescription, Thumbnail, ThumbnailContainer, SubmitButton } from './styles';
 
@@ -21,6 +23,7 @@ interface ChapterReviewProps {
 
 export const DataReview = ({ context, onNext, values, isSubmitting }: ChapterReviewProps) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   return (
     <GridContainer container gap="2rem" padding="2rem">
@@ -51,7 +54,14 @@ export const DataReview = ({ context, onNext, values, isSubmitting }: ChapterRev
         </ThumbnailContainer>
       </Grid>
 
-      <SubmitButton isLoading={isSubmitting} size="large" variantType="gradient" onClick={onNext}>
+      <SubmitButton
+        isLoading={isSubmitting}
+        size="large"
+        variantType="gradient"
+        onClick={() => {
+          onNext();
+          dispatch(resetChapterQueue());
+        }}>
         {t('chapterCreate.chapterReview.publishButton')}
       </SubmitButton>
     </GridContainer>
