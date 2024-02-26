@@ -32,6 +32,20 @@ type NftData = {
   transferred: boolean;
 };
 
+export type TransferNFTData = {
+  chain: string;
+  fromAddress: string;
+  toAddress: string;
+  tokenId: string;
+  tokenMintAddress: string;
+};
+
+type TransferNFTResponse = {
+  success: boolean;
+  message: string;
+  transactionId?: string;
+};
+
 type CanvaResponse = {
   chapter_id: number;
   comments: Comment[];
@@ -239,4 +253,36 @@ export const apiUserProfile = {
         likes: string;
       }[]
     >('/user_profiles/canvas'),
+};
+
+export const apisNFT = {
+  transferNFT: async (data: TransferNFTData): Promise<TransferNFTResponse> => {
+    try {
+      const response = await api.post<TransferNFTResponse>('/transfer', data, {
+        baseURL: process.env.NEXT_PUBLIC_CROSSMINT_API_URL,
+        headers: {
+          'X-API-KEY': process.env.CROSSMINT_API_KEY,
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log(response);
+
+      if (response.data.success) {
+        toast.success(i18next.t('toast.nftTransferSuccess'));
+      } else {
+        toast.error(i18next.t('toast.nftTransferFail'));
+      }
+
+      return response.data;
+    } catch (error) {
+      toast.error(i18next.t('toast.failCall'));
+      if (axios.isAxiosError(error)) {
+        const serverError = error as AxiosError<TransferNFTResponse>;
+        if (serverError && serverError.response) {
+          return Promise.reject(serverError.response.data);
+        }
+      }
+      return Promise.reject(error);
+    }
+  },
 };

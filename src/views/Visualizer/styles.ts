@@ -18,6 +18,8 @@ export const Paper = styled(PaperComponent)({
   padding: '1rem',
   borderRadius: 30,
   width: '80%',
+  margin: 'auto',
+  height: '100%',
   maxWidth: '1500px',
 });
 export const Canva = styled(Grid)<{ image: string }>(({ image }) => ({
