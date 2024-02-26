@@ -94,7 +94,7 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
       </Grid>
       <Container container item>
         <Title variant="h3">{dataChapter?.title}</Title>
-        <Grid>
+        <Grid container>
           {dataChapter?.canvas?.map(item => (
             <Img src={item.image_url} alt="" onClick={() => push(`${Route.visualizer}/${item.id}`)} />
           ))}

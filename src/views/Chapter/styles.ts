@@ -23,7 +23,6 @@ export const Loading = styled('div')({
 export const Img = styled('img')({
   width: '100%',
   height: 'auto',
-  marginRight: '10px',
   '&:hover': {
     cursor: 'pointer',
   },
