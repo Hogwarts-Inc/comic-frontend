@@ -5,7 +5,7 @@ import { CrossmintNFTDetail } from '@crossmint/client-sdk-react-ui';
 import { Favorite } from '@mui/icons-material';
 import { Dialog,
   DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, TextField, Typography } from '@mui/material';
-import { useWeb3Modal, useWeb3ModalAccount } from '@web3modal/ethers/react';
+import { useWeb3Modal, useWeb3ModalAccount, useDisconnect } from '@web3modal/ethers/react';
 import { debounce } from 'lodash';
 import { useRouter } from 'next/router';
 import ReactCardFlip from 'react-card-flip';
@@ -22,9 +22,10 @@ import {
 import Button from '@components/Button';
 import DefaultLayout from '@components/DefaultLayout';
 import theme from '@styles/theme';
+import { postCrossmintTransfer } from 'pages/api/auth/crossmint';
 import useAppAuthentication from 'src/hooks/useAppAuthentication';
 import useIsMobile from 'src/hooks/useIsMobile';
-import { TransferNFTData, apisCanvasComment, apisCanvasLike, apisNFT } from 'src/services/apiConfig';
+import { TransferNFTData, apisCanvasComment, apisCanvasLike } from 'src/services/apiConfig';
 
 import {
   ArrowBack,
@@ -68,7 +69,7 @@ export default function Visualizer(props: VisualizerProps) {
   const { t } = useTranslation();
 
   const { open } = useWeb3Modal();
-  // const { disconnect } = useDisconnect();
+  const { disconnect } = useDisconnect();
   const { address, isConnected } = useWeb3ModalAccount();
 
   const [currentUserLikes, setCurrentUserLikes] = useState(props.currentUserLikes);
@@ -78,8 +79,26 @@ export default function Visualizer(props: VisualizerProps) {
   const [comments, setComments] = useState(props.comments);
   const [isShowingNFT, setIsShowingNFT] = useState(false);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const [transferred, setTransferred] = useState(false);
 
+  const url = useMemo(() => `${process.env.NEXT_PUBLIC_BASE_URL}${asPath}`, [asPath]);
   const isOwner = props.currentUserUsername === props.username;
+
+  const handleFlip = () => {
+    setIsShowingNFT(!isShowingNFT);
+  };
+
+  const handleConnectClick = () => {
+    open();
+  };
+
+  const handleDisconnectClick = () => {
+    disconnect();
+  };
+
+  const handleOpenConfirmDialog = () => {
+    setOpenConfirmDialog(true);
+  };
 
   const handleLike = useCallback(
     debounce(
@@ -107,16 +126,6 @@ export default function Visualizer(props: VisualizerProps) {
     [query],
   );
 
-  const handleFlip = () => {
-    setIsShowingNFT(!isShowingNFT);
-  };
-
-  const handleConnectClick = () => {
-    open();
-  };
-
-  const url = useMemo(() => `${process.env.NEXT_PUBLIC_BASE_URL}${asPath}`, [asPath]);
-
   const commentHandler = async () => {
     if (query.vignette) {
       const prevComment = comment;
@@ -140,11 +149,7 @@ export default function Visualizer(props: VisualizerProps) {
     }
   };
 
-  const handleOpenConfirmDialog = () => {
-    setOpenConfirmDialog(true);
-  };
-
-  const proceedWithTransfer = async () => {
+  const handleTransferNft = async () => {
     try {
       const { tokenId } = props;
       const toAddress = address as string;
@@ -158,15 +163,12 @@ export default function Visualizer(props: VisualizerProps) {
         tokenMintAddress: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? '',
       };
 
-      console.log('transferData:', transferData);
-
-      await apisNFT.transferNFT(transferData);
-
-      alert('NFT transferred successfully!');
+      await postCrossmintTransfer(transferData);
     } catch (error) {
       console.error('Error transferring NFT:', error);
-      alert('Failed to transfer NFT. See console for details.');
-    } setOpenConfirmDialog(false);
+    }
+    setOpenConfirmDialog(false);
+    setTransferred(true);
   };
 
   return (
@@ -176,7 +178,10 @@ export default function Visualizer(props: VisualizerProps) {
           <IconButton size="large" style={{ fontSize: '2.5rem' }} onClick={back}>
             <ArrowBack fontSize="inherit" />
           </IconButton>
-          <Button variant="contained" onClick={handleFlip}>{isShowingNFT ? 'See canva' : 'See NFT details'}</Button>
+          {props.tokenId &&
+          <Button variant="contained" onClick={handleFlip}>
+            {!isShowingNFT ? t('canva.seeNFT') : t('canva.seeCanva')}
+          </Button>}
         </Grid>
         <Grid item xs marginBottom="2rem" justifyContent="center">
           <ReactCardFlip
@@ -278,16 +283,21 @@ export default function Visualizer(props: VisualizerProps) {
               <Grid container style={{ height: '80vh' }} flexDirection="row" justifyContent="end" alignItems="center">
                 <Grid item style={{ flexGrow: 1 }} />
                 {
-                  props.accessToken && isOwner &&
-                  <Grid item>
-                    {isConnected && props.transferred ? (
-                      <Typography>NFT claimed</Typography>
-                    ) : isConnected ? (
-                      <Button onClick={handleOpenConfirmDialog}>Claim NFT</Button>
+                props.accessToken && isOwner &&
+                  <Grid container item>
+                    {isConnected ? (
+                      <>
+                        {props.transferred || transferred ? (
+                          <Button disabled>{t('canva.claimed')}</Button>
+                        ) : (
+                          <Button onClick={handleOpenConfirmDialog} variantType="gradient">{t('canva.claim')}</Button>
+                        )}
+                        <Grid item style={{ flexGrow: 1 }} />
+                        <Button onClick={handleDisconnectClick}>{t('canva.disconnectWallet')}</Button>
+                      </>
                     ) : (
-                      <Button onClick={handleConnectClick}>Connect Wallet</Button>
+                      <Button onClick={handleConnectClick}>{t('canva.connectWallet')}</Button>
                     )}
-                    {/* <w3m-connect-button /> */}
                   </Grid>
                 }
                 <CrossmintNFTDetail
@@ -300,32 +310,18 @@ export default function Visualizer(props: VisualizerProps) {
               </Grid>
             </Paper>
           </ReactCardFlip>
-
         </Grid>
       </Container>
-      <Dialog
-        open={openConfirmDialog}
-        onClose={() => setOpenConfirmDialog(false)}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          Confirm NFT Transfer
-        </DialogTitle>
+      <Dialog open={openConfirmDialog} onClose={() => setOpenConfirmDialog(false)}>
+        <DialogTitle>{t('canva.claimDialog.title')}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to transfer this NFT?
-          </DialogContentText>
+          <DialogContentText>{`${t('canva.claimDialog.content')}\n${address}`}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenConfirmDialog(false)}>Cancel</Button>
-          <Button onClick={proceedWithTransfer} autoFocus>
-            Confirm
-          </Button>
+          <Button onClick={() => setOpenConfirmDialog(false)}>{t('common.cancel')}</Button>
+          <Button onClick={handleTransferNft} autoFocus>{t('common.accept')}</Button>
         </DialogActions>
       </Dialog>
-
     </DefaultLayout>
-
   );
 }

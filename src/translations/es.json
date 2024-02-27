@@ -1,5 +1,6 @@
 {
   "common": {
+    "accept": "Aceptar",
     "add": "Añadir",
     "back": "Atrás",
     "cancel": "Cancelar",
@@ -113,7 +114,17 @@
     "failCall": "La solicitud ha fallado"
   },
   "canva": {
-    "noComments": "No hay comentarios, ¡sé el primero!"
+    "noComments": "No hay comentarios, ¡sé el primero!",
+    "seeNFT": "Ver detalles NFT",
+    "seeCanva": "Ver viñeta",
+    "claimDialog": {
+      "title": "Confirmar transferencia de NFT",
+      "content": "¿Estás seguro que quieres transferir este NFT a esta cuenta?"
+    },
+    "claim": "Transferir NFT",
+    "claimed": "NFT transferido",
+    "connectWallet": "Conectar billetera",
+    "disconnectWallet": "Desconectar billetera"
   },
   "goToLanding": "Ir al inicio",
   "dialogUserQueue": {
