@@ -48,6 +48,7 @@ type StoriettesCreation = any;
 //To do: create canva type
 export type StoriettesParam = {
   title: string;
+  description: string;
   id: number;
   updated_at: string;
   canvas: CanvaParam[];
