@@ -1,7 +1,7 @@
 import { getAccessToken } from '@auth0/nextjs-auth0';
 import { GetServerSideProps } from 'next';
 
-import { apiUserProfile, apisCanvas } from 'src/services/apiConfig';
+import { apiUserProfile, apisCanvas } from 'src/services/api';
 import Visualizer, { VisualizerProps } from 'src/views/Visualizer';
 
 export const getServerSideProps = (async context => {

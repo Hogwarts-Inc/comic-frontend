@@ -106,7 +106,7 @@ function Images({ title, images }: { title: string; images: (Character | Resourc
         <CloseSideBar />
       </Block>
       <Scrollable>
-        <Block padding="0 1.5rem">
+        <Block padding="0 1.5rem 1.5rem 1.5rem">
           <div
             style={{
               display: 'grid',

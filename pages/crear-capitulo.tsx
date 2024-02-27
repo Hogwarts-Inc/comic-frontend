@@ -14,7 +14,7 @@ import CustomStepper from '@components/Stepper';
 import { Route } from 'src/constants/routes';
 import withAuth from 'src/hoc/withAuth';
 import { ChapterData } from 'src/interfaces/common';
-import { apisCanvas, apisChapters, apisComic } from 'src/services/apiConfig';
+import { apisCanvas, apisChapters, apisComic } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
 import { resetCanvaCreate, setActiveStep } from 'src/store/slices/canva-creator/reducer';
 import { selectActiveStep, selectCanvaData } from 'src/store/slices/canva-creator/selectors';
@@ -53,7 +53,7 @@ const ChapterCreate = () => {
       const chapterId = chapterResponse.data.id;
 
       await apisCanvas.postCanva({ chapter_id: chapterId, images: chapterData.files });
-      router.push(Route.home);
+      router.push(Route.chapter);
       dispatch(resetCanvaCreate());
     } catch (e) {
       console.error(e); // TODO handle error with alert

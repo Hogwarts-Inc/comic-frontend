@@ -52,9 +52,7 @@
 }
 
 .inputTextField {
-  font-family: 'Inter';
   font-size: 14px;
-  font-weight: bolder;
   height: 13px;
   padding-top: 2px;
   padding-bottom: 2px;
@@ -67,8 +65,6 @@
   display: flex;
   height: 30px;
   justify-content: space-between;
-  margin-bottom: 13px;
-  margin-top: 13px;
   width: 81px;
 }
 

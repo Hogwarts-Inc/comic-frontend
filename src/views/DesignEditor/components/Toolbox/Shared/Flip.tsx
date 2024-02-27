@@ -38,6 +38,7 @@ function Flip() {
 
   return (
     <StatefulPopover
+      dismissOnClickOutside
       placement={PLACEMENT.bottom}
       content={
         <Block width="180px" padding="12px" backgroundColor="#ffffff">

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useActiveObject, useEditor } from '@layerhub-io/react';
 import { IStaticText } from '@layerhub-io/types';
@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import { Block } from 'baseui/block';
 import { Button, SIZE, KIND } from 'baseui/button';
+import { ChevronDown } from 'baseui/icon';
 import { useSelector } from 'react-redux';
 
 import styles from './text.module.css';
@@ -64,6 +65,7 @@ const StyledTextField = styled(TextField)({
   '& .MuiInput-underline:after': {
     display: 'none',
   },
+  fontFamily: 'inherit',
 });
 
 function TextFontSize() {
@@ -197,123 +199,61 @@ export default function Text() {
     };
   }, [editor, activeObject, fonts, state]);
 
+  const lookForFont = useCallback(
+    (matchCriteria: RegExp) =>
+      state.styleOptions.options.find(option => {
+        if (!option.postScriptName) return false;
+        const postScriptNames = option.postScriptName.split('-');
+        return postScriptNames[postScriptNames.length - 1].match(matchCriteria);
+      }),
+    [state.styleOptions.options],
+  );
+
   const makeBold = React.useCallback(async () => {
-    if (state.bold) {
-      let desiredFont;
-
-      if (state.italic) {
-        // look for regular italic
-        desiredFont = state.styleOptions.options.find(option => {
-          const postScriptNames = option.post_script_name.split('-');
-          return postScriptNames[postScriptNames.length - 1].match(/^Italic$/);
-        });
-      } else {
-        // look for  regular
-        desiredFont = state.styleOptions.options.find(option => {
-          const postScriptNames = option.post_script_name.split('-');
-          return postScriptNames[postScriptNames.length - 1].match(/^Regular$/);
-        });
-      }
-
-      const font = {
-        name: desiredFont.post_script_name,
-        url: desiredFont.url,
-      };
-      await loadFonts([font]);
-
-      editor.objects.update({
-        fontFamily: desiredFont.post_script_name,
-        fontURL: font.url,
-      });
-      setState({ ...state, bold: false });
+    let desiredFont;
+    const newBoldState = !state.bold;
+    if (state.italic) {
+      // look for bold italic or italic
+      desiredFont = lookForFont(newBoldState ? /^BoldItalic$/ : /^Italic$/);
     } else {
-      let desiredFont;
-      if (state.italic) {
-        // look for bold italic
-        desiredFont = state.styleOptions.options.find(option => {
-          const postScriptNames = option.post_script_name.split('-');
-          return postScriptNames[postScriptNames.length - 1].match(/^BoldItalic$/);
-        });
-      } else {
-        // look for bold
-        desiredFont = state.styleOptions.options.find(option => {
-          const postScriptNames = option.post_script_name.split('-');
-          return postScriptNames[postScriptNames.length - 1].match(/^Bold$/);
-        });
-      }
-
-      const font = {
-        name: desiredFont.post_script_name,
-        url: desiredFont.url,
-      };
-      await loadFonts([font]);
-
-      editor.objects.update({
-        fontFamily: desiredFont.post_script_name,
-        fontURL: font.url,
-      });
-      setState({ ...state, bold: true });
+      // look for bold or regular
+      desiredFont = lookForFont(newBoldState ? /^Bold$/ : /^Regular$/);
     }
-  }, [editor, state]);
+    if (!desiredFont) return;
+    const font = {
+      name: desiredFont.postScriptName,
+      url: desiredFont.url,
+    };
+    await loadFonts([font]);
+    editor.objects.update({
+      fontFamily: desiredFont.postScriptName,
+      fontURL: font.url,
+    });
+    setState({ ...state, bold: newBoldState });
+  }, [editor.objects, lookForFont, state]);
 
   const makeItalic = React.useCallback(async () => {
-    if (state.italic) {
-      let desiredFont;
-      if (state.bold) {
-        // Search bold regular
-        desiredFont = state.styleOptions.options.find(option => {
-          const postScriptNames = option.post_script_name.split('-');
-          return postScriptNames[postScriptNames.length - 1].match(/^Bold$/);
-        });
-      } else {
-        // Search regular
-        desiredFont = state.styleOptions.options.find(option => {
-          const postScriptNames = option.post_script_name.split('-');
-          return postScriptNames[postScriptNames.length - 1].match(/^Regular$/);
-        });
-      }
-
-      const font = {
-        name: desiredFont.post_script_name,
-        url: desiredFont.url,
-      };
-      await loadFonts([font]);
-
-      editor.objects.update({
-        fontFamily: desiredFont.post_script_name,
-        fontURL: font.url,
-      });
-      setState({ ...state, italic: false });
+    let desiredFont;
+    const newItalicState = !state.italic;
+    if (state.bold) {
+      // look for bold italic or italic
+      desiredFont = lookForFont(newItalicState ? /^BoldItalic$/ : /^Bold$/);
     } else {
-      let desiredFont;
-
-      if (state.bold) {
-        // search italic bold
-        desiredFont = state.styleOptions.options.find(option => {
-          const postScriptNames = option.post_script_name.split('-');
-          return postScriptNames[postScriptNames.length - 1].match(/^BoldItalic$/);
-        });
-      } else {
-        // search regular italic
-        desiredFont = state.styleOptions.options.find(option => {
-          const postScriptNames = option.post_script_name.split('-');
-          return postScriptNames[postScriptNames.length - 1].match(/^Italic$/);
-        });
-      }
-
-      const font = {
-        name: desiredFont.post_script_name,
-        url: desiredFont.url,
-      };
-      await loadFonts([font]);
-
-      editor.objects.update({
-        fontFamily: desiredFont.post_script_name,
-        fontURL: font.url,
-      });
-      setState({ ...state, italic: true });
+      // look for bold or regular
+      desiredFont = lookForFont(newItalicState ? /^Italic$/ : /^Regular$/);
     }
-  }, [editor, state]);
+    if (!desiredFont) return;
+    const font = {
+      name: desiredFont.postScriptName,
+      url: desiredFont.url,
+    };
+    await loadFonts([font]);
+    editor.objects.update({
+      fontFamily: desiredFont.postScriptName,
+      fontURL: font.url,
+    });
+    setState({ ...state, italic: newItalicState });
+  }, [editor.objects, lookForFont, state]);
 
   const makeUnderline = React.useCallback(() => {
     editor.objects.update({
@@ -325,25 +265,25 @@ export default function Text() {
   return (
     <div className={styles.flexContainer}>
       <div className={styles.flexInnerContainer}>
-        {/*
-        <div onClick={() => setActiveSubMenu('FontSelector')} style={{
-          border: '1px solid rgb(185,185,185)',
-          borderRadius: '4px',
-          padding: '0.2rem 0.45rem',
-          cursor: 'pointer',
-          fontWeight: 500,
-          fontSize: '14px',
-          gap: '0.5rem',
-          display: 'flex',
-          alignItems: 'center',
-          height: '24px',
-        }}>
-          <div>{state.family}</div>
+        <div
+          onClick={() => setActiveSubMenu('FontSelector')}
+          style={{
+            border: '1px solid rgb(185,185,185)',
+            borderRadius: '4px',
+            padding: '0.2rem 0.45rem',
+            cursor: 'pointer',
+            fontWeight: 500,
+            fontSize: '14px',
+            gap: '0.5rem',
+            display: 'flex',
+            alignItems: 'center',
+            height: '24px',
+          }}>
+          <div style={{ whiteSpace: 'nowrap' }}>{state.family}</div>
           <div style={{ display: 'flex' }}>
             <ChevronDown size={22} />
           </div>
         </div>
-        */}
 
         <div className={styles.divider} />
 

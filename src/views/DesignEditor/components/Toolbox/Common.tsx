@@ -37,6 +37,7 @@ function CommonLayers() {
   }, [activeObject]);
   return (
     <StatefulPopover
+      dismissOnClickOutside
       placement={PLACEMENT.bottomRight}
       content={
         <Block padding="12px" backgroundColor="#ffffff">
@@ -108,6 +109,7 @@ function CommonAlign() {
 
   return (
     <StatefulPopover
+      dismissOnClickOutside
       placement={PLACEMENT.bottomRight}
       content={
         <Block padding="12px" backgroundColor="#ffffff" display="grid" gridTemplateColumns="1fr 1fr 1fr" gridGap="8px">

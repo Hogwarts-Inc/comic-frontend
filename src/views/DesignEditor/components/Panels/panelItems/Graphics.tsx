@@ -1,23 +1,25 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useEditor } from '@layerhub-io/react';
 import { useStyletron } from 'baseui';
 import { Block } from 'baseui/block';
-import { Button, SIZE } from 'baseui/button';
-import { useTranslation } from 'react-i18next';
+
+import useIsMobile from 'src/hooks/useIsMobile';
+import { Resource } from 'src/store/slices/resources/reducer';
+import { toBase64 } from 'src/utils/data';
 
 import { CloseSideBar } from './Common/CloseSideBar';
+import { ImageContainer } from './styles';
 import Scrollable from '../../../../../components/Scrollable';
-import { vectors } from '../../../../../constants/mock-data';
 
-function GraphicItem({ preview, onClick }: { preview: any; onClick?: (option: any) => void }) {
+export const GraphicItem = ({ preview, onClick }: { preview: string; onClick: (option: any) => void }) => {
   const [css] = useStyletron();
   return (
     <div
       onClick={onClick}
-      // onClick={() => onClick(component.layers[0])}
       className={css({
         position: 'relative',
         height: '84px',
@@ -63,25 +65,36 @@ function GraphicItem({ preview, onClick }: { preview: any; onClick?: (option: an
           },
         })}
       />
-      <img
-        src={preview}
+      <div
         className={css({
-          width: '100%',
+          backgroundImage: `url(${preview.replace('data:application/octet-stream', 'data:image/svg+xml')})`,
           height: '100%',
-          objectFit: 'contain',
-          pointerEvents: 'none',
-          verticalAlign: 'middle',
+          width: 'auto',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'contain',
+          backgroundPosition: 'center',
+          backgroundOrigin: 'border-box',
         })}
       />
     </div>
   );
-}
+};
 
-function Graphics() {
-  const { t } = useTranslation();
-  const inputFileRef = React.useRef<HTMLInputElement>(null);
-
+const Graphics = ({ title, images }: { title: string; images: Resource[] }) => {
   const editor = useEditor();
+  const [vectors, setVectors] = useState<string[]>([]);
+  const isMobile = useIsMobile();
+  useEffect(() => {
+    Promise.all(
+      images.map(async image => {
+        const data = await fetch(image.url);
+
+        const blob = await data.blob();
+
+        return toBase64(blob);
+      }),
+    ).then(setVectors);
+  }, [images]);
 
   const addObject = React.useCallback(
     (url: string) => {
@@ -96,23 +109,6 @@ function Graphics() {
     [editor],
   );
 
-  const handleDropFiles = (files: FileList) => {
-    const file = files[0];
-    const url = URL.createObjectURL(file);
-    editor.objects.add({
-      src: url,
-      type: 'StaticVector',
-    });
-  };
-
-  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleDropFiles(e.target.files!);
-  };
-
-  const handleInputFileRefClick = () => {
-    inputFileRef.current?.click();
-  };
-
   return (
     <Block $style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
       <Block
@@ -123,37 +119,20 @@ function Graphics() {
           justifyContent: 'space-between',
           padding: '1.5rem',
         }}>
-        <Block>{t('panels.panelsList.graphics')}</Block>
-
+        <Block>{title}</Block>
         <CloseSideBar />
       </Block>
-
-      <Block padding="0 1.5rem">
-        <Button
-          onClick={handleInputFileRefClick}
-          size={SIZE.compact}
-          overrides={{
-            Root: {
-              style: {
-                width: '100%',
-              },
-            },
-          }}>
-          Computer
-        </Button>
-      </Block>
       <Scrollable>
-        <input onChange={handleFileInput} type="file" id="file" ref={inputFileRef} style={{ display: 'none' }} />
-        <Block>
-          <Block $style={{ display: 'grid', gap: '8px', padding: '1.5rem', gridTemplateColumns: '1fr 1fr' }}>
-            {vectors.map(vector => (
-              <GraphicItem onClick={() => addObject(vector)} key={vector} preview={vector} />
+        <Block padding="0 1.5rem 1.5rem 1.5rem">
+          <ImageContainer isMobile={!!isMobile}>
+            {vectors.map((vector, index) => (
+              <GraphicItem onClick={() => addObject(vector)} key={index} preview={vector} />
             ))}
-          </Block>
+          </ImageContainer>
         </Block>
       </Scrollable>
     </Block>
   );
-}
+};
 
 export default Graphics;

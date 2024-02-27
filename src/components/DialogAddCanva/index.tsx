@@ -5,9 +5,10 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Route } from 'src/constants/routes';
-import { apisCanvas } from 'src/services/apiConfig';
+import { handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
+import { apisCanvas } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
-import { resetCanvaCreate, setActiveStep } from 'src/store/slices/canva-creator/reducer';
+import { setActiveStep } from 'src/store/slices/canva-creator/reducer';
 import { selectActiveStep, selectCanvaData } from 'src/store/slices/canva-creator/selectors';
 import { AddCanva } from 'src/views/ChapterCreate/AddCanva/AddCanva';
 import { DataReview } from 'src/views/ChapterCreate/ChapterReview/DataReview';
@@ -20,6 +21,7 @@ interface DialogAddCanvaParams {
 export const DialogAddCanva = ({ openDialog, setOpenDialog }: DialogAddCanvaParams) => {
   const dispatch = useDispatch();
   const { push } = useRouter();
+  const { isCreating } = useSelector((state: RootState) => state.chapterQueue);
 
   const { canvaData, activeStep } = useSelector((state: RootState) => ({
     canvaData: selectCanvaData(state),
@@ -28,6 +30,9 @@ export const DialogAddCanva = ({ openDialog, setOpenDialog }: DialogAddCanvaPara
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleClose = () => {
+    if (isCreating && canvaData.chapterId) {
+      handleRemoveFromQueue(canvaData.chapterId);
+    }
     setOpenDialog(false);
   };
 
@@ -40,10 +45,8 @@ export const DialogAddCanva = ({ openDialog, setOpenDialog }: DialogAddCanvaPara
     setIsSubmitting(true);
     try {
       await apisCanvas.postCanva({ chapter_id: canvaData.chapterId, images: canvaData.files });
-      dispatch(resetCanvaCreate());
-
-      handleClose();
-      push(Route.home);
+      setOpenDialog(false);
+      push(Route.chapter);
     } catch (e) {
       console.error(e);
     }

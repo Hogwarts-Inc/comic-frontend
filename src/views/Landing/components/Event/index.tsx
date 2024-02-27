@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { CircularProgress, Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import { apisEvents, Event as EventType } from 'src/services/apiConfig';
+import { apisEvents, Event as EventType } from 'src/services/api';
 
 import { GridItemCenter, TypographyDescription, TypographyTitle, Container } from './styles';
 

@@ -2,9 +2,11 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { createReducer } from '@reduxjs/toolkit';
+import { orderBy } from 'lodash';
 
-import { queryFonts, setFonts } from './actions';
+import { queryFonts } from './actions';
 import { IFontFamily } from '../../../interfaces/editor';
+import fonts from '../../../styles/fonts.json';
 
 export interface FontsState {
   fonts: IFontFamily[];
@@ -12,7 +14,7 @@ export interface FontsState {
 }
 
 const initialState: FontsState = {
-  fonts: [],
+  fonts: orderBy(fonts.fonts, ['family'], ['asc']),
   result: [],
 };
 
@@ -43,10 +45,6 @@ function fuzzySearch(items: IFontFamily[], query: string) {
 }
 
 export const fontsReducer = createReducer(initialState, builder => {
-  builder.addCase(setFonts, (state, { payload }) => {
-    state.fonts = payload;
-  });
-
   builder.addCase(queryFonts, (state, { payload }) => {
     const { skip, query } = payload;
     if (query) {

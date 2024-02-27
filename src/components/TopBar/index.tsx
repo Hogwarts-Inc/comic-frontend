@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import StopCircleTwoToneIcon from '@mui/icons-material/StopCircleTwoTone';
 import { Avatar, Box, Typography, Grid, MenuItem, IconButton, Menu } from '@mui/material';
 import { useDisconnect, useWeb3ModalAccount } from '@web3modal/ethers/react';
 import dynamic from 'next/dynamic';
@@ -8,19 +9,32 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { Route } from 'src/constants/routes';
-import { apiUserProfile } from 'src/services/apiConfig';
+import { handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
+import useIsMobile from 'src/hooks/useIsMobile';
+import { StoriettesParam, apiUserProfile, apisChapters } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
 
-import { AppBarMui, ButtonSignUp, ButtonLogIn, ButtonBox, StyledLogoIcon } from './styles';
+import { AppBarMui, ButtonSignUp, ButtonLogIn, ButtonBox, StyledLogoIcon, ButtonWaiting } from './styles';
 
 export const TopBar = dynamic(
   Promise.resolve(() => {
     const { t } = useTranslation();
     const { push } = useRouter();
+    const isMobile = useIsMobile();
     const accessToken = useSelector((state: RootState) => state.auth.token);
     const [anchorMenuUser, setAnchorMenuUser] = useState<null | HTMLElement>(null);
     const [userProfile, setUserProfile] = useState('');
     const router = useRouter();
+    const { isWaiting, chapterId } = useSelector((state: RootState) => state.chapterQueue);
+    const [currentChapterQueue, setCurrentChapterQueue] = useState<StoriettesParam | undefined>();
+
+    useEffect(() => {
+      if (isWaiting && chapterId) {
+        apisChapters.getChaptersById(chapterId).then(({ data }) => {
+          setCurrentChapterQueue(data);
+        });
+      }
+    }, [chapterId, isWaiting]);
 
     const { isConnected } = useWeb3ModalAccount();
     const { disconnect } = useDisconnect();
@@ -35,13 +49,25 @@ export const TopBar = dynamic(
         .catch(e => console.log(e));
     }, [accessToken]);
 
+    const handleCloseUserMenu = () => {
+      setAnchorMenuUser(null);
+    };
     const userMenuOptions = [
-      { title: t('topBar.menu.profile'), handler: () => push(Route.profile) },
+      {
+        title: t('topBar.menu.profile'),
+        handler: () => {
+          push(Route.profile);
+          handleCloseUserMenu();
+        },
+      },
       {
         title: t('topBar.menu.logout'),
         handler: () => {
           if (isConnected) {
-            disconnect().then(() => push(Route.logout));
+            disconnect().then(() => {
+              push(Route.logout);
+              handleCloseUserMenu();
+            });
           } else {
             push(Route.logout);
           }
@@ -51,9 +77,6 @@ export const TopBar = dynamic(
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
       setAnchorMenuUser(event.currentTarget);
-    };
-    const handleCloseUserMenu = () => {
-      setAnchorMenuUser(null);
     };
 
     const onClickLogo = () => {
@@ -69,9 +92,21 @@ export const TopBar = dynamic(
             </ButtonBox>
             {accessToken ? (
               <Box>
-                <IconButton style={{ padding: 0 }} onClick={handleOpenUserMenu}>
-                  <Avatar src={userProfile} sx={{ height: '3rem', width: '3rem' }} />
-                </IconButton>
+                <ButtonBox>
+                  {isWaiting && (
+                    <ButtonWaiting
+                      onClick={() => handleRemoveFromQueue(chapterId)}
+                      variant="outlined"
+                      endIcon={<StopCircleTwoToneIcon style={{ marginLeft: '0.2rem' }} />}>
+                      {isMobile
+                        ? t('topBar.removeQueueMobile')
+                        : `${t('topBar.removeQueueWeb')} ${currentChapterQueue?.title}`}
+                    </ButtonWaiting>
+                  )}
+                  <IconButton style={{ padding: 0 }} onClick={handleOpenUserMenu}>
+                    <Avatar src={userProfile} sx={{ height: '3rem', width: '3rem' }} />
+                  </IconButton>
+                </ButtonBox>
                 <Menu
                   sx={{ mt: '3.25rem' }}
                   id="menu-appbar"
