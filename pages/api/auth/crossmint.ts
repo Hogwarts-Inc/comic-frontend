@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { apiNft } from '../../../src/services/apiConfig';
+import { apiNft } from '../../../src/services/api';
 
 interface TransferNFTData {
   tokenId: string;
