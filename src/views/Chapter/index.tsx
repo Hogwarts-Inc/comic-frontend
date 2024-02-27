@@ -16,9 +16,9 @@ import useIsMobile from 'src/hooks/useIsMobile';
 import { StoriettesParam, apisChapters } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
 
-import { Title, Loading, Img, Container, AddCanvaButton, AddCircleOutlineStyle } from './styles';
+import { Title, Loading, Img, Container, AddCanvaButton, AddCircleOutlineStyle, TitleContainer } from './styles';
 
-function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
+function Chapter({ isFooterVisible, dataChapter }: { isFooterVisible: boolean; dataChapter: StoriettesParam | null }) {
   const {
     query: { chapter },
     push,
@@ -31,8 +31,6 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
 
   const [loading, setLoading] = useState<boolean>(true);
 
-  const [dataChapter, setDataChapter] = useState<StoriettesParam | undefined>();
-
   const isUserTurn = useMemo(() => chapter && chapterId === +chapter && position === 1, [chapter, chapterId, position]);
 
   const [openDialogUserQueue, setOpenDialogUserQueue] = useState<boolean>(false);
@@ -44,13 +42,8 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
   }, [isUserTurn]);
 
   useEffect(() => {
-    if (chapter) {
-      apisChapters.getChaptersById(+chapter).then(({ data }) => {
-        setDataChapter(data);
-        setLoading(false);
-      });
-    }
-  }, [chapter]);
+    setLoading(!dataChapter);
+  }, [dataChapter]);
 
   const handleClickOpen = async () => {
     if (!chapter) return;
@@ -78,7 +71,7 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
     setLoading(false);
   };
 
-  return loading ? (
+  return loading || !dataChapter || !chapter ? (
     <Loading>
       <CircularProgress />
     </Loading>
@@ -93,10 +86,20 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
         <Button onClick={back}>{t('back')}</Button>
       </Grid>
       <Container container item>
-        <Title variant="h3">{dataChapter?.title}</Title>
-        <Grid>
-          {dataChapter?.canvas?.map(item => (
-            <Img src={item.image_url} alt="" onClick={() => push(`${Route.visualizer}/${item.id}`)} />
+        <TitleContainer>
+          <Title variant="h3" style={{ marginBottom: '0.5rem' }}>
+            {dataChapter.title}
+          </Title>
+          <Title variant="h5">{dataChapter.description}</Title>
+        </TitleContainer>
+        <Grid container style={{ flexDirection: 'column' }}>
+          {dataChapter.canvas.map(item => (
+            <Img
+              src={item.image_url}
+              alt={`Canva: ${item.id}`}
+              key={item.id}
+              onClick={() => push(`${Route.visualizer}/${item.id}`)}
+            />
           ))}
         </Grid>
         {!!accessToken && !isWaiting && !isCreating && (
@@ -110,14 +113,12 @@ function Chapter({ isFooterVisible }: { isFooterVisible: boolean }) {
           openDialog={openDialogUserQueue}
           setOpenDialog={setOpenDialogUserQueue}
         />
-        {chapter && (
-          <DialogLastThreeCanva
-            openDialog={openDialogThreeCanvas}
-            setOpenDialog={setOpenDialogThreeCanvas}
-            chapterId={+chapter}
-            setOpenDialogAddCanva={setOpenDialogAddCanva}
-          />
-        )}
+        <DialogLastThreeCanva
+          openDialog={openDialogThreeCanvas}
+          setOpenDialog={setOpenDialogThreeCanvas}
+          chapterId={+chapter}
+          setOpenDialogAddCanva={setOpenDialogAddCanva}
+        />
       </Container>
     </Grid>
   );

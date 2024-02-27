@@ -63,6 +63,7 @@ type StoriettesCreation = any;
 //To do: create canva type
 export type StoriettesParam = {
   title: string;
+  description: string;
   id: number;
   updated_at: string;
   canvas: CanvaParam[];
@@ -138,7 +139,7 @@ export const apisChapters = {
   getAddUserToQueue: (id: number) => api.get(`/chapters/${id}/add_user_to_queue`),
   getUserQueuePlace: (id: number) => api.get<any>(`/chapters/${id}/user_position_in_queue`),
   removeUserFromQueue: (id: number) => api.get<any>(`/chapters/${id}/remove_user_from_queue`),
-  getTheeLastCanva: (id: number) => api.get<CanvaChapter[]>(`/chapters/${id}/last_three_canvas`),
+  getThreeLastCanva: (id: number) => api.get<CanvaChapter>(`/chapters/${id}/last_three_canvas`),
 };
 
 //CANVAS

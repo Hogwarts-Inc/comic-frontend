@@ -6,11 +6,22 @@ export const Title = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.primary,
 }));
 
-export const Container = styled(Grid)({
+export const Container = styled(Grid)(({ theme }) => ({
   alignSelf: 'center',
   flexDirection: 'column',
   margin: '1rem 0',
-  width: '90%',
+  width: '50%',
+  [theme.breakpoints.down('md')]: {
+    width: '90%',
+  },
+}));
+
+export const TitleContainer = styled('div')({
+  border: '5px solid',
+  padding: '5px',
+  borderImage: 'linear-gradient(to right, rgb(64, 224, 208), rgb(112, 121, 190), rgb(255, 0, 128)) 1',
+  marginBottom: '2rem',
+  borderRadius: '10px',
 });
 
 export const Loading = styled('div')({
@@ -23,7 +34,6 @@ export const Loading = styled('div')({
 export const Img = styled('img')({
   width: '100%',
   height: 'auto',
-  marginRight: '10px',
   '&:hover': {
     cursor: 'pointer',
   },
@@ -36,7 +46,9 @@ export const ImgWrapper = styled('div')({
   flexDirection: 'column',
 });
 
-export const AddCanvaButton = styled(Button)<{ isFooterVisible: boolean }>(({ isFooterVisible }) => ({
+export const AddCanvaButton = styled(Button, {
+  shouldForwardProp: props => !['isFooterVisible'].includes(props as string),
+})<{ isFooterVisible: boolean }>(({ isFooterVisible }) => ({
   position: 'absolute',
   bottom: isFooterVisible ? '6.5rem' : '1rem',
   right: '1rem',

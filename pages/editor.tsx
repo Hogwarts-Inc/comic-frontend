@@ -1,4 +1,4 @@
 import withCanvaData from 'src/hoc/withCanvaData';
-import GraphicEditor from 'src/views/DesignEditor/DesignEditor';
+import DesignEditor from 'src/views/DesignEditor/DesignEditor';
 
-export default withCanvaData(GraphicEditor);
+export default withCanvaData(DesignEditor);

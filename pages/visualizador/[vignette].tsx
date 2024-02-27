@@ -25,7 +25,6 @@ export const getServerSideProps = (async context => {
   } catch (e) {
     console.error('Error fetching access token:', e);
   }
-  context.res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=30');
   if (context.query.vignette) {
     try {
       const { data: dataApi } = await apisCanvas.getCanvaById({ token: accessToken, canvaId: +context.query.vignette });

@@ -46,7 +46,7 @@ export const DialogLastThreeCanva = ({
 
   useEffect(() => {
     if (openDialog) {
-      apisChapters.getTheeLastCanva(chapterId).then(({ data }) => {
+      apisChapters.getThreeLastCanva(chapterId).then(({ data }) => {
         setThreeCanvas(data);
       });
     }
