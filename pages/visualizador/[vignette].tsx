@@ -15,6 +15,7 @@ export const getServerSideProps = (async context => {
     accessToken: '',
     currentUserProfilePicture: '',
     currentUserUsername: '',
+    url: '',
   };
   let accessToken = '';
   try {
@@ -22,6 +23,7 @@ export const getServerSideProps = (async context => {
   } catch (e) {
     console.error('Error fetching access token:', e);
   }
+
   if (context.query.vignette) {
     try {
       const { data: dataApi } = await apisCanvas.getCanvaById({ token: accessToken, canvaId: +context.query.vignette });
@@ -41,6 +43,7 @@ export const getServerSideProps = (async context => {
         accessToken,
         currentUserUsername: '',
         currentUserProfilePicture: '',
+        url: context.req.headers.referer || '',
       };
     } catch (e) {
       console.error('Error fetching data:', e);

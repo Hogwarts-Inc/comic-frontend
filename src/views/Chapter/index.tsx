@@ -16,7 +16,7 @@ import useIsMobile from 'src/hooks/useIsMobile';
 import { StoriettesParam, apisChapters } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
 
-import { Title, Loading, Img, Container, AddCanvaButton, AddCircleOutlineStyle } from './styles';
+import { Title, Loading, Img, Container, AddCanvaButton, AddCircleOutlineStyle, TitleContainer } from './styles';
 
 function Chapter({ isFooterVisible, dataChapter }: { isFooterVisible: boolean; dataChapter: StoriettesParam | null }) {
   const {
@@ -29,7 +29,7 @@ function Chapter({ isFooterVisible, dataChapter }: { isFooterVisible: boolean; d
   const accessToken = useSelector((state: RootState) => state.auth.token);
   const { chapterId, isWaiting, isCreating, position } = useSelector((state: RootState) => state.chapterQueue);
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const isUserTurn = useMemo(() => chapter && chapterId === +chapter && position === 1, [chapter, chapterId, position]);
 
@@ -40,6 +40,10 @@ function Chapter({ isFooterVisible, dataChapter }: { isFooterVisible: boolean; d
   useEffect(() => {
     setOpenDialogThreeCanvas(!!isUserTurn);
   }, [isUserTurn]);
+
+  useEffect(() => {
+    setLoading(!dataChapter);
+  }, [dataChapter]);
 
   const handleClickOpen = async () => {
     if (!chapter) return;
@@ -67,7 +71,7 @@ function Chapter({ isFooterVisible, dataChapter }: { isFooterVisible: boolean; d
     setLoading(false);
   };
 
-  return loading || !dataChapter ? (
+  return loading || !dataChapter || !chapter ? (
     <Loading>
       <CircularProgress />
     </Loading>
@@ -82,7 +86,12 @@ function Chapter({ isFooterVisible, dataChapter }: { isFooterVisible: boolean; d
         <Button onClick={back}>{t('back')}</Button>
       </Grid>
       <Container container item>
-        <Title variant="h3">{dataChapter.title}</Title>
+        <TitleContainer>
+          <Title variant="h3" style={{ marginBottom: '0.5rem' }}>
+            {dataChapter.title}
+          </Title>
+          <Title variant="h5">{dataChapter.description}</Title>
+        </TitleContainer>
         <Grid container style={{ flexDirection: 'column' }}>
           {dataChapter.canvas.map(item => (
             <Img
@@ -104,14 +113,12 @@ function Chapter({ isFooterVisible, dataChapter }: { isFooterVisible: boolean; d
           openDialog={openDialogUserQueue}
           setOpenDialog={setOpenDialogUserQueue}
         />
-        {chapter && (
-          <DialogLastThreeCanva
-            openDialog={openDialogThreeCanvas}
-            setOpenDialog={setOpenDialogThreeCanvas}
-            chapterId={+chapter}
-            setOpenDialogAddCanva={setOpenDialogAddCanva}
-          />
-        )}
+        <DialogLastThreeCanva
+          openDialog={openDialogThreeCanvas}
+          setOpenDialog={setOpenDialogThreeCanvas}
+          chapterId={+chapter}
+          setOpenDialogAddCanva={setOpenDialogAddCanva}
+        />
       </Container>
     </Grid>
   );

@@ -53,10 +53,11 @@ export type VisualizerProps = {
   accessToken: string;
   currentUserUsername: string;
   currentUserProfilePicture: string;
+  url: string;
 };
 export default function Visualizer(props: VisualizerProps) {
   useAppAuthentication(props.accessToken);
-  const { back, asPath, query } = useRouter();
+  const { query, back } = useRouter();
   const isMobile = useIsMobile();
   const { t } = useTranslation();
 
@@ -92,7 +93,7 @@ export default function Visualizer(props: VisualizerProps) {
     [query],
   );
 
-  const url = useMemo(() => `${process.env.NEXT_PUBLIC_BASE_URL}${asPath}`, [asPath]);
+  const url = useMemo(() => props.url, [props]);
 
   const commentHandler = async () => {
     if (query.vignette) {
@@ -140,7 +141,7 @@ export default function Visualizer(props: VisualizerProps) {
                   <CommentsContainer container item xs>
                     {comments.length ? (
                       comments.map(({ username, comment: commentText, profilePicture }) => (
-                        <CommentContainer container>
+                        <CommentContainer container key={`${username}${profilePicture}${commentText}`}>
                           <CommentProfile src={profilePicture} />
                           <Typography margin={0} variant="h5">
                             {username}
