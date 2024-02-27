@@ -28,9 +28,24 @@ type Comment = {
   user_attributes: UserAttributes;
 };
 
+type NftData = {
+  wallet_address: string;
+  token_id: string;
+  transferred: boolean;
+};
+
+export type TransferNFTData = {
+  chain: string;
+  fromAddress: string;
+  toAddress: string;
+  tokenId: string;
+  tokenMintAddress: string;
+};
+
 type CanvaResponse = {
   chapter_id: number;
   comments: Comment[];
+  nft_data: NftData;
   id: number;
   image_url: string;
   likes: number;
@@ -238,4 +253,16 @@ export const apiUserProfile = {
         likes: string;
       }[]
     >('/user_profiles/canvas'),
+};
+
+export const apiNft = {
+  postNftTransfers: (token_id: string, to_address: string, from_address: string, transactionId: string) =>
+    api.post('/nft_transfers', {
+      nft_transfer: {
+        token_id,
+        to_address,
+        from_address,
+        transaction_hash: transactionId,
+      },
+    }),
 };
