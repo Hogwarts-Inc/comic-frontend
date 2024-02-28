@@ -14,7 +14,8 @@ import useIsMobile from 'src/hooks/useIsMobile';
 import { StoriettesParam, apiUserProfile, apisChapters } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
 
-import { AppBarMui, ButtonSignUp, ButtonLogIn, ButtonBox, StyledLogoIcon, ButtonWaiting } from './styles';
+import { AppBarMui, ButtonSignUp, ButtonLogIn, ButtonBox, ButtonWaiting } from './styles';
+import LogoIcon from '../Icons/logo.svg';
 
 export const TopBar = dynamic(
   Promise.resolve(() => {
@@ -88,7 +89,7 @@ export const TopBar = dynamic(
         <Grid item xs>
           <AppBarMui>
             <ButtonBox onClick={onClickLogo}>
-              <StyledLogoIcon />
+              <LogoIcon />
             </ButtonBox>
             {accessToken ? (
               <Box>

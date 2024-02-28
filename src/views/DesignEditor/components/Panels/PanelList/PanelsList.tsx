@@ -3,12 +3,9 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 
 import Button from '@components/Button';
-import { handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
 import useIsMobile from 'src/hooks/useIsMobile';
-import { RootState } from 'src/store/rootReducer';
 
 import { PanelListItem } from './PanelListItem';
 import { ButtonsContainer, Container, WhiteContainer } from './styles';
@@ -19,7 +16,6 @@ function PanelsList() {
   const { t } = useTranslation();
   const { back } = useRouter();
   const isMobile = useIsMobile();
-  const { chapterId, isCreating } = useSelector((state: RootState) => state.chapterQueue);
   return (
     <Container container xs direction="column" isMobile={!!isMobile} wrap="nowrap">
       <Grid
@@ -29,13 +25,7 @@ function PanelsList() {
         justifyContent={isMobile ? 'space-between' : 'center'}
         margin={isMobile ? '1rem' : undefined}
         marginBottom={0}>
-        <Button
-          onClick={async () => {
-            if (isCreating) await handleRemoveFromQueue(chapterId);
-            back();
-          }}>
-          {t('back')}
-        </Button>
+        <Button onClick={back}>{t('back')}</Button>
         {isMobile && <SaveCanvaButton />}
       </Grid>
       <WhiteContainer container xs isMobile={!!isMobile}>

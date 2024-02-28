@@ -58,7 +58,7 @@
     "chapterReview": {
       "createdCanvas": "Viñetas creadas",
       "publishButton": "Publicar",
-      "termsAndConditions": "Acepto los terminos y condiciones"
+      "termsAndConditions": "Acepto los términos y condiciones"
     },
     "stepperLabels": ["Agregar información del capítulo", "Agregar viñetas", "Publicar"],
     "validations": {
@@ -174,5 +174,12 @@
     "defaultColors": "Colores predeterminados",
     "selectAFont": "Selecciona una fuente",
     "searchFont": "Buscar fuente"
+  },
+  "footer": {
+    "knowAboutArtesVisualesStart": "Conoce más acerca de la ",
+    "knowAboutArtesVisualesEnd": " en la Universidad Católica del Uruguay",
+    "ArtesVisuales": " Licenciatura en Artes Visuales ",
+    "termsAndConditions": "Términos y Condiciones",
+    "see": "Ver "
   }
 }
