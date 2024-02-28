@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import StopCircleTwoToneIcon from '@mui/icons-material/StopCircleTwoTone';
 import { Avatar, Box, Typography, Grid, MenuItem, IconButton, Menu } from '@mui/material';
+import { useDisconnect, useWeb3ModalAccount } from '@web3modal/ethers/react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
@@ -35,6 +36,9 @@ export const TopBar = dynamic(
       }
     }, [chapterId, isWaiting]);
 
+    const { isConnected } = useWeb3ModalAccount();
+    const { disconnect } = useDisconnect();
+
     useEffect(() => {
       if (!accessToken) return;
       apiUserProfile
@@ -59,8 +63,14 @@ export const TopBar = dynamic(
       {
         title: t('topBar.menu.logout'),
         handler: () => {
-          push(Route.logout);
-          handleCloseUserMenu();
+          if (isConnected) {
+            disconnect().then(() => {
+              push(Route.logout);
+              handleCloseUserMenu();
+            });
+          } else {
+            push(Route.logout);
+          }
         },
       },
     ];

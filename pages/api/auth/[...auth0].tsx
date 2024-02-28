@@ -13,7 +13,7 @@ export default handleAuth({
   },
   logout: async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-      await handleLogout(req, res, { returnTo: `${req.headers.referer}reset` });
+      await handleLogout(req, res, { returnTo: '/reset' });
     } catch (error) {
       console.error(error);
     }
