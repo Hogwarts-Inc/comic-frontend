@@ -1,4 +1,4 @@
-import { Grid, Typography, styled } from '@mui/material';
+import { Box, Grid, Typography, styled } from '@mui/material';
 
 import Button from '@components/Button';
 import theme from '@styles/theme';
@@ -43,5 +43,13 @@ export const Thumbnail = styled('img')(() => ({
 }));
 
 export const SubmitButton = styled(Button)({
+  marginTop: '1rem',
   width: 'fit-content',
 });
+
+export const SubmitBox = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+}));
