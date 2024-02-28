@@ -9,11 +9,13 @@ import TableCell from '@mui/material/TableCell';
 import TablePagination from '@mui/material/TablePagination';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
 import Button from '@components/Button';
 import { Route } from 'src/constants/routes';
 import useIsMobile from 'src/hooks/useIsMobile';
 import { StoriettesParam, apisChapters, apisComic } from 'src/services/api';
+import { resetCanvaCreate } from 'src/store/slices/canva-creator/reducer';
 
 import {
   Title,
@@ -35,6 +37,7 @@ function ChapterPreviewer() {
   const [dataComic, setDataComic] = useState<StoriettesParam[]>([]);
   const [rowPage, setRowPage] = useState(5);
   const isMobile = useIsMobile();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     apisChapters.getChapters().then(({ data }) => {
@@ -73,7 +76,13 @@ function ChapterPreviewer() {
     <Grid item container direction="column" maxHeight="100%">
       <Grid container item xs="auto" justifyContent="space-between" margin={isMobile ? '1rem' : '1rem 1rem 0'}>
         <Button onClick={back}>{t('back')}</Button>
-        <Button variantType="gradient" size="medium" onClick={() => push(`${Route.chapterCreate}`)}>
+        <Button
+          variantType="gradient"
+          size="medium"
+          onClick={() => {
+            dispatch(resetCanvaCreate());
+            push(Route.chapterCreate);
+          }}>
           {t('chaptersPreview.createChapter')}
         </Button>
       </Grid>

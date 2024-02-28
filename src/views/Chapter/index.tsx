@@ -11,7 +11,7 @@ import { DialogAddCanva } from '@components/DialogAddCanva';
 import { DialogLastThreeCanva } from '@components/DialogLastThreeCanva';
 import { DialogUserQueue } from '@components/DialogUserQueue';
 import { Route } from 'src/constants/routes';
-import { addUserToQueue } from 'src/helpers/chaptersQueue';
+import { addUserToQueue, handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
 import useIsMobile from 'src/hooks/useIsMobile';
 import { StoriettesParam, apisChapters } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
@@ -47,7 +47,6 @@ function Chapter({ isFooterVisible, dataChapter }: { isFooterVisible: boolean; d
 
   const handleClickOpen = async () => {
     if (!chapter) return;
-    setLoading(true);
     try {
       const { status: checkQueueStatus } = await apisChapters.getChaptersCheckQueue(+chapter);
       if (checkQueueStatus === 200) {
@@ -60,15 +59,12 @@ function Chapter({ isFooterVisible, dataChapter }: { isFooterVisible: boolean; d
         console.error(error);
       }
     }
-    setLoading(false);
   };
 
   const handleWait = async () => {
     if (!chapter) return;
-    setLoading(true);
     await addUserToQueue(+chapter);
     setOpenDialogUserQueue(false);
-    setLoading(false);
   };
 
   return loading || !dataChapter || !chapter ? (
@@ -107,7 +103,15 @@ function Chapter({ isFooterVisible, dataChapter }: { isFooterVisible: boolean; d
             <AddCircleOutlineStyle />
           </AddCanvaButton>
         )}
-        <DialogAddCanva openDialog={openDialogAddCanva} setOpenDialog={setOpenDialogAddCanva} />
+        <DialogAddCanva
+          openDialog={openDialogAddCanva}
+          setOpenDialog={setOpenDialogAddCanva}
+          onClose={() => {
+            if (isCreating && chapterId) {
+              handleRemoveFromQueue(chapterId);
+            }
+          }}
+        />
         <DialogUserQueue
           handleWait={handleWait}
           openDialog={openDialogUserQueue}

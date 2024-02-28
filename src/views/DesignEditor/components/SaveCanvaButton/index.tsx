@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
@@ -21,12 +21,17 @@ export const SaveCanvaButton = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const buttonIsActive = useMemo(() => !!scenes.filter(scn => scn.scenePosition > 1).length, [scenes]);
+
   const uploadCanva = async () => {
     setIsLoading(true);
     try {
-      const images = scenes
-        ?.map(({ history, scenePosition }) => history[scenePosition].preview)
-        .filter(Boolean) as string[];
+      const images = scenes.reduce((acc, { history, scenePosition }) => {
+        if (scenePosition > 1 && typeof history[scenePosition].preview) {
+          acc.push(history[scenePosition].preview as string);
+        }
+        return acc;
+      }, [] as string[]);
 
       if (images.length > 0 && canvaData) {
         dispatch(setCanvaFiles(images));
@@ -46,7 +51,7 @@ export const SaveCanvaButton = () => {
 
   return (
     <>
-      <Button onClick={uploadCanva} isLoading={isLoading}>
+      <Button onClick={uploadCanva} isLoading={isLoading} disabled={!buttonIsActive}>
         {t('navbar.save')}
       </Button>
       {isDialogOpen && <DialogAddCanva openDialog={isDialogOpen} setOpenDialog={setIsDialogOpen} />}

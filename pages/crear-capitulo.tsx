@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
+import Button from '@components/Button';
 import DefaultLayout from '@components/DefaultLayout';
 import CustomStepper from '@components/Stepper';
 import { Route } from 'src/constants/routes';
@@ -30,7 +31,7 @@ const createValidationSchema = (t: TFunction) =>
 
 const ChapterCreate = () => {
   const { t } = useTranslation();
-  const router = useRouter();
+  const { push, back } = useRouter();
   const dispatch = useDispatch();
   const { chapterData, activeStep } = useSelector((state: RootState) => ({
     chapterData: selectCanvaData(state),
@@ -53,7 +54,7 @@ const ChapterCreate = () => {
       const chapterId = chapterResponse.data.id;
 
       await apisCanvas.postCanva({ chapter_id: chapterId, images: chapterData.files });
-      router.push(Route.chapter);
+      await push(Route.chapter);
       dispatch(resetCanvaCreate());
     } catch (e) {
       console.error(e); // TODO handle error with alert
@@ -96,9 +97,12 @@ const ChapterCreate = () => {
           };
 
           return (
-            <Form>
+            <Form style={{ width: '100%' }}>
+              <Grid container item xs="auto" margin="1rem 0 0 1rem">
+                <Button onClick={back}>{t('back')}</Button>
+              </Grid>
               <Grid container direction="row" justifyContent="center">
-                <Grid container item style={{ padding: '2rem 0', width: '80%' }}>
+                <Grid container item style={{ padding: '0 0 2rem 0', width: '80%' }}>
                   <CustomStepper
                     activeStep={activeStep}
                     setActiveStep={step => dispatch(setActiveStep(step))}
