@@ -79,7 +79,7 @@ export const DataReview = ({ context, onNext, values, isSubmitting }: ChapterRev
           label={
             <Typography>
               <a href={termsAndConditions?.file_url} target="_blank" rel="noreferrer">
-                Acepto los terminos y condiciones
+                {t('chapterCreate.chapterReview.termsAndConditions')}
               </a>
             </Typography>
           }
