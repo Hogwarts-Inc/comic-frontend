@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import useOnScreen from 'src/hooks/useOnScreen';
 import { TermsAndConditions, apisTermsAndConditions } from 'src/services/api';
 
-import { BoxMui, TextButton, TypographyWhite, TypographyWhiteLink } from './styles';
+import { BoxMui, TypographyWhite, TypographyWhiteLink } from './styles';
 
 export const Footer = ({ onFooterIsShowed }: { onFooterIsShowed?: (value: boolean) => void }) => {
   const ref = useRef(null);
