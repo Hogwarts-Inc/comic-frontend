@@ -90,7 +90,7 @@ export type Event = {
   name: string;
 };
 export type User = { id: number; name: string; email: string; picture: string };
-
+export type TermsAndConditions = { id: number; file_url: string };
 const { dispatch, getState } = store;
 
 const CONTENT_TYPE = {
@@ -266,4 +266,9 @@ export const apiNft = {
         transaction_hash: transactionId,
       },
     }),
+};
+
+//TermsAndConditions
+export const apisTermsAndConditions = {
+  getTermsAndConditions: () => api.get<TermsAndConditions[]>('/terms_and_conditions'),
 };

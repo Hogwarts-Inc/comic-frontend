@@ -3,8 +3,17 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import { CrossmintNFTDetail } from '@crossmint/client-sdk-react-ui';
 import { Favorite } from '@mui/icons-material';
-import { Dialog,
-  DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, TextField, Typography } from '@mui/material';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+  IconButton,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useWeb3Modal, useWeb3ModalAccount, useDisconnect } from '@web3modal/ethers/react';
 import { debounce } from 'lodash';
 import { useRouter } from 'next/router';
@@ -58,6 +67,7 @@ export type VisualizerProps = {
   accessToken: string;
   currentUserUsername: string;
   currentUserProfilePicture: string;
+  url: string;
 } & Partial<{
   walletAddress: string;
   tokenId: string;
@@ -66,7 +76,7 @@ export type VisualizerProps = {
 
 export default function Visualizer(props: VisualizerProps) {
   useAppAuthentication(props.accessToken);
-  const { back, asPath, query } = useRouter();
+  const { query, back } = useRouter();
   const isMobile = useIsMobile();
   const { t } = useTranslation();
 
@@ -84,8 +94,6 @@ export default function Visualizer(props: VisualizerProps) {
   const [transferred, setTransferred] = useState(false);
   const [isShowingNFT, setIsShowingNFT] = useState(false);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
-
-  const url = useMemo(() => `${process.env.NEXT_PUBLIC_BASE_URL}${asPath}`, [asPath]);
 
   const handleLike = useCallback(
     debounce(
@@ -112,6 +120,8 @@ export default function Visualizer(props: VisualizerProps) {
     ),
     [query],
   );
+
+  const url = useMemo(() => props.url, [props]);
 
   const commentHandler = async () => {
     if (query.vignette) {
@@ -179,18 +189,14 @@ export default function Visualizer(props: VisualizerProps) {
           <IconButton size="large" style={{ fontSize: '2.5rem' }} onClick={back}>
             <ArrowBack fontSize="inherit" />
           </IconButton>
-          {nftEnabled && props.tokenId &&
+          {nftEnabled && props.tokenId && (
             <Button variant="contained" onClick={handleFlip}>
               {!isShowingNFT ? t('canva.seeNFT') : t('canva.seeCanva')}
             </Button>
-          }
+          )}
         </Grid>
         <Grid item xs marginBottom="2rem" justifyContent="center">
-          <ReactCardFlip
-            isFlipped={isShowingNFT}
-            containerStyle={{ height: '100%' }}
-            flipDirection="horizontal"
-            >
+          <ReactCardFlip isFlipped={isShowingNFT} containerStyle={{ height: '100%' }} flipDirection="horizontal">
             <Paper elevation={3} key="front">
               <SubContainer container xs>
                 <TitleContainer container item>
@@ -205,7 +211,7 @@ export default function Visualizer(props: VisualizerProps) {
                     <CommentsContainer container item xs>
                       {comments.length ? (
                         comments.map(({ username, comment: commentText, profilePicture }) => (
-                          <CommentContainer container>
+                          <CommentContainer container key={`${username}${profilePicture}${commentText}`}>
                             <CommentProfile src={profilePicture} />
                             <Typography margin={0} variant="h5">
                               {username}
@@ -223,30 +229,30 @@ export default function Visualizer(props: VisualizerProps) {
                     </CommentsContainer>
                     <ButtonContainer container item>
                       {!!props.accessToken && (
-                      <LikeContainer>
-                        <IconButton
-                          style={{ fontSize: '3rem' }}
-                          size="large"
-                          onClick={() => handleLike(!currentUserLikes, likes, currentUserLikes)}>
-                          {currentUserLikes ? (
-                            <Favorite fontSize="inherit" sx={{ color: theme.customPalette.like.main }} />
-                          ) : (
-                            <FavoriteBorder fontSize="inherit" />
-                          )}
-                        </IconButton>
-                        <Typography variant="subtitle2" margin={0}>
-                          {likes}
-                        </Typography>
-                      </LikeContainer>
+                        <LikeContainer>
+                          <IconButton
+                            style={{ fontSize: '3rem' }}
+                            size="large"
+                            onClick={() => handleLike(!currentUserLikes, likes, currentUserLikes)}>
+                            {currentUserLikes ? (
+                              <Favorite fontSize="inherit" sx={{ color: theme.customPalette.like.main }} />
+                            ) : (
+                              <FavoriteBorder fontSize="inherit" />
+                            )}
+                          </IconButton>
+                          <Typography variant="subtitle2" margin={0}>
+                            {likes}
+                          </Typography>
+                        </LikeContainer>
                       )}
                       {!!props.accessToken && (
-                      <IconButton size="large" style={{ fontSize: '3rem' }}>
-                        {showInput ? (
-                          <ChatBubble fontSize="inherit" onClick={() => setShowInput(!showInput)} />
-                        ) : (
-                          <ChatBubbleOutline fontSize="inherit" onClick={() => setShowInput(!showInput)} />
-                        )}
-                      </IconButton>
+                        <IconButton size="large" style={{ fontSize: '3rem' }}>
+                          {showInput ? (
+                            <ChatBubble fontSize="inherit" onClick={() => setShowInput(!showInput)} />
+                          ) : (
+                            <ChatBubbleOutline fontSize="inherit" onClick={() => setShowInput(!showInput)} />
+                          )}
+                        </IconButton>
                       )}
                       <FacebookShareButton url={url} style={{ margin: '0.25rem' }}>
                         <FacebookIcon size="3rem" round />
@@ -259,23 +265,23 @@ export default function Visualizer(props: VisualizerProps) {
                       </WhatsappShareButton>
                     </ButtonContainer>
                     {showInput && (
-                    <InputContainer container item>
-                      <Grid item xs>
-                        <TextField
-                          variant="outlined"
-                          fullWidth
-                          size="small"
-                          multiline
-                          maxRows={3}
-                          style={{ borderRadius: 30 }}
-                          value={comment}
-                          onChange={e => setComment(e.target.value)}
-                        />
-                      </Grid>
-                      <Button variant="contained" sx={{ marginBottom: 0.5 }} onClick={commentHandler}>
-                        {t('common.send')}
-                      </Button>
-                    </InputContainer>
+                      <InputContainer container item>
+                        <Grid item xs>
+                          <TextField
+                            variant="outlined"
+                            fullWidth
+                            size="small"
+                            multiline
+                            maxRows={3}
+                            style={{ borderRadius: 30 }}
+                            value={comment}
+                            onChange={e => setComment(e.target.value)}
+                          />
+                        </Grid>
+                        <Button variant="contained" sx={{ marginBottom: 0.5 }} onClick={commentHandler}>
+                          {t('common.send')}
+                        </Button>
+                      </InputContainer>
                     )}
                   </RigthContainer>
                 </BoxContainer>
@@ -285,15 +291,16 @@ export default function Visualizer(props: VisualizerProps) {
               <Paper elevation={3} key="back">
                 <Grid container style={{ height: '80vh' }} flexDirection="row" justifyContent="end" alignItems="center">
                   <Grid item style={{ flexGrow: 1 }} />
-                  {
-                  props.accessToken && isOwner &&
+                  {props.accessToken && isOwner && (
                     <Grid container item>
                       {isConnected ? (
                         <>
                           {props.transferred || transferred ? (
                             <Button disabled>{t('canva.claimed')}</Button>
                           ) : (
-                            <Button onClick={handleOpenConfirmDialog} variantType="gradient">{t('canva.claim')}</Button>
+                            <Button onClick={handleOpenConfirmDialog} variantType="gradient">
+                              {t('canva.claim')}
+                            </Button>
                           )}
                           <Grid item style={{ flexGrow: 1 }} />
                           <Button onClick={handleDisconnectClick}>{t('canva.disconnectWallet')}</Button>
@@ -302,14 +309,15 @@ export default function Visualizer(props: VisualizerProps) {
                         <Button onClick={handleConnectClick}>{t('canva.connectWallet')}</Button>
                       )}
                     </Grid>
-                  }
+                  )}
                   <CrossmintNFTDetail
                     nft={{
                       chain: 'polygon',
                       contractAddress: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? '',
                       tokenId: props.tokenId!,
                     }}
-                    environment="staging" />
+                    environment="staging"
+                  />
                 </Grid>
               </Paper>
             )}
@@ -323,7 +331,9 @@ export default function Visualizer(props: VisualizerProps) {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenConfirmDialog(false)}>{t('common.cancel')}</Button>
-          <Button onClick={handleTransferNft} autoFocus>{t('common.accept')}</Button>
+          <Button onClick={handleTransferNft} autoFocus>
+            {t('common.accept')}
+          </Button>
         </DialogActions>
       </Dialog>
     </DefaultLayout>

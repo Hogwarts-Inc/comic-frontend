@@ -2,7 +2,7 @@ import { Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export const LayoutContainer = styled(Grid)({
-  backgroundImage: 'url(/texture.svg)',
+  backgroundImage: 'url(/static/texture.svg)',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
 });

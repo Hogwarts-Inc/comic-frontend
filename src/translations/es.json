@@ -56,7 +56,8 @@
     },
     "chapterReview": {
       "createdCanvas": "Viñetas creadas",
-      "publishButton": "Publicar"
+      "publishButton": "Publicar",
+      "termsAndConditions": "Acepto los terminos y condiciones"
     },
     "stepperLabels": ["Agregar información del capítulo", "Agregar viñetas", "Publicar"],
     "validations": {
