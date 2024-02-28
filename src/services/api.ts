@@ -272,5 +272,5 @@ export const apiNft = {
 
 //TermsAndConditions
 export const apisTermsAndConditions = {
-  getTermsAndConditions: () => api.get<TermsAndConditions[]>('/terms_and_conditions'),
+  getTermsAndConditions: () => api.get<TermsAndConditions>('/terms_and_conditions'),
 };

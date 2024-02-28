@@ -2,7 +2,7 @@ import { styled, Box, AppBar } from '@mui/material';
 
 import Button from '@components/Button';
 
-import LogoIcon from '../Icons/logo.svg'; //Logo preeliminar
+import LogoIcon from '../Icons/logo.svg';
 
 export const StyledLogoIcon = styled(LogoIcon)({
   width: 'auto',
@@ -11,7 +11,7 @@ export const StyledLogoIcon = styled(LogoIcon)({
 export const AppBarMui = styled(AppBar)(({ theme }) => ({
   position: 'sticky',
   top: 0,
-  height: '5.5rem',
+  height: '4.5rem',
   width: '100%',
   background: theme.customPalette.gradient.main,
   display: 'flex',
