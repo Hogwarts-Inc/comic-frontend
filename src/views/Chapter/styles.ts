@@ -17,11 +17,10 @@ export const Container = styled(Grid)(({ theme }) => ({
 }));
 
 export const TitleContainer = styled('div')({
-  border: '5px solid',
-  padding: '5px',
+  border: '0.25rem solid',
   borderImage: 'linear-gradient(to right, rgb(64, 224, 208), rgb(112, 121, 190), rgb(255, 0, 128)) 1',
   marginBottom: '2rem',
-  borderRadius: '10px',
+  padding: '1rem',
 });
 
 export const Loading = styled('div')({

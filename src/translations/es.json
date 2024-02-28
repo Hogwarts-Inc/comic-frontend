@@ -45,6 +45,7 @@
   },
   "chapterCreate": {
     "title": "Agregar Capítulo",
+    "backStep": "Paso anterior",
     "addCanva": {
       "uploadTitle": "Sube tus propios archivos",
       "uploadDescription": "Puedes subir tu propia viñeta creada previamente y agregarla al capítulo. \nAsegúrate que sea un archivo PNG. \nPuedes subir hasta 3 viñetas en esta instancia. ",

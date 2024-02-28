@@ -37,7 +37,7 @@ const CustomStepper = ({ activeStep, steps, setActiveStep }: CustomStepperProps)
 
         <ButtonRow>
           <StyledButton color="inherit" disabled={activeStep === 0} onClick={handleBack}>
-            {t('common.back')}
+            {t('chapterCreate.backStep')}
           </StyledButton>
         </ButtonRow>
       </StepperContainer>

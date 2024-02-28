@@ -41,8 +41,21 @@ function Scenes() {
     }),
   ];
 
+  const addScene = useCallback(async () => {
+    const defaultTemplate = getDefaultTemplate(currentDesign.frame);
+    const newPreview = (await editor.renderer.render(defaultTemplate)) as string;
+    const newPage = { ...defaultTemplate, id: nanoid(), preview: newPreview };
+    const newPages: ScenesWithPosition = [...scenes.slice(), { history: [newPage], scenePosition: 0 }];
+    setScenes(newPages);
+    setCurrentScene(newPage);
+  }, [editor, scenes, currentDesign, setScenes, setCurrentScene]);
+
   useEffect(() => {
     if (editor && scenes && currentScene) {
+      if (scenes.length === 0) {
+        addScene();
+        return;
+      }
       const currentSceneLoaded = scenes.find(
         ({ history, scenePosition }) => history[scenePosition].id === currentScene?.id,
       );
@@ -51,6 +64,7 @@ function Scenes() {
       }
     }
   }, [editor, scenes, currentScene, setCurrentScene]);
+
   const watcher = useCallback(async () => {
     const updatedTemplate = editor.scene.exportToJSON();
 
@@ -123,15 +137,6 @@ function Scenes() {
       }
     }
   }, [editor, currentScene, setCurrentDesign, setCurrentScene, setScenes, updateCurrentScene]);
-
-  const addScene = useCallback(async () => {
-    const defaultTemplate = getDefaultTemplate(currentDesign.frame);
-    const newPreview = (await editor.renderer.render(defaultTemplate)) as string;
-    const newPage = { ...defaultTemplate, id: nanoid(), preview: newPreview };
-    const newPages: ScenesWithPosition = [...scenes, { history: [newPage], scenePosition: 0 }];
-    setScenes(newPages);
-    setCurrentScene(newPage);
-  }, [editor, scenes, currentDesign, setScenes, setCurrentScene]);
 
   const handleDragStart = (event: any) => {
     const newDraggedScene = scenes.find(({ history, scenePosition }) => history[scenePosition].id === event.active.id);

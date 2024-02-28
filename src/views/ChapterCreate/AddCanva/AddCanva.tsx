@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 
 import { TitleView } from '@components/AddCanvaTitleView';
 import { Route } from 'src/constants/routes';
+import useDesignEditorContext from 'src/hooks/useDesignEditorContext';
 import { ContextType } from 'src/interfaces/common';
 import { setCanvaFiles } from 'src/store/slices/canva-creator/reducer';
 import { toBase64 } from 'src/utils/data';
@@ -38,6 +39,7 @@ export const AddCanva = ({ context, values, setFieldValue, onNext }: AddCanvaPro
   const { t } = useTranslation();
   const router = useRouter();
   const dispatch = useDispatch();
+  const { setScenes } = useDesignEditorContext();
 
   const handleFileChange = async (fileObjects: File[]) => {
     setFieldValue?.('files', fileObjects);
@@ -51,9 +53,11 @@ export const AddCanva = ({ context, values, setFieldValue, onNext }: AddCanvaPro
       if (confirm(t('confirmNavigateToEditor'))) {
         setFieldValue?.('files', []);
         dispatch(setCanvaFiles([]));
+        setScenes([]);
         router.push(Route.editor);
       }
     } else {
+      setScenes([]);
       router.push(Route.editor);
     }
   };
