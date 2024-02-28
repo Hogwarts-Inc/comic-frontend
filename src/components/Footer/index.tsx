@@ -19,7 +19,7 @@ export const Footer = ({ onFooterIsShowed }: { onFooterIsShowed?: (value: boolea
 
   useEffect(() => {
     apisTermsAndConditions.getTermsAndConditions().then(({ data }) => {
-      setTermsAndConditions(data[0]);
+      setTermsAndConditions(data);
     });
   }, []);
 
@@ -28,9 +28,7 @@ export const Footer = ({ onFooterIsShowed }: { onFooterIsShowed?: (value: boolea
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <TypographyWhite>
           {t('footer.knowAboutArtesVisualesStart')}
-          <TypographyWhiteLink
-            href="https://carreras.ucu.edu.uy/programas/ver/licenciatura-en-artes-visuales--mvd--presencial?variante=2"
-            target="_blank">
+          <TypographyWhiteLink href={process.env.NEXT_PUBLIC_UCU_LINK} target="_blank">
             {` ${t('footer.ArtesVisuales')} `}
           </TypographyWhiteLink>
           {t('footer.knowAboutArtesVisualesEnd')}

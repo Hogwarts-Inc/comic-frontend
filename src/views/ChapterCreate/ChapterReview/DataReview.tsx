@@ -40,7 +40,7 @@ export const DataReview = ({ context, onNext, values, isSubmitting }: ChapterRev
 
   useEffect(() => {
     apisTermsAndConditions.getTermsAndConditions().then(({ data }) => {
-      setTermsAndConditions(data[0]);
+      setTermsAndConditions(data);
     });
   }, []);
 
