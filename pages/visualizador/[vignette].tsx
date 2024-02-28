@@ -26,7 +26,9 @@ export const getServerSideProps = (async context => {
         }
       : {}),
     url: '',
+    isOwner: false,
   };
+  let userID1;
 
   let accessToken = '';
   try {
@@ -39,6 +41,7 @@ export const getServerSideProps = (async context => {
     try {
       const { data: dataApi } = await apisCanvas.getCanvaById({ token: accessToken, canvaId: +context.query.vignette });
       const image = (await fetch(dataApi.image_url)).url;
+      userID1 = dataApi.user_attributes.id;
 
       data = {
         ...data,
@@ -71,7 +74,12 @@ export const getServerSideProps = (async context => {
 
     try {
       const { data: userApi } = await apiUserProfile.getUserProfile({ token: accessToken });
-      data = { ...data, currentUserUsername: userApi.name, currentUserProfilePicture: userApi.image_url };
+      data = {
+        ...data,
+        currentUserUsername: userApi.name,
+        currentUserProfilePicture: userApi.image_url,
+        isOwner: userApi.id === userID1,
+      };
     } catch (e) {
       console.error('Error fetching user profile:', e);
     }

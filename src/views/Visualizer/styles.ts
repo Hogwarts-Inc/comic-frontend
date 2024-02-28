@@ -15,11 +15,10 @@ const IconCommonStyle = css`
 `;
 export const ArrowBack = styled(ArrowBackIcon)(IconCommonStyle);
 export const Paper = styled(PaperComponent)({
-  padding: '1rem',
   borderRadius: 30,
   width: '80%',
-  margin: 'auto',
   height: '100%',
+  margin: 'auto',
   maxWidth: '1500px',
 });
 export const Canva = styled(Grid)<{ image: string }>(({ image }) => ({
@@ -43,8 +42,18 @@ export const CommentsContainer = styled(Grid)(({ theme: themeProp }) => ({
 export const FavoriteBorder = styled(FavoriteBorderComponent)(IconCommonStyle);
 export const ChatBubble = styled(ChatBubbleComponent)(IconCommonStyle);
 export const ChatBubbleOutline = styled(ChatBubbleOutlineComponent)(IconCommonStyle);
-export const Container = styled(Grid)({ padding: '1rem', flexDirection: 'column', paddingBottom: '2rem' });
-export const SubContainer = styled(Grid)({ flexDirection: 'column', gap: '1rem', alignSelf: 'center', height: '100%' });
+export const Container = styled(Grid)({
+  padding: '1rem',
+  flexDirection: 'column',
+  paddingBottom: '2rem',
+});
+export const SubContainer = styled(Grid)({
+  flexDirection: 'column',
+  gap: '1rem',
+  alignSelf: 'center',
+  height: '100%',
+  padding: '1rem',
+});
 export const TitleContainer = styled(Grid)({
   padding: '1rem',
   paddingTop: '0',

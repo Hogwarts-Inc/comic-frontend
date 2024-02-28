@@ -1,5 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/destructuring-assignment */
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { CrossmintNFTDetail } from '@crossmint/client-sdk-react-ui';
 import { Favorite } from '@mui/icons-material';
@@ -31,10 +32,10 @@ import {
 import Button from '@components/Button';
 import DefaultLayout from '@components/DefaultLayout';
 import theme from '@styles/theme';
-import { postCrossmintTransfer } from 'pages/api/auth/crossmint';
+import { TransferNFTData } from 'pages/api/crossmint';
 import useAppAuthentication from 'src/hooks/useAppAuthentication';
 import useIsMobile from 'src/hooks/useIsMobile';
-import { TransferNFTData, apisCanvasComment, apisCanvasLike } from 'src/services/api';
+import { apisCanvasComment, apisCanvasLike } from 'src/services/api';
 
 import {
   ArrowBack,
@@ -68,6 +69,7 @@ export type VisualizerProps = {
   currentUserUsername: string;
   currentUserProfilePicture: string;
   url: string;
+  isOwner: boolean;
 } & Partial<{
   walletAddress: string;
   tokenId: string;
@@ -87,13 +89,17 @@ export default function Visualizer(props: VisualizerProps) {
   const [comments, setComments] = useState(props.comments);
 
   const nftEnabled = process.env.NEXT_PUBLIC_NFT_TOGGLE === 'true';
-  const isOwner = props.currentUserUsername === props.username;
   const { open } = useWeb3Modal();
   const { disconnect } = useDisconnect();
   const { address, isConnected } = useWeb3ModalAccount();
-  const [transferred, setTransferred] = useState(false);
+  const [transferred, setTransferred] = useState(props.transferred);
   const [isShowingNFT, setIsShowingNFT] = useState(false);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const [isClientLoaded, setIsClientLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsClientLoaded(true);
+  }, []);
 
   const handleLike = useCallback(
     debounce(
@@ -172,9 +178,10 @@ export default function Visualizer(props: VisualizerProps) {
         toAddress: address as string,
         tokenId: props.tokenId!,
         tokenMintAddress: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? '',
+        userToken: props.accessToken,
       };
 
-      await postCrossmintTransfer(transferData);
+      await fetch('/api/crossmint', { method: 'POST', body: JSON.stringify(transferData) });
     } catch (error) {
       console.error('Error transferring NFT:', error);
     }
@@ -184,19 +191,23 @@ export default function Visualizer(props: VisualizerProps) {
 
   return (
     <DefaultLayout disableFooter={isMobile}>
-      <Container container>
+      <Container container direction="column">
         <Grid item container justifyContent="space-between">
           <IconButton size="large" style={{ fontSize: '2.5rem' }} onClick={back}>
             <ArrowBack fontSize="inherit" />
           </IconButton>
           {nftEnabled && props.tokenId && (
-            <Button variant="contained" onClick={handleFlip}>
+            <Button variantType={isShowingNFT ? 'default' : 'gradient'} onClick={handleFlip}>
               {!isShowingNFT ? t('canva.seeNFT') : t('canva.seeCanva')}
             </Button>
           )}
         </Grid>
-        <Grid item xs marginBottom="2rem" justifyContent="center">
-          <ReactCardFlip isFlipped={isShowingNFT} containerStyle={{ height: '100%' }} flipDirection="horizontal">
+        <Grid container xs marginTop="1rem" marginBottom="0" justifyContent="center">
+          <ReactCardFlip
+            cardStyles={{ front: { transformStyle: 'unset' }, back: { transformStyle: 'unset' } }}
+            isFlipped={isShowingNFT}
+            containerStyle={{ height: '100%', width: '100%' }}
+            flipDirection="horizontal">
             <Paper elevation={3} key="front">
               <SubContainer container xs>
                 <TitleContainer container item>
@@ -246,12 +257,8 @@ export default function Visualizer(props: VisualizerProps) {
                         </LikeContainer>
                       )}
                       {!!props.accessToken && (
-                        <IconButton size="large" style={{ fontSize: '3rem' }}>
-                          {showInput ? (
-                            <ChatBubble fontSize="inherit" onClick={() => setShowInput(!showInput)} />
-                          ) : (
-                            <ChatBubbleOutline fontSize="inherit" onClick={() => setShowInput(!showInput)} />
-                          )}
+                        <IconButton size="large" style={{ fontSize: '3rem' }} onClick={() => setShowInput(!showInput)}>
+                          {showInput ? <ChatBubble fontSize="inherit" /> : <ChatBubbleOutline fontSize="inherit" />}
                         </IconButton>
                       )}
                       <FacebookShareButton url={url} style={{ margin: '0.25rem' }}>
@@ -289,13 +296,12 @@ export default function Visualizer(props: VisualizerProps) {
             </Paper>
             {nftEnabled && (
               <Paper elevation={3} key="back">
-                <Grid container style={{ height: '80vh' }} flexDirection="row" justifyContent="end" alignItems="center">
-                  <Grid item style={{ flexGrow: 1 }} />
-                  {props.accessToken && isOwner && (
+                <SubContainer container xs>
+                  {isClientLoaded && props.accessToken && props.isOwner && (
                     <Grid container item>
                       {isConnected ? (
                         <>
-                          {props.transferred || transferred ? (
+                          {transferred ? (
                             <Button disabled>{t('canva.claimed')}</Button>
                           ) : (
                             <Button onClick={handleOpenConfirmDialog} variantType="gradient">
@@ -310,15 +316,17 @@ export default function Visualizer(props: VisualizerProps) {
                       )}
                     </Grid>
                   )}
-                  <CrossmintNFTDetail
-                    nft={{
-                      chain: 'polygon',
-                      contractAddress: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? '',
-                      tokenId: props.tokenId!,
-                    }}
-                    environment="staging"
-                  />
-                </Grid>
+                  <Grid container xs>
+                    <CrossmintNFTDetail
+                      nft={{
+                        chain: 'polygon',
+                        contractAddress: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? '',
+                        tokenId: props.tokenId!,
+                      }}
+                      environment="staging"
+                    />
+                  </Grid>
+                </SubContainer>
               </Paper>
             )}
           </ReactCardFlip>

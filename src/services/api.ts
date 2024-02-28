@@ -34,14 +34,6 @@ type NftData = {
   transferred: boolean;
 };
 
-export type TransferNFTData = {
-  chain: string;
-  fromAddress: string;
-  toAddress: string;
-  tokenId: string;
-  tokenMintAddress: string;
-};
-
 type CanvaResponse = {
   chapter_id: number;
   comments: Comment[];
@@ -257,15 +249,25 @@ export const apiUserProfile = {
 };
 
 export const apiNft = {
-  postNftTransfers: (token_id: string, to_address: string, from_address: string, transactionId: string) =>
-    api.post('/nft_transfers', {
-      nft_transfer: {
-        token_id,
-        to_address,
-        from_address,
-        transaction_hash: transactionId,
+  postNftTransfers: (
+    token_id: string,
+    to_address: string,
+    from_address: string,
+    transactionId: string,
+    token: string,
+  ) =>
+    api.post(
+      '/nft_transfers',
+      {
+        nft_transfer: {
+          token_id,
+          to_address,
+          from_address,
+          transaction_hash: transactionId,
+        },
       },
-    }),
+      { headers: { Authorization: `Bearer ${token}` } },
+    ),
 };
 
 //TermsAndConditions

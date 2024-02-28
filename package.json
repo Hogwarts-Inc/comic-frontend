@@ -11,7 +11,8 @@
     "run-build-docker": "docker compose down && docker compose up --build",
     "lint-fix": "next lint --fix",
     "copy-env-to-server": "scp .env.development opc@164.152.19.10:~/front/.env",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "prune": "docker system prune -f"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.3.0",
