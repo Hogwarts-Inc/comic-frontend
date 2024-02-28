@@ -162,5 +162,12 @@
     "defaultColors": "Colores predeterminados",
     "selectAFont": "Selecciona una fuente",
     "searchFont": "Buscar fuente"
+  },
+  "footer": {
+    "knowAboutArtesVisualesStart": "Conoce mas acerca de la ",
+    "knowAboutArtesVisualesEnd": " en la Universidad Catolica del Uruguay",
+    "ArtesVisuales": " Licenciatura en Artes Visuales ",
+    "termsAndConditions": "Terminos y condiciones",
+    "see": "Ver "
   }
 }
