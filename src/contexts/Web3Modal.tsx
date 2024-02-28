@@ -10,7 +10,7 @@ const testnet = {
   chainId: 80001,
   name: 'Polygon',
   currency: 'MATIC',
-  explorerUrl: 'https://mumbai.polygonscan.com/',
+  explorerUrl: process.env.NEXT_PUBLIC_POLYGONSCAN_URL ?? '',
   rpcUrl: process.env.NEXT_PUBLIC_QUICKNODE_HTTP_ENDPOINT ?? '',
 };
 
@@ -18,7 +18,7 @@ const metadata = {
   name: 'La historieta mas larga del mundo',
   description: '',
   url: process.env.NEXT_PUBLIC_BASE_URL ?? '',
-  icons: ['https://avatars.mywebsite.com/'],
+  icons: [''],
 };
 
 createWeb3Modal({

@@ -5,6 +5,8 @@ import { apiUserProfile, apisCanvas } from 'src/services/api';
 import Visualizer, { VisualizerProps } from 'src/views/Visualizer';
 
 export const getServerSideProps = (async context => {
+  const nftEnabled = process.env.NEXT_PUBLIC_NFT_TOGGLE === 'true';
+
   let data: VisualizerProps = {
     image: '',
     username: '',
@@ -13,23 +15,29 @@ export const getServerSideProps = (async context => {
     likes: 0,
     currentUserLikes: false,
     accessToken: '',
-    currentUserProfilePicture: '',
     currentUserUsername: '',
-    walletAddress: '',
-    tokenId: '',
-    transferred: false,
+    currentUserProfilePicture: '',
+    ...(nftEnabled ? {
+      walletAddress: '',
+      tokenId: '',
+      transferred: false,
+    } : {}),
   };
+
   let accessToken = '';
   try {
     accessToken = (await getAccessToken(context.req, context.res)).accessToken || '';
   } catch (e) {
     console.error('Error fetching access token:', e);
   }
+
   if (context.query.vignette) {
     try {
       const { data: dataApi } = await apisCanvas.getCanvaById({ token: accessToken, canvaId: +context.query.vignette });
       const image = (await fetch(dataApi.image_url)).url;
+
       data = {
+        ...data,
         image,
         comments: dataApi.comments.map(comment => ({
           comment: comment.text,
@@ -37,9 +45,6 @@ export const getServerSideProps = (async context => {
           username: comment.user_attributes.name,
           id: `${comment.id}`,
         })),
-        walletAddress: dataApi.nft_data.wallet_address,
-        tokenId: dataApi.nft_data.token_id,
-        transferred: dataApi.nft_data.transferred,
         username: dataApi.user_attributes.name,
         profilePicture: dataApi.user_attributes.image_url,
         likes: dataApi.likes,
@@ -47,15 +52,21 @@ export const getServerSideProps = (async context => {
         accessToken,
         currentUserUsername: '',
         currentUserProfilePicture: '',
+        ...(nftEnabled ? {
+          walletAddress: dataApi.nft_data.wallet_address,
+          tokenId: dataApi.nft_data.token_id,
+          transferred: dataApi.nft_data.transferred,
+        } : {}),
       };
     } catch (e) {
       console.error('Error fetching data:', e);
     }
+
     try {
       const { data: userApi } = await apiUserProfile.getUserProfile({ token: accessToken });
       data = { ...data, currentUserUsername: userApi.name, currentUserProfilePicture: userApi.image_url };
     } catch (e) {
-      console.error('Error fetching data:', e);
+      console.error('Error fetching user profile:', e);
     }
   }
 

@@ -58,47 +58,34 @@ export type VisualizerProps = {
   accessToken: string;
   currentUserUsername: string;
   currentUserProfilePicture: string;
+} & Partial<{
   walletAddress: string;
   tokenId: string;
   transferred: boolean;
-};
+}>;
+
 export default function Visualizer(props: VisualizerProps) {
   useAppAuthentication(props.accessToken);
   const { back, asPath, query } = useRouter();
   const isMobile = useIsMobile();
   const { t } = useTranslation();
 
-  const { open } = useWeb3Modal();
-  const { disconnect } = useDisconnect();
-  const { address, isConnected } = useWeb3ModalAccount();
-
   const [currentUserLikes, setCurrentUserLikes] = useState(props.currentUserLikes);
   const [showInput, setShowInput] = useState(false);
   const [likes, setLikes] = useState(props.likes);
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState(props.comments);
+
+  const nftEnabled = process.env.NEXT_PUBLIC_NFT_TOGGLE === 'true';
+  const isOwner = props.currentUserUsername === props.username;
+  const { open } = useWeb3Modal();
+  const { disconnect } = useDisconnect();
+  const { address, isConnected } = useWeb3ModalAccount();
+  const [transferred, setTransferred] = useState(false);
   const [isShowingNFT, setIsShowingNFT] = useState(false);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
-  const [transferred, setTransferred] = useState(false);
 
   const url = useMemo(() => `${process.env.NEXT_PUBLIC_BASE_URL}${asPath}`, [asPath]);
-  const isOwner = props.currentUserUsername === props.username;
-
-  const handleFlip = () => {
-    setIsShowingNFT(!isShowingNFT);
-  };
-
-  const handleConnectClick = () => {
-    open();
-  };
-
-  const handleDisconnectClick = () => {
-    disconnect();
-  };
-
-  const handleOpenConfirmDialog = () => {
-    setOpenConfirmDialog(true);
-  };
 
   const handleLike = useCallback(
     debounce(
@@ -149,17 +136,31 @@ export default function Visualizer(props: VisualizerProps) {
     }
   };
 
-  const handleTransferNft = async () => {
-    try {
-      const { tokenId } = props;
-      const toAddress = address as string;
-      const fromAddress = props.walletAddress;
+  const handleFlip = () => {
+    setIsShowingNFT(!isShowingNFT);
+  };
 
+  const handleConnectClick = () => {
+    open();
+  };
+
+  const handleDisconnectClick = () => {
+    disconnect();
+  };
+
+  const handleOpenConfirmDialog = () => {
+    setOpenConfirmDialog(true);
+  };
+
+  const handleTransferNft = async () => {
+    if (!nftEnabled) return;
+
+    try {
       const transferData: TransferNFTData = {
         chain: 'polygon',
-        fromAddress,
-        toAddress,
-        tokenId,
+        fromAddress: props.walletAddress!,
+        toAddress: address as string,
+        tokenId: props.tokenId!,
         tokenMintAddress: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? '',
       };
 
@@ -178,10 +179,11 @@ export default function Visualizer(props: VisualizerProps) {
           <IconButton size="large" style={{ fontSize: '2.5rem' }} onClick={back}>
             <ArrowBack fontSize="inherit" />
           </IconButton>
-          {props.tokenId &&
-          <Button variant="contained" onClick={handleFlip}>
-            {!isShowingNFT ? t('canva.seeNFT') : t('canva.seeCanva')}
-          </Button>}
+          {nftEnabled && props.tokenId &&
+            <Button variant="contained" onClick={handleFlip}>
+              {!isShowingNFT ? t('canva.seeNFT') : t('canva.seeCanva')}
+            </Button>
+          }
         </Grid>
         <Grid item xs marginBottom="2rem" justifyContent="center">
           <ReactCardFlip
@@ -279,36 +281,38 @@ export default function Visualizer(props: VisualizerProps) {
                 </BoxContainer>
               </SubContainer>
             </Paper>
-            <Paper elevation={3} key="back">
-              <Grid container style={{ height: '80vh' }} flexDirection="row" justifyContent="end" alignItems="center">
-                <Grid item style={{ flexGrow: 1 }} />
-                {
-                props.accessToken && isOwner &&
-                  <Grid container item>
-                    {isConnected ? (
-                      <>
-                        {props.transferred || transferred ? (
-                          <Button disabled>{t('canva.claimed')}</Button>
-                        ) : (
-                          <Button onClick={handleOpenConfirmDialog} variantType="gradient">{t('canva.claim')}</Button>
-                        )}
-                        <Grid item style={{ flexGrow: 1 }} />
-                        <Button onClick={handleDisconnectClick}>{t('canva.disconnectWallet')}</Button>
-                      </>
-                    ) : (
-                      <Button onClick={handleConnectClick}>{t('canva.connectWallet')}</Button>
-                    )}
-                  </Grid>
-                }
-                <CrossmintNFTDetail
-                  nft={{
-                    chain: 'polygon',
-                    contractAddress: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? '',
-                    tokenId: props.tokenId,
-                  }}
-                  environment="staging" />
-              </Grid>
-            </Paper>
+            {nftEnabled && (
+              <Paper elevation={3} key="back">
+                <Grid container style={{ height: '80vh' }} flexDirection="row" justifyContent="end" alignItems="center">
+                  <Grid item style={{ flexGrow: 1 }} />
+                  {
+                  props.accessToken && isOwner &&
+                    <Grid container item>
+                      {isConnected ? (
+                        <>
+                          {props.transferred || transferred ? (
+                            <Button disabled>{t('canva.claimed')}</Button>
+                          ) : (
+                            <Button onClick={handleOpenConfirmDialog} variantType="gradient">{t('canva.claim')}</Button>
+                          )}
+                          <Grid item style={{ flexGrow: 1 }} />
+                          <Button onClick={handleDisconnectClick}>{t('canva.disconnectWallet')}</Button>
+                        </>
+                      ) : (
+                        <Button onClick={handleConnectClick}>{t('canva.connectWallet')}</Button>
+                      )}
+                    </Grid>
+                  }
+                  <CrossmintNFTDetail
+                    nft={{
+                      chain: 'polygon',
+                      contractAddress: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? '',
+                      tokenId: props.tokenId!,
+                    }}
+                    environment="staging" />
+                </Grid>
+              </Paper>
+            )}
           </ReactCardFlip>
         </Grid>
       </Container>

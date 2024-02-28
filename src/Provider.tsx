@@ -16,18 +16,28 @@ import theme from './styles/theme';
 import './translations';
 
 function Provider({ children }: { children: React.ReactNode }) {
+  const nftEnabled = process.env.NEXT_PUBLIC_NFT_TOGGLE === 'true';
+
   return (
     <ReduxProvier store={store}>
       <ThemeProvider theme={theme}>
         <DesignEditorProvider>
           <TimerProvider>
-            <Web3ModalProvider>
+            {nftEnabled ? (
+              <Web3ModalProvider>
+                <AppProvider>
+                  <ScenifyProvider>
+                    <I18nextProvider i18n={i18next}>{children}</I18nextProvider>
+                  </ScenifyProvider>
+                </AppProvider>
+              </Web3ModalProvider>
+            ) : (
               <AppProvider>
                 <ScenifyProvider>
                   <I18nextProvider i18n={i18next}>{children}</I18nextProvider>
                 </ScenifyProvider>
               </AppProvider>
-            </Web3ModalProvider>
+            )}
           </TimerProvider>
         </DesignEditorProvider>
       </ThemeProvider>
