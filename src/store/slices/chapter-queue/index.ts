@@ -7,6 +7,7 @@ interface IQueue {
   position: number;
   isWaiting: boolean;
   isCreating: boolean;
+  timeleft: number;
 }
 
 const initialState: IQueue = {
@@ -14,6 +15,7 @@ const initialState: IQueue = {
   position: -1,
   isWaiting: false,
   isCreating: false,
+  timeleft: 0,
 };
 
 const chapterQueueSlice = createSlice({
@@ -25,6 +27,7 @@ const chapterQueueSlice = createSlice({
       state.chapterId = payload.chapterId;
       state.isWaiting = payload.isWaiting;
       state.isCreating = payload.isCreating;
+      state.timeleft = payload.timeleft;
     },
     resetChapterQueue: () => initialState,
   },

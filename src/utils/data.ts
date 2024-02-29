@@ -5,3 +5,5 @@ export const toBase64 = (file: File | Blob) =>
     reader.onload = () => resolve(reader.result as string);
     reader.onerror = error => reject(error);
   });
+
+export const INTERVAL = 30000;

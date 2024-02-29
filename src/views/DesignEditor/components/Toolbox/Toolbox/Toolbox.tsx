@@ -8,6 +8,7 @@ import { Grid } from '@mui/material';
 import { ButtonsContainer, Container } from './styles';
 import useAppContext from '../../../../../hooks/useAppContext';
 import getSelectionType from '../../../../../utils/get-selection-type';
+import Countdown from '../../Countdown';
 import { SaveCanvaButton } from '../../SaveCanvaButton';
 import Items from '../Items';
 
@@ -65,9 +66,12 @@ function Toolbox() {
           {!!Component && <Component />}
         </Grid>
         {!isMobile && (
-          <ButtonsContainer>
-            <SaveCanvaButton />
-          </ButtonsContainer>
+          <>
+            <Countdown />
+            <ButtonsContainer>
+              <SaveCanvaButton />
+            </ButtonsContainer>
+          </>
         )}
       </Container>
     )
