@@ -3,12 +3,9 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 
 import Button from '@components/Button';
-import { handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
 import useIsMobile from 'src/hooks/useIsMobile';
-import { RootState } from 'src/store/rootReducer';
 
 import { PanelListItem } from './PanelListItem';
 import { ButtonsContainer, Container, WhiteContainer } from './styles';
