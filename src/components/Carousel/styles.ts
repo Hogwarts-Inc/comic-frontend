@@ -46,13 +46,15 @@ export const CarouselContainer = styled('div')<CarouselProps>(props => ({
 export const CarouselSlot = styled('div')<CarouselProps>(({ displayMode, isClickable }) => ({
   flex: '1 0 auto',
   flexBasis: displayMode === 'reduced' ? '100%' : '75%',
-  '@media (min-width: 1280px)': {
-    flexBasis: '45%',
-  },
   marginRight: '1%',
   '&:hover': {
     cursor: isClickable ? 'pointer' : 'auto',
   },
+  ...(displayMode !== 'reduced' && {
+    '@media (min-width: 1280px)': {
+      flexBasis: '45%',
+    },
+  }),
 }));
 
 export const CarouselSlotImage = styled('img')<CarouselProps>(({ displayMode }) => ({

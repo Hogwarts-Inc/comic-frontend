@@ -27,8 +27,6 @@ const api = axios.create({
 
 async function postCrossmintTransfer(data: TransferNFTData): Promise<TransferNFTResponse> {
   try {
-    console.log({ api: process.env.CROSSMINT_API_KEY });
-
     const response = await api.post<TransferNFTResponse>('/transfer', data);
 
     if (response.status === 200 && response.data.transactionId) {
@@ -50,7 +48,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<TransferNFTRespo
   if (req.method === 'POST') {
     const data = JSON.parse(req.body) as TransferNFTData;
 
-    await postCrossmintTransfer(data)
+    postCrossmintTransfer(data)
       .then(response => {
         res.status(200).json(response);
       })

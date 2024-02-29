@@ -8,6 +8,7 @@ import { RootState } from 'src/store/rootReducer';
 
 import FontSelector from './FontSelector';
 import Graphics from './Graphics';
+import IA from './IA';
 import Images from './Images';
 import Text from './Text';
 import TextFill from './TextFill';
@@ -35,7 +36,6 @@ function TextConvertor() {
   const { dialog } = useSelector((state: RootState) => state.resources);
   return <Text images={dialog} />;
 }
-
 export default {
   Text: TextConvertor,
   Uploads: Uploads,
@@ -44,4 +44,5 @@ export default {
   Shapes: ShapesConvertor,
   FontSelector,
   TextFill,
+  ImageGeneration: IA,
 } as { [key: string]: () => React.JSX.Element };

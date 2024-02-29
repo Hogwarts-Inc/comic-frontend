@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 export const BASE_ITEMS = [
   {
     id: 'images',
@@ -19,6 +20,14 @@ export const BASE_ITEMS = [
     id: 'uploads',
     name: 'Uploads',
   },
+  ...(process.env.NEXT_PUBLIC_IMAGE_TOGGLE === 'true'
+    ? [
+        {
+          id: 'imageGeneration',
+          name: 'ImageGeneration',
+        },
+      ]
+    : []),
 ];
 
 export type PanelType = 'Images' | 'Text' | 'Shapes' | 'Characters' | 'Uploads' | '';

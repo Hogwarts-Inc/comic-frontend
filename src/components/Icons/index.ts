@@ -60,6 +60,7 @@ const Icons: { [key: string]: (value: any) => React.JSX.Element } = {
   Add,
   Characters,
   Shapes,
+  ImageGeneration: Search,
 };
 
 export default Icons;

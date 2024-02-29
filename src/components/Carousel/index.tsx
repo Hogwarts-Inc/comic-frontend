@@ -36,7 +36,7 @@ export const Carousel = ({ images, displayMode = 'full', setCurrentIndex = () =>
   const [index, setIndex] = useState(0);
   const numItems = images.length;
 
-  const itemWidth = isLargeScreen ? 45 : (displayMode === 'reduced' ? 100 : 75);
+  const itemWidth = (displayMode === 'reduced' ? 100 : isLargeScreen ? 45 : 75);
   const transformValue = `-${index * (itemWidth + 1)}%`;
 
   useEffect(() => {

@@ -26,7 +26,8 @@
     "skip": "Saltear",
     "title": "Título",
     "upload": "Subir",
-    "send": "Enviar"
+    "send": "Enviar",
+    "browse": "Buscar"
   },
   "panels": {
     "panelsList": {
@@ -34,7 +35,8 @@
       "images": "Imagenes",
       "shapes": "Formas",
       "text": "Texto",
-      "uploads": "Subir"
+      "uploads": "Subir",
+      "imageGeneration": "IA"
     }
   },
   "mainComic": {
