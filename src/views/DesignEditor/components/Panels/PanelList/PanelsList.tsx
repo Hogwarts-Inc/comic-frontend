@@ -19,7 +19,6 @@ function PanelsList() {
   const { t } = useTranslation();
   const { back } = useRouter();
   const isMobile = useIsMobile();
-  const { chapterId, isCreating } = useSelector((state: RootState) => state.chapterQueue);
   return (
     <Container container xs direction="column" isMobile={!!isMobile} wrap="nowrap">
       <Grid
@@ -29,13 +28,7 @@ function PanelsList() {
         justifyContent={isMobile ? 'space-between' : 'center'}
         margin={isMobile ? '1rem' : undefined}
         marginBottom={0}>
-        <Button
-          onClick={async () => {
-            if (isCreating) await handleRemoveFromQueue(chapterId);
-            back();
-          }}>
-          {t('back')}
-        </Button>
+        <Button onClick={back}>{t('back')}</Button>
         {isMobile && <SaveCanvaButton />}
       </Grid>
       <WhiteContainer container xs isMobile={!!isMobile}>
