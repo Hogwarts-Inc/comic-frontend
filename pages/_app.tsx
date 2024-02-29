@@ -20,8 +20,10 @@ import { Route } from 'src/constants/routes';
 import Container from 'src/Container';
 import { getUserQueuePosition } from 'src/helpers/chaptersQueue';
 import Provider from 'src/Provider';
+import { apisQueeuTimes } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
 import { setChapterQueue } from 'src/store/slices/chapter-queue';
+import { INTERVAL } from 'src/utils/data';
 
 const QueueHandler = () => {
   const { chapterId, isWaiting } = useSelector((state: RootState) => state.chapterQueue);
@@ -37,6 +39,10 @@ const QueueHandler = () => {
         } = await getUserQueuePosition(chapterId);
 
         if (userCurrentPosition === 1) {
+          const timeLeftDate = new Date();
+          const { time } = (await apisQueeuTimes.getRemoveUserTime()).data;
+          const timeleft = time * 60000 - INTERVAL;
+          timeLeftDate.setMilliseconds(timeleft);
           push(`${Route.chapter}/${chapterId}`);
           dispatch(
             setChapterQueue({
@@ -44,10 +50,11 @@ const QueueHandler = () => {
               isWaiting: userCurrentPosition !== 1,
               position: userCurrentPosition,
               isCreating: userCurrentPosition === 1,
+              timeleft: timeLeftDate.getTime(),
             }),
           );
         }
-      }, 30000);
+      }, INTERVAL);
     }
     return () => {
       if (interval) {

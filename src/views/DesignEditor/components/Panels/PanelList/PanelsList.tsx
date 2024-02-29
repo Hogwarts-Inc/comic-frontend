@@ -10,6 +10,7 @@ import useIsMobile from 'src/hooks/useIsMobile';
 import { PanelListItem } from './PanelListItem';
 import { ButtonsContainer, Container, WhiteContainer } from './styles';
 import { BASE_ITEMS, PanelType } from '../../../../../constants/app-options';
+import Countdown from '../../Countdown';
 import { SaveCanvaButton } from '../../SaveCanvaButton';
 
 function PanelsList() {
@@ -26,7 +27,12 @@ function PanelsList() {
         margin={isMobile ? '1rem' : undefined}
         marginBottom={0}>
         <Button onClick={back}>{t('back')}</Button>
-        {isMobile && <SaveCanvaButton />}
+        {isMobile && (
+          <>
+            <Countdown />
+            <SaveCanvaButton />
+          </>
+        )}
       </Grid>
       <WhiteContainer container xs isMobile={!!isMobile}>
         <ButtonsContainer container wrap="nowrap" direction={isMobile ? 'row' : 'column'}>

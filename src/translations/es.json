@@ -173,7 +173,9 @@
     "textFill": "Color de texto",
     "defaultColors": "Colores predeterminados",
     "selectAFont": "Selecciona una fuente",
-    "searchFont": "Buscar fuente"
+    "searchFont": "Buscar fuente",
+    "timeFinished": "Tiempo finalizado",
+    "timeWarning": "Quedan {{minutes}} minuto{{s}} para que tu turno termine."
   },
   "footer": {
     "knowAboutArtesVisualesStart": "Conoce más acerca de la ",

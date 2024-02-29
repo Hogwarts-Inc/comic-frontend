@@ -274,3 +274,8 @@ export const apiNft = {
 export const apisTermsAndConditions = {
   getTermsAndConditions: () => api.get<TermsAndConditions>('/terms_and_conditions'),
 };
+
+//Timeleft
+export const apisQueeuTimes = {
+  getRemoveUserTime: () => api.get<{ time: number }>('/queue_times/remove_user_time'),
+};
