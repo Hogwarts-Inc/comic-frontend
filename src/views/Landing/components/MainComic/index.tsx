@@ -19,7 +19,7 @@ export const MainComic = ({ images }: { images: Images[] }): JSX.Element => {
       <Grid container item xs={12} lg={12} justifyContent="center">
         <TypographyTitle variant="h2">{t('mainComic.title')}</TypographyTitle>
       </Grid>
-      <Grid item xs={12} lg={10}>
+      <Grid item xs={12} lg={12}>
         <Carousel images={images} />
       </Grid>
     </MainComicGrid>
