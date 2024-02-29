@@ -4,7 +4,7 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
-import { Grid, Hidden } from '@mui/material';
+import { Grid, Hidden, useMediaQuery, useTheme } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useSwipeable } from 'react-swipeable';
 
@@ -30,17 +30,21 @@ interface CarouselProps {
 }
 
 export const Carousel = ({ images, displayMode = 'full', setCurrentIndex = () => {} }: CarouselProps) => {
-  const [index, setIndex] = useState(0);
+  const theme = useTheme();
   const { push } = useRouter();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
+  const [index, setIndex] = useState(0);
   const numItems = images.length;
-  const transformValue = `-${index * ((displayMode === 'reduced' ? 100 : 75) + 5)}%`;
+
+  const itemWidth = isLargeScreen ? 45 : (displayMode === 'reduced' ? 100 : 75);
+  const transformValue = `-${index * (itemWidth + 1)}%`;
 
   useEffect(() => {
     setCurrentIndex(index);
   }, [index, setCurrentIndex]);
 
   const handleNext = () => {
-    setIndex(prevIndex => Math.min(prevIndex + 1, numItems - 1));
+    setIndex(prevIndex => Math.min(prevIndex + 1, numItems - 2));
   };
 
   const handlePrev = () => {
@@ -52,7 +56,7 @@ export const Carousel = ({ images, displayMode = 'full', setCurrentIndex = () =>
   };
 
   const handleLast = () => {
-    setIndex(numItems - 1);
+    setIndex(numItems - 2);
   };
 
   const handlers = useSwipeable({
@@ -91,7 +95,7 @@ export const Carousel = ({ images, displayMode = 'full', setCurrentIndex = () =>
                   displayMode={displayMode}
                   isClickable={!!id}
                   onClick={() => id && push(`${Route.visualizer}/${id}`)}>
-                  <CarouselSlotImage src={url} alt="Carousel Image" />
+                  <CarouselSlotImage src={url} displayMode={displayMode} alt="Carousel Image" />
                 </CarouselSlot>
               ))}
             </CarouselContainer>
@@ -99,14 +103,14 @@ export const Carousel = ({ images, displayMode = 'full', setCurrentIndex = () =>
         </Grid>
         <Hidden only={['xs', 'sm', 'md']}>
           <Grid container item lg={1} justifyContent="flex-end">
-            {index < numItems - 1 && (
+            {index < numItems - 2 && (
               <CarouselButtonNext onClick={handleNext}>
                 <KeyboardArrowRightIcon />
               </CarouselButtonNext>
             )}
           </Grid>
           <Grid container item lg={1}>
-            {index < numItems - 1 && (
+            {index < numItems - 2 && (
               <CarouselButtonLast displayMode={displayMode} onClick={handleLast}>
                 <KeyboardDoubleArrowRightIcon />
               </CarouselButtonLast>
