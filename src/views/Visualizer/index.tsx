@@ -33,7 +33,6 @@ import Button from '@components/Button';
 import DefaultLayout from '@components/DefaultLayout';
 import theme from '@styles/theme';
 import { TransferNFTData } from 'pages/api/crossmint';
-import useAppAuthentication from 'src/hooks/useAppAuthentication';
 import useIsMobile from 'src/hooks/useIsMobile';
 import { apisCanvasComment, apisCanvasLike } from 'src/services/api';
 
@@ -77,7 +76,6 @@ export type VisualizerProps = {
 }>;
 
 export default function Visualizer(props: VisualizerProps) {
-  useAppAuthentication(props.accessToken);
   const { query, back } = useRouter();
   const isMobile = useIsMobile();
   const { t } = useTranslation();
@@ -190,7 +188,10 @@ export default function Visualizer(props: VisualizerProps) {
   };
 
   return (
-    <DefaultLayout disableFooter={isMobile}>
+    <DefaultLayout
+      disableFooter={isMobile}
+      profilePicture={props.currentUserProfilePicture}
+      accessToken={props.accessToken}>
       <Container container direction="column">
         <Grid item container justifyContent="space-between">
           <IconButton size="large" style={{ fontSize: '2.5rem' }} onClick={back}>

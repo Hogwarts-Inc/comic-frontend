@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { Route } from 'src/constants/routes';
 import { selectCanvaData } from 'src/store/slices/canva-creator/selectors';
 
-const withCanvaData = (WrappedComponent: React.ComponentType) => (props: any) => {
+const withCanvaData = (WrappedComponent: any) => (props: any) => {
   const { t } = useTranslation();
   const router = useRouter();
   const [isDataChecked, setIsDataChecked] = useState(false);

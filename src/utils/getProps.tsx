@@ -1,18 +1,14 @@
-import React from 'react';
-
 import { getAccessToken } from '@auth0/nextjs-auth0';
 import { GetServerSideProps } from 'next';
 
-import ChapterPreviewer from '@components/ChaptersPreview';
-import DefaultLayout from '@components/DefaultLayout';
 import { apiUserProfile } from 'src/services/api';
 
-interface ChapterProps {
+export interface BasicProps {
   accessToken: string;
   profilePicture: string;
 }
 
-export const getServerSideProps = (async ctx => {
+export const getProps = (async ctx => {
   let accessToken = '';
   let profilePicture = '';
   try {
@@ -27,10 +23,4 @@ export const getServerSideProps = (async ctx => {
     console.error('Error fetching images:', e);
   }
   return { props: { accessToken, profilePicture } };
-}) satisfies GetServerSideProps<ChapterProps>;
-
-export default ({ accessToken, profilePicture }: ChapterProps) => (
-  <DefaultLayout profilePicture={profilePicture} accessToken={accessToken}>
-    <ChapterPreviewer />
-  </DefaultLayout>
-);
+}) satisfies GetServerSideProps<BasicProps>;

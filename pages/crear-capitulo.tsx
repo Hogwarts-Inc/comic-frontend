@@ -19,9 +19,12 @@ import { apisCanvas, apisChapters, apisComic } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
 import { resetCanvaCreate, setActiveStep } from 'src/store/slices/canva-creator/reducer';
 import { selectActiveStep, selectCanvaData } from 'src/store/slices/canva-creator/selectors';
+import { BasicProps, getProps } from 'src/utils/getProps';
 import { AddCanva } from 'src/views/ChapterCreate/AddCanva/AddCanva';
 import { AddInfo } from 'src/views/ChapterCreate/AddInfo/AddInfo';
 import { DataReview } from 'src/views/ChapterCreate/ChapterReview/DataReview';
+
+export const getServerSideProps = getProps;
 
 const createValidationSchema = (t: TFunction) =>
   Yup.object({
@@ -29,7 +32,7 @@ const createValidationSchema = (t: TFunction) =>
     description: Yup.string().required(t('chapterCreate.validations.description')),
   });
 
-const ChapterCreate = () => {
+const ChapterCreate = ({ accessToken, profilePicture }: BasicProps) => {
   const { t } = useTranslation();
   const { push, back } = useRouter();
   const dispatch = useDispatch();
@@ -63,7 +66,7 @@ const ChapterCreate = () => {
   };
 
   return (
-    <DefaultLayout>
+    <DefaultLayout profilePicture={profilePicture} accessToken={accessToken}>
       <Formik<ChapterData> initialValues={chapterData} validationSchema={validationSchema} onSubmit={onSubmit}>
         {({
           errors,
