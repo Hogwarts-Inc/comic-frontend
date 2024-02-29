@@ -44,7 +44,8 @@ export const Carousel = ({ images, displayMode = 'full', setCurrentIndex = () =>
   }, [index, setCurrentIndex]);
 
   const handleNext = () => {
-    setIndex(prevIndex => Math.min(prevIndex + 1, numItems - 2));
+    const offset = isLargeScreen ? 2 : 1;
+    setIndex(prevIndex => Math.min(prevIndex + 1, numItems - offset));
   };
 
   const handlePrev = () => {
