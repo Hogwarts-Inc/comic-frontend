@@ -49,7 +49,7 @@ export const AddCanvaButtonStyle = styled(Button, {
   shouldForwardProp: props => !['isFooterVisible'].includes(props as string),
 })<{ isFooterVisible: boolean }>(({ isFooterVisible }) => ({
   position: 'absolute',
-  bottom: isFooterVisible ? '6.5rem' : '1rem',
+  bottom: isFooterVisible ? '4.5rem' : '1rem',
   boxShadow: 'none',
   right: '1rem',
 }));
