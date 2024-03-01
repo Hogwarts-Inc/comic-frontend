@@ -76,7 +76,7 @@
     "publishButton": "Publicar"
   },
   "explore": {
-    "title": "Empeza a explorar otros capitulos y crear tus propias historias",
+    "title": "Empeza a explorar otros capítulos y crear tus propias historias",
     "buttonText": "Explorar"
   },
   "event": {
@@ -137,7 +137,7 @@
     "title": "En fila",
     "description": "En este momento, otro usuario está creando una viñeta para este capítulo. ¿Prefieres esperar o crear tu propio capítulo y una viñeta nueva?.",
     "wait": "Esperar",
-    "createChapter": "Crear capitulo"
+    "createChapter": "Crear capítulo"
   },
   "dialogLastCanvas": {
     "title": "Preparate para empezar!",
@@ -147,8 +147,8 @@
     "footer": "Toma en cuenta que algunas de estas viñetas quizás no aparezcan en el capítulo, ya que aún no han sido aprobadas por un administrador."
   },
   "chaptersPreview": {
-    "createChapter": "Crear capitulo",
-    "chaptersList": "Listado de capitulos"
+    "createChapter": "Crear capítulo",
+    "chaptersList": "Listado de capítulos"
   },
   "yourCreations": "Tus creaciones",
   "noCreations": "No tienes historietas creadas.",
