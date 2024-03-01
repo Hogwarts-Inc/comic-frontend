@@ -54,7 +54,7 @@
       "navToEditorTitle": "Utiliza el editor gráfico",
       "navToEditorButton": "Ir al editor",
       "dropZone": "Arrastra y suelta tus archivos aquí",
-      "fileRejected": "El archivo {{fileName}} ha sido rechazado, peso máximo 1MB.",
+      "fileRejected": "El archivo {{fileName}} ha sido rechazado, peso máximo 1,5MB.",
       "maximunExceeded": "Has excedido el número máximo de viñetas permitidas, el máximo son {{max}}"
     },
     "chapterReview": {
