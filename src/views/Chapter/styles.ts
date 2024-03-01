@@ -1,4 +1,5 @@
 import { Grid, Typography, styled } from '@mui/material';
+
 import Button from '@components/Button';
 
 export const Title = styled(Typography)(({ theme }) => ({

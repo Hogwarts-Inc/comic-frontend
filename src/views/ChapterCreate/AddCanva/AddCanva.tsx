@@ -9,6 +9,7 @@ import { DropzoneArea } from 'mui-file-dropzone';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import { TitleView } from '@components/AddCanvaTitleView';
 import { Route } from 'src/constants/routes';
@@ -28,7 +29,6 @@ import {
   DividerLine,
   ItemGridContainer,
 } from './styles';
-import { toast } from 'react-toastify';
 
 interface AddCanvaProps {
   context: ContextType;
