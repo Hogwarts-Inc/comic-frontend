@@ -89,8 +89,8 @@ export const DataReview = ({ context, onNext, values, isSubmitting }: ChapterRev
           size="large"
           variantType="gradient"
           disabled={!isChecked}
-          onClick={() => {
-            onNext();
+          onClick={async () => {
+            await onNext();
             dispatch(resetChapterQueue());
           }}>
           {t('chapterCreate.chapterReview.publishButton')}
