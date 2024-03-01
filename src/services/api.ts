@@ -108,6 +108,9 @@ api.interceptors.response.use(
     // toast.success(i18next.t('toast.successCall'));
     response,
   (error: AxiosError) => {
+    if (error.config?.url?.includes('check_queue')) {
+      return Promise.reject(error);
+    }
     toast.error(i18next.t('toast.failCall'));
     return Promise.reject(error);
   },
@@ -153,6 +156,7 @@ export const apisCanvas = {
     });
   },
   patchCanva: (id: number, data: CanvaParam) => api.patch(`/canvas/${id}`, data),
+  getCanvaVerification: (fileObjects: File[]) => api.post<any[]>('/canvas/image_verification', fileObjects),
 };
 
 export const apisCanvasLike = {

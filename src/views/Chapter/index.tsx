@@ -10,13 +10,14 @@ import Button from '@components/Button';
 import { DialogAddCanva } from '@components/DialogAddCanva';
 import { DialogLastThreeCanva } from '@components/DialogLastThreeCanva';
 import { DialogUserQueue } from '@components/DialogUserQueue';
+import AddCanvaButton from '@components/Icons/addCanvaButton.svg';
 import { Route } from 'src/constants/routes';
 import { addUserToQueue, handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
 import useIsMobile from 'src/hooks/useIsMobile';
 import { StoriettesParam, apisChapters } from 'src/services/api';
 import { RootState } from 'src/store/rootReducer';
 
-import { Title, Loading, Img, Container, AddCanvaButton, AddCircleOutlineStyle, TitleContainer } from './styles';
+import { Title, Loading, Img, Container, TitleContainer, AddCanvaButtonStyle } from './styles';
 
 function Chapter({ isFooterVisible, dataChapter }: { isFooterVisible: boolean; dataChapter: StoriettesParam | null }) {
   const {
@@ -83,10 +84,10 @@ function Chapter({ isFooterVisible, dataChapter }: { isFooterVisible: boolean; d
       </Grid>
       <Container container item>
         <TitleContainer>
-          <Title variant="h3" style={{ marginBottom: '0.5rem' }}>
+          <Title variant="h4" style={{ marginBottom: '0.5rem' }}>
             {dataChapter.title}
           </Title>
-          <Title variant="h5">{dataChapter.description}</Title>
+          <Title>{dataChapter.description}</Title>
         </TitleContainer>
         <Grid container style={{ flexDirection: 'column' }}>
           {dataChapter.canvas.map(item => (
@@ -99,9 +100,9 @@ function Chapter({ isFooterVisible, dataChapter }: { isFooterVisible: boolean; d
           ))}
         </Grid>
         {!!accessToken && !isWaiting && !isCreating && (
-          <AddCanvaButton variant="text" onClick={handleClickOpen} isFooterVisible={isFooterVisible}>
-            <AddCircleOutlineStyle />
-          </AddCanvaButton>
+          <AddCanvaButtonStyle variant="text" onClick={handleClickOpen} isFooterVisible={isFooterVisible}>
+            <AddCanvaButton />
+          </AddCanvaButtonStyle>
         )}
         <DialogAddCanva
           openDialog={openDialogAddCanva}
