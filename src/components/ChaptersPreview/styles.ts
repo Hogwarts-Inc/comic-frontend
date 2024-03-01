@@ -37,9 +37,8 @@ export const Title = styled(Typography)(({ theme }) => ({
 
 export const TitleWrapper = styled('div')({
   display: 'flex',
-  flexDirection: 'row',
+  flexDirection: 'column',
   justifyContent: 'space-between',
-  alignItems: 'center',
   marginLeft: 'auto',
   marginRight: 'auto',
   width: '80%',

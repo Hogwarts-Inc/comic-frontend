@@ -89,6 +89,7 @@ function ChapterPreviewer() {
       <Container>
         <TitleWrapper>
           <Title variant="h4">{dataComic[0]?.title}</Title>
+          <Title variant="h6">{t('chaptersPreview.chaptersList')}</Title>
         </TitleWrapper>
         <TableMui>
           <TableBody>

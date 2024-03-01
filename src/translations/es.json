@@ -147,7 +147,8 @@
     "footer": "Toma en cuenta que algunas de estas viñetas quizás no aparezcan en el capítulo, ya que aún no han sido aprobadas por un administrador."
   },
   "chaptersPreview": {
-    "createChapter": "Crear capitulo"
+    "createChapter": "Crear capitulo",
+    "chaptersList": "Listado de capitulos"
   },
   "yourCreations": "Tus creaciones",
   "noCreations": "No tienes historietas creadas.",
@@ -185,5 +186,8 @@
     "ArtesVisuales": " Licenciatura en Artes Visuales ",
     "termsAndConditions": "Términos y Condiciones",
     "see": "Ver "
+  },
+  "chapter": {
+    "addCanva": "Agregar viñeta"
   }
 }

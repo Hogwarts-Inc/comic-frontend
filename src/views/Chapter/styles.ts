@@ -1,5 +1,6 @@
-import { AddCircleOutline } from '@mui/icons-material';
-import { Button, Grid, Typography, styled } from '@mui/material';
+import { Grid, Typography, styled } from '@mui/material';
+
+import Button from '@components/Button';
 
 export const Title = styled(Typography)(({ theme }) => ({
   margin: '0',
@@ -17,7 +18,7 @@ export const Container = styled(Grid)(({ theme }) => ({
 }));
 
 export const TitleContainer = styled('div')({
-  border: '0.25rem solid',
+  border: '0.15rem solid',
   borderImage: 'linear-gradient(to right, rgb(64, 224, 208), rgb(112, 121, 190), rgb(255, 0, 128)) 1',
   marginBottom: '2rem',
   padding: '1rem',
@@ -45,18 +46,11 @@ export const ImgWrapper = styled('div')({
   flexDirection: 'column',
 });
 
-export const AddCanvaButton = styled(Button, {
+export const AddCanvaButtonStyle = styled(Button, {
   shouldForwardProp: props => !['isFooterVisible'].includes(props as string),
 })<{ isFooterVisible: boolean }>(({ isFooterVisible }) => ({
   position: 'absolute',
-  bottom: isFooterVisible ? '6.5rem' : '1rem',
-  right: '1rem',
-  borderRadius: '50%',
+  bottom: isFooterVisible ? '4.5rem' : '1rem',
   boxShadow: 'none',
-  maxWidth: '68px',
-  minWidth: '68px',
-  maxHeight: 'none',
-  padding: 0,
+  right: '1rem',
 }));
-
-export const AddCircleOutlineStyle = styled(AddCircleOutline)({ fontSize: 68, color: 'black' });
