@@ -105,7 +105,7 @@ function Chapter({ isFooterVisible, dataChapter }: { isFooterVisible: boolean; d
             onClick={handleClickOpen}
             isFooterVisible={isFooterVisible}
             endIcon={<AddCircleOutlineIcon />}>
-            Agregar viñeta
+            {t('chapter.addCanva')}
           </AddCanvaButtonStyle>
         )}
         <DialogAddCanva
