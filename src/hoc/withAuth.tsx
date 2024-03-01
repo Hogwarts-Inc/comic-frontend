@@ -8,10 +8,10 @@ import { useSelector } from 'react-redux';
 import { Route } from 'src/constants/routes';
 import { RootState } from 'src/store/rootReducer';
 
-const withAuth = (WrappedComponent: React.ComponentType) => (props: any) => {
+const withAuth = (WrappedComponent: any) => (props: any) => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { token } = useSelector((state: RootState) => state.auth); //TODO - obtener token usando getServerSideProps?
+  const { token } = useSelector((state: RootState) => state.auth);
   const [isAuthChecked, setIsAuthChecked] = useState(false);
 
   useEffect(() => {
