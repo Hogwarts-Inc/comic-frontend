@@ -43,7 +43,7 @@ export const DialogAddCanva = ({ openDialog, setOpenDialog, onClose }: DialogAdd
     try {
       await apisCanvas.postCanva({ chapter_id: canvaData.chapterId, images: canvaData.files });
       setOpenDialog(false);
-      push(Route.chapter);
+      await push(Route.chapter);
     } catch (e) {
       console.error(e);
     }
