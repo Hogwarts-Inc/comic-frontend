@@ -9,11 +9,13 @@ import { DropzoneArea } from 'mui-file-dropzone';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import { TitleView } from '@components/AddCanvaTitleView';
 import { Route } from 'src/constants/routes';
 import useDesignEditorContext from 'src/hooks/useDesignEditorContext';
 import { ContextType } from 'src/interfaces/common';
+import { apisCanvas } from 'src/services/api';
 import { setCanvaFiles } from 'src/store/slices/canva-creator/reducer';
 import { toBase64 } from 'src/utils/data';
 
@@ -42,6 +44,12 @@ export const AddCanva = ({ context, values, setFieldValue, onNext }: AddCanvaPro
   const { setScenes } = useDesignEditorContext();
 
   const handleFileChange = async (fileObjects: File[]) => {
+    try {
+      await apisCanvas.getCanvaVerification(fileObjects);
+    } catch (e: any) {
+      toast.error(e.data.message);
+    }
+
     setFieldValue?.('files', fileObjects);
 
     const newFileObjects = await Promise.all(fileObjects.map(toBase64));

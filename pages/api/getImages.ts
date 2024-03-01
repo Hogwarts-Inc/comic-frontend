@@ -8,7 +8,12 @@ export interface ImagesQuery {
 }
 export default async (
   req: NextApiRequest,
-  res: NextApiResponse<{ data: { url?: string }[] } | { message: string; error: any }>,
+  res: NextApiResponse<
+    | {
+        url: string;
+      }[]
+    | { message: string; error: any }
+  >,
 ) => {
   if (req.method === 'GET') {
     const { prompt } = req.query;
@@ -19,6 +24,18 @@ export default async (
 
     openai.images
       .generate({ prompt: prompt as string, model: 'dall-e-2', n: 1 })
+      .then(response =>
+        Promise.all(
+          response.data.map(async image => {
+            const blob = await fetch(image.url || '').then(response2 => response2.blob());
+            const base64 = `data:image/jpeg;base64,${Buffer.from(await blob.arrayBuffer()).toString('base64')}`;
+
+            return {
+              url: base64,
+            };
+          }),
+        ),
+      )
       .then(response => res.status(200).json(response))
       .catch(error => {
         console.error('Error transferring NFT:', error);

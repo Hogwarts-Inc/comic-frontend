@@ -89,7 +89,7 @@ function IA() {
     setIsLoading(true);
     if (prompt) {
       const data = await (await fetch(`/api/getImages?prompt=${prompt}`, { method: 'GET' })).json();
-      setImages([...images, ...data.data]);
+      setImages([...images, ...data]);
       setPrompt('');
     }
     setIsLoading(false);
