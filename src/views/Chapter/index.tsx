@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState, useMemo } from 'react';
 
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CircularProgress, Grid } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +11,6 @@ import Button from '@components/Button';
 import { DialogAddCanva } from '@components/DialogAddCanva';
 import { DialogLastThreeCanva } from '@components/DialogLastThreeCanva';
 import { DialogUserQueue } from '@components/DialogUserQueue';
-import AddCanvaButton from '@components/Icons/addCanvaButton.svg';
 import { Route } from 'src/constants/routes';
 import { addUserToQueue, handleRemoveFromQueue } from 'src/helpers/chaptersQueue';
 import useIsMobile from 'src/hooks/useIsMobile';
@@ -100,8 +100,12 @@ function Chapter({ isFooterVisible, dataChapter }: { isFooterVisible: boolean; d
           ))}
         </Grid>
         {!!accessToken && !isWaiting && !isCreating && (
-          <AddCanvaButtonStyle variant="text" onClick={handleClickOpen} isFooterVisible={isFooterVisible}>
-            <AddCanvaButton />
+          <AddCanvaButtonStyle
+            variantType="gradient"
+            onClick={handleClickOpen}
+            isFooterVisible={isFooterVisible}
+            endIcon={<AddCircleOutlineIcon />}>
+            Agregar viñeta
           </AddCanvaButtonStyle>
         )}
         <DialogAddCanva

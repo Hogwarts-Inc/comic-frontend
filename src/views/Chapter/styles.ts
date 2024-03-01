@@ -1,4 +1,5 @@
-import { Button, Grid, Typography, styled } from '@mui/material';
+import { Grid, Typography, styled } from '@mui/material';
+import Button from '@components/Button';
 
 export const Title = styled(Typography)(({ theme }) => ({
   margin: '0',
@@ -51,5 +52,4 @@ export const AddCanvaButtonStyle = styled(Button, {
   bottom: isFooterVisible ? '6.5rem' : '1rem',
   boxShadow: 'none',
   right: '1rem',
-  padding: 0,
 }));
