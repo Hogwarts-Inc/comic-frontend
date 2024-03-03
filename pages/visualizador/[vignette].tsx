@@ -42,7 +42,6 @@ export const getServerSideProps = (async context => {
       const { data: dataApi } = await apisCanvas.getCanvaById({ token: accessToken, canvaId: +context.query.vignette });
       const image = (await fetch(dataApi.image_url)).url;
       userID1 = dataApi.user_attributes.id;
-
       data = {
         ...data,
         image,
@@ -66,7 +65,7 @@ export const getServerSideProps = (async context => {
               transferred: dataApi.nft_data.transferred,
             }
           : {}),
-        url: context.req.headers.referer || '',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}${context.resolvedUrl}` || '',
       };
     } catch (e) {
       console.error('Error fetching data:', e);
